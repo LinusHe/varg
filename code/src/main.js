@@ -1,9 +1,8 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable import/first */
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
-
-// Graph:
-// import graph from './vargraph'
 
 Vue.config.productionTip = false
 
