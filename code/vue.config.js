@@ -1,9 +1,11 @@
+const path = require('path')
+
 module.exports = {
   "pluginOptions": {
     "style-resources-loader": {
       "preProcessor": "less",
       "patterns": [
-        "D:\\Projekte\\htwk\\varg\\code\\src\\assets\\styles\\global.less"
+        path.resolve(__dirname, './src/assets/styles/global.less')
       ]
     }
   },
