@@ -12,7 +12,7 @@
         </v-list-item>
 
         <v-card-actions>
-          <v-btn depressed large block outlined color="primary">Knoten Hinzufügen</v-btn>
+          <v-btn @click="neuerKnoten" large block outlined color="primary">Knoten Hinzufügen</v-btn>
         </v-card-actions>
         
       </v-card>
@@ -47,7 +47,7 @@
         </v-list-item>
 
         <v-card-actions>
-          <v-btn depressed large block outlined color="primary">Kante Hinzufügen</v-btn>
+          <v-btn @click="neueKante" depressed large block outlined color="primary">Kante Hinzufügen</v-btn>
         </v-card-actions>
 
       </v-card>
@@ -56,3 +56,17 @@
 
   </div>
 </template>
+
+<script>
+export default {
+  methods: {   
+    neuerKnoten: function(){
+      alert('Test')
+      
+    },
+    neueKante: function(){
+      alert('Test')
+    }
+  }
+}
+</script>
