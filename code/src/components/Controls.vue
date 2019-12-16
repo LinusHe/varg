@@ -1,5 +1,24 @@
 <template>
   <div class="button-container">
+
+    <v-row align="center">
+
+      <v-card class="mx-auto mb-4" max-width="344">
+
+        <v-list-item three-line>
+          <v-list-item-content>
+            <v-list-item-title class="headline mb-1">Neue Datenstruktur</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-card-actions>
+          <v-btn @click="neuerGraph" block outlined color="primary">Graph Hinzufügen</v-btn>
+        </v-card-actions>
+
+      </v-card>
+
+    </v-row>
+
     <v-row align="center">
 
       <v-card class="mx-auto mb-4" max-width="344">
@@ -58,8 +77,20 @@
 </template>
 
 <script>
+import BasicData from '@/components/BasicData.js'
+
 export default {
   methods: {   
+    neuerGraph: function(){
+      var Name=prompt('Name: ')
+      var Datum=new Date()
+      if (Name===""){
+        alert('Fehlender Name')
+      }
+      else alert(Name+" "+Datum)
+      var Save =new BasicData(Name,Datum);
+    },
+
     neuerKnoten: function(){
       alert('Test')
       
