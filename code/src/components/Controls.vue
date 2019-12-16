@@ -7,12 +7,12 @@
         <v-list-item three-line>
           <v-list-item-content>
             <v-list-item-title class="headline mb-1">Neuer Knoten</v-list-item-title>
-            <v-text-field label="Knotenname"></v-text-field>
+            <v-text-field id="nodeName" label="Knotenname"></v-text-field>
           </v-list-item-content>
         </v-list-item>
 
         <v-card-actions>
-          <v-btn @click="neuerKnoten" large block outlined color="primary">Knoten Hinzufügen</v-btn>
+          <v-btn @click="createNode" large block outlined color="primary">Knoten Hinzufügen</v-btn>
         </v-card-actions>
         
       </v-card>
@@ -25,7 +25,7 @@
         
         <v-list-item three-line>
           <v-list-item-content>
-            <v-list-item-title class="headline mb-1">Neue Kante</v-list-item-title>
+            <v-list-item-title id="demo" class="headline mb-1">Neue Kante</v-list-item-title>
             <v-text-field label="Kantenname"></v-text-field>
             <v-row>
               <v-col sm="6">
@@ -47,7 +47,7 @@
         </v-list-item>
 
         <v-card-actions>
-          <v-btn @click="neueKante" depressed large block outlined color="primary">Kante Hinzufügen</v-btn>
+          <v-btn depressed large block outlined color="primary">Kante Hinzufügen</v-btn>
         </v-card-actions>
 
       </v-card>
@@ -58,14 +58,12 @@
 </template>
 
 <script>
+import graph from '../vargraph'
 export default {
+  name: 'Controls',
   methods: {   
-    neuerKnoten: function(){
-      alert('Test')
-      
-    },
-    neueKante: function(){
-      alert('Test')
+    createNode() {
+      graph.createNode(document.getElementById('nodeName').value)
     }
   }
 }

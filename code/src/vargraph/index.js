@@ -1,8 +1,10 @@
 /* eslint-disable no-unused-vars */
 import cytoscape from 'cytoscape'
 
-function run () {
-  var cy = cytoscape({
+let cy;
+
+export function run() {
+  cy = cytoscape({
 
     container: document.getElementById('cy'), // container to render in
 
@@ -37,7 +39,7 @@ function run () {
         }
       }
       // eslint-disable-next-line indent
-          ],
+    ],
 
     layout: {
       name: 'grid',
@@ -47,9 +49,12 @@ function run () {
   })
 }
 
-export default {
-  name: 'VarGraph',
-  mounted: function () {
-    run()
-  }
+export function createNode(name) {
+  cy.add({
+      data: { id: name },
+      position: {x: 300, y: 300}
+    });
 }
+
+
+export default {run, createNode}
