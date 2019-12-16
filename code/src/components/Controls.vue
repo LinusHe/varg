@@ -78,7 +78,7 @@
 
 <script>
 import graph from '../vargraph'
-import BasicData from '@/components/BasicData.js'
+import BasicData from '@/vargraph/BasicData.js'
 
 export default {
   name: 'Controls',
@@ -89,11 +89,11 @@ export default {
     neuerGraph: function(){
       var Name=prompt('Name: ')
       var Datum=new Date()
-      if (Name ===""){
+      if (Name === ""){
         alert('Fehlender Name')
       }
-      else alert(Name+" "+Datum)
-      new BasicData(Name,Datum)
+      else alert(Name + " " + Datum)
+      new BasicData(Name, Datum)
     }
   }
 }
