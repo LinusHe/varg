@@ -52,7 +52,7 @@ export function run() {
 export function createNode(name) {
   cy.add({
       data: { id: name },
-      position: {x: 300, y: 300}
+      position: {x: 500, y: 300}
     });
 }
 
