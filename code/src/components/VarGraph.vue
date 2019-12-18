@@ -3,4 +3,12 @@
   </div>
 </template>
 
-<script src="../vargraph/index.js"></script>
+<script>
+import graph from '../vargraph'
+export default {
+  name: 'VarGraph',
+  mounted: function(){
+    graph.run()
+  }
+}
+</script>
