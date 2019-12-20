@@ -2,20 +2,8 @@
 
 <template>
   <div class="login-page">
-      <img alt="htwk logo" id="htwk-logo" src="../assets/img/htwk.svg">
-
-      <v-row>
-
-        <v-col sm="3">
-          <Controls />
-        </v-col>
-
-        <v-col sm="9">
-          <VarGraph />
-        </v-col>
-
-      </v-row> 
-           
+      <HtwkLogoHeader></HtwkLogoHeader>
+      <div class="dotted-background fullwidth fullheight"></div> 
   </div>
 </template>
 
@@ -23,12 +11,14 @@
 // @ is an alias to /src
 import Controls from '@/components/Controls.vue'
 import VarGraph from '@/components/VarGraph.vue'
+import HtwkLogoHeader from '@/components/HtwkLogoHeader'
 
 export default {
   name: 'login',
   components: {
     Controls,
-    VarGraph
+    VarGraph,
+    HtwkLogoHeader
   }
 }
 </script>
