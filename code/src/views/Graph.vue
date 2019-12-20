@@ -1,7 +1,7 @@
 <style lang="less"></style>
 
 <template>
-  <div class="home">
+  <div class="graph-page">
       <img alt="htwk logo" id="htwk-logo" src="../assets/img/htwk.svg">
 
       <v-row>
@@ -25,7 +25,7 @@ import Controls from '@/components/Controls.vue'
 import VarGraph from '@/components/VarGraph.vue'
 
 export default {
-  name: 'home',
+  name: 'graph',
   components: {
     Controls,
     VarGraph
