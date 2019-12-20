@@ -3,8 +3,5 @@ export default class BasicData {
     {
         this.name=name;
         this.datum=datum;
-        if (this!=null){
-            alert('Success');
-        }
     }
 }
