@@ -49,6 +49,11 @@ export function run() {
   })
 }
 
+export function toString(){
+  var String = "We are the same. Proof: " + cy.data("a")
+  return String
+}
+
 export function createNode(name) {
   cy.add({
       data: { id: name },
@@ -57,4 +62,4 @@ export function createNode(name) {
 }
 
 
-export default {run, createNode}
+export default {run, createNode, toString}

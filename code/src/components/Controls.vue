@@ -84,16 +84,27 @@ export default {
   name: 'Controls',
   methods: {   
     createNode() {
-      graph.createNode(document.getElementById('nodeName').value)
+      //Überprüft ob Daten für Knoten vom User eingegeben wurden
+      if (document.getElementById('nodeName').value===""){
+        // eslint-disable-next-line no-console
+        console.log('Missing Node Name')
+      }
+      else {
+        graph.createNode(document.getElementById('nodeName').value)
+        alert(graph.toString())
+      }
     },
     neuerGraph: function(){
       var Name=prompt('Name: ')
       var Datum=new Date()
-      if (Name === ""){
+      if (Name === "" || Name == null){
         alert('Fehlender Name')
       }
-      else alert(Name + " " + Datum)
-      new BasicData(Name, Datum)
+      else {
+        alert(Name + " " + Datum+""+ graph.toString())
+        // eslint-disable-next-line no-unused-vars
+        var Save=new BasicData(Name, Datum, graph)
+      }
     }
   }
 }
