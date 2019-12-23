@@ -5,6 +5,7 @@ import Login from '../views/Login.vue'
 import Graph from '../views/Graph.vue'
 import Database from '../views/Database.vue'
 import Menu from '../views/Menu.vue'
+import NewGraph from '../views/NewGraph.vue'
 
 Vue.use(VueRouter)
 
@@ -26,6 +27,10 @@ const routes = [
       {
         path: 'menu',
         component: Menu
+      },
+      {
+        path: 'new',
+        component: NewGraph
       }
     ]
   },

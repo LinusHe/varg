@@ -1,7 +1,7 @@
 <style lang="less"></style>
 
 <template>
-  <div class="menu-page dotted-background">
+  <div class="menu-page">
     <HomeMenu></HomeMenu>
   </div>
 </template>

@@ -1,19 +1,19 @@
 <style lang="less"></style>
 
 <template>
-  <div class="login-page">
-    <LoginForm></LoginForm>
+  <div class="newgraph-page">
+    <NewGraph></NewGraph>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import LoginForm from "@/components/LoginForm";
+import NewGraph from "@/components/newGraph";
 
 export default {
-  name: "login",
+  name: "newgraph",
   components: {
-    LoginForm
+    NewGraph
   }
 };
 </script>
