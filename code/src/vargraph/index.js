@@ -69,5 +69,14 @@ export function createNode(name) {
     });
 }
 
+export function createEdge(name, start, end) {
+  cy.add({
+      data: { id: name, source: start, target: end},
+    });
+}
 
-export default {run, createNode, toString}
+export function getNodes(){
+  return cy.nodes();
+}
+
+export default {run, createNode, toString, createEdge, getNodes}
