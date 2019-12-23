@@ -21,7 +21,10 @@
               placeholder="******"
               outlined
             ></v-text-field>
-            <v-btn class="login-button" @click="createNode" large color="primary">Login</v-btn>
+            <router-link to="menu" tag="button">
+              <v-btn class="login-button" @click="createNode" large color="primary">Login</v-btn>
+            </router-link>
+            
             <a align="center" class="font-italic mt-6" color="error">Passwort vergessen?</a>
             <p align="center" class="login-bottom-links mt-10" color="lightgrey">
               <a>Backend</a> |
