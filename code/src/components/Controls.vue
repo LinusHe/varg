@@ -93,23 +93,22 @@ export default {
         graph.createNode(document.getElementById('nodeName').value)
       }
     },
-    //neuerGraph(): creates an instance of BasicData if a valid input 
-    //(any string input) was given by the user along with the current date (provided by the JS Date object).
-    //It also utilizes the toString Method of graph to output all current nodes of the graph (for testing purposes).
-    //This method should also (in future development) do the following:
-    //  Write new entries in to the database 
-    //  Check entries within the database to avoid entries with the same name
-    //  Update excisting entries
-    SaveGraph: function(){
-      var Name=prompt('Name: ')
-      var Datum=new Date()
-      if (Name === "" || Name == null){
-        alert('Fehlender Name')
+    // SaveGraph(): creates an instance of BasicData if a valid input (any string input)
+    // was given by the user along with the current date (provided by the JS Date object).
+    // It also utilizes the toString method of graph to output all current nodes of the graph (for testing purposes).
+    // This method should also (in future development) do the following:
+    //  - Write new entries into the database 
+    //  - Check entries within the database to avoid entries with the same name
+    //  - Update existing entries
+    SaveGraph: function() {
+      var name = prompt('Name:')
+      var date = new Date()
+      if (name != '' && name != null) {
+        var save = new BasicData(name, date, graph)
+        alert('graph name: ' + save.getName() + '\nsave time: ' + save.getDate() +  '\nnodes: ' + save.getGraph().toString());
       }
-      else {
-        alert(Name + " " + Datum +" "+ graph)
-        // eslint-disable-next-line no-unused-vars
-        var Save=new BasicData(Name, Datum, graph)
+      else if (name === '') {
+        alert('Fehlender Name')
       }
     }
   }
