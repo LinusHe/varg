@@ -12,7 +12,7 @@
         </v-list-item>
 
         <v-card-actions>
-          <v-btn @click="neuerGraph" block outlined color="primary">Graph Hinzufügen</v-btn>
+          <v-btn @click="SaveGraph" block outlined color="primary">Graph Speichern</v-btn>
         </v-card-actions>
 
       </v-card>
@@ -84,24 +84,30 @@ export default {
   name: 'Controls',
   methods: {   
     createNode() {
-      //Überprüft ob Daten für Knoten vom User eingegeben wurden
+      //Checks if if data was input by the user
       if (document.getElementById('nodeName').value===""){
         // eslint-disable-next-line no-console
-        console.log('Missing Node Name')
+        console.log('Missing nodeName')
       }
       else {
         graph.createNode(document.getElementById('nodeName').value)
-        alert(graph.toString())
       }
     },
-    neuerGraph: function(){
+    //neuerGraph(): creates an instance of BasicData if a valid input 
+    //(any string input) was given by the user along with the current date (provided by the JS Date object).
+    //It also utilizes the toString Method of graph to output all current nodes of the graph (for testing purposes).
+    //This method should also (in future development) do the following:
+    //  Write new entries in to the database 
+    //  Check entries within the database to avoid entries with the same name
+    //  Update excisting entries
+    SaveGraph: function(){
       var Name=prompt('Name: ')
       var Datum=new Date()
       if (Name === "" || Name == null){
         alert('Fehlender Name')
       }
       else {
-        alert(Name + " " + Datum+""+ graph.toString())
+        alert(Name + " " + Datum +" "+ graph)
         // eslint-disable-next-line no-unused-vars
         var Save=new BasicData(Name, Datum, graph)
       }

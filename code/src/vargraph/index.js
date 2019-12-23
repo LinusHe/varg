@@ -49,9 +49,17 @@ export function run() {
   })
 }
 
+//toString(): Collects all nodes of the graph in the Array All 
+//            and then outputs their ID in a string.
+//            Currently for testing purposes.
+
 export function toString(){
-  var String = "We are the same. Proof: " + cy.data("a")
-  return String
+  var Output ='';
+  var All = cy.filter('nodes');
+  for (var i=0;i<All.length;i++){
+    Output = Output + " " + All[i].data('id');
+  }
+  return Output;
 }
 
 export function createNode(name) {
