@@ -1,5 +1,22 @@
 <template>
   <div class="button-container">
+    <v-row align="center">
+
+      <v-card class="mx-auto mb-4"  width="344">
+
+        <v-list-item three-line>
+          <v-list-item-content>
+            <v-list-item-title class="headline mb-1">Eigenschaften</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-card-actions>
+          <v-btn @click="findPath" block outlined color="primary">Eigenschaften berechnen</v-btn>
+        </v-card-actions>
+
+      </v-card>
+
+    </v-row>
 
     <v-row align="center">
 
@@ -77,7 +94,7 @@
 </template>
 
 <script>
-import graph from '../vargraph'
+import graph  from '../vargraph'
 import BasicData from '@/vargraph/BasicData.js'
 
 export default {
@@ -110,7 +127,13 @@ export default {
       else if (name === '') {
         alert('Fehlender Name')
       }
+    },
+
+    findPath: function(){
+      graph.findPath()
     }
+
+
   }
 }
 </script>
