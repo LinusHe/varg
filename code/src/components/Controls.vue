@@ -1,77 +1,48 @@
 <template>
   <div class="button-container">
-
+<v-list>
     <v-row align="center">
-
-      <v-card class="mx-auto mb-4"  width="344">
-
-        <v-list-item three-line>
-          <v-list-item-content>
-            <v-list-item-title class="headline mb-1">Neue Datenstruktur</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-
-        <v-card-actions>
-          <v-btn @click="neuerGraph" block outlined color="primary">Graph Hinzufügen</v-btn>
-        </v-card-actions>
-
-      </v-card>
-
+    <v-btn @click="neuerGraph" class="ma-auto" fab dark small color="primary">
+      <v-icon dark>mdi-plus</v-icon>
+    </v-btn>
     </v-row>
 
     <v-row align="center">
-
-      <v-card class="mx-auto mb-4" max-width="344">
-
-        <v-list-item three-line>
-          <v-list-item-content>
-            <v-list-item-title class="headline mb-1">Neuer Knoten</v-list-item-title>
-            <v-text-field id="nodeName" label="Knotenname"></v-text-field>
-          </v-list-item-content>
-        </v-list-item>
-
-        <v-card-actions>
-          <v-btn @click="createNode" large block outlined color="primary">Knoten Hinzufügen</v-btn>
-        </v-card-actions>
-        
-      </v-card>
-
+    <v-btn class="ma-auto" fab dark small color="primary">
+      <v-icon dark>mdi-database-export</v-icon>
+    </v-btn>
     </v-row>
 
-    <v-row>
-
-      <v-card class="mx-auto" max-width="344">
-        
-        <v-list-item three-line>
-          <v-list-item-content>
-            <v-list-item-title id="demo" class="headline mb-1">Neue Kante</v-list-item-title>
-            <v-text-field label="Kantenname"></v-text-field>
-            <v-row>
-              <v-col sm="6">
-                <v-text-field label="Kosten"></v-text-field>
-              </v-col>
-              <v-col sm="6">
-                <v-text-field label="Dauer"></v-text-field>
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col sm="6">
-                <v-select :items="from" label="Anfangsknoten"></v-select>
-              </v-col>
-              <v-col sm="6">
-                <v-select :items="to" label="Endknoten"></v-select>
-              </v-col>
-            </v-row>
-          </v-list-item-content>
-        </v-list-item>
-
-        <v-card-actions>
-          <v-btn depressed large block outlined color="primary">Kante Hinzufügen</v-btn>
-        </v-card-actions>
-
-      </v-card>
-
+    <v-row align="center">
+    <v-btn class="ma-auto" fab dark small color="primary">
+      <v-icon dark>mdi-content-save</v-icon>
+    </v-btn>
     </v-row>
+
+    <v-row align="center">
+    <v-btn class="ma-auto" fab dark small color="primary">
+      <v-icon dark>mdi-open-in-app</v-icon>
+    </v-btn>
+    </v-row>
+
+    <v-row align="center">
+    <v-btn class="ma-auto" fab dark small color="primary">
+      <v-icon dark>mdi-image</v-icon>
+    </v-btn>
+    </v-row>
+
+    <v-row align="center">
+    <v-btn class="ma-auto" fab dark small color="primary">
+      <v-icon dark>mdi-settings</v-icon>
+    </v-btn>
+    </v-row>
+
+    <v-row align="center">
+      <v-btn class="ma-auto" fab dark small color="primary">
+      <v-icon dark>mdi-logout</v-icon>
+    </v-btn>
+    </v-row>
+</v-list>
 
   </div>
 </template>

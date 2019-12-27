@@ -1,12 +1,14 @@
 <style lang="less"></style>
 
 <template>
+
   <div class="graph-page">
-      <img alt="htwk logo" id="htwk-logo" src="../assets/img/htwk.svg">
+      <v-list-item-title align="center" class="login-pre-headline mt-6">Prudukt:</v-list-item-title>
+    <v-list-item-title align="center" class="login-headline mb-1">Anzahl:</v-list-item-title>
 
       <v-row>
 
-        <v-col sm="3">
+        <v-col sm="1">
           <Controls />
         </v-col>
 
