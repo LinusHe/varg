@@ -25,6 +25,25 @@
 
         <v-list-item three-line>
           <v-list-item-content>
+            <v-list-item-title class="headline mb-1">Datenstruktur Laden</v-list-item-title>
+            <v-text-field id="graphName" label="Dateiname"></v-text-field>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-card-actions>
+          <v-btn @click="LoadGraph" large block outlined color="primary">Laden</v-btn>
+        </v-card-actions>
+        
+      </v-card>
+
+    </v-row>
+
+    <v-row align="center">
+
+      <v-card class="mx-auto mb-4" max-width="344">
+
+        <v-list-item three-line>
+          <v-list-item-content>
             <v-list-item-title class="headline mb-1">Neuer Knoten</v-list-item-title>
             <v-text-field id="nodeName" label="Knotenname"></v-text-field>
           </v-list-item-content>
@@ -110,14 +129,26 @@ export default {
       var name = prompt('Name:')
       var date = new Date()
       if (name != '' && name != null) {
-        let save = new BasicData(name, date, graph)
+        let newGraph = graph.SaveMe()
+        let save = new BasicData(name, date, newGraph)
         alert('graph name: ' + save.getName() + '\nsave time: ' + save.getDate() +  '\nnodes: ' + save.getGraph().toString());
-        save.getGraph().SaveMe();
+        //save.getGraph().SaveMe();
         this.vars.testDatabase.save(save)
         this.vars.testDatabase.logContent()
       }
       else if (name === '') {
         alert('Fehlender Name')
+      }
+    },
+    LoadGraph () {
+      // Checks if data was input by the user
+      if (document.getElementById('graphName').value === ""){
+        // eslint-disable-next-line no-console
+        console.log('Missing graphName')
+      }
+      else {
+        let instance = this.vars.testDatabase.load(document.getElementById('graphName').value)
+        graph.Load(instance)
       }
     }
   },

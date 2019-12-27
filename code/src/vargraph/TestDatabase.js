@@ -44,6 +44,11 @@ export default class TestDatabase {
     return -1
   }
 
+  load (graphName) {
+    const index = this.searchExisting (graphName)
+    return this.basicDataArray[index]
+  }
+
   // logs the content of the save array to the console (testing purposes)
   logContent () {
     for (let element of this.basicDataArray) {

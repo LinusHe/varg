@@ -54,12 +54,16 @@ export function run() {
 //             Currently for testing purposes.
 
 export function toString(){
-  var output = '';
-  var all = cy.elements("node");
-  for (var i = 0; i < all.length; i++) {
-    output += all[i].data('id') + ' ';
+  let output = ''
+  let nodeArr = this.nodes
+  let edgeArr = this.edges
+  for (let element of nodeArr) {
+    output += element.data('id') + ' '
   }
-  return output;
+  for (let element of edgeArr) {
+    output += element.data('id') + ' '
+  }
+  return output
 }
 
 export function createNode(name) {
@@ -72,21 +76,24 @@ export function createNode(name) {
 export function SaveMe(){
   const elements={
     nodes: cy.elements("node"),
-    edges: cy.elements("edge")
-  }
-  var Output ='';
-  for (let i=0; i<elements.nodes.length;i++){
-    Output += elements.nodes[i].data('id') +" ";
-  }
-  alert(Array.isArray(elements.edges))
-  var String2=''
-  if (Array.isArray(elements.edges)){
-    for (let i=0; i<elements.edges.length;i++){
-      String2 += elements.edges[i].data('id') +" ";
+    edges: cy.elements("edge"),
+
+    toString () {
+      let Output ='';
+      for (let i=0; i<elements.nodes.length;i++){
+        Output += elements.nodes[i].data('id') +" ";
+      }
+      let String2=''
+      if (Array.isArray(elements.edges)){
+        for (let i=0; i<elements.edges.length;i++){
+          String2 += elements.edges[i].data('id') +" ";
+        }
+      }
+      else String2 = elements.edges.data('id');
+      return Output + ' ' + String2
     }
   }
-  else String2 = elements.edges.data('id');
-  alert(Output + " " + String2);
+  
   return elements;
 }
 
