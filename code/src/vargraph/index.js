@@ -69,5 +69,13 @@ export function createNode(name) {
     });
 }
 
+export function SaveMe(){
+  let elements={
+    nodes: this.savedCyInstance.elements().nodes().jsons(),
+    edges: this.savedCyInstance.elements().edges().jsons()
+  }
+  alert(elements);
+}
 
-export default {run, createNode, toString}
+
+export default {run, createNode, toString, SaveMe}
