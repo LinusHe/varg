@@ -1,20 +1,20 @@
-// Klasse zum Testen von Speicherfunktionen in einer virtuellen Datenbank
+// class to test save functions in a virtual test database
 export default class TestDatabase {
 
   constructor () {
-    // Array zum Speichern von Graphen
-    // im Format BasicData(Name, Datum, Graph)
+    // array to save graphs in format BasicData(name, date, graph)
     this.basicDataArray = []
   }
 
-  /* save(basicData) wird nach einem Klick auf den Button
-   * "Graph Speichern" mit dem davor in Controls.vue erstellten
-   * BasicData-Element aufgerufen
+  /* The save function is called after clicking the button
+   * "Graph Speichern". It first handles the case of possible
+   * duplicate data names, and then pushes the BasicData element
+   * on the save array.
    */
   save (basicData) {
-    let index = this.searchExisting(basicData.getName())
+    const index = this.searchExisting(basicData.getName())
     if (index >= 0) {
-      var input = prompt("Dateiname existiert bereits. 'überschreiben' oder 'kopie' erstellen?")
+      const input = prompt("Dateiname existiert bereits. 'überschreiben' oder 'kopie' erstellen?")
       if (input === "überschreiben") {
         this.basicDataArray[index] = basicData
       }
@@ -22,16 +22,18 @@ export default class TestDatabase {
         basicData.setName(basicData.getName() + " (Kopie)")
         this.basicDataArray.push(basicData)
       }
+      else {
+        alert ("Nicht gespeichert")
+      }
     }
     else {
       this.basicDataArray.push(basicData)
     }
   }
 
-  /* sucht nach bereits existierendem Dateinamen bzw.
-   * Graphnamen im Speicher-Array
+  /* looks for duplicate data names in the save array
    *
-   * @returns {number} index des gefundenen Elements wenn Element mit gleichem Namen gefunden, -1 sonst
+   * @returns {number} index of the element with a duplicate name, -1 if no duplicate was found
    */
   searchExisting (graphName) {
     for (var i = 0; i < this.basicDataArray.length; i++) {
@@ -41,6 +43,8 @@ export default class TestDatabase {
     }
     return -1
   }
+
+  // logs the content of the save array to the console (testing purposes)
   logContent () {
     for (let element of this.basicDataArray) {
       // eslint-disable-next-line no-console
