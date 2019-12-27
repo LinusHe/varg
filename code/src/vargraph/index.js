@@ -74,7 +74,7 @@ export function SaveMe(){
     nodes: this.savedCyInstance.elements().nodes().jsons(),
     edges: this.savedCyInstance.elements().edges().jsons()
   }
-  alert(elements);
+  alert(elements.nodes + " " +elements.edges);
 }
 
 
