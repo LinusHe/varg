@@ -77,7 +77,7 @@
 </template>
 
 <script>
-import graph from '../vargraph'
+import graph from '@/vargraph/index.js'
 import BasicData from '@/vargraph/BasicData.js'
 import TestDatabase from '@/vargraph/TestDatabase.js'
 
@@ -90,8 +90,8 @@ export default {
   },
   methods: {   
     createNode() {
-      //Checks if if data was input by the user
-      if (document.getElementById('nodeName').value===""){
+      // Checks if data was input by the user
+      if (document.getElementById('nodeName').value === ""){
         // eslint-disable-next-line no-console
         console.log('Missing nodeName')
       }
@@ -110,9 +110,11 @@ export default {
       var name = prompt('Name:')
       var date = new Date()
       if (name != '' && name != null) {
-        var save = new BasicData(name, date, graph)
+        let save = new BasicData(name, date, graph)
         alert('graph name: ' + save.getName() + '\nsave time: ' + save.getDate() +  '\nnodes: ' + save.getGraph().toString());
         save.getGraph().SaveMe();
+        this.vars.testDatabase.save(save)
+        this.vars.testDatabase.logContent()
       }
       else if (name === '') {
         alert('Fehlender Name')
