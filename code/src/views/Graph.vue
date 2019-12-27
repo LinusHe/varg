@@ -3,21 +3,15 @@
 <template>
 
   <div class="graph-page">
-      <v-list-item-title align="center" class="login-pre-headline mt-6">Prudukt:</v-list-item-title>
-    <v-list-item-title align="center" class="login-headline mb-1">Anzahl:</v-list-item-title>
-
+    <GraphHeader/>
       <v-row>
-
         <v-col sm="1">
           <Controls />
         </v-col>
-
-        <v-col sm="9">
+        <v-col sm="10" >
           <VarGraph />
         </v-col>
-
-      </v-row> 
-           
+      </v-row>       
   </div>
 </template>
 
