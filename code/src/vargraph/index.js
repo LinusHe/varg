@@ -55,7 +55,7 @@ export function run() {
 
 export function toString(){
   var output = '';
-  var all = cy.filter('nodes');
+  var all = cy.elements("node");
   for (var i = 0; i < all.length; i++) {
     output += all[i].data('id') + ' ';
   }
