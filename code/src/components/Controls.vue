@@ -79,9 +79,15 @@
 <script>
 import graph from '../vargraph'
 import BasicData from '@/vargraph/BasicData.js'
+import TestDatabase from '@/vargraph/TestDatabase.js'
 
 export default {
   name: 'Controls',
+  created(){
+    this.vars = {
+      testDatabase: new TestDatabase()
+    }
+  },
   methods: {   
     createNode() {
       //Checks if if data was input by the user
@@ -106,11 +112,12 @@ export default {
       if (name != '' && name != null) {
         var save = new BasicData(name, date, graph)
         alert('graph name: ' + save.getName() + '\nsave time: ' + save.getDate() +  '\nnodes: ' + save.getGraph().toString());
+        this.vars.testDatabase.say()
       }
       else if (name === '') {
         alert('Fehlender Name')
       }
     }
-  }
+  },
 }
 </script>
