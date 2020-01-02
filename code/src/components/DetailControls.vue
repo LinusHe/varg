@@ -13,7 +13,17 @@
         <v-btn class="btn-close ma-2" @click="show= !show" text icon color="primary">
           <v-icon>mdi-close</v-icon>
         </v-btn>
-        <p class="headline mt-4 ml-4 mr-12">Produktionsschritt 1</p>
+        <p class="headline mt-4 ml-4 mr-12">{{name}}</p>
+        <v-row>
+          <v-col>
+          <v-text-field class="mt-8" id="name" label="Bezeichnung" v-model="name" outlined></v-text-field>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col sm=4>
+            <v-text-field class="mt-8" id="name" label="Bezeichnung" v-model="name" outlined></v-text-field>
+          </v-col>
+        </v-row>
       </v-card>
     </v-slide-x-reverse-transition>
   </div>
@@ -24,7 +34,8 @@ export default {
   name: "DetailControls",
   data() {
     return {
-      show: false
+      show: false,
+      name: "Produktionsschritt 1"
     };
   }
 };
