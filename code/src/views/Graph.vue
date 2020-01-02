@@ -9,6 +9,7 @@
           <VarGraph />
           <Controls />
           <ZoomControls />
+          <OptimizeControls />
         </v-layout>
       </v-container>
     </div>
@@ -21,6 +22,7 @@ import Controls from "@/components/Controls.vue";
 import VarGraph from "@/components/VarGraph.vue";
 import GraphHeader from "@/components/GraphHeader.vue";
 import ZoomControls from "@/components/ZoomControls.vue";
+import OptimizeControls from "@/components/OptimizeControls.vue";
 
 export default {
   name: "graph",
@@ -28,7 +30,8 @@ export default {
     GraphHeader,
     Controls,
     VarGraph,
-    ZoomControls
+    ZoomControls,
+    OptimizeControls
   }
 };
 </script>

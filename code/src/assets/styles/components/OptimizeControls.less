@@ -1,0 +1,36 @@
+.optimize-container {
+    position: absolute;
+    width: 100%;
+    bottom: 30px;
+}
+.optimize-controls {
+    max-width: 250px;
+    margin: auto;
+    .headline {
+        color: @colorGrey;
+        padding-top: 10px;
+    }
+    .switch-container {
+        display: flex;
+        margin: auto;
+    }
+    .switch-text-left {
+        font-size: 20px;
+        padding: 17px 15px 0 0;
+    }
+    .switch-text-right {
+        font-size: 20px;
+        padding: 17px 0 10px 0;
+    }
+    .switch-button {
+        .v-input--switch__thumb {
+            border-radius: 0;
+            color: #ffffff !important;
+        }
+        .v-input--switch__track {
+            border-radius: 4px;
+            opacity: 1;
+            background: @colorPrimary !important;
+        }
+    }
+}
