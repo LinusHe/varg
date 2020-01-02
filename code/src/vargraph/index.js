@@ -82,27 +82,23 @@ export function createNode(name) {
 
 
 export function SaveMe(){
-  const elements={
+  const content={
     nodes: cy.elements("node"),
     edges: cy.elements("edge"),
 
-    toString () {
-      let Output ='';
-      for (let i=0; i<elements.nodes.length;i++){
-        Output += elements.nodes[i].data('id') +" ";
-      }
-      let String2=''
-      if (Array.isArray(elements.edges)){
-        for (let i=0; i<elements.edges.length;i++){
-          String2 += elements.edges[i].data('id') +" ";
+    toString() {
+      let Output =''
+        for (let i=0; i<this.nodes.length;i++){
+          Output += this.nodes[i].data('id') + ' '
         }
-      }
-      else String2 = elements.edges.data('id');
-      return Output + ' ' + String2
+        for (let i=0; i<this.edges.length;i++){
+          Output += this.edges[i].data('id') + ' '
+        }
+      return Output
     }
   }
   
-  return elements;
+  return content;
 }
 
 //  Load(graph): Doesn't work right now!
