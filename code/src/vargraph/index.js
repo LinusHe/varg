@@ -9,21 +9,29 @@ export function run() {
     container: document.getElementById('cy'), // container to render in
 
     elements: [ // list of graph elements to start with
-      { group: 'nodes',data: { id: 'n1' }, position: { x: 50, y: 200 } },
-      { group: 'nodes',data: { id: 'n2' }, position: { x: 131, y: 226 } },
-      { group: 'nodes',data: { id: 'n3' }, position: { x: 128, y: 143 } },
-      { group: 'nodes',data: { id: 'n4' }, position: { x: 249, y: 142 } },
-      { group: 'nodes',data: { id: 'n5' }, position: { x: 191, y: 62 } },
-      { group: 'nodes',data: { id: 'n6' }, position: { x: 66, y: 83 } },
-      { group: 'edges',data: { id: 'e0', source: 'n1', target: 'n2', label: 7 } },
-      { group: 'edges',data: { id: 'e1', source: 'n2', target: 'n3', label: 10 } },
-      { group: 'edges',data: { id: 'e2', source: 'n1', target: 'n6', label: 14 } },
-      { group: 'edges',data: { id: 'e3', source: 'n1', target: 'n3', label: 9 } },
-      { group: 'edges',data: { id: 'e4', source: 'n2', target: 'n4', label: 15 } },
-      { group: 'edges',data: { id: 'e5', source: 'n3', target: 'n4', label: 11 } },
-      { group: 'edges',data: { id: 'e6', source: 'n3', target: 'n6', label: 2 } },
-      { group: 'edges',data: { id: 'e7', source: 'n6', target: 'n5', label: 9 } },  
-      { group: 'edges',data: { id: 'e8', source: 'n5', target: 'n4', label: 6 } },
+      { // node a
+        data: { id: 'a' }
+      },
+      { // node b
+        data: { id: 'b' }
+      },
+      { // node b
+        data: { id: 'c' }
+      },
+      { // edge ab 
+        //! it's important to wright the weigth as a number and not as a string (for the algorithm)
+        data: { id: 'ab', source: 'a', target: 'b', weight1: 10, weight2: 10, label: "(10,10)" }
+      },
+      {
+        data: { id: 'ac', source: 'a', target: 'c', weight1: 8, weight2: 1, label: '(8,1)' }
+      },
+      { 
+        data: { id: 'cb', source: 'c', target: 'b', weight1: 9, weight2: 1, label: '(9,1)' }
+      }
+
+
+
+
     ],
 
     style: [ // the stylesheet for the graph
@@ -57,7 +65,20 @@ export function run() {
         'text-outline-color': 'black'
 
         }
+
+      },
+      {
+        selector: ':selected',
+        style:{
+        'background-color': 'black',
+        'line-color': 'black',
+        'target-arrow-color': 'black',
+        'source-arrow-color': 'black',
+        'text-outline-color': 'black'
+
+        }
       }
+
     ],
   
     layout: {
@@ -88,15 +109,36 @@ export function createNode(name) {
     });
 }
 
-export function findPath(){
-  // wendet A*-Algorithmus an und speichert Ergebnis (ein path als Knoten in Reihenfolge) in aStar  
-  var aStar = cy.elements().aStar({root: "#n2", 
-  goal: "#n6", weight: function(edge){
-  return edge.data('label'); }
-  }
-)
-// markiert die Knoten von aStar (in cy?)
-aStar.path.select();
+/*The method finds the shortest Path between 2 nodes(for now between a and b) with the 
+  Dijkstra Algorithm
+
+
+  */ 
+ export function findPath(option){
+
+  cy.$(':selected').unselect()
+
+  if(option ==="optionCosts"){
+   
+  var dijkstraCosts = cy.elements().dijkstra('#a', function(edge){
+    return edge.data('weight1');
+  });
+
+  //saves the shortes path to a specific node(in this case )
+  var pathToBCosts = dijkstraCosts.pathTo( cy.$('#b') );
+
+  pathToBCosts.select()
+}
+
+if(option ==="optionTime"){
+
+  var dijkstraTime = cy.elements().dijkstra('#a', function(edge){
+    return edge.data('weight2');
+  });
+  var pathToBTime = dijkstraTime.pathTo( cy.$('#b') );
+
+  pathToBTime.select()
+}
 
 }
 

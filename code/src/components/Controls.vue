@@ -6,15 +6,33 @@
 
         <v-list-item three-line>
           <v-list-item-content>
-            <v-list-item-title class="headline mb-1">Eigenschaften</v-list-item-title>
+            <v-list-item-title class="headline mb-1">Nach Kosten berechnen</v-list-item-title>
+            
           </v-list-item-content>
         </v-list-item>
 
         <v-card-actions>
-          <v-btn @click="findPath" block outlined color="primary">Eigenschaften berechnen</v-btn>
+          <v-btn @click="findPathForCosts" block outlined color="primary">Nach Kosten optimieren</v-btn>
         </v-card-actions>
 
       </v-card>
+       <v-card class="mx-auto mb-4"  width="344">
+       <v-list-item three-line>
+          <v-list-item-content>
+            <v-list-item-title class="headline mb-1">Nach Zeit berechnen</v-list-item-title>
+            
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-card-actions>
+          <v-btn @click="findPathForTime" block outlined color="primary">Nach Zeit optimieren</v-btn>
+        </v-card-actions>
+
+      </v-card>
+
+
+
+
 
     </v-row>
 
@@ -129,9 +147,13 @@ export default {
       }
     },
 
-    findPath: function(){
-      graph.findPath()
+    findPathForCosts: function(){
+      graph.findPath("optionCosts")
+    },
+    findPathForTime: function(){
+      graph.findPath("optionTime")
     }
+
 
 
   }
