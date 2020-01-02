@@ -67,18 +67,18 @@
             <v-text-field id="edgeName" label="Kantenname"></v-text-field>
             <v-row>
               <v-col sm="6">
-                <v-text-field label="Kosten"></v-text-field>
+                <v-text-field id="weightOne" label="Kosten"></v-text-field>
               </v-col>
               <v-col sm="6">
-                <v-text-field label="Dauer"></v-text-field>
+                <v-text-field id="weightTwo" label="Dauer"></v-text-field>
               </v-col>
             </v-row>
             <v-row>
               <v-col sm="6">
-                <v-select @focus="getNodes" :items="nodes" v-model="edgeStart" id="edgeStart" label="Anfangsknoten"></v-select>
+                <v-select :items="items" v-model="edgeStart" id="edgeStart" label="Anfangsknoten" ></v-select>
               </v-col>
               <v-col sm="6">
-                <v-select @focus="getNodes" :items="nodes" v-model="edgeEnd" id="edgeEnd" label="Endknoten"></v-select>
+                <v-select :items="items" v-model="edgeEnd" id="edgeEnd" label="Endknoten"></v-select>
               </v-col>
             </v-row>
           </v-list-item-content>
@@ -86,7 +86,6 @@
 
         <v-card-actions>
           <v-btn @click="createEdge" depressed large block outlined color="primary">Kante Hinzufügen</v-btn>
-          <v-btn @click="getNodes" depressed large block outlined color="primary">Knoten anzeigen</v-btn>
         </v-card-actions>
 
       </v-card>
@@ -116,7 +115,8 @@ export default {
         console.log('Missing nodeName')
       }
       else {
-        graph.createNode(document.getElementById('nodeName').value)
+        graph.createNode(document.getElementById('nodeName').value),
+        this.items.push(document.getElementById('nodeName').value)
       }
     },
     // SaveGraph(): creates an instance of BasicData if a valid input (any string input)
@@ -143,15 +143,7 @@ export default {
     },
 
     createEdge() {
-      graph.createEdge(document.getElementById('edgeName').value, this.edgeStart, this.edgeEnd)
-    },
-    getNodes(){
-      var nodes = graph.getNodes()
-      var ids = []
-      nodes.forEach(function(node) {
-       ids.push(node.id())
-      })
-      this.nodes = ids;
+      graph.createEdge(document.getElementById('edgeName').value, this.edgeStart, this.edgeEnd, document.getElementById('weightOne').value, document.getElementById('weightTwo').value)
     },
 
     LoadGraph () {
@@ -168,7 +160,7 @@ export default {
   },
   data: function(){
     return {
-      nodes:[]
+      items:['a', 'b'],
     }
   }
 }

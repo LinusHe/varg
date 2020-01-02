@@ -16,9 +16,9 @@ export function run() {
         data: { id: 'b' }
       },
       { // edge ab
-        data: { id: 'ab', source: 'a', target: 'b' }
-      }
-    ],
+        data: { id: 'ab', source: 'a', target: 'b', weight1:'0', weight2: '0' }
+      },
+   ],
 
     style: [ // the stylesheet for the graph
       {
@@ -35,7 +35,8 @@ export function run() {
           'width': 3,
           'line-color': '#ccc',
           'target-arrow-color': '#ccc',
-          'target-arrow-shape': 'triangle'
+          'target-arrow-shape': 'triangle',
+          'label': 'data(weight1)'
         }
       }
       // eslint-disable-next-line indent
@@ -160,14 +161,11 @@ export function Load(graph){
     })
   }
 }
-export function createEdge(name, start, end) {
+
+export function createEdge(name, start, end, cost, time) {
   cy.add({
-      data: {id: name, source: start, target: end},
+      data: {id: name, source: start, target: end, weight1: cost, weight2: time},
     });
 }
 
-export function getNodes(){
-  return cy.nodes();
-}
-
-export default {run, createNode, toString, createEdge, getNodes, SaveMe, Load}
+export default {run, createNode, toString, createEdge, SaveMe, Load}
