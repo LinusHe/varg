@@ -64,7 +64,7 @@
         <v-list-item three-line>
           <v-list-item-content>
             <v-list-item-title id="demo" class="headline mb-1">Neue Kante</v-list-item-title>
-            <v-text-field label="Kantenname"></v-text-field>
+            <v-text-field id="edgeName" label="Kantenname"></v-text-field>
             <v-row>
               <v-col sm="6">
                 <v-text-field label="Kosten"></v-text-field>
@@ -75,17 +75,18 @@
             </v-row>
             <v-row>
               <v-col sm="6">
-                <v-select :items="from" label="Anfangsknoten"></v-select>
+                <v-select @focus="getNodes" :items="nodes" v-model="edgeStart" id="edgeStart" label="Anfangsknoten"></v-select>
               </v-col>
               <v-col sm="6">
-                <v-select :items="to" label="Endknoten"></v-select>
+                <v-select @focus="getNodes" :items="nodes" v-model="edgeEnd" id="edgeEnd" label="Endknoten"></v-select>
               </v-col>
             </v-row>
           </v-list-item-content>
         </v-list-item>
 
         <v-card-actions>
-          <v-btn depressed large block outlined color="primary">Kante Hinzufügen</v-btn>
+          <v-btn @click="createEdge" depressed large block outlined color="primary">Kante Hinzufügen</v-btn>
+          <v-btn @click="getNodes" depressed large block outlined color="primary">Knoten anzeigen</v-btn>
         </v-card-actions>
 
       </v-card>
@@ -137,9 +138,22 @@ export default {
         this.vars.testDatabase.logContent()
       }
       else if (name === '') {
-        alert('Fehlender Name')
+                alert('Fehlender Name')
       }
     },
+
+    createEdge() {
+      graph.createEdge(document.getElementById('edgeName').value, this.edgeStart, this.edgeEnd)
+    },
+    getNodes(){
+      var nodes = graph.getNodes()
+      var ids = []
+      nodes.forEach(function(node) {
+       ids.push(node.id())
+      })
+      this.nodes = ids;
+    },
+
     LoadGraph () {
       // Checks if data was input by the user
       if (document.getElementById('graphName').value === ""){
@@ -152,5 +166,10 @@ export default {
       }
     }
   },
+  data: function(){
+    return {
+      nodes:[]
+    }
+  }
 }
 </script>

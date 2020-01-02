@@ -49,7 +49,7 @@ export function run() {
   })
 }
 
-// toString(): Collects all nodes of the graph in the array "all"
+// toString(): Collects all nodes of the graph and edges in arrays
 //             and then outputs their ID in a string.
 //             Currently for testing purposes.
 
@@ -72,6 +72,14 @@ export function createNode(name) {
       position: {x: 500, y: 300}
     });
 }
+
+// SaveMe(): Creates a constant object "elements" which 
+//           saves all nodes and egdges in two arrays.
+//           This object is then returned. By calling this function
+//           the current state of the graph can be saved. The object elements
+//           posses a unique toString method that ouputs all nodes and edges.
+//           Currently for testing purposes.
+
 
 export function SaveMe(){
   const elements={
@@ -96,6 +104,16 @@ export function SaveMe(){
   
   return elements;
 }
+
+//  Load(graph): Doesn't work right now!
+//               Intended is a function which allows the current 
+//               graph that is displayed in the container to be overwritten 
+//               by another graph (which would probably be saved in the database).
+//               This would allow the user to switch between different graphs without
+//               losing progress.
+//               Currently Load(graph) gets the "elements" object of 
+//               SaveMe() and then reconstructs the graph using that object by adding every element
+//               (nodes first, edges second).
 
 export function Load(graph){
   cy = cytoscape({
@@ -146,6 +164,14 @@ export function Load(graph){
     })
   }
 }
+export function createEdge(name, start, end) {
+  cy.add({
+      data: {id: name, source: start, target: end},
+    });
+}
 
+export function getNodes(){
+  return cy.nodes();
+}
 
-export default {run, createNode, toString, SaveMe, Load}
+export default {run, createNode, toString, createEdge, getNodes, SaveMe, Load}
