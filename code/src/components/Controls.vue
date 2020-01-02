@@ -2,6 +2,33 @@
   <div class="button-container">
 
     <v-row align="center">
+      <v-card class="mx-auto mb-4"  width="344">
+
+        <v-list-item three-line>
+          <v-list-item-content>
+            <v-list-item-title class="headline mb-1">Nach Kosten berechnen</v-list-item-title>
+            
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-card-actions>
+          <v-btn @click="findPathForCosts" block outlined color="primary">Nach Kosten optimieren</v-btn>
+        </v-card-actions>
+
+      </v-card>
+       <v-card class="mx-auto mb-4"  width="344">
+       <v-list-item three-line>
+          <v-list-item-content>
+            <v-list-item-title class="headline mb-1">Nach Zeit berechnen</v-list-item-title>
+            
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-card-actions>
+          <v-btn @click="findPathForTime" block outlined color="primary">Nach Zeit optimieren</v-btn>
+        </v-card-actions>
+
+      </v-card>
 
       <v-card class="mx-auto mb-4"  width="344">
 
@@ -67,10 +94,10 @@
             <v-text-field id="edgeName" label="Kantenname"></v-text-field>
             <v-row>
               <v-col sm="6">
-                <v-text-field id="weightOne" label="Kosten"></v-text-field>
+                <v-text-field id="weightOne" label="Kosten" type = "number"></v-text-field>
               </v-col>
               <v-col sm="6">
-                <v-text-field id="weightTwo" label="Dauer"></v-text-field>
+                <v-text-field id="weightTwo" label="Dauer" type = "number"></v-text-field>
               </v-col>
             </v-row>
             <v-row>
@@ -143,8 +170,20 @@ export default {
     },
 
     createEdge() {
-      graph.createEdge(document.getElementById('edgeName').value, this.edgeStart, this.edgeEnd, document.getElementById('weightOne').value, document.getElementById('weightTwo').value)
+
+      var w1 = parseInt(document.getElementById('weightOne').value)
+      var w2 = parseInt(document.getElementById('weightTwo').value)
+      var label = "(" + w1 + "," + w2 + ")"
+      graph.createEdge(document.getElementById('edgeName').value, this.edgeStart, this.edgeEnd, w1, w2, label)
     },
+
+    findPathForCosts(){
+      graph.findPath("optionCosts")
+    },
+    findPathForTime(){
+      graph.findPath("optionTime")
+    },
+
 
     LoadGraph () {
       // Checks if data was input by the user
@@ -160,7 +199,7 @@ export default {
   },
   data: function(){
     return {
-      items:['a', 'b'],
+      items:['a', 'b', 'c'],
     }
   }
 }

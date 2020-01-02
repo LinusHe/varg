@@ -15,9 +15,19 @@ export function run() {
       { // node b
         data: { id: 'b' }
       },
-      { // edge ab
-        data: { id: 'ab', source: 'a', target: 'b', weight1:'0', weight2: '0' }
+      { // node b
+        data: { id: 'c' }
       },
+      { // edge ab 
+        //! it's important to wright the weigth as a number and not as a string (for the algorithm)
+        data: { id: 'ab', source: 'a', target: 'b', weight1: 10, weight2: 10, label: "(10,10)" }
+      },
+      {
+        data: { id: 'ac', source: 'a', target: 'c', weight1: 8, weight2: 1, label: '(8,1)' }
+      },
+      { 
+        data: { id: 'cb', source: 'c', target: 'b', weight1: 9, weight2: 1, label: '(9,1)' }
+      }
    ],
 
     style: [ // the stylesheet for the graph
@@ -36,9 +46,23 @@ export function run() {
           'line-color': '#ccc',
           'target-arrow-color': '#ccc',
           'target-arrow-shape': 'triangle',
-          'label': 'data(weight1)'
+          'label' : 'data(label)'
+          
+        }
+        
+      },
+      {
+        selector: ':selected',
+        style:{
+        'background-color': 'black',
+        'line-color': 'black',
+        'target-arrow-color': 'black',
+        'source-arrow-color': 'black',
+        'text-outline-color': 'black'
+
         }
       }
+
       // eslint-disable-next-line indent
     ],
 
@@ -73,6 +97,40 @@ export function createNode(name) {
       position: {x: 500, y: 300}
     });
 }
+
+/*The method finds the shortest Path between 2 nodes(for now between a and b) with the 
+  Dijkstra Algorithm
+
+
+  */ 
+export function findPath(option){
+
+  cy.$(':selected').unselect()
+
+  if(option ==="optionCosts"){
+   
+  var dijkstraCosts = cy.elements().dijkstra('#a', function(edge){
+    return edge.data('weight1');
+  });
+
+  //saves the shortes path to a specific node(in this case )
+  var pathToBCosts = dijkstraCosts.pathTo( cy.$('#b') );
+
+  pathToBCosts.select()
+}
+
+if(option ==="optionTime"){
+
+  var dijkstraTime = cy.elements().dijkstra('#a', function(edge){
+    return edge.data('weight2');
+  });
+  var pathToBTime = dijkstraTime.pathTo( cy.$('#b') );
+
+  pathToBTime.select()
+}
+
+}
+
 
 // SaveMe(): Creates a constant object "content" which 
 //           saves all nodes and egdges in two arrays.
@@ -162,10 +220,10 @@ export function Load(graph){
   }
 }
 
-export function createEdge(name, start, end, cost, time) {
+export function createEdge(name, start, end, cost, time, edgeLabel) {
   cy.add({
-      data: {id: name, source: start, target: end, weight1: cost, weight2: time},
+    data: {id: name, source: start, target: end, weight1: cost, weight2: time, label: edgeLabel},
     });
 }
 
-export default {run, createNode, toString, createEdge, SaveMe, Load}
+export default {run, createNode, toString, createEdge, SaveMe, Load, findPath}
