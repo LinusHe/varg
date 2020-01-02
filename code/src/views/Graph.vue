@@ -2,12 +2,13 @@
 
 <template>
   <div class="graph-page">
-    <GraphHeader />    
+    <GraphHeader />
     <div class="graph-container dotted-background">
       <v-container fill-height grid-list-md>
-        <v-layout row wrap align-center>
+        <v-layout row wrap align-center align="center">
           <VarGraph />
-              <Controls />
+          <Controls />
+          <ZoomControls />
         </v-layout>
       </v-container>
     </div>
@@ -19,13 +20,15 @@
 import Controls from "@/components/Controls.vue";
 import VarGraph from "@/components/VarGraph.vue";
 import GraphHeader from "@/components/GraphHeader.vue";
+import ZoomControls from "@/components/ZoomControls.vue";
 
 export default {
   name: "graph",
   components: {
     GraphHeader,
     Controls,
-    VarGraph
+    VarGraph,
+    ZoomControls
   }
 };
 </script>
