@@ -73,10 +73,10 @@ export function createNode(name) {
     });
 }
 
-// SaveMe(): Creates a constant object "elements" which 
+// SaveMe(): Creates a constant object "content" which 
 //           saves all nodes and egdges in two arrays.
 //           This object is then returned. By calling this function
-//           the current state of the graph can be saved. The object elements
+//           the current state of the graph can be saved. The object "content"
 //           posses a unique toString method that ouputs all nodes and edges.
 //           Currently for testing purposes.
 
