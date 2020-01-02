@@ -107,7 +107,7 @@ export function SaveMe(){
 //               by another graph (which would probably be saved in the database).
 //               This would allow the user to switch between different graphs without
 //               losing progress.
-//               Currently Load(graph) gets the "elements" object of 
+//               Currently Load(graph) gets the "content" object of 
 //               SaveMe() and then reconstructs the graph using that object by adding every element
 //               (nodes first, edges second).
 
