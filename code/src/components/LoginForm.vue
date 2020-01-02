@@ -9,11 +9,12 @@
       label="E-Mail"
       placeholder="beispiel@htwk-leipzig.de"
       outlined
+      clearable
     ></v-text-field>
     <v-text-field
       v-model="password"
       :type="show1 ? 'text' : 'password'"
-      name="input-10-1"
+      id="password"
       label="Passwort"
       placeholder="******"
       outlined
