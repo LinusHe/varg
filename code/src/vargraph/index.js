@@ -146,10 +146,11 @@ export function SaveMe(){
     edges: cy.elements("edge"),
 
     toString() {
-      let Output =''
+      let Output ='nodes: '
         for (let i=0; i<this.nodes.length;i++){
           Output += this.nodes[i].data('id') + ' '
         }
+        Output += ', edges: '
         for (let i=0; i<this.edges.length;i++){
           Output += this.edges[i].data('id') + ' '
         }
@@ -190,7 +191,8 @@ export function Load(graph){
       source: edge.data('source'), 
       target: edge.data('target'), 
       weight1: edge.data('weigth1'),
-      weight2: edge.data('weight2')
+      weight2: edge.data('weight2'),
+      label: edge.data('label')
     },
     });
   }
