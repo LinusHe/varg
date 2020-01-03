@@ -20,7 +20,16 @@ export default new Vuetify({
         error: '#FF5252',
         info: '#4D4C4C',
         success: '#4CAF50',
-        warning: '#FFC107'
+        warning: '#FFC107',
+        // Node Colors
+        blue: '#2699FB',
+        green: '#00CEC9',
+        purple: '#6C5CE7',
+        pink: '#FD79A8',
+        red: '#FF7675',
+        orange: '#FAB1A0',
+        yellow: '#FDCB6E',
+        lightyellow: '#FFEAA7',
       },
     },
   },
