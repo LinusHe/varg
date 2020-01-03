@@ -85,8 +85,9 @@ export function run() {
       name: 'grid',
       rows: 1
     }
-
   })
+  cy.minZoom(1),
+  cy.maxZoom(2)
 }
 
 // toString(): Collects all nodes of the graph in the array "all"
