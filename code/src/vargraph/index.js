@@ -52,7 +52,7 @@ export function run() {
           'target-arrow-shape': 'triangle',
           'label': 'data(label)',
           'font-size': '14px',
-          'color': '#777'
+          'color': '#777',
         }
       },
       {
@@ -109,39 +109,56 @@ export function createNode(name) {
     });
 }
 
+/*  Method for getting all nodes in the graph
+
+
+  @return: Array of nodes
+
+  */
+
+export function getNodes(){
+  
+  var nodes = cy.nodes()
+  var nodesArray =[]
+  for(let i = 0; i< nodes.length; i++){
+    nodesArray.push(nodes[i].data("id"))
+  }
+  
+  return nodesArray
+}
+
 /*The method finds the shortest Path between 2 nodes(for now between a and b) with the 
   Dijkstra Algorithm
-
-
   */ 
- export function findPath(option){
+ export function findPath(option, start, end){
 
+  var startNode = "#" + start
+  var endNode = "#" + end
+ 
+ 
   cy.$(':selected').unselect()
 
   if(option ==="optionCosts"){
-   
-  var dijkstraCosts = cy.elements().dijkstra('#a', function(edge){
-    return edge.data('weight1');
-  });
+    var dijkstraCosts = cy.elements().dijkstra(startNode, function(edge){
+      return edge.data('weight1');
+      });
 
-  //saves the shortes path to a specific node(in this case )
-  var pathToBCosts = dijkstraCosts.pathTo( cy.$('#b') );
+  //saves the shortes path to a specific node
+  var pathToBCosts = dijkstraCosts.pathTo( cy.$(endNode) );
 
   pathToBCosts.select()
-}
+  }
 
-if(option ==="optionTime"){
-
-  var dijkstraTime = cy.elements().dijkstra('#a', function(edge){
+  if(option ==="optionTime"){
+    var dijkstraTime = cy.elements().dijkstra(startNode, function(edge){
     return edge.data('weight2');
   });
-  var pathToBTime = dijkstraTime.pathTo( cy.$('#b') );
-
+  
+  var pathToBTime = dijkstraTime.pathTo( cy.$(endNode) );
   pathToBTime.select()
+  }
 }
 
-}
-
-export default {run, createNode, toString, findPath}
+export default {run, createNode, toString, findPath, getNodes}
 
 
