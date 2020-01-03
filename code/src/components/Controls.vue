@@ -89,16 +89,35 @@ export default {
   name: "Controls",
   methods: {
     createNode() {
-      graph.createNode(document.getElementById("nodeName").value);
+      //Checks if if data was input by the user
+      if (document.getElementById('nodeName').value===""){
+        // eslint-disable-next-line no-console
+        console.log('Missing nodeName')
+      }
+      else {
+        graph.createNode(document.getElementById('nodeName').value)
+      }
     },
-    neuerGraph: function() {
-      var Name = prompt("Name: ");
-      var Datum = new Date();
-      if (Name === "") {
-        alert("Fehlender Name");
-      } else alert(Name + " " + Datum);
-      new BasicData(Name, Datum);
-    }
+    // SaveGraph(): creates an instance of BasicData if a valid input (any string input)
+    // was given by the user along with the current date (provided by the JS Date object).
+    // It also utilizes the toString method of graph to output all current nodes of the graph (for testing purposes).
+    // This method should also (in future development) do the following:
+    //  - Write new entries into the database 
+    //  - Check entries within the database to avoid entries with the same name
+    //  - Update existing entries
+    SaveGraph: function() {
+      var name = prompt('Name:')
+      var date = new Date()
+      if (name != '' && name != null) {
+        var save = new BasicData(name, date, graph)
+        alert('graph name: ' + save.getName() + '\nsave time: ' + save.getDate() +  '\nnodes: ' + save.getGraph().toString());
+      }
+      else if (name === '') {
+        alert('Fehlender Name')
+      }
+    },
+
+
   }
 };
 </script>
