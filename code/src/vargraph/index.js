@@ -171,52 +171,28 @@ export function SaveMe(){
 //               (nodes first, edges second).
 
 export function Load(graph){
-  cy = cytoscape({
-    container: document.getElementById('cy'),
 
-    elements: [ // list of graph elements to start with
-        {
-        }
-    ],
+  cy.elements('node').remove()
+  cy.elements('edge').remove()
 
-    style: [ // the stylesheet for the graph
-      {
-        selector: 'node',
-        style: {
-          'background-color': '#666',
-          'label': 'data(id)'
-        }
-      },
-
-      {
-        selector: 'edge',
-        style: {
-          'width': 3,
-          'line-color': '#ccc',
-          'target-arrow-color': '#ccc',
-          'target-arrow-shape': 'triangle'
-        }
-      }
-      // eslint-disable-next-line indent
-    ],
-
-    layout: {
-      name: 'grid',
-      rows: 1
-    }
-  })
-
-  for (let element of graph.nodes){
+  for (let i=0; i<graph.nodes.length;i++){
+    let node=graph.nodes[i]
     cy.add({
-      data: {id: element.data('id')},
-      position: {x: element.position('x'), y: element.position('y')}
+      data: {id: node.data('id')},
+      position: {x: node.position('x'),y: node.position('y')}
     });
   }
 
-  for (let element of graph.edges){
+  for (let i=0; i<graph.edges.length;i++){
+    let edge=graph.edges[i]
     cy.add({
-      data: {id: element.data('id'), source: element.data('source'), target: element.data('target')}
-    })
+      data: {id: edge.data('id'), 
+      source: edge.data('source'), 
+      target: edge.data('target'), 
+      weight1: edge.data('weigth1'),
+      weight2: edge.data('weight2')
+    },
+    });
   }
 }
 

@@ -193,7 +193,9 @@ export default {
       }
       else {
         let instance = this.vars.testDatabase.load(document.getElementById('graphName').value)
-        graph.Load(instance)
+        // eslint-disable-next-line no-console
+        console.log(instance.getGraph().toString())
+        graph.Load(instance.getGraph())
       }
     }
   },
