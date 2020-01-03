@@ -161,15 +161,15 @@ export function SaveMe(){
   return content;
 }
 
-//  Load(graph): Doesn't work right now!
-//               Intended is a function which allows the current 
+//  Load(graph): Intended is a function which allows the current 
 //               graph that is displayed in the container to be overwritten 
 //               by another graph (which would probably be saved in the database).
 //               This would allow the user to switch between different graphs without
 //               losing progress.
 //               Currently Load(graph) gets the "content" object of 
 //               SaveMe() and then reconstructs the graph using that object by adding every element
-//               (nodes first, edges second).
+//               (nodes first, edges second) and defining every data value by referencing the graph that is written
+//               in the database.
 
 export function Load(graph){
 
