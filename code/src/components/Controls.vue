@@ -2,6 +2,33 @@
   <div class="button-container">
 
     <v-row align="center">
+      <v-card class="mx-auto mb-4"  width="344">
+
+        <v-list-item three-line>
+          <v-list-item-content>
+            <v-list-item-title class="headline mb-1">Nach Kosten berechnen</v-list-item-title>
+            
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-card-actions>
+          <v-btn @click="findPathForCosts" block outlined color="primary">Nach Kosten optimieren</v-btn>
+        </v-card-actions>
+
+      </v-card>
+       <v-card class="mx-auto mb-4"  width="344">
+       <v-list-item three-line>
+          <v-list-item-content>
+            <v-list-item-title class="headline mb-1">Nach Zeit berechnen</v-list-item-title>
+            
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-card-actions>
+          <v-btn @click="findPathForTime" block outlined color="primary">Nach Zeit optimieren</v-btn>
+        </v-card-actions>
+
+      </v-card>
 
       <v-card class="mx-auto mb-4"  width="344">
 
@@ -12,9 +39,28 @@
         </v-list-item>
 
         <v-card-actions>
-          <v-btn @click="neuerGraph" block outlined color="primary">Graph Hinzufügen</v-btn>
+          <v-btn @click="SaveGraph" block outlined color="primary">Graph Speichern</v-btn>
         </v-card-actions>
 
+      </v-card>
+
+    </v-row>
+
+    <v-row align="center">
+
+      <v-card class="mx-auto mb-4" max-width="344">
+
+        <v-list-item three-line>
+          <v-list-item-content>
+            <v-list-item-title class="headline mb-1">Datenstruktur Laden</v-list-item-title>
+            <v-text-field id="graphName" label="Dateiname"></v-text-field>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-card-actions>
+          <v-btn @click="LoadGraph" large block outlined color="primary">Laden</v-btn>
+        </v-card-actions>
+        
       </v-card>
 
     </v-row>
@@ -45,28 +91,28 @@
         <v-list-item three-line>
           <v-list-item-content>
             <v-list-item-title id="demo" class="headline mb-1">Neue Kante</v-list-item-title>
-            <v-text-field label="Kantenname"></v-text-field>
+            <v-text-field id="edgeName" label="Kantenname"></v-text-field>
             <v-row>
               <v-col sm="6">
-                <v-text-field label="Kosten"></v-text-field>
+                <v-text-field id="weightOne" label="Kosten" type = "number"></v-text-field>
               </v-col>
               <v-col sm="6">
-                <v-text-field label="Dauer"></v-text-field>
+                <v-text-field id="weightTwo" label="Dauer" type = "number"></v-text-field>
               </v-col>
             </v-row>
             <v-row>
               <v-col sm="6">
-                <v-select :items="from" label="Anfangsknoten"></v-select>
+                <v-select :items="items" v-model="edgeStart" id="edgeStart" label="Anfangsknoten" ></v-select>
               </v-col>
               <v-col sm="6">
-                <v-select :items="to" label="Endknoten"></v-select>
+                <v-select :items="items" v-model="edgeEnd" id="edgeEnd" label="Endknoten"></v-select>
               </v-col>
             </v-row>
           </v-list-item-content>
         </v-list-item>
 
         <v-card-actions>
-          <v-btn depressed large block outlined color="primary">Kante Hinzufügen</v-btn>
+          <v-btn @click="createEdge" depressed large block outlined color="primary">Kante Hinzufügen</v-btn>
         </v-card-actions>
 
       </v-card>
@@ -77,23 +123,85 @@
 </template>
 
 <script>
-import graph from '../vargraph'
+import graph from '@/vargraph/index.js'
 import BasicData from '@/vargraph/BasicData.js'
+import TestDatabase from '@/vargraph/TestDatabase.js'
 
 export default {
   name: 'Controls',
+  created(){
+    this.vars = {
+      testDatabase: new TestDatabase()
+    }
+  },
   methods: {   
     createNode() {
-      graph.createNode(document.getElementById('nodeName').value)
-    },
-    neuerGraph: function(){
-      var Name=prompt('Name: ')
-      var Datum=new Date()
-      if (Name === ""){
-        alert('Fehlender Name')
+      // Checks if data was input by the user
+      if (document.getElementById('nodeName').value === ""){
+        // eslint-disable-next-line no-console
+        console.log('Missing nodeName')
       }
-      else alert(Name + " " + Datum)
-      new BasicData(Name, Datum)
+      else {
+        graph.createNode(document.getElementById('nodeName').value),
+        this.items.push(document.getElementById('nodeName').value)
+      }
+    },
+    // SaveGraph(): creates an instance of BasicData if a valid input (any string input)
+    // was given by the user along with the current date (provided by the JS Date object).
+    // It also utilizes the toString method of graph to output all current nodes of the graph (for testing purposes).
+    // This method should also (in future development) do the following:
+    //  - Write new entries into the database 
+    //  - Check entries within the database to avoid entries with the same name
+    //  - Update existing entries
+    SaveGraph: function() {
+      var name = prompt('Name:')
+      var date = new Date()
+      if (name != '' && name != null) {
+        let newGraph = graph.SaveMe()
+        let save = new BasicData(name, date, newGraph)
+        alert('graph name: ' + save.getName() + '\nsave time: ' + save.getDate() +  '\nnodes: ' + save.getGraph().toString());
+        //save.getGraph().SaveMe();
+        this.vars.testDatabase.save(save)
+        this.vars.testDatabase.logContent()
+      }
+      else if (name === '') {
+                alert('Fehlender Name')
+      }
+    },
+
+    createEdge() {
+
+      var w1 = parseInt(document.getElementById('weightOne').value)
+      var w2 = parseInt(document.getElementById('weightTwo').value)
+      var label = "(" + w1 + "," + w2 + ")"
+      graph.createEdge(document.getElementById('edgeName').value, this.edgeStart, this.edgeEnd, w1, w2, label)
+    },
+
+    findPathForCosts(){
+      graph.findPath("optionCosts")
+    },
+    findPathForTime(){
+      graph.findPath("optionTime")
+    },
+
+
+    LoadGraph () {
+      // Checks if data was input by the user
+      if (document.getElementById('graphName').value === ""){
+        // eslint-disable-next-line no-console
+        console.log('Missing graphName')
+      }
+      else {
+        let instance = this.vars.testDatabase.load(document.getElementById('graphName').value)
+        // eslint-disable-next-line no-console
+        console.log(instance.getGraph().toString())
+        graph.Load(instance.getGraph())
+      }
+    }
+  },
+  data: function(){
+    return {
+      items:['a', 'b', 'c'],
     }
   }
 }
