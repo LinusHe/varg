@@ -1,46 +1,76 @@
 <template>
-  <div class="detail-controls">
-    <!-- ONLY FOR TESTING! @TODO -->
-    <v-card style="position: absolute; top: -100px; right: 50px" max-width="400">
-      <v-card-title>Test!</v-card-title>
-      <v-card-text>
-        <p>Später soll die GUI beim Klick auf die Knoten / Kanten im Graphen erscheinen. Zum testen gibts die Buttons hier:</p>
-        <v-btn @click="nodeGui = true; edgeGui = false">klick auf knoten</v-btn>
-        <v-btn @click="nodeGui = false; edgeGui = true">klick auf kante</v-btn>
-      </v-card-text>
-    </v-card>
+  <div class="create-controls-container">
+    <!-- Selection Hover-Button -->
+    <div class="create-controls">
+      <v-speed-dial
+        v-model="fab"
+        bottom
+        right
+        direction="top"
+        open-on-hover
+        transition="slide-y-reverse-transition"
+      >
+        <template v-slot:activator>
+          <v-btn v-model="fab" color="primary" dark fab large>
+            <v-icon v-if="fab">mdi-close</v-icon>
+            <v-icon v-else>mdi-plus</v-icon>
+          </v-btn>
+        </template>
+        <v-tooltip left>
+          <template v-slot:activator="{ on }">
+            <v-btn
+              @click="nodeCreateGui = true; edgeCreateGui = false"
+              v-on="on"
+              fab
+              dark
+              color="secondary"
+            >
+              <v-icon>mdi-plus-circle-outline</v-icon>
+            </v-btn>
+          </template>
+          <span>Neuer Zustand</span>
+        </v-tooltip>
+        <v-tooltip left>
+          <template v-slot:activator="{ on }">
+            <v-btn
+              @click="nodeCreateGui = false; edgeCreateGui = true"
+              v-on="on"
+              fab
+              dark
+              color="secondary"
+            >
+              <v-icon>mdi-link-variant-plus</v-icon>
+            </v-btn>
+          </template>
+          <span>Neue Verknüpfung</span>
+        </v-tooltip>
+      </v-speed-dial>
+    </div>
 
-    <!-- Re-Activate Button -->
-    <!-- <v-card class="activate-button" v-show="reopen">
-      <v-btn @click="show= !show" class="ma-2" text icon color="primary">
-        <v-icon>mdi-triangle</v-icon>
-      </v-btn>
-    </v-card>-->
-
-    <!-- Detail-Zustand Controls -->
+    <!-- Create-Zustand Controls -->
     <v-slide-x-reverse-transition>
       <v-card
         class="detail-card"
-        v-click-outside="nodeGui"
-        v-show="nodeGui"
+        v-click-outside="nodeCreateGui"
+        v-show="nodeCreateGui"
         transition="scroll-y-transition"
       >
-        <v-btn class="btn-close ma-2" @click="nodeGui= false" text icon color="primary">
+        <v-btn class="btn-close ma-2" @click="nodeCreateGui= false" text icon color="primary">
           <v-icon>mdi-close</v-icon>
         </v-btn>
 
         <!-- Headline -->
-        <p class="ml-3 mb-0 font-weight-light font-italic">Zustandseigenschaften</p>
-        <p class="prodname ml-3 mr-12 mb-0">{{nodeName}}</p>
+        <p class="ml-3 mb-0 font-weight-light font-italic">Neuer Zustand</p>
+        <p class="prodname ml-3 mr-12 mb-0">{{nodeCreateName}}</p>
 
         <!-- Name Selection -->
         <v-row>
           <v-col sm="12">
             <v-text-field
               class="mt-2"
-              id="nodeName"
+              id="nodeCreateName"
               label="Bezeichnung"
-              v-model="nodeName"
+              v-model="nodeCreateName"
               outlined
               hide-details
             ></v-text-field>
@@ -50,13 +80,19 @@
         <!-- Shortcut & Icon Upload -->
         <v-row>
           <v-col sm="3">
-            <v-text-field id="nodeShort" label="Kürzel" v-model="nodeShort" outlined hide-details></v-text-field>
+            <v-text-field
+              id="nodeCreateShort"
+              label="Kürzel"
+              v-model="nodeCreateShort"
+              outlined
+              hide-details
+            ></v-text-field>
           </v-col>
           <v-col sm="9">
             <v-text-field
-              id="nodeImgpath"
+              id="nodeCreateImgPath"
               label="Icon/Bild"
-              v-model="nodeImgpath"
+              v-model="nodeCreateImgPath"
               outlined
               hide-details
             ></v-text-field>
@@ -67,8 +103,11 @@
         <v-row>
           <v-col sm="12">
             <div class="radio-container">
-              <label for="nodeColor" class="color-label v-label v-label--active theme--light">Farbe</label>
-              <v-radio-group v-model="nodeColor" id="nodeColor" row>
+              <label
+                for="nodeCreateColor"
+                class="color-label v-label v-label--active theme--light"
+              >Farbe</label>
+              <v-radio-group v-model="nodeCreateColor" id="nodeCreateColor" row>
                 <v-radio class="color-radio-blue" color="blue" value="blue"></v-radio>
                 <v-radio class="color-radio-green" color="green" value="green"></v-radio>
                 <v-radio class="color-radio-purple" color="purple" value="purple"></v-radio>
@@ -81,37 +120,38 @@
             </div>
           </v-col>
         </v-row>
+
         <!-- Create Buttons -->
         <v-row>
           <v-col sm="6" align="right">
-            <v-btn color="success" flat outlined @click="nodeGui = false">Speichern</v-btn>
+            <v-btn color="success" flat outlined @click="nodeCreateGui = false">Hinzufügen</v-btn>
           </v-col>
           <v-col sm="6">
-            <v-btn color="error" flat outlined @click="nodeGui = false">Abbrechen</v-btn>
+            <v-btn color="error" flat outlined @click="nodeCreateGui = false">Abbrechen</v-btn>
           </v-col>
         </v-row>
       </v-card>
     </v-slide-x-reverse-transition>
 
-    <!-- Detail-Verbindung Controls -->
+    <!-- Create-Verbindung Controls -->
     <v-slide-x-reverse-transition>
-      <v-card class="detail-card" v-show="edgeGui" transition="scroll-y-transition">
-        <v-btn class="btn-close ma-2" @click="edgeGui= false" text icon color="primary">
+      <v-card class="detail-card" v-show="edgeCreateGui" transition="scroll-y-transition">
+        <v-btn class="btn-close ma-2" @click="edgeCreateGui= false" text icon color="primary">
           <v-icon>mdi-close</v-icon>
         </v-btn>
 
         <!-- Headline -->
-        <p class="ml-3 mb-0 font-weight-light font-italic">Verbindungseigenschaften</p>
-        <p class="prodname ml-3 mr-12 mb-0">{{edgeName}}</p>
+        <p class="ml-3 mb-0 font-weight-light font-italic">Neue Verbindung</p>
+        <p class="prodname ml-3 mr-12 mb-0">{{edgeCreateName}}</p>
 
         <!-- Name Selection -->
         <v-row>
           <v-col sm="9">
             <v-text-field
               class="mt-2"
-              id="edgeName"
+              id="edgeCreateName"
               label="Bezeichnung"
-              v-model="edgeName"
+              v-model="edgeCreateName"
               outlined
               hide-details
             ></v-text-field>
@@ -119,9 +159,9 @@
           <v-col sm="3">
             <v-text-field
               class="mt-2"
-              id="edgeShort"
+              id="edgeCreateShort"
               label="Kürzel"
-              v-model="edgeShort"
+              v-model="edgeCreateShort"
               outlined
               hide-details
             ></v-text-field>
@@ -153,8 +193,8 @@
               id="edgetime"
               label="Kosten / Stück"
               suffix="€"
-              v-model="edgetime"
               type="number"
+              v-model="edgetime"
               outlined
               hide-details
             ></v-text-field>
@@ -171,13 +211,14 @@
             ></v-text-field>
           </v-col>
         </v-row>
-        <!-- Save Buttons -->
+
+        <!-- Create Buttons -->
         <v-row>
           <v-col sm="6" align="right">
-            <v-btn color="success" flat outlined @click="edgeGui = false">Speichern</v-btn>
+            <v-btn color="success" flat outlined @click="edgeCreateGui = false">Hinzufügen</v-btn>
           </v-col>
           <v-col sm="6">
-            <v-btn color="error" flat outlined @click="edgeGui = false">Abbrechen</v-btn>
+            <v-btn color="error" flat outlined @click="edgeCreateGui = false">Abbrechen</v-btn>
           </v-col>
         </v-row>
       </v-card>
@@ -187,20 +228,20 @@
 
 <script>
 export default {
-  name: "DetailControls",
+  name: "CreateControls",
   data() {
     return {
-      nodeGui: false,
-      nodeName: "Stahlrohre",
-      nodeShort: "ST",
-      nodeImgpath: "uploads/funztNochNicht.png",
-      nodeColor: "blue",
-      edgeGui: false,
-      edgeName: "Maschinelles Walzen",
-      edgeShort: "MWA",
+      nodeCreateGui: false,
+      nodeCreateName: "",
+      nodeCreateShort: "",
+      nodeCreateImgPath: "",
+      nodeCreateColor: "",
+      edgeCreateGui: false,
+      edgeCreateName: "",
+      edgeCreateShort: "",
       items: ["Stahlrohre", "Gewahlzter Stahl"],
-      startSelect: "Stahlrohre",
-      endSelect: "Gewahlzter Stahl"
+      startSelect: "",
+      endSelect: ""
     };
   }
 };
