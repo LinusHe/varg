@@ -28,28 +28,41 @@ export function run() {
       { 
         data: { id: 'cb', source: 'c', target: 'b', weight1: 9, weight2: 1, label: '(9,1)' }
       }
-   ],
+
+    ],
 
     style: [ // the stylesheet for the graph
       {
         selector: 'node',
         style: {
-          'background-color': '#666',
-          'label': 'data(id)'
+          'background-color': '#69e',
+          'label': 'data(id)',
         }
       },
-
+  
       {
         selector: 'edge',
         style: {
-          'width': 3,
-          'line-color': '#ccc',
-          'target-arrow-color': '#ccc',
+          'width': 1,
+          'line-color': '#369',
+          'target-arrow-color': '#369',
           'target-arrow-shape': 'triangle',
-          'label' : 'data(label)'
-          
+          'label': 'data(label)',
+          'font-size': '14px',
+          'color': '#777',
         }
-        
+      },
+      {
+        selector: ':selected',
+        style:{
+        'background-color': 'black',
+        'line-color': 'black',
+        'target-arrow-color': 'black',
+        'source-arrow-color': 'black',
+        'text-outline-color': 'black'
+
+        }
+
       },
       {
         selector: ':selected',
@@ -63,15 +76,17 @@ export function run() {
         }
       }
 
-      // eslint-disable-next-line indent
     ],
-
+  
     layout: {
       name: 'grid',
       rows: 1
     }
-
   })
+  // Sets maximum and minimum of zoom levels. Difference between one and two
+  // is rougly one mouse wheel scroll.
+  cy.minZoom(1),
+  cy.maxZoom(2)
 }
 
 // toString(): Collects all nodes of the graph and edges in arrays
@@ -130,7 +145,6 @@ if(option ==="optionTime"){
 }
 
 }
-
 
 // SaveMe(): Creates a constant object "content" which 
 //           saves all nodes and egdges in two arrays.
@@ -204,4 +218,22 @@ export function createEdge(name, start, end, cost, time, edgeLabel) {
     });
 }
 
-export default {run, createNode, toString, createEdge, SaveMe, Load, findPath}
+/*  Method for getting all nodes in the graph
+
+
+  @return: Array of nodes
+
+  */
+
+export function getNodes(){
+  
+  var nodes = cy.nodes()
+  var nodesArray =[]
+  for(let i = 0; i< nodes.length; i++){
+    nodesArray.push(nodes[i].data("id"))
+  }
+  
+  return nodesArray
+}
+
+export default {run, createNode, toString, createEdge, SaveMe, Load, findPath, getNodes}

@@ -1,124 +1,83 @@
 <template>
-  <div class="button-container">
+  <div class="controls">
+    <v-card class="button-card">
+      <v-row align="center">
+        <v-tooltip right>
+          <template v-slot:activator="{ on }">
+            <v-btn v-on="on" fab dark small depressed color="primary">
+              <v-icon dark>mdi-plus</v-icon>
+            </v-btn>
+          </template>
+          <span>Neuer Graph</span>
+        </v-tooltip>
+      </v-row>
 
-    <v-row align="center">
-      <v-card class="mx-auto mb-4"  width="344">
+      <v-row align="center">
+        <v-tooltip right>
+          <template v-slot:activator="{ on }">
+            <v-btn @click="datenbank()" v-on="on" fab dark small depressed color="primary">
+              <v-icon dark>mdi-database-export</v-icon>
+            </v-btn>
+          </template>
+          <span>Graph aus Datenbank laden</span>
+        </v-tooltip>
+      </v-row>
 
-        <v-list-item three-line>
-          <v-list-item-content>
-            <v-list-item-title class="headline mb-1">Nach Kosten berechnen</v-list-item-title>
-            
-          </v-list-item-content>
-        </v-list-item>
+      <v-row align="center">
+        <v-tooltip right>
+          <template v-slot:activator="{ on }">
+            <v-btn @click="SaveGraph" v-on="on" fab dark small depressed color="primary">
+              <v-icon dark>mdi-content-save</v-icon>
+            </v-btn>
+          </template>
+          <span>Speichern</span>
+        </v-tooltip>
+      </v-row>
 
-        <v-card-actions>
-          <v-btn @click="findPathForCosts" block outlined color="primary">Nach Kosten optimieren</v-btn>
-        </v-card-actions>
+      <v-row align="center">
+        <v-tooltip right>
+          <template v-slot:activator="{ on }">
+            <v-btn @click="Load" v-on="on" fab dark small depressed color="primary">
+              <v-icon dark>mdi-open-in-app</v-icon>
+            </v-btn>
+          </template>
+          <span>Graph laden</span>
+        </v-tooltip>
+      </v-row>
 
-      </v-card>
-       <v-card class="mx-auto mb-4"  width="344">
-       <v-list-item three-line>
-          <v-list-item-content>
-            <v-list-item-title class="headline mb-1">Nach Zeit berechnen</v-list-item-title>
-            
-          </v-list-item-content>
-        </v-list-item>
+      <v-row align="center">
+        <v-tooltip right>
+          <template v-slot:activator="{ on }">
+            <v-btn v-on="on" fab dark small depressed color="primary">
+              <v-icon dark>mdi-image</v-icon>
+            </v-btn>
+          </template>
+          <span>Als Bild speichern</span>
+        </v-tooltip>
+      </v-row>
 
-        <v-card-actions>
-          <v-btn @click="findPathForTime" block outlined color="primary">Nach Zeit optimieren</v-btn>
-        </v-card-actions>
+      <v-row align="center">
+        <v-tooltip right>
+          <template v-slot:activator="{ on }">
+            <v-btn v-on="on" fab dark small depressed color="primary">
+              <v-icon dark>mdi-settings</v-icon>
+            </v-btn>
+          </template>
+          <span>Einstellungen</span>
+        </v-tooltip>
+      </v-row>
 
-      </v-card>
-
-      <v-card class="mx-auto mb-4"  width="344">
-
-        <v-list-item three-line>
-          <v-list-item-content>
-            <v-list-item-title class="headline mb-1">Neue Datenstruktur</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-
-        <v-card-actions>
-          <v-btn @click="SaveGraph" block outlined color="primary">Graph Speichern</v-btn>
-        </v-card-actions>
-
-      </v-card>
-
-    </v-row>
-
-    <v-row align="center">
-
-      <v-card class="mx-auto mb-4" max-width="344">
-
-        <v-list-item three-line>
-          <v-list-item-content>
-            <v-list-item-title class="headline mb-1">Datenstruktur Laden</v-list-item-title>
-            <v-text-field id="graphName" label="Dateiname"></v-text-field>
-          </v-list-item-content>
-        </v-list-item>
-
-        <v-card-actions>
-          <v-btn @click="LoadGraph" large block outlined color="primary">Laden</v-btn>
-        </v-card-actions>
-        
-      </v-card>
-
-    </v-row>
-
-    <v-row align="center">
-
-      <v-card class="mx-auto mb-4" max-width="344">
-
-        <v-list-item three-line>
-          <v-list-item-content>
-            <v-list-item-title class="headline mb-1">Neuer Knoten</v-list-item-title>
-            <v-text-field id="nodeName" label="Knotenname"></v-text-field>
-          </v-list-item-content>
-        </v-list-item>
-
-        <v-card-actions>
-          <v-btn @click="createNode" large block outlined color="primary">Knoten Hinzufügen</v-btn>
-        </v-card-actions>
-        
-      </v-card>
-
-    </v-row>
-
-    <v-row>
-
-      <v-card class="mx-auto" max-width="344">
-        
-        <v-list-item three-line>
-          <v-list-item-content>
-            <v-list-item-title id="demo" class="headline mb-1">Neue Kante</v-list-item-title>
-            <v-text-field id="edgeName" label="Kantenname"></v-text-field>
-            <v-row>
-              <v-col sm="6">
-                <v-text-field id="weightOne" label="Kosten" type = "number"></v-text-field>
-              </v-col>
-              <v-col sm="6">
-                <v-text-field id="weightTwo" label="Dauer" type = "number"></v-text-field>
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col sm="6">
-                <v-select :items="items" v-model="edgeStart" id="edgeStart" label="Anfangsknoten" ></v-select>
-              </v-col>
-              <v-col sm="6">
-                <v-select :items="items" v-model="edgeEnd" id="edgeEnd" label="Endknoten"></v-select>
-              </v-col>
-            </v-row>
-          </v-list-item-content>
-        </v-list-item>
-
-        <v-card-actions>
-          <v-btn @click="createEdge" depressed large block outlined color="primary">Kante Hinzufügen</v-btn>
-        </v-card-actions>
-
-      </v-card>
-
-    </v-row>
-
+      <v-row align="center">
+        <v-tooltip right>
+          <template v-slot:activator="{ on }">
+            <v-btn @click="home()" v-on="on" fab dark small depressed color="primary">
+              <v-icon dark>mdi-logout</v-icon>
+            </v-btn>
+          </template>
+          <span>Ausloggen</span>
+        </v-tooltip>
+      </v-row>
+    </v-card>
   </div>
 </template>
 
@@ -150,7 +109,7 @@ export default {
     // was given by the user along with the current date (provided by the JS Date object).
     // It also utilizes the toString method of graph to output all current nodes of the graph (for testing purposes).
     // This method should also (in future development) do the following:
-    //  - Write new entries into the database 
+    //  - Write new entries into the database
     //  - Check entries within the database to avoid entries with the same name
     //  - Update existing entries
     SaveGraph: function() {
@@ -203,6 +162,12 @@ export default {
     return {
       items:['a', 'b', 'c'],
     }
+  },
+  home: function(){
+    window.location.href='/home/login';
+  },
+  datenbank: function(){
+    window.location.href='/database';
   }
-}
+};
 </script>
