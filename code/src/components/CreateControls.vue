@@ -215,7 +215,7 @@
         <!-- Create Buttons -->
         <v-row>
           <v-col sm="6" align="right">
-            <v-btn color="success" flat outlined @click="edgeCreateGui = false">Hinzufügen</v-btn>
+            <v-btn color="success" flat outlined @click="edgeCreateGui = false && createEdge">Hinzufügen</v-btn>
           </v-col>
           <v-col sm="6">
             <v-btn color="error" flat outlined @click="edgeCreateGui = false">Abbrechen</v-btn>
@@ -227,6 +227,8 @@
 </template>
 
 <script>
+import graph from '@/vargraph/index.js'
+
 export default {
   name: "CreateControls",
   data() {
@@ -242,7 +244,26 @@ export default {
       items: ["Stahlrohre", "Gewahlzter Stahl"],
       startSelect: "",
       endSelect: ""
-    };
+    }
+  },
+  methods:  {
+  createEdge () {
+      let w1 = parseInt(document.getElementById('weightOne').value)
+      let w2 = parseInt(document.getElementById('weightTwo').value)
+      let label = "(" + w1 + "," + w2 + ")"
+      graph.createEdge(document.getElementById('edgeName').value, this.edgeStart, this.edgeEnd, w1, w2, label)
+    }
+  },
+  createNode() {
+    // Checks if data was input by the user
+    if (document.getElementById('nodeName').value === ""){
+      // eslint-disable-next-line no-console
+      console.log('Missing nodeName')
+    }
+    else {
+      graph.createNode(document.getElementById('nodeName').value),
+      this.items.push(document.getElementById('nodeName').value)
+    }
   }
 };
 </script>
