@@ -86,6 +86,7 @@ export function run() {
       rows: 1
     }
   })
+  // Sets maximum and minimum of zoom levels.
   cy.minZoom(1),
   cy.maxZoom(2)
 }
