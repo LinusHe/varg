@@ -70,7 +70,7 @@
       <v-row align="center">
         <v-tooltip right>
           <template v-slot:activator="{ on }">
-            <v-btn @click="home()" v-on="on" fab dark small depressed color="primary">
+            <v-btn @click="home" v-on="on" fab dark small depressed color="primary">
               <v-icon dark>mdi-logout</v-icon>
             </v-btn>
           </template>
@@ -82,27 +82,26 @@
 </template>
 
 <script>
-import graph from '@/vargraph/index.js'
-import BasicData from '@/vargraph/BasicData.js'
-import TestDatabase from '@/vargraph/TestDatabase.js'
+import graph from "@/vargraph/index.js";
+import BasicData from "@/vargraph/BasicData.js";
+import TestDatabase from "@/vargraph/TestDatabase.js";
 
 export default {
-  name: 'Controls',
-  created(){
+  name: "Controls",
+  created() {
     this.vars = {
       testDatabase: new TestDatabase()
-    }
+    };
   },
-  methods: {   
+  methods: {
     createNode() {
       // Checks if data was input by the user
-      if (document.getElementById('nodeName').value === ""){
+      if (document.getElementById("nodeName").value === "") {
         // eslint-disable-next-line no-console
-        console.log('Missing nodeName')
-      }
-      else {
-        graph.createNode(document.getElementById('nodeName').value),
-        this.items.push(document.getElementById('nodeName').value)
+        console.log("Missing nodeName");
+      } else {
+        graph.createNode(document.getElementById("nodeName").value),
+          this.items.push(document.getElementById("nodeName").value);
       }
     },
     // SaveGraph(): creates an instance of BasicData if a valid input (any string input)
@@ -113,62 +112,72 @@ export default {
     //  - Check entries within the database to avoid entries with the same name
     //  - Update existing entries
     SaveGraph: function() {
-      var name = prompt('Name:')
-      var date = new Date()
-      if (name != '' && name != null) {
-        let newGraph = graph.SaveMe()
-        let save = new BasicData(name, date, newGraph)
-        alert('graph name: ' + save.getName() + '\nsave time: ' + save.getDate() +  '\nnodes: ' + save.getGraph().toString());
+      var name = prompt("Name:");
+      var date = new Date();
+      if (name != "" && name != null) {
+        let newGraph = graph.SaveMe();
+        let save = new BasicData(name, date, newGraph);
+        alert(
+          "graph name: " +
+            save.getName() +
+            "\nsave time: " +
+            save.getDate() +
+            "\nnodes: " +
+            save.getGraph().toString()
+        );
         //save.getGraph().SaveMe();
-        this.vars.testDatabase.save(save)
-        this.vars.testDatabase.logContent()
-      }
-      else if (name === '') {
-                alert('Fehlender Name')
+        this.vars.testDatabase.save(save);
+        this.vars.testDatabase.logContent();
+      } else if (name === "") {
+        alert("Fehlender Name");
       }
     },
 
     createEdge() {
-
-      var w1 = parseInt(document.getElementById('weightOne').value)
-      var w2 = parseInt(document.getElementById('weightTwo').value)
-      var label = "(" + w1 + "," + w2 + ")"
-      graph.createEdge(document.getElementById('edgeName').value, this.edgeStart, this.edgeEnd, w1, w2, label)
+      var w1 = parseInt(document.getElementById("weightOne").value);
+      var w2 = parseInt(document.getElementById("weightTwo").value);
+      var label = "(" + w1 + "," + w2 + ")";
+      graph.createEdge(
+        document.getElementById("edgeName").value,
+        this.edgeStart,
+        this.edgeEnd,
+        w1,
+        w2,
+        label
+      );
     },
 
-    findPathForCosts(){
-      graph.findPath("optionCosts")
+    findPathForCosts() {
+      graph.findPath("optionCosts");
     },
-    findPathForTime(){
-      graph.findPath("optionTime")
+    findPathForTime() {
+      graph.findPath("optionTime");
     },
 
-
-    LoadGraph () {
-      let Input = prompt("GraphName: ")
+    LoadGraph() {
+      let Input = prompt("GraphName: ");
       // Checks if data was input by the user
-      if (Input === ""){
+      if (Input === "") {
         // eslint-disable-next-line no-console
-        console.log('Missing graphName')
-      }
-      else {
-        let instance = this.vars.testDatabase.load(Input)
+        console.log("Missing graphName");
+      } else {
+        let instance = this.vars.testDatabase.load(Input);
         // eslint-disable-next-line no-console
-        console.log(instance.getGraph().toString())
-        graph.Load(instance.getGraph())
+        console.log(instance.getGraph().toString());
+        graph.Load(instance.getGraph());
       }
+    },
+    home() {
+      window.location.href = "/home/login";
+    },
+    datenbank() {
+      window.location.href = "/database";
     }
   },
-  data: function(){
+  data: function() {
     return {
-      items:['a', 'b', 'c'],
-    }
-  },
-  home: function(){
-    window.location.href='/home/login';
-  },
-  datenbank: function(){
-    window.location.href='/database';
+      items: ["a", "b", "c"]
+    };
   }
 };
 </script>
