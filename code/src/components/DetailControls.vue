@@ -4,9 +4,9 @@
     <v-card style="position: absolute; top: -100px; right: 50px" max-width="400">
       <v-card-title>Test!</v-card-title>
       <v-card-text>
-        <p>Später sollen die Funktionalität der Buttons an den Cytoscape Graphen angebunden werden</p>
-        <v-btn @click="nodeprop = true; edgeprop = false">klick auf knoten</v-btn>
-        <v-btn @click="nodeprop = false; edgeprop = true">klick auf kante</v-btn>
+        <p>Später soll die GUI beim Klick auf die Knoten / Kanten im Graphen erscheinen. Zum testen gibts die Buttons hier:</p>
+        <v-btn @click="nodeGui = true; edgeGui = false">klick auf knoten</v-btn>
+        <v-btn @click="nodeGui = false; edgeGui = true">klick auf kante</v-btn>
       </v-card-text>
     </v-card>
 
@@ -19,23 +19,28 @@
 
     <!-- Detail-Zustand Controls -->
     <v-slide-x-reverse-transition>
-      <v-card class="detail-card" v-click-outside="nodeprop" v-show="nodeprop" transition="scroll-y-transition">
-        <v-btn class="btn-close ma-2" @click="nodeprop= false" text icon color="primary">
+      <v-card
+        class="detail-card"
+        v-click-outside="nodeGui"
+        v-show="nodeGui"
+        transition="scroll-y-transition"
+      >
+        <v-btn class="btn-close ma-2" @click="nodeGui= false" text icon color="primary">
           <v-icon>mdi-close</v-icon>
         </v-btn>
 
         <!-- Headline -->
         <p class="ml-3 mb-0 font-weight-light font-italic">Zustandseigenschaften</p>
-        <p class="prodname ml-3 mr-12 mb-0">{{nodename}}</p>
+        <p class="prodname ml-3 mr-12 mb-0">{{nodeName}}</p>
 
         <!-- Name Selection -->
         <v-row>
           <v-col sm="12">
             <v-text-field
               class="mt-2"
-              id="nodename"
+              id="nodeName"
               label="Bezeichnung"
-              v-model="nodename"
+              v-model="nodeName"
               outlined
               hide-details
             ></v-text-field>
@@ -45,13 +50,13 @@
         <!-- Shortcut & Icon Upload -->
         <v-row>
           <v-col sm="3">
-            <v-text-field id="nodeshort" label="Kürzel" v-model="nodeshort" outlined hide-details></v-text-field>
+            <v-text-field id="nodeShort" label="Kürzel" v-model="nodeShort" outlined hide-details></v-text-field>
           </v-col>
           <v-col sm="9">
             <v-text-field
-              id="nodeimgpath"
+              id="nodeImgpath"
               label="Icon/Bild"
-              v-model="nodeimgpath"
+              v-model="nodeImgpath"
               outlined
               hide-details
             ></v-text-field>
@@ -62,8 +67,8 @@
         <v-row>
           <v-col sm="12">
             <div class="radio-container">
-              <label for="nodecolor" class="color-label v-label v-label--active theme--light">Farbe</label>
-              <v-radio-group v-model="nodecolor" id="nodecolor" row>
+              <label for="nodeColor" class="color-label v-label v-label--active theme--light">Farbe</label>
+              <v-radio-group v-model="nodeColor" id="nodeColor" row>
                 <v-radio class="color-radio-blue" color="blue" value="blue"></v-radio>
                 <v-radio class="color-radio-green" color="green" value="green"></v-radio>
                 <v-radio class="color-radio-purple" color="purple" value="purple"></v-radio>
@@ -76,28 +81,37 @@
             </div>
           </v-col>
         </v-row>
+        <!-- Create Buttons -->
+        <v-row>
+          <v-col sm="6" align="right">
+            <v-btn color="success" flat outlined @click="nodeGui = false">Speichern</v-btn>
+          </v-col>
+          <v-col sm="6">
+            <v-btn color="error" flat outlined @click="nodeGui = false">Abbrechen</v-btn>
+          </v-col>
+        </v-row>
       </v-card>
     </v-slide-x-reverse-transition>
 
     <!-- Detail-Verbindung Controls -->
     <v-slide-x-reverse-transition>
-      <v-card class="detail-card" v-show="edgeprop" transition="scroll-y-transition">
-        <v-btn class="btn-close ma-2" @click="edgeprop= false" text icon color="primary">
+      <v-card class="detail-card" v-show="edgeGui" transition="scroll-y-transition">
+        <v-btn class="btn-close ma-2" @click="edgeGui= false" text icon color="primary">
           <v-icon>mdi-close</v-icon>
         </v-btn>
 
         <!-- Headline -->
         <p class="ml-3 mb-0 font-weight-light font-italic">Verbindungseigenschaften</p>
-        <p class="prodname ml-3 mr-12 mb-0">{{edgename}}</p>
+        <p class="prodname ml-3 mr-12 mb-0">{{edgeName}}</p>
 
         <!-- Name Selection -->
         <v-row>
           <v-col sm="9">
             <v-text-field
               class="mt-2"
-              id="edgename"
+              id="edgeName"
               label="Bezeichnung"
-              v-model="edgename"
+              v-model="edgeName"
               outlined
               hide-details
             ></v-text-field>
@@ -105,24 +119,30 @@
           <v-col sm="3">
             <v-text-field
               class="mt-2"
-              id="edgeshort"
+              id="edgeShort"
               label="Kürzel"
-              v-model="edgeshort"
+              v-model="edgeShort"
               outlined
               hide-details
             ></v-text-field>
           </v-col>
         </v-row>
-        
+
         <!-- Start und Endzustand -->
         <v-row>
-          <v-col sm=12>
-          <v-select v-model="startSelect" :items="items" outlined label="Startzustand" hide-details></v-select>
+          <v-col sm="12">
+            <v-select
+              v-model="startSelect"
+              :items="items"
+              outlined
+              label="Startzustand"
+              hide-details
+            ></v-select>
           </v-col>
         </v-row>
         <v-row>
-          <v-col sm=12>
-          <v-select v-model="endSelect" :items="items" label="Endzustand" outlined hide-details></v-select>
+          <v-col sm="12">
+            <v-select v-model="endSelect" :items="items" label="Endzustand" outlined hide-details></v-select>
           </v-col>
         </v-row>
 
@@ -134,6 +154,7 @@
               label="Kosten / Stück"
               suffix="€"
               v-model="edgetime"
+              type="number"
               outlined
               hide-details
             ></v-text-field>
@@ -143,13 +164,22 @@
               id="edgecosts"
               label="Zeit / Stück"
               suffix="Sek."
+              type="number"
               v-model="edgecosts"
               outlined
               hint="Einheit ist in den Einstellungen wählbar"
             ></v-text-field>
           </v-col>
         </v-row>
-
+        <!-- Save Buttons -->
+        <v-row>
+          <v-col sm="6" align="right">
+            <v-btn color="success" flat outlined @click="edgeGui = false">Speichern</v-btn>
+          </v-col>
+          <v-col sm="6">
+            <v-btn color="error" flat outlined @click="edgeGui = false">Abbrechen</v-btn>
+          </v-col>
+        </v-row>
       </v-card>
     </v-slide-x-reverse-transition>
   </div>
@@ -160,17 +190,17 @@ export default {
   name: "DetailControls",
   data() {
     return {
-      nodeprop: false,
-      nodename: "Stahlrohre",
-      nodeshort: "ST",
-      nodeimgpath: "uploads/funztNochNicht.png",
-      nodecolor: "blue",
-      edgeprop: false,
-      edgename: "Maschinelles Walzen",
-      edgeshort: "MWA",
+      nodeGui: false,
+      nodeName: "Stahlrohre",
+      nodeShort: "ST",
+      nodeImgpath: "uploads/funztNochNicht.png",
+      nodeColor: "blue",
+      edgeGui: false,
+      edgeName: "Maschinelles Walzen",
+      edgeShort: "MWA",
       items: ["Stahlrohre", "Gewahlzter Stahl"],
       startSelect: "Stahlrohre",
-      endSelect: "Gewahlzter Stahl",
+      endSelect: "Gewahlzter Stahl"
     };
   }
 };
