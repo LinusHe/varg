@@ -70,7 +70,7 @@
       <v-row align="center">
         <v-tooltip right>
           <template v-slot:activator="{ on }">
-            <v-btn @click="home()" fab dark small depressed color="primary">
+            <v-btn @click="home()" v-on="on" fab dark small depressed color="primary">
               <v-icon dark>mdi-logout</v-icon>
             </v-btn>
           </template>
@@ -117,7 +117,7 @@ export default {
       }
     },
   home: function(){
-    window.location.href='/home';
+    window.location.href='/home/login';
   },
   datenbank: function(){
     window.location.href='/database';
