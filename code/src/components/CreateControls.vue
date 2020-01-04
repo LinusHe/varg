@@ -124,7 +124,7 @@
         <!-- Create Buttons -->
         <v-row>
           <v-col sm="6" align="right">
-            <v-btn color="success" flat outlined @click="nodeCreateGui = false && createNode">Hinzufügen</v-btn>
+            <v-btn color="success" flat outlined @click="createNode()">Hinzufügen</v-btn>
           </v-col>
           <v-col sm="6">
             <v-btn color="error" flat outlined @click="nodeCreateGui = false">Abbrechen</v-btn>
@@ -173,6 +173,7 @@
           <v-col sm="12">
             <v-select
               v-model="startSelect"
+              id="Startzustand"
               :items="items"
               outlined
               label="Startzustand"
@@ -182,7 +183,13 @@
         </v-row>
         <v-row>
           <v-col sm="12">
-            <v-select v-model="endSelect" :items="items" label="Endzustand" outlined hide-details></v-select>
+            <v-select 
+              v-model="endSelect"
+              id="Endzustand"
+              :items="items"
+              label="Endzustand"
+              outlined hide-details>
+            </v-select>
           </v-col>
         </v-row>
 
@@ -215,7 +222,7 @@
         <!-- Create Buttons -->
         <v-row>
           <v-col sm="6" align="right">
-            <v-btn color="success" flat outlined @click="edgeCreateGui = false && createEdge">Hinzufügen</v-btn>
+            <v-btn color="success" flat outlined @click="createEdge()">Hinzufügen</v-btn>
           </v-col>
           <v-col sm="6">
             <v-btn color="error" flat outlined @click="edgeCreateGui = false">Abbrechen</v-btn>
@@ -247,22 +254,29 @@ export default {
     }
   },
   methods:  {
-  createEdge () {
-      let w1 = parseInt(document.getElementById('weightOne').value)
-      let w2 = parseInt(document.getElementById('weightTwo').value)
+    createEdge () {
+      //alert('Hi')
+      let w1 = parseInt(document.getElementById('edgetime').value)
+      let w2 = parseInt(document.getElementById('edgecosts').value)
       let label = "(" + w1 + "," + w2 + ")"
-      graph.createEdge(document.getElementById('edgeName').value, this.edgeStart, this.edgeEnd, w1, w2, label)
-    }
-  },
-  createNode() {
-    // Checks if data was input by the user
-    if (document.getElementById('nodeName').value === ""){
-      // eslint-disable-next-line no-console
-      console.log('Missing nodeName')
-    }
-    else {
-      graph.createNode(document.getElementById('nodeName').value),
-      this.items.push(document.getElementById('nodeName').value)
+      graph.createEdge(document.getElementById('edgeCreateName').value, 
+        document.getElementById('Startzustand').value,
+        document.getElementById('Endzustand').value, 
+        w1, w2, label)
+      this.edgeCreateGui = false
+      },
+    createNode () {
+      // Checks if data was input by the user
+      alert('Hi')
+      if (document.getElementById('nodeCreateName').value === ""){
+        // eslint-disable-next-line no-console
+        console.log('Missing nodeName')
+      }
+      else {
+        graph.createNode(document.getElementById('nodeCreateName').value),
+        this.items.push(document.getElementById('nodeCreateName').value)
+      }
+      this.nodeCreateGui = false;
     }
   }
 };
