@@ -7,7 +7,6 @@
         bottom
         right
         direction="top"
-        open-on-hover
         transition="slide-y-reverse-transition"
       >
         <template v-slot:activator>
