@@ -118,11 +118,11 @@ export default {
     },
   home: function(){
     window.location.href='/home';
-  }
-
   },
   datenbank: function(){
     window.location.href='/database';
+  }
+
   }
 };
 </script>

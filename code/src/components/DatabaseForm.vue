@@ -3,24 +3,21 @@
 
      <strong class="mx-6" style="color:blue"> DB-Optionen: </strong>
       <strong class="mx-20"  style="color:blue">Vorlage Laden:</strong>
-        <v-row>
-        <v-col sm="1">
-          <v-row>
-          <v-btn class="li" @click="myfunc()"><a href="#home"><center>Hinzu.</center></a></v-btn></v-row>
-         <!--v-btn class = "li" id="r" @click="re(true)"><a href="#Graphen-entfernen"><center> Remove </center></a></!--v-btn>-->
-         <v-row ><v-btn class="li" @click="go()"><a href="#Musterlösungen"><center>Muster</center></a></v-btn></v-row>
-         <v-row><v-btn class="li" @click="zurueck()"><a href="#zurueck"><center> Zurueck </center></a></v-btn></v-row>
-        </v-col>
-      <v-divider class="vertical" vertical></v-divider>
-    <v-col align="left" id="First">
-      <img id="0" class="rectangle" src="../assets/img/g.png" @click="selected(0)"/>
-    </v-col>
-    </v-row>
 
-  </div>
+
+         <v-btn class="li" @click="myfunc()"><a href="#home"><center>Hinzu.</center></a></v-btn>
+         <!--v-btn class = "li" id="r" @click="re(true)"><a href="#Graphen-entfernen"><center> Remove </center></a></!--v-btn>-->
+         <v-btn class="li" @click="go()"><a href="#Musterlösungen"><center>Muster</center></a></v-btn>
+         <v-btn class="li" @click="zurueck()"><a href="#zurueck"><center> Zurueck </center></a></v-btn>
+
+        <div align="left" id="First">
+        <img id="0" class="rectangle" src="../assets/img/g.png" @click="selected(0)"/>
+        </div>
+
+ </div>
 </template>
 <script>
-         var r = false;
+        var r = false;
         var i = 1;
         var b = 130;
         var t = 220;
