@@ -70,7 +70,7 @@
       <v-row align="center">
         <v-tooltip right>
           <template v-slot:activator="{ on }">
-            <v-btn v-on="on" fab dark small depressed color="primary">
+            <v-btn @click="home()" fab dark small depressed color="primary">
               <v-icon dark>mdi-logout</v-icon>
             </v-btn>
           </template>
@@ -102,7 +102,7 @@ export default {
     // was given by the user along with the current date (provided by the JS Date object).
     // It also utilizes the toString method of graph to output all current nodes of the graph (for testing purposes).
     // This method should also (in future development) do the following:
-    //  - Write new entries into the database 
+    //  - Write new entries into the database
     //  - Check entries within the database to avoid entries with the same name
     //  - Update existing entries
     SaveGraph: function() {
@@ -116,7 +116,9 @@ export default {
         alert('Fehlender Name')
       }
     },
-
+  home: function(){
+    window.location.href='/home';
+  }
 
   }
 };
