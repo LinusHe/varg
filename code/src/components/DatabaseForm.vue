@@ -1,5 +1,6 @@
 <template>
- <div class="database">
+ <div class="databank">
+
      <strong class="mx-6" style="color:blue"> DB-Optionen: </strong>
       <strong class="mx-20"  style="color:blue">Vorlage Laden:</strong>
         <v-row>
@@ -10,11 +11,12 @@
          <v-row ><v-btn class="li" @click="go()"><a href="#Musterlösungen"><center>Muster</center></a></v-btn></v-row>
          <v-row><v-btn class="li" @click="zurueck()"><a href="#zurueck"><center> Zurueck </center></a></v-btn></v-row>
         </v-col>
-      <v-divider class="mx-12" vertical></v-divider>
+      <v-divider class="vertical" vertical></v-divider>
     <v-col align="left" id="First">
       <img id="0" class="rectangle" src="../assets/img/g.png" @click="selected(0)"/>
     </v-col>
     </v-row>
+
   </div>
 </template>
 <script>

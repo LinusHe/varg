@@ -122,7 +122,7 @@ export default {
 
   },
   datenbank: function(){
-    window.location.href='/Datenbank';
+    window.location.href='/database';
   }
 };
 </script>
