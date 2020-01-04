@@ -37,6 +37,9 @@
             document.getElementById("First").innerHTML+= '<img id="'+i+'" class="rectangle" style="left:'+ b +'px;top:'+ t +'px" src="../assets/img/g.png" @click="selected('+i+')" /> ';
             i++;
           }
+          else if (t > 748){
+          alert("Datnbank ist voll!");
+          }
         else if (r == true) {
           alert("Error Musterlösungen");
         }
