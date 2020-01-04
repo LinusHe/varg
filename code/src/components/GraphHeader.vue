@@ -1,7 +1,11 @@
 <template>
   <div class="header-graph-container">
-      <v-list-item-title align="center" class="login-pre-headline mt-6">Prudukt:</v-list-item-title>
-    <v-list-item-title align="center" class="login-headline mb-1">Anzahl:</v-list-item-title>
+    <div id="headertext_out">
+      <div id="headertext_in">
+      <p align="left"  id="produkt">Produkt: <span>TESTPRODUKT</span></p>
+      <p align="left" id="anzahl">Anzahl: <span> X Stk.</span></p>
+      </div>
+    </div>
   </div>
 </template>
 
