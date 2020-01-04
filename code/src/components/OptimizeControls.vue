@@ -16,9 +16,9 @@
                 Um den bestmöglichen Produktions-Weg zu finden, müssen Start und Endzustände ausgewählt werden,
                 zwischen denen die Optimierungsfunktion angewendet werden soll:
                 <br />
-                <br />Startknoten:
-                <v-select v-model="startSelect" :items="items"></v-select>Endknoten:
-                <v-select v-model="endSelect" :items="items"></v-select>
+                <br />
+                <v-select v-model="startSelect" :items="items" label="Startzustand"></v-select>
+                <v-select v-model="endSelect" :items="items" label="Endzustand"></v-select>
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>

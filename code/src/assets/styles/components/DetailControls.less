@@ -1,5 +1,5 @@
 .detail-controls {
-    .activate-button{
+    .activate-button {
         position: absolute;
         right: 30px;
         top: 100px;
@@ -15,58 +15,118 @@
         right: 30px;
         top: 100px;
         width: 400px;
-        padding: 10px; 
-        
+        padding: 10px;
+
         .btn-close {
             position: absolute;
             top: 5px;
-            right: 5px;;
+            right: 5px;
+            ;
         }
+
         .prodname {
             font-weight: bolder;
             font-size: 27px;
             color: @colorGrey;
+            min-height: 40px;
         }
+
+        .radio-container {
+            border: #C2C2C2 solid 1px;
+            -webkit-transition: border-color 0.25s ease;
+            -moz-transition: border-color 0.25s ease;
+            -o-transition: border-color 0.25s ease;
+            -ms-transition: border-color 0.25s ease;
+            transition: border-color 0.25s ease;
+            border-radius: 5px;
+
+            &:hover {
+                border-color: #000000;
+            }
+
+            &:active {
+                border-color: @colorPrimary;
+            }
+
+            .v-input {
+                margin-top: 18px;
+            }
+
+            .v-input__slot {
+                margin-bottom: 20px;
+            }
+
+            .v-messages {
+                display: none;
+            }
+
+            .color-label {
+                position: absolute;
+                left: 20px;
+                margin-top: -7px;
+                font-size: 13px;
+                background: #ffffff;
+                padding: 0 3px;
+            }
+        }
+
         .v-radio {
             margin: 0 7px;
+
+            .mdi-radiobox-blank::before {
+                content: "\F12F";
+            }
+
+            .mdi-radiobox-marked::before {
+                font-size: 26px;
+            }
         }
 
         // Radio Colors:
         .color-radio-blue {
+            margin-left: 15px;
+
             .mdi-radiobox-blank::before {
                 color: @colorBlue
             }
         }
+
         .color-radio-green {
             .mdi-radiobox-blank::before {
                 color: @colorGreen
             }
         }
+
         .color-radio-purple {
             .mdi-radiobox-blank::before {
                 color: @colorPurple
             }
         }
+
         .color-radio-pink {
             .mdi-radiobox-blank::before {
                 color: @colorPink
             }
         }
+
         .color-radio-red {
             .mdi-radiobox-blank::before {
                 color: @colorRed
             }
         }
+
         .color-radio-orange {
             .mdi-radiobox-blank::before {
                 color: @colorOrange
             }
         }
+
         .color-radio-yellow {
             .mdi-radiobox-blank::before {
                 color: @colorYellow
             }
         }
+
         .color-radio-lightyellow {
             .mdi-radiobox-blank::before {
                 color: @colorLightYellow
