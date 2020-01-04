@@ -56,9 +56,9 @@
     },
     zurueck(){
      if (r == false)
-      window.location.href='/';
+      window.location.href='/graph';
       else
-      window.location.href='/datenbank';
+      window.location.href='/database';
     }
      }
   }
