@@ -37,7 +37,7 @@
       <v-row align="center">
         <v-tooltip right>
           <template v-slot:activator="{ on }">
-            <v-btn @click="Load" v-on="on" fab dark small depressed color="primary">
+            <v-btn @click="LoadGraph" v-on="on" fab dark small depressed color="primary">
               <v-icon dark>mdi-open-in-app</v-icon>
             </v-btn>
           </template>
@@ -145,13 +145,14 @@ export default {
 
 
     LoadGraph () {
+      let Input = prompt("GraphName: ")
       // Checks if data was input by the user
-      if (document.getElementById('graphName').value === ""){
+      if (Input === ""){
         // eslint-disable-next-line no-console
         console.log('Missing graphName')
       }
       else {
-        let instance = this.vars.testDatabase.load(document.getElementById('graphName').value)
+        let instance = this.vars.testDatabase.load(Input)
         // eslint-disable-next-line no-console
         console.log(instance.getGraph().toString())
         graph.Load(instance.getGraph())
