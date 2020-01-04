@@ -124,7 +124,7 @@
         <!-- Create Buttons -->
         <v-row>
           <v-col sm="6" align="right">
-            <v-btn color="success" flat outlined @click="nodeCreateGui = false">Hinzufügen</v-btn>
+            <v-btn color="success" flat outlined @click="nodeCreateGui = false && createNode">Hinzufügen</v-btn>
           </v-col>
           <v-col sm="6">
             <v-btn color="error" flat outlined @click="nodeCreateGui = false">Abbrechen</v-btn>
