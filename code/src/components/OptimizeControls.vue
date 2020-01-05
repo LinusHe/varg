@@ -17,8 +17,8 @@
                 zwischen denen die Optimierungsfunktion angewendet werden soll:
                 <br />
                 <br />
-                <v-select v-model="startSelect" :items="items" label="Startzustand"></v-select>
-                <v-select v-model="endSelect" :items="items" label="Endzustand"></v-select>
+                <v-select @focus="getNode()" v-model="startSelect" :items="items" label="Startzustand" ></v-select>
+                <v-select @focus="getNode()" v-model="endSelect" :items="items" label="Endzustand" ></v-select>
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
@@ -48,14 +48,13 @@ export default {
     return {
       option: "optionTime",
       items: [],
-      dialog: false
+      dialog: false,
     };
   },
-  mounted() {
-    this.items = graph.getNodes();
-    graph.findPath(this.option);
-  },
   methods: {
+    getNode(){
+      this.items = graph.getNodes()
+    },
     changeOption: function() {
       if (this.option === "optionTime") {
         this.option = "optionCosts";
@@ -66,5 +65,6 @@ export default {
       }
     }
   }
+
 };
 </script>
