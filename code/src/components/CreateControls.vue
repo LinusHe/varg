@@ -10,10 +10,15 @@
         transition="slide-y-reverse-transition"
       >
         <template v-slot:activator>
-          <v-btn v-model="fab" color="primary" dark fab large>
-            <v-icon v-if="fab">mdi-close</v-icon>
-            <v-icon v-else>mdi-plus</v-icon>
-          </v-btn>
+          <v-tooltip left>
+            <template v-slot:activator="{ on }">
+              <v-btn v-model="fab" v-on="on" color="primary" dark fab large>
+                <v-icon v-if="fab">mdi-close</v-icon>
+                <v-icon v-else>mdi-plus</v-icon>
+              </v-btn>
+            </template>
+            <span>Erstellen</span>
+          </v-tooltip>
         </template>
         <v-tooltip left>
           <template v-slot:activator="{ on }">
@@ -183,14 +188,15 @@
         </v-row>
         <v-row>
           <v-col sm="12">
-            <v-select 
+            <v-select
               @focus="getNodes()"
               v-model="endSelect"
               id="Endzustand"
               :items="items"
               label="Endzustand"
-              outlined hide-details>
-            </v-select>
+              outlined
+              hide-details
+            ></v-select>
           </v-col>
         </v-row>
 
@@ -235,7 +241,7 @@
 </template>
 
 <script>
-import graph from '@/vargraph/index.js'
+import graph from "@/vargraph/index.js";
 
 export default {
   name: "CreateControls",
@@ -252,35 +258,38 @@ export default {
       items: ["Stahlrohre", "Gewahlzter Stahl"],
       startSelect: "",
       endSelect: ""
-    }
+    };
   },
-  methods:  {
+  methods: {
     getNodes() {
-      this.items = graph.getNodes()
+      this.items = graph.getNodes();
     },
-    createEdge () {
+    createEdge() {
       //alert('Hi')
-      let w1 = this.edgecosts
-      let w2 = this.edgetime
+      let w1 = this.edgecosts;
+      let w2 = this.edgetime;
 
-      let label = "(" + w1 + "," + w2 + ")"
+      let label = "(" + w1 + "," + w2 + ")";
 
-      graph.createEdge(document.getElementById('edgeCreateName').value, 
+      graph.createEdge(
+        document.getElementById("edgeCreateName").value,
         this.startSelect,
-        this.endSelect, 
-        w1, w2, label)
-      this.edgeCreateGui = false
-      },
-    createNode () {
+        this.endSelect,
+        w1,
+        w2,
+        label
+      );
+      this.edgeCreateGui = false;
+    },
+    createNode() {
       // Checks if data was input by the user
-      alert('Hi')
-      if (document.getElementById('nodeCreateName').value === ""){
+      alert("Hi");
+      if (document.getElementById("nodeCreateName").value === "") {
         // eslint-disable-next-line no-console
-        console.log('Missing nodeName')
-      }
-      else {
-        graph.createNode(document.getElementById('nodeCreateName').value),
-        this.items.push(document.getElementById('nodeCreateName').value)
+        console.log("Missing nodeName");
+      } else {
+        graph.createNode(document.getElementById("nodeCreateName").value),
+          this.items.push(document.getElementById("nodeCreateName").value);
       }
       this.nodeCreateGui = false;
     }
