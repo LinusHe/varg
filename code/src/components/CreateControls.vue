@@ -260,8 +260,10 @@ export default {
     },
     createEdge () {
       //alert('Hi')
-      let w1 = this.edgecosts
-      let w2 = this.edgetime
+      let w1 = parseInt(this.edgecosts)
+      let w2 = parseInt(this.edgetime)
+// eslint-disable-next-line no-console
+      console.log(typeof w1)
 
       let label = "(" + w1 + "," + w2 + ")"
 
