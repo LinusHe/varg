@@ -44,6 +44,7 @@ const routes = [
     name: 'Varg - Datenbank import',
     component: Database
   }
+
 ]
 
 const router = new VueRouter({
