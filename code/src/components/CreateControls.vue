@@ -171,6 +171,7 @@
         <v-row>
           <v-col sm="12">
             <v-select
+              @focus="getNodes()"
               v-model="startSelect"
               id="Startzustand"
               :items="items"
@@ -183,6 +184,7 @@
         <v-row>
           <v-col sm="12">
             <v-select 
+              @focus="getNodes()"
               v-model="endSelect"
               id="Endzustand"
               :items="items"
@@ -196,7 +198,7 @@
         <v-row>
           <v-col sm="6">
             <v-text-field
-              id="edgetime"
+              id="edgecosts"
               label="Kosten / Stück"
               suffix="€"
               type="number"
@@ -207,7 +209,7 @@
           </v-col>
           <v-col sm="6">
             <v-text-field
-              id="edgecosts"
+              id="edgetime"
               label="Zeit / Stück"
               suffix="Sek."
               type="number"
@@ -253,14 +255,32 @@ export default {
     }
   },
   methods:  {
+    getNodes() {
+      this.items = graph.getNodes()
+    },
     createEdge () {
       //alert('Hi')
-      let w1 = parseInt(document.getElementById('edgetime').value)
-      let w2 = parseInt(document.getElementById('edgecosts').value)
-      let label = "(" + w1 + "," + w2 + ")"
+      let w1, w2, label
+      if (document.getElementById('edgecosts').value === ""){
+        // eslint-disable-next-line no-console
+        w1 = 0
+      }
+      else {
+        w1 = parseInt(document.getElementById('edgecosts').value)
+      }
+      if (document.getElementById('edgetime').value === ""){
+        // eslint-disable-next-line no-console
+        w2 = 0
+      }
+      else {
+        w1 = parseInt(document.getElementById('edgetime').value)
+      }
+
+      label = "(" + w1 + "," + w2 + ")"
+
       graph.createEdge(document.getElementById('edgeCreateName').value, 
-        document.getElementById('Startzustand').value,
-        document.getElementById('Endzustand').value, 
+        this.startSelect,
+        this.endSelect, 
         w1, w2, label)
       this.edgeCreateGui = false
       },

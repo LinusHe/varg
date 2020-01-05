@@ -20,7 +20,7 @@ export function run() {
       },
       { // edge ab 
         //! it's important to wright the weigth as a number and not as a string (for the algorithm)
-        data: { id: 'ab', source: 'a', target: 'b', weight1: 10, weight2: 10, label: "(10,10)" }
+        data: { id: 'ab', source: 'a', target: 'b', weight1: 10, weight2: 10, label: '(10,10)' }
       },
       {
         data: { id: 'ac', source: 'a', target: 'c', weight1: 8, weight2: 1, label: '(8,1)' }
