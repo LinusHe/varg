@@ -202,7 +202,7 @@
               label="Kosten / Stück"
               suffix="€"
               type="number"
-              v-model="edgetime"
+              v-model="edgecosts"
               outlined
               hide-details
             ></v-text-field>
@@ -213,7 +213,7 @@
               label="Zeit / Stück"
               suffix="Sek."
               type="number"
-              v-model="edgecosts"
+              v-model="edgetime"
               outlined
               hint="Einheit ist in den Einstellungen wählbar"
             ></v-text-field>
@@ -260,23 +260,10 @@ export default {
     },
     createEdge () {
       //alert('Hi')
-      let w1, w2, label
-      if (document.getElementById('edgecosts').value === ""){
-        // eslint-disable-next-line no-console
-        w1 = 0
-      }
-      else {
-        w1 = parseInt(document.getElementById('edgecosts').value)
-      }
-      if (document.getElementById('edgetime').value === ""){
-        // eslint-disable-next-line no-console
-        w2 = 0
-      }
-      else {
-        w1 = parseInt(document.getElementById('edgetime').value)
-      }
+      let w1 = this.edgecosts
+      let w2 = this.edgetime
 
-      label = "(" + w1 + "," + w2 + ")"
+      let label = "(" + w1 + "," + w2 + ")"
 
       graph.createEdge(document.getElementById('edgeCreateName').value, 
         this.startSelect,
