@@ -83,12 +83,26 @@
         </v-row>
         <!-- Create Buttons -->
         <v-row>
-          <v-col sm="6" align="right">
+          <v-spacer sm=4 />
+          <v-col sm="4" align="right">
             <v-btn color="success" flat outlined @click="nodeGui = false">Speichern</v-btn>
           </v-col>
-          <v-col sm="6">
-            <v-btn color="error" flat outlined @click="nodeGui = false">Abbrechen</v-btn>
+          <v-dialog v-model="deletedialog" persistent max-width="350">
+            <template v-slot:activator="{ on }">
+              <v-col sm="4" align="right">
+            <v-btn color="error" v-on="on" flat outlined>Löschen</v-btn>
           </v-col>
+            </template>
+            <v-card>
+              <v-card-title class="headline">Zustand löschen</v-card-title>
+              <v-card-text>Soll der Zustand <b>{{nodeName}}</b> endgültig gelöscht werden? Diese Aktion kann nicht rückgängig gemacht werden.</v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="error" text @click="deletedialog = false; nodeGui = false">Löschen</v-btn>
+                <v-btn color="grey" text @click="deletedialog = false">Abbrechen</v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
         </v-row>
       </v-card>
     </v-slide-x-reverse-transition>
@@ -173,12 +187,26 @@
         </v-row>
         <!-- Save Buttons -->
         <v-row>
-          <v-col sm="6" align="right">
+          <v-spacer sm=4 />
+          <v-col sm="4" align="right">
             <v-btn color="success" flat outlined @click="edgeGui = false">Speichern</v-btn>
           </v-col>
-          <v-col sm="6">
-            <v-btn color="error" flat outlined @click="edgeGui = false">Abbrechen</v-btn>
+          <v-dialog v-model="deletedialog" persistent max-width="350">
+            <template v-slot:activator="{ on }">
+              <v-col sm="4" align="right">
+            <v-btn color="error" v-on="on" flat outlined>Löschen</v-btn>
           </v-col>
+            </template>
+            <v-card>
+              <v-card-title class="headline">Verbindung löschen</v-card-title>
+              <v-card-text>Soll die Verbindung <b>{{edgeName}}</b> endgültig gelöscht werden? Diese Aktion kann nicht rückgängig gemacht werden.</v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="error" text @click="deletedialog = false; edgeGui = false">Löschen</v-btn>
+                <v-btn color="grey" text @click="deletedialog = false">Abbrechen</v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
         </v-row>
       </v-card>
     </v-slide-x-reverse-transition>
@@ -190,6 +218,7 @@ export default {
   name: "DetailControls",
   data() {
     return {
+      deletedialog: false,
       nodeGui: false,
       nodeName: "Stahlrohre",
       nodeShort: "ST",
