@@ -243,4 +243,32 @@ export function getNodes(){
   return nodesArray
 }
 
-export default {run, createNode, toString, createEdge, SaveMe, Load, findPath, getNodes}
+export function getZoom (){
+  return cy.zoom()
+}
+
+export function getMaxZoom (){
+  return cy.maxZoom()
+}
+
+export function getMinZoom (){
+  return cy.minZoom()
+}
+
+export function setZoom (ZoomLevel) {
+  cy.zoom(ZoomLevel)
+}
+
+export default {run,
+                createNode,
+                toString, 
+                createEdge, 
+                SaveMe, 
+                Load, 
+                findPath, 
+                getNodes,
+                getZoom,
+                setZoom,
+                getMaxZoom,
+                getMinZoom
+              }
