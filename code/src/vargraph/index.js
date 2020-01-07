@@ -86,7 +86,9 @@ export function run() {
   // Sets maximum and minimum of zoom levels. Difference between one and two
   // is rougly one mouse wheel scroll.
   cy.minZoom(0.5),
-  cy.maxZoom(2)
+  cy.maxZoom(2),
+  //  Sets up a new datafield called minZoom with the value 
+  cy.data('minZoom', 0.5)
 }
 
 // toString(): Collects all nodes of the graph and edges in arrays
@@ -153,13 +155,14 @@ export function createNode(name) {
 }
 
 
-// SaveMe(): Creates a constant object "content" which 
-//           saves all nodes and egdges in two arrays.
-//           This object is then returned. By calling this function
-//           the current state of the graph can be saved. The object "content"
-//           posses a unique toString method that ouputs all nodes and edges.
-//           Currently for testing purposes.
-
+/* SaveMe(): 
+  Creates a constant object "content" which 
+  saves all nodes and egdges in two arrays.
+  This object is then returned. By calling this function
+  the current state of the graph can be saved. The object "content"
+  posses a unique toString method that ouputs all nodes and edges.
+  Currently for testing purposes.
+*/ 
 
 export function SaveMe(){
   const content={
@@ -266,6 +269,17 @@ export function getNodePosSum(input){
   else return null
 }
 
+/*
+  NodeToPointVector(pointx, pointy, node):
+
+  Computes the distance of a node to a point by
+  generating a vector out of the given point and
+  the nodes position values and then computes it's 
+  length with the formula l = sqrt(a^2 + b^2) which
+  it then returns.
+
+*/
+
 export function NodeToPointVector(pointx, pointy, node){
   let one= node.position('x') - pointx
   let two= node.position('y') - pointy
@@ -289,8 +303,29 @@ export function MinZoom (){
   return cy.minZoom()
 }
 
+/**
+ * setMinZoom(ZoomLevel):
+ * 
+ * It takes the given ZoomLevel
+ * and checks wether or not is smaller then the 
+ * limit that is defined in cy.data. If it is greather
+ * than the limit, it will set the MinZoom as the ZoomLevel.
+ * It will be impossible for the user to ever zoom
+ * past the given limit, which, if implemented well, would
+ * make it so, that the zoom range makes it easy to see
+ * the graph at all times.
+ * 
+ * @param {*} ZoomLevel 
+*/
+
 export function setMinZoom(ZoomLevel){
-  cy.minZoom(ZoomLevel)
+  // eslint-disable-next-line no-console
+  console.log(ZoomLevel+' '+cy.data('minZoom'))
+  if (ZoomLevel < cy.data('minZoom')) {
+    // eslint-disable-next-line no-console
+    console.log('Max Zoomout reached.')
+  }
+  else cy.minZoom(ZoomLevel)
 }
 
 export function setZoom (ZoomLevel) {

@@ -16,6 +16,11 @@ export function setZoom (ZoomLevel){
     graph.setZoom(ZoomLevel)
 }
 
+export function setMinZoom(ZoomLevel){
+    graph.setMinZoom(ZoomLevel)
+}
+
+
 //ZoomOut():    
 
 export function ZoomOut() {
@@ -32,6 +37,7 @@ export function ZoomOut() {
        }
    }
    let ZoomLevel = 2 - (MaxVektor/400)
+   this.setMinZoom(ZoomLevel)
    this.setZoom({
        level : ZoomLevel,
        position : {x: posx, y: posy},
@@ -39,4 +45,4 @@ export function ZoomOut() {
    })
 }
 
-export default {getZoom, getMaxZoom, getMinZoom, setZoom, ZoomOut}
+export default {getZoom, getMaxZoom, getMinZoom, setZoom, ZoomOut, setMinZoom}
