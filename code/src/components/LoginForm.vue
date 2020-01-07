@@ -3,6 +3,7 @@
   <v-list-item-content>
     <v-list-item-title align="center" class="login-pre-headline mt-5">Variantengraph-Editor</v-list-item-title>
     <v-list-item-title align="center" class="login-headline mb-1">varg</v-list-item-title>
+    <v-alert v-show="error != null">{{ error }}</v-alert>
     <v-text-field
     v-model="input.email"
       class="mt-8"
@@ -11,6 +12,7 @@
       placeholder="beispiel@htwk-leipzig.de"
       outlined
       clearable
+      @focus="clearError()" 
     ></v-text-field>
     <v-text-field
       v-model="input.password"
@@ -18,11 +20,11 @@
       id="password"
       label="Passwort"
       placeholder="******"
-      
       outlined
+      @focus="clearError()" 
     ></v-text-field>
     <!--<router-link to="menu" tag="button">-->
-      <v-btn class="login-button" @click="login()" large color="primary">Login</v-btn>
+      <v-btn class="login-button" @click="login()" @keyup.enter="login()" large color="primary">Login</v-btn>
     <!--</router-link>-->
 
     <a align="center" class="font-italic mt-6" color="error">Passwort vergessen?</a>
@@ -57,8 +59,7 @@ export default {
         
         if(this.input.email != "" && this.input.password != "") {
           if(this.input.email == "VarG" && this.input.password == "2020") {
-            print
-            //this.$emit("authenticated", true);
+            this.$emit("authenticated", true);
             this.$router.replace("/home/menu");
           } else {
             this.error = 'Falscher Nutzername oder falsches Passwort'
@@ -75,18 +76,5 @@ export default {
         this.error = ''
       },
     }
-}
-
-
-
-;
+};
 </script>
-
-<!--"createNode"
-
-@click="login()"
-
-
-
-
-<button [routerLink]="( ? ['/menu'] : []"></button> -->
