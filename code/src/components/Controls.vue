@@ -1,100 +1,183 @@
 <template>
-  <div class="button-container">
+  <div class="controls">
+    <v-card class="button-card">
+      <v-row align="center">
+        <v-tooltip right>
+          <template v-slot:activator="{ on }">
+            <v-btn v-on="on" fab dark small depressed color="primary">
+              <v-icon dark>mdi-plus</v-icon>
+            </v-btn>
+          </template>
+          <span>Neuer Graph</span>
+        </v-tooltip>
+      </v-row>
 
-    <v-row align="center">
+      <v-row align="center">
+        <v-tooltip right>
+          <template v-slot:activator="{ on }">
+            <v-btn @click="datenbank()" v-on="on" fab dark small depressed color="primary">
+              <v-icon dark>mdi-database-export</v-icon>
+            </v-btn>
+          </template>
+          <span>Graph aus Datenbank laden</span>
+        </v-tooltip>
+      </v-row>
 
-      <v-card class="mx-auto mb-4"  width="344">
+      <v-row align="center">
+        <v-tooltip right>
+          <template v-slot:activator="{ on }">
+            <v-btn @click="SaveGraph" v-on="on" fab dark small depressed color="primary">
+              <v-icon dark>mdi-content-save</v-icon>
+            </v-btn>
+          </template>
+          <span>Speichern</span>
+        </v-tooltip>
+      </v-row>
 
-        <v-list-item three-line>
-          <v-list-item-content>
-            <v-list-item-title class="headline mb-1">Neue Datenstruktur</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
+      <v-row align="center">
+        <v-tooltip right>
+          <template v-slot:activator="{ on }">
+            <v-btn @click="LoadGraph" v-on="on" fab dark small depressed color="primary">
+              <v-icon dark>mdi-open-in-app</v-icon>
+            </v-btn>
+          </template>
+          <span>Graph laden</span>
+        </v-tooltip>
+      </v-row>
 
-        <v-card-actions>
-          <v-btn @click="neuerGraph" block outlined color="primary">Graph Hinzufügen</v-btn>
-        </v-card-actions>
+      <v-row align="center">
+        <v-tooltip right>
+          <template v-slot:activator="{ on }">
+            <v-btn v-on="on" fab dark small depressed color="primary">
+              <v-icon dark>mdi-image</v-icon>
+            </v-btn>
+          </template>
+          <span>Als Bild speichern</span>
+        </v-tooltip>
+      </v-row>
 
-      </v-card>
+      <v-row align="center">
+        <v-tooltip right>
+          <template v-slot:activator="{ on }">
+            <v-btn v-on="on" fab dark small depressed color="primary">
+              <v-icon dark>mdi-settings</v-icon>
+            </v-btn>
+          </template>
+          <span>Einstellungen</span>
+        </v-tooltip>
+      </v-row>
 
-    </v-row>
-
-    <v-row align="center">
-
-      <v-card class="mx-auto mb-4" max-width="344">
-
-        <v-list-item three-line>
-          <v-list-item-content>
-            <v-list-item-title class="headline mb-1">Neuer Knoten</v-list-item-title>
-            <v-text-field id="nodeName" label="Knotenname"></v-text-field>
-          </v-list-item-content>
-        </v-list-item>
-
-        <v-card-actions>
-          <v-btn @click="createNode" large block outlined color="primary">Knoten Hinzufügen</v-btn>
-        </v-card-actions>
-        
-      </v-card>
-
-    </v-row>
-
-    <v-row>
-
-      <v-card class="mx-auto" max-width="344">
-        
-        <v-list-item three-line>
-          <v-list-item-content>
-            <v-list-item-title id="demo" class="headline mb-1">Neue Kante</v-list-item-title>
-            <v-text-field label="Kantenname"></v-text-field>
-            <v-row>
-              <v-col sm="6">
-                <v-text-field label="Kosten"></v-text-field>
-              </v-col>
-              <v-col sm="6">
-                <v-text-field label="Dauer"></v-text-field>
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col sm="6">
-                <v-select :items="from" label="Anfangsknoten"></v-select>
-              </v-col>
-              <v-col sm="6">
-                <v-select :items="to" label="Endknoten"></v-select>
-              </v-col>
-            </v-row>
-          </v-list-item-content>
-        </v-list-item>
-
-        <v-card-actions>
-          <v-btn depressed large block outlined color="primary">Kante Hinzufügen</v-btn>
-        </v-card-actions>
-
-      </v-card>
-
-    </v-row>
-
+      <v-row align="center">
+        <v-tooltip right>
+          <template v-slot:activator="{ on }">
+            <v-btn @click="home" v-on="on" fab dark small depressed color="primary">
+              <v-icon dark>mdi-logout</v-icon>
+            </v-btn>
+          </template>
+          <span>Ausloggen</span>
+        </v-tooltip>
+      </v-row>
+    </v-card>
   </div>
 </template>
 
 <script>
-import graph from '../vargraph'
-import BasicData from '@/vargraph/BasicData.js'
+import graph from "@/vargraph/index.js";
+import BasicData from "@/vargraph/BasicData.js";
+import TestDatabase from "@/vargraph/TestDatabase.js";
 
 export default {
-  name: 'Controls',
-  methods: {   
+  name: "Controls",
+  created() {
+    this.vars = {
+      testDatabase: new TestDatabase()
+    };
+  },
+  methods: {
     createNode() {
-      graph.createNode(document.getElementById('nodeName').value)
-    },
-    neuerGraph: function(){
-      var Name=prompt('Name: ')
-      var Datum=new Date()
-      if (Name === ""){
-        alert('Fehlender Name')
+      // Checks if data was input by the user
+      if (document.getElementById("nodeName").value === "") {
+        // eslint-disable-next-line no-console
+        console.log("Missing nodeName");
+      } else {
+        graph.createNode(document.getElementById("nodeName").value),
+          this.items.push(document.getElementById("nodeName").value);
       }
-      else alert(Name + " " + Datum)
-      new BasicData(Name, Datum)
+    },
+    // SaveGraph(): creates an instance of BasicData if a valid input (any string input)
+    // was given by the user along with the current date (provided by the JS Date object).
+    // It also utilizes the toString method of graph to output all current nodes of the graph (for testing purposes).
+    // This method should also (in future development) do the following:
+    //  - Write new entries into the database
+    //  - Check entries within the database to avoid entries with the same name
+    //  - Update existing entries
+    SaveGraph: function() {
+      var name = prompt("Name:");
+      var date = new Date();
+      if (name != "" && name != null) {
+        let newGraph = graph.SaveMe();
+        let save = new BasicData(name, date, newGraph);
+        alert(
+          "graph name: " +
+            save.getName() +
+            "\nsave time: " +
+            save.getDate() +
+            "\nnodes: " +
+            save.getGraph().toString()
+        );
+        //save.getGraph().SaveMe();
+        this.vars.testDatabase.save(save);
+        this.vars.testDatabase.logContent();
+      } else if (name === "") {
+        alert("Fehlender Name");
+      }
+    },
+
+    createEdge() {
+      var w1 = parseInt(document.getElementById("weightOne").value);
+      var w2 = parseInt(document.getElementById("weightTwo").value);
+      var label = "(" + w1 + "," + w2 + ")";
+      graph.createEdge(
+        document.getElementById("edgeName").value,
+        this.edgeStart,
+        this.edgeEnd,
+        w1,
+        w2,
+        label
+      );
+    },
+
+    findPathForCosts() {
+      graph.findPath("optionCosts");
+    },
+    findPathForTime() {
+      graph.findPath("optionTime");
+    },
+
+    LoadGraph() {
+      let Input = prompt("GraphName: ");
+      // Checks if data was input by the user
+      if (Input === "") {
+        // eslint-disable-next-line no-console
+        console.log("Missing graphName");
+      } else {
+        let instance = this.vars.testDatabase.load(Input);
+        // eslint-disable-next-line no-console
+        console.log(instance.getGraph().toString());
+        graph.Load(instance.getGraph());
+      }
+    },
+    home() {
+      window.location.href = "/home/login";
+    },
+    datenbank() {
+      window.location.href = "/database";
     }
+  },
+  data: function() {
+    return {
+      items: ["a", "b", "c"]
+    };
   }
-}
+};
 </script>

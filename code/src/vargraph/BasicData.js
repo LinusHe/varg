@@ -1,10 +1,26 @@
 export default class BasicData {
-    constructor(name, datum)
-    {
-        this.name=name;
-        this.datum=datum;
-        if (this!=null){
-            alert('Success');
-        }
-    }
+  constructor(name, date, graph)
+  {
+    this.name=name;
+    this.date=date;
+    this.graph=graph;
+  }
+  getName() {
+    return this.name;
+  }
+  setName(newName) {
+    this.name = newName;
+  }
+  getDate() {
+    return this.date;
+  }
+  setDate(newDate) {
+    this.date = newDate;
+  }
+  getGraph() {
+    return this.graph;
+  }
+  setGraph(newGraph) {
+    this.graph = newGraph;
+  }
 }
