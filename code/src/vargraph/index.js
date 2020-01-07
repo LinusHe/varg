@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+/* eslint-disable no-console */
 import cytoscape from 'cytoscape'
 
 let cy;
@@ -22,10 +23,10 @@ export function run() {
         //! it's important to wright the weigth as a number and not as a string (for the algorithm)
         data: { id: 'ab', source: 'a', target: 'b', weight1: 10, weight2: 10, label: '(10,10)' }
       },
-      {
+      { // edge ac
         data: { id: 'ac', source: 'a', target: 'c', weight1: 8, weight2: 1, label: '(8,1)' }
       },
-      {
+      { // edge cb
         data: { id: 'cb', source: 'c', target: 'b', weight1: 9, weight2: 1, label: '(9,1)' }
       }
 
@@ -86,7 +87,20 @@ export function run() {
   // Sets maximum and minimum of zoom levels. Difference between one and two
   // is rougly one mouse wheel scroll.
   cy.minZoom(1),
-    cy.maxZoom(2)
+  cy.maxZoom(2)
+
+  // Left-Click Listeners:
+  cy.on('tap', function(event) {
+    var evtTarget = event.target;
+    if( evtTarget === cy ){
+      console.log('tap on background');
+    } else if(evtTarget.isNode()){
+      console.log('tapped Node: ' + evtTarget.id());
+    }
+    else {
+      console.log('tapped Edge: ' + evtTarget.id());
+    }
+  });
 }
 
 // toString(): Collects all nodes of the graph and edges in arrays
