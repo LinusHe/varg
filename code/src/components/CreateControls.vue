@@ -55,7 +55,6 @@
     <v-slide-x-reverse-transition>
       <v-card
         class="detail-card"
-        v-click-outside="nodeCreateGui"
         v-show="nodeCreateGui"
         transition="scroll-y-transition"
       >
@@ -128,10 +127,10 @@
         <!-- Create Buttons -->
         <v-row>
           <v-col sm="6" align="right">
-            <v-btn color="success" flat outlined @click="createNode()">Hinzufügen</v-btn>
+            <v-btn color="success" outlined @click="createNode()">Hinzufügen</v-btn>
           </v-col>
           <v-col sm="6">
-            <v-btn color="error" flat outlined @click="nodeCreateGui = false">Abbrechen</v-btn>
+            <v-btn color="error" outlined @click="nodeCreateGui = false">Abbrechen</v-btn>
           </v-col>
         </v-row>
       </v-card>
@@ -204,22 +203,22 @@
         <v-row>
           <v-col sm="6">
             <v-text-field
-              id="edgecosts"
+              id="edgeCreateCosts"
               label="Kosten / Stück"
               suffix="€"
               type="number"
-              v-model="edgecosts"
+              v-model="edgeCreateCosts"
               outlined
               hide-details
             ></v-text-field>
           </v-col>
           <v-col sm="6">
             <v-text-field
-              id="edgetime"
+              id="edgeCreateTime"
               label="Zeit / Stück"
               suffix="Sek."
               type="number"
-              v-model="edgetime"
+              v-model="edgeCreateTime"
               outlined
               hint="Einheit ist in den Einstellungen wählbar"
             ></v-text-field>
@@ -229,10 +228,10 @@
         <!-- Create Buttons -->
         <v-row>
           <v-col sm="6" align="right">
-            <v-btn color="success" flat outlined @click="createEdge()">Hinzufügen</v-btn>
+            <v-btn color="success" outlined @click="createEdge()">Hinzufügen</v-btn>
           </v-col>
           <v-col sm="6">
-            <v-btn color="error" flat outlined @click="edgeCreateGui = false">Abbrechen</v-btn>
+            <v-btn color="error" outlined @click="edgeCreateGui = false">Abbrechen</v-btn>
           </v-col>
         </v-row>
       </v-card>
@@ -255,9 +254,12 @@ export default {
       edgeCreateGui: false,
       edgeCreateName: "",
       edgeCreateShort: "",
+      edgeCreateCosts: "",
+      edgeCreateTime: "",
       items: ["Stahlrohre", "Gewahlzter Stahl"],
       startSelect: "",
-      endSelect: ""
+      endSelect: "",
+      fab: false,
     };
   },
   methods: {
@@ -266,8 +268,8 @@ export default {
     },
     createEdge() {
       //alert('Hi')
-      let w1 = parseInt(this.edgecosts)
-      let w2 = parseInt(this.edgetime)
+      let w1 = parseInt(this.edgeCreateCosts)
+      let w2 = parseInt(this.edgeCreateTime)
 
       let label = "(" + w1 + "," + w2 + ")";
 

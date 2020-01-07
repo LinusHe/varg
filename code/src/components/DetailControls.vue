@@ -21,7 +21,6 @@
     <v-slide-x-reverse-transition>
       <v-card
         class="detail-card"
-        v-click-outside="nodeGui"
         v-show="nodeGui"
         transition="scroll-y-transition"
       >
@@ -85,12 +84,12 @@
         <v-row>
           <v-spacer sm=4 />
           <v-col sm="4" align="right">
-            <v-btn color="success" flat outlined @click="nodeGui = false">Speichern</v-btn>
+            <v-btn color="success" outlined @click="nodeGui = false">Speichern</v-btn>
           </v-col>
           <v-dialog v-model="deletedialog" persistent max-width="350">
             <template v-slot:activator="{ on }">
               <v-col sm="4" align="right">
-            <v-btn color="error" v-on="on" flat outlined>Löschen</v-btn>
+            <v-btn color="error" v-on="on" outlined>Löschen</v-btn>
           </v-col>
             </template>
             <v-card>
@@ -164,10 +163,10 @@
         <v-row>
           <v-col sm="6">
             <v-text-field
-              id="edgetime"
+              id="edgeTime"
               label="Kosten / Stück"
               suffix="€"
-              v-model="edgetime"
+              v-model="edgeTime"
               type="number"
               outlined
               hide-details
@@ -175,11 +174,11 @@
           </v-col>
           <v-col sm="6">
             <v-text-field
-              id="edgecosts"
+              id="edgeCosts"
               label="Zeit / Stück"
               suffix="Sek."
               type="number"
-              v-model="edgecosts"
+              v-model="edgeCosts"
               outlined
               hint="Einheit ist in den Einstellungen wählbar"
             ></v-text-field>
@@ -189,12 +188,12 @@
         <v-row>
           <v-spacer sm=4 />
           <v-col sm="4" align="right">
-            <v-btn color="success" flat outlined @click="edgeGui = false">Speichern</v-btn>
+            <v-btn color="success" outlined @click="edgeGui = false">Speichern</v-btn>
           </v-col>
           <v-dialog v-model="deletedialog" persistent max-width="350">
             <template v-slot:activator="{ on }">
               <v-col sm="4" align="right">
-            <v-btn color="error" v-on="on" flat outlined>Löschen</v-btn>
+            <v-btn color="error" v-on="on" outlined>Löschen</v-btn>
           </v-col>
             </template>
             <v-card>
@@ -227,6 +226,8 @@ export default {
       edgeGui: false,
       edgeName: "Maschinelles Walzen",
       edgeShort: "MWA",
+      edgeTime: "10",
+      edgeCosts: "10",
       items: ["Stahlrohre", "Gewahlzter Stahl"],
       startSelect: "Stahlrohre",
       endSelect: "Gewahlzter Stahl"

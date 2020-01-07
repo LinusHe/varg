@@ -49,6 +49,8 @@ export default {
       option: "optionTime",
       items: [],
       dialog: false,
+      startSelect: "",
+      endSelect: "",
     };
   },
   methods: {
