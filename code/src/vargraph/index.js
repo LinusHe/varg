@@ -11,23 +11,23 @@ export function run() {
 
     elements: [ // list of graph elements to start with
       { // node a
-        data: { id: 1, name: 'a' }
+        data: { id: -3, name: 'a' }
       },
       { // node b
-        data: { id: 2, name: 'b' }
+        data: { id: -2, name: 'b' }
       },
       { // node b
-        data: { id: 3, name: 'c' }
+        data: { id: -1, name: 'c' }
       },
       { // edge ab 
         //! it's important to wright the weigth as a number and not as a string (for the algorithm)
-        data: { id: 4, name: 'ab', source: 1, target: 2, weight1: 10, weight2: 10, label: '(10,10)' }
+        data: { id: 4, name: 'ab', source: -3, target: -2, weight1: 10, weight2: 10, label: '(10,10)' }
       },
       { // edge ac
-        data: { id: 5, name: 'ac', source: 1, target: 3, weight1: 8, weight2: 1, label: '(8,1)' }
+        data: { id: 5, name: 'ac', source: -3, target: -1, weight1: 8, weight2: 1, label: '(8,1)' }
       },
       { // edge cb
-        data: { id: 6, name: 'cb', source: 3, target: 2, weight1: 9, weight2: 1, label: '(9,1)' }
+        data: { id: 6, name: 'cb', source: -1, target: -2, weight1: 9, weight2: 1, label: '(9,1)' }
       }
 
     ],
