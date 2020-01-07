@@ -1,14 +1,14 @@
 <template>
   <div class="detail-controls">
     <!-- ONLY FOR TESTING! @TODO -->
-    <v-card style="position: absolute; top: -100px; right: 50px" max-width="400">
+    <!-- <v-card style="position: absolute; top: -100px; right: 50px" max-width="400">
       <v-card-title>Test!</v-card-title>
       <v-card-text>
         <p>Später soll die GUI beim Klick auf die Knoten / Kanten im Graphen erscheinen. Zum testen gibts die Buttons hier:</p>
         <v-btn @click="nodeGui = true; edgeGui = false">klick auf knoten</v-btn>
         <v-btn @click="nodeGui = false; edgeGui = true">klick auf kante</v-btn>
       </v-card-text>
-    </v-card>
+    </v-card>-->
 
     <!-- Re-Activate Button -->
     <!-- <v-card class="activate-button" v-show="reopen">
@@ -19,11 +19,7 @@
 
     <!-- Detail-Zustand Controls -->
     <v-slide-x-reverse-transition>
-      <v-card
-        class="detail-card"
-        v-show="nodeGui"
-        transition="scroll-y-transition"
-      >
+      <v-card class="detail-card" v-show="nodeGui" transition="scroll-y-transition">
         <v-btn class="btn-close ma-2" @click="nodeGui= false" text icon color="primary">
           <v-icon>mdi-close</v-icon>
         </v-btn>
@@ -82,19 +78,22 @@
         </v-row>
         <!-- Create Buttons -->
         <v-row>
-          <v-spacer sm=4 />
+          <v-spacer sm="4" />
           <v-col sm="4" align="right">
-            <v-btn color="success" outlined @click="nodeGui = false">Speichern</v-btn>
+            <v-btn color="success" outlined @click="saveNode">Speichern</v-btn>
           </v-col>
           <v-dialog v-model="deletedialog" persistent max-width="350">
             <template v-slot:activator="{ on }">
               <v-col sm="4" align="right">
-            <v-btn color="error" v-on="on" outlined>Löschen</v-btn>
-          </v-col>
+                <v-btn color="error" v-on="on" outlined>Löschen</v-btn>
+              </v-col>
             </template>
             <v-card>
               <v-card-title class="headline">Zustand löschen</v-card-title>
-              <v-card-text>Soll der Zustand <b>{{nodeName}}</b> endgültig gelöscht werden? Diese Aktion kann nicht rückgängig gemacht werden.</v-card-text>
+              <v-card-text>
+                Soll der Zustand
+                <b>{{nodeName}}</b> endgültig gelöscht werden? Diese Aktion kann nicht rückgängig gemacht werden.
+              </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="error" text @click="deletedialog = false; nodeGui = false">Löschen</v-btn>
@@ -186,19 +185,22 @@
         </v-row>
         <!-- Save Buttons -->
         <v-row>
-          <v-spacer sm=4 />
+          <v-spacer sm="4" />
           <v-col sm="4" align="right">
             <v-btn color="success" outlined @click="edgeGui = false">Speichern</v-btn>
           </v-col>
           <v-dialog v-model="deletedialog" persistent max-width="350">
             <template v-slot:activator="{ on }">
               <v-col sm="4" align="right">
-            <v-btn color="error" v-on="on" outlined>Löschen</v-btn>
-          </v-col>
+                <v-btn color="error" v-on="on" outlined>Löschen</v-btn>
+              </v-col>
             </template>
             <v-card>
               <v-card-title class="headline">Verbindung löschen</v-card-title>
-              <v-card-text>Soll die Verbindung <b>{{edgeName}}</b> endgültig gelöscht werden? Diese Aktion kann nicht rückgängig gemacht werden.</v-card-text>
+              <v-card-text>
+                Soll die Verbindung
+                <b>{{edgeName}}</b> endgültig gelöscht werden? Diese Aktion kann nicht rückgängig gemacht werden.
+              </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="error" text @click="deletedialog = false; edgeGui = false">Löschen</v-btn>
@@ -213,25 +215,75 @@
 </template>
 
 <script>
+import graph from "@/vargraph/index.js";
 export default {
   name: "DetailControls",
   data() {
     return {
       deletedialog: false,
       nodeGui: false,
-      nodeName: "Stahlrohre",
-      nodeShort: "ST",
-      nodeImgpath: "uploads/funztNochNicht.png",
-      nodeColor: "blue",
+      oldId: "",
+      nodeName: "",
+      nodeShort: "",
+      nodeImgpath: "",
+      nodeColor: "",
       edgeGui: false,
-      edgeName: "Maschinelles Walzen",
-      edgeShort: "MWA",
-      edgeTime: "10",
-      edgeCosts: "10",
-      items: ["Stahlrohre", "Gewahlzter Stahl"],
-      startSelect: "Stahlrohre",
-      endSelect: "Gewahlzter Stahl"
+      edgeName: "",
+      edgeShort: "",
+      edgeTime: "",
+      edgeCosts: "",
+      items: [],
+      startSelect: "",
+      endSelect: ""
     };
+  },
+  methods: {
+    loadNodeDetails(node) {
+      this.nodeName = node.id();
+      this.oldId = node.id();
+      this.nodeShort = node.data('short');
+      this.nodeImgpath = node.data('imgUrl');
+      this.nodeColor = node.data('color');
+      this.edgeGui = false;
+      this.nodeGui = true;
+    },
+    loadEdgeDetails(edge) {
+      this.edgeName = edge.id();
+      this.oldId = edge.id();
+      this.edgeShort = edge.data('short');
+      this.edgeCosts = edge.data('weight1');
+      this.edgeTime = edge.data('weight2');
+      this.startSelect = edge.data('source');
+      this.endSelect = edge.data('target');
+      this.nodeGui = false;
+      this.edgeGui = true;
+    },
+    saveNode(){
+      graph.updateNode(
+        this.oldId,
+        this.nodeName,
+        this.nodeShort,
+        this.nodeImgpath,
+        this.nodeColor
+      )
+    },
+    saveEdge(){
+      graph.updateEdge(
+        this.oldId,
+        this.edgeName,
+        this.edgeShort,
+        this.edgeCosts,
+        this.edgeTime,
+        this.startSelect,
+        this.endSelect,
+      )
+    }
+  },
+  mounted: function() {
+    this.items = graph.getNodes();
+    // Left-Click Listeners:
+    graph.getCytoGraph().on('tap', 'node', n => this.loadNodeDetails(n.target));
+    graph.getCytoGraph().on('tap', 'edge', e => this.loadEdgeDetails(e.target));
   }
 };
 </script>

@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 import cytoscape from 'cytoscape'
+import { detailControls } from '../components/DetailControls';
 
 let cy;
 
@@ -86,21 +87,8 @@ export function run() {
   })
   // Sets maximum and minimum of zoom levels. Difference between one and two
   // is rougly one mouse wheel scroll.
-  cy.minZoom(1),
-    cy.maxZoom(2)
-
-  // Left-Click Listeners:
-  cy.on('tap', function (event) {
-    var evtTarget = event.target;
-    if (evtTarget === cy) {
-      console.log('tap on background');
-    } else if (evtTarget.isNode()) {
-      console.log('tapped Node: ' + evtTarget.id() + ' short: ' + evtTarget.data('short'));
-    }
-    else {
-      console.log('tapped Edge: ' + evtTarget.id() + ' short: ' + evtTarget.data('short'));
-    }
-  });
+  cy.minZoom(1);
+  cy.maxZoom(2);
 }
 
 // toString(): Collects all nodes of the graph and edges in arrays
@@ -135,12 +123,12 @@ export function createNode(newName, newShort, newImgurl, newColor) {
 export function createEdge(name, edgeshort, start, end, cost, time, edgeLabel) {
   cy.add({
     data: {
-      id: name, 
+      id: name,
       short: edgeshort,
-      source: start, 
-      target: end, 
-      weight1: cost, 
-      weight2: time, 
+      source: start,
+      target: end,
+      weight1: cost,
+      weight2: time,
       label: edgeLabel
     },
   });
@@ -271,4 +259,16 @@ export function getNodes() {
   return nodesArray
 }
 
-export default { run, createNode, toString, createEdge, SaveMe, Load, findPath, getNodes }
+export function updateNode(id, newId, newShort, newImgurl, newColor) {
+  let node = cy.getElementById(id);
+  node.data('id', newId);
+  node.data('short', newShort);
+  node.data('imgurl', newImgurl);
+  node.data('color', newColor);
+}
+
+export function getCytoGraph() {
+  return cy;
+}
+
+export default { run, createNode, toString, createEdge, SaveMe, Load, findPath, getNodes, getCytoGraph, updateNode }
