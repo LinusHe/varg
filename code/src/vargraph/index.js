@@ -25,7 +25,7 @@ export function run() {
       {
         data: { id: 'ac', source: 'a', target: 'c', weight1: 8, weight2: 1, label: '(8,1)' }
       },
-      { 
+      {
         data: { id: 'cb', source: 'c', target: 'b', weight1: 9, weight2: 1, label: '(9,1)' }
       }
 
@@ -39,7 +39,7 @@ export function run() {
           'label': 'data(id)',
         }
       },
-  
+
       {
         selector: 'edge',
         style: {
@@ -54,30 +54,30 @@ export function run() {
       },
       {
         selector: ':selected',
-        style:{
-        'background-color': 'black',
-        'line-color': 'black',
-        'target-arrow-color': 'black',
-        'source-arrow-color': 'black',
-        'text-outline-color': 'black'
+        style: {
+          'background-color': 'black',
+          'line-color': 'black',
+          'target-arrow-color': 'black',
+          'source-arrow-color': 'black',
+          'text-outline-color': 'black'
 
         }
 
       },
       {
         selector: ':selected',
-        style:{
-        'background-color': 'black',
-        'line-color': 'black',
-        'target-arrow-color': 'black',
-        'source-arrow-color': 'black',
-        'text-outline-color': 'black'
+        style: {
+          'background-color': 'black',
+          'line-color': 'black',
+          'target-arrow-color': 'black',
+          'source-arrow-color': 'black',
+          'text-outline-color': 'black'
 
         }
       }
 
     ],
-  
+
     layout: {
       name: 'grid',
       rows: 1
@@ -86,14 +86,14 @@ export function run() {
   // Sets maximum and minimum of zoom levels. Difference between one and two
   // is rougly one mouse wheel scroll.
   cy.minZoom(1),
-  cy.maxZoom(2)
+    cy.maxZoom(2)
 }
 
 // toString(): Collects all nodes of the graph and edges in arrays
 //             and then outputs their ID in a string.
 //             Currently for testing purposes.
 
-export function toString(){
+export function toString() {
   let output = ''
   let nodeArr = this.nodes
   let edgeArr = this.edges
@@ -106,49 +106,52 @@ export function toString(){
   return output
 }
 
-export function createNode(name) {
+export function createNode(name, short, imgurl, color) {
   cy.add({
-      data: { id: name },
-      position: {x: 500, y: 300}
-    });
+    data: { id: name },
+    position: { x: 500, y: 300 }
+  });
+  cy.data(short, short)
+  cy.data(imgurl, imgurl)
+  cy.data(color, color)
 }
 
 /*The method finds the shortest Path between 2 nodes(for now between a and b) with the 
   Dijkstra Algorithm
 
 
-  */ 
+  */
 
 
 /*The method finds the shortest Path between 2 nodes(for now between a and b) with the 
   Dijkstra Algorithm
-  */ 
- export function findPath(option, start, end){
+  */
+export function findPath(option, start, end) {
 
   var startNode = "#" + start
   var endNode = "#" + end
- 
- 
+
+
   cy.$(':selected').unselect()
 
-  if(option ==="optionCosts"){
-    var dijkstraCosts = cy.elements().dijkstra(startNode, function(edge){
+  if (option === "optionCosts") {
+    var dijkstraCosts = cy.elements().dijkstra(startNode, function (edge) {
       return edge.data('weight1');
-      });
+    });
 
-  //saves the shortes path to a specific node
-  var pathToBCosts = dijkstraCosts.pathTo( cy.$(endNode) );
+    //saves the shortes path to a specific node
+    var pathToBCosts = dijkstraCosts.pathTo(cy.$(endNode));
 
-  pathToBCosts.select()
+    pathToBCosts.select()
   }
 
-  if(option ==="optionTime"){
-    var dijkstraTime = cy.elements().dijkstra(startNode, function(edge){
-    return edge.data('weight2');
-  });
-  
-  var pathToBTime = dijkstraTime.pathTo( cy.$(endNode) );
-  pathToBTime.select()
+  if (option === "optionTime") {
+    var dijkstraTime = cy.elements().dijkstra(startNode, function (edge) {
+      return edge.data('weight2');
+    });
+
+    var pathToBTime = dijkstraTime.pathTo(cy.$(endNode));
+    pathToBTime.select()
   }
 }
 
@@ -161,24 +164,24 @@ export function createNode(name) {
 //           Currently for testing purposes.
 
 
-export function SaveMe(){
-  const content={
+export function SaveMe() {
+  const content = {
     nodes: cy.elements("node"),
     edges: cy.elements("edge"),
 
     toString() {
-      let Output ='nodes: '
-        for (let i=0; i<this.nodes.length;i++){
-          Output += this.nodes[i].data('id') + ' '
-        }
-        Output += ', edges: '
-        for (let i=0; i<this.edges.length;i++){
-          Output += this.edges[i].data('id') + ' '
-        }
+      let Output = 'nodes: '
+      for (let i = 0; i < this.nodes.length; i++) {
+        Output += this.nodes[i].data('id') + ' '
+      }
+      Output += ', edges: '
+      for (let i = 0; i < this.edges.length; i++) {
+        Output += this.edges[i].data('id') + ' '
+      }
       return Output
     }
   }
-  
+
   return content;
 }
 
@@ -192,37 +195,38 @@ export function SaveMe(){
 //               (nodes first, edges second) and defining every data value by referencing the graph that is written
 //               in the database.
 
-export function Load(graph){
+export function Load(graph) {
 
   cy.elements('node').remove()
   cy.elements('edge').remove()
 
-  for (let i=0; i<graph.nodes.length;i++){
-    let node=graph.nodes[i]
+  for (let i = 0; i < graph.nodes.length; i++) {
+    let node = graph.nodes[i]
     cy.add({
-      data: {id: node.data('id')},
-      position: {x: node.position('x'),y: node.position('y')}
+      data: { id: node.data('id') },
+      position: { x: node.position('x'), y: node.position('y') }
     });
   }
 
-  for (let i=0; i<graph.edges.length;i++){
-    let edge=graph.edges[i]
+  for (let i = 0; i < graph.edges.length; i++) {
+    let edge = graph.edges[i]
     cy.add({
-      data: {id: edge.data('id'), 
-      source: edge.data('source'), 
-      target: edge.data('target'), 
-      weight1: edge.data('weigth1'),
-      weight2: edge.data('weight2'),
-      label: edge.data('label')
-    },
+      data: {
+        id: edge.data('id'),
+        source: edge.data('source'),
+        target: edge.data('target'),
+        weight1: edge.data('weigth1'),
+        weight2: edge.data('weight2'),
+        label: edge.data('label')
+      },
     });
   }
 }
 
 export function createEdge(name, start, end, cost, time, edgeLabel) {
   cy.add({
-    data: {id: name, source: start, target: end, weight1: cost, weight2: time, label: edgeLabel},
-    });
+    data: { id: name, source: start, target: end, weight1: cost, weight2: time, label: edgeLabel },
+  });
 }
 
 /*  Method for getting all nodes in the graph
@@ -232,15 +236,15 @@ export function createEdge(name, start, end, cost, time, edgeLabel) {
 
   */
 
-export function getNodes(){
-  
+export function getNodes() {
+
   var nodes = cy.nodes()
-  var nodesArray =[]
-  for(let i = 0; i< nodes.length; i++){
+  var nodesArray = []
+  for (let i = 0; i < nodes.length; i++) {
     nodesArray.push(nodes[i].data("id"))
   }
-  
+
   return nodesArray
 }
 
-export default {run, createNode, toString, createEdge, SaveMe, Load, findPath, getNodes}
+export default { run, createNode, toString, createEdge, SaveMe, Load, findPath, getNodes }
