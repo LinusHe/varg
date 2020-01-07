@@ -319,12 +319,8 @@ export function MinZoom (){
 */
 
 export function setMinZoom(ZoomLevel){
-  // eslint-disable-next-line no-console
-  console.log(ZoomLevel+' '+cy.data('minZoom'))
-  if (ZoomLevel < cy.data('minZoom')) {
-    // eslint-disable-next-line no-console
-    console.log('Max Zoomout reached.')
-  }
+  // eslint-disable-next-line no-empty
+  if (ZoomLevel < cy.data('minZoom')) {}
   else cy.minZoom(ZoomLevel)
 }
 
