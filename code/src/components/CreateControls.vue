@@ -290,8 +290,8 @@ export default {
         // eslint-disable-next-line no-console
         console.log("Missing nodeName");
       } else {
-        graph.createNode(document.getElementById("nodeCreateName").value),
-          this.items.push(document.getElementById("nodeCreateName").value);
+        graph.createNode(this.nodeCreateName, this.nodeCreateShort, this.nodeCreateImgPath, this.nodeCreateColor ),
+          this.items.push(this.nodeCreateName);
       }
       this.nodeCreateGui = false;
     }
