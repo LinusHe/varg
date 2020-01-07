@@ -16,7 +16,7 @@
     ></v-text-field>
     <v-text-field
       v-model="input.password"
-      :type="show1 ? 'text' : 'password'"
+      :type="'password'"
       id="password"
       label="Passwort"
       placeholder="******"
