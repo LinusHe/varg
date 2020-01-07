@@ -90,7 +90,7 @@ export function run() {
   cy.maxZoom(2),
   //  Sets up a new datafield called minZoom with the value 
   cy.data('minZoom', 0.5)
-  cy.data('NodeCount',0)
+  cy.data('IDCount',0)
 
   // Left-Click Listeners:
   cy.on('tap', function (event) {
@@ -124,7 +124,7 @@ export function toString() {
 }
 
 export function createNode( newName, newShort, newImgurl, newColor) {
-  let count = cy.data('NodeCount')
+  let count = cy.data('IDCount')
   cy.add({
     data: {
       id: parseInt(count),
@@ -136,13 +136,15 @@ export function createNode( newName, newShort, newImgurl, newColor) {
     position: { x: 500, y: 300 }
   });
   count++
-  cy.data('NodeCount',count++)
+  cy.data('IDCount',count++)
 }
 
-export function createEdge(name, edgeshort, start, end, cost, time, edgeLabel) {
+export function createEdge(newName, edgeshort, start, end, cost, time, edgeLabel) {
+  let count = cy.data('IDCount')
   cy.add({
     data: {
-      id: name, 
+      id: parseInt(count),
+      name: newName,
       short: edgeshort,
       source: start, 
       target: end, 
@@ -151,6 +153,8 @@ export function createEdge(name, edgeshort, start, end, cost, time, edgeLabel) {
       label: edgeLabel
     },
   });
+  count++
+  cy.data('IDCount',count++)
 }
 
 /*The method finds the shortest Path between 2 nodes(for now between a and b) with the 
@@ -241,7 +245,7 @@ export function Load(graph) {
   for (let i = 0; i < graph.nodes.length; i++) {
     let node = graph.nodes[i]
     cy.add({
-      data: { id: node.data('id') },
+      data: { id: node.data('id'), name: node.data('name') },
       position: { x: node.position('x'), y: node.position('y') }
     });
   }
@@ -251,6 +255,7 @@ export function Load(graph) {
     cy.add({
       data: {
         id: edge.data('id'),
+        name: edge.data('name'),
         source: edge.data('source'),
         target: edge.data('target'),
         weight1: edge.data('weigth1'),
@@ -274,6 +279,17 @@ export function getNodeName() {
   var nodesArray = []
   for (let i = 0; i < nodes.length; i++) {
     nodesArray.push(nodes[i].data("name"))
+  }
+
+  return nodesArray
+}
+
+export function getNodeID() {
+
+  var nodes = cy.nodes()
+  var nodesArray = []
+  for (let i = 0; i < nodes.length; i++) {
+    nodesArray.push(nodes[i].data("id"))
   }
 
   return nodesArray
@@ -369,7 +385,8 @@ export default {
   SaveMe, 
   Load, 
   findPath, 
-  getNodes : getNodeName,
+  getNodeName,
+  getNodeID,
   getNodeArr,
   getNodePosSum,
   NodeToPointVector,

@@ -175,7 +175,7 @@
         <v-row>
           <v-col sm="12">
             <v-select
-              @focus="getNodes()"
+              @focus="getNodeID()"
               v-model="startSelect"
               id="Startzustand"
               :items="items"
@@ -188,7 +188,7 @@
         <v-row>
           <v-col sm="12">
             <v-select
-              @focus="getNodes()"
+              @focus="getNodeID()"
               v-model="endSelect"
               id="Endzustand"
               :items="items"
@@ -263,11 +263,10 @@ export default {
     };
   },
   methods: {
-    getNodes() {
-      this.items = graph.getNodes();
+    getNodeID() {
+      this.items = graph.getNodeID();
     },
     createEdge() {
-      //alert('Hi')
       let w1 = parseInt(this.edgeCreateCosts)
       let w2 = parseInt(this.edgeCreateTime)
 

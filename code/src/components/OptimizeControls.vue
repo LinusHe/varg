@@ -55,7 +55,7 @@ export default {
   },
   methods: {
     getNode(){
-      this.items = graph.getNodes()
+      this.items = graph.getNodeID()
     },
     changeOption: function() {
       if (this.option === "optionTime") {
