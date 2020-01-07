@@ -271,4 +271,4 @@ export function getCytoGraph() {
   return cy;
 }
 
-export default { run, createNode, toString, createEdge, SaveMe, Load, findPath, getNodes, getCytoGraph, updateNode }
+export default { run, createNode, toString, createEdge, SaveMe, Load, findPath, getNodeName, getCytoGraph, updateNode }
