@@ -256,7 +256,7 @@ export default {
       edgeCreateShort: "",
       edgeCreateCosts: "",
       edgeCreateTime: "",
-      items: ["Stahlrohre", "Gewahlzter Stahl"],
+      items: [""],
       startSelect: "",
       endSelect: "",
       fab: false,
@@ -274,13 +274,15 @@ export default {
       let label = "(" + w1 + "," + w2 + ")";
 
       graph.createEdge(
-        document.getElementById("edgeCreateName").value,
+        this.edgeCreateName,
+        this.edgeCreateShort,
         this.startSelect,
         this.endSelect,
         w1,
         w2,
         label
       );
+      this.clearFields();
       this.edgeCreateGui = false;
     },
     createNode() {
@@ -293,7 +295,20 @@ export default {
         graph.createNode(this.nodeCreateName, this.nodeCreateShort, this.nodeCreateImgPath, this.nodeCreateColor ),
           this.items.push(this.nodeCreateName);
       }
+      this.clearFields();
       this.nodeCreateGui = false;
+    },
+    clearFields(){
+      this.nodeCreateName = "";
+      this.nodeCreateShort = "";
+      this.nodeCreateImgPath = "";
+      this.nodeCreateColor = "";
+      this.edgeCreateName = "";
+      this.edgeCreateShort = "";
+      this.edgeCreateCosts = "";
+      this.edgeCreateTime = "";
+      this.startSelect = "";
+      this.endSelect = "";
     }
   }
 };
