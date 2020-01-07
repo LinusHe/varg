@@ -87,15 +87,15 @@ export function run() {
   // Sets maximum and minimum of zoom levels. Difference between one and two
   // is rougly one mouse wheel scroll.
   cy.minZoom(1),
-  cy.maxZoom(2)
+    cy.maxZoom(2)
 
   // Left-Click Listeners:
-  cy.on('tap', function(event) {
+  cy.on('tap', function (event) {
     var evtTarget = event.target;
-    if( evtTarget === cy ){
+    if (evtTarget === cy) {
       console.log('tap on background');
-    } else if(evtTarget.isNode()){
-      console.log('tapped Node: ' + evtTarget.id());
+    } else if (evtTarget.isNode()) {
+      console.log('tapped Node: ' + evtTarget.id() + ' short: ' + evtTarget.data('short'));
     }
     else {
       console.log('tapped Edge: ' + evtTarget.id());
@@ -120,14 +120,16 @@ export function toString() {
   return output
 }
 
-export function createNode(name, short, imgurl, color) {
+export function createNode(newName, newShort, newImgurl, newColor) {
   cy.add({
-    data: { id: name },
+    data: {
+      id: newName,
+      short: newShort,
+      imgUrl: newImgurl,
+      color: newColor
+    },
     position: { x: 500, y: 300 }
   });
-  cy.data(short, short)
-  cy.data(imgurl, imgurl)
-  cy.data(color, color)
 }
 
 /*The method finds the shortest Path between 2 nodes(for now between a and b) with the 
