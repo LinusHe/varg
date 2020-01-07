@@ -85,7 +85,7 @@ export function run() {
   })
   // Sets maximum and minimum of zoom levels. Difference between one and two
   // is rougly one mouse wheel scroll.
-  cy.minZoom(1),
+  cy.minZoom(0.5),
   cy.maxZoom(2)
 }
 
