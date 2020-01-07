@@ -98,7 +98,7 @@ export function run() {
       console.log('tapped Node: ' + evtTarget.id() + ' short: ' + evtTarget.data('short'));
     }
     else {
-      console.log('tapped Edge: ' + evtTarget.id());
+      console.log('tapped Edge: ' + evtTarget.id() + ' short: ' + evtTarget.data('short'));
     }
   });
 }
@@ -129,6 +129,20 @@ export function createNode(newName, newShort, newImgurl, newColor) {
       color: newColor
     },
     position: { x: 500, y: 300 }
+  });
+}
+
+export function createEdge(name, edgeshort, start, end, cost, time, edgeLabel) {
+  cy.add({
+    data: {
+      id: name, 
+      short: edgeshort,
+      source: start, 
+      target: end, 
+      weight1: cost, 
+      weight2: time, 
+      label: edgeLabel
+    },
   });
 }
 
@@ -237,12 +251,6 @@ export function Load(graph) {
       },
     });
   }
-}
-
-export function createEdge(name, start, end, cost, time, edgeLabel) {
-  cy.add({
-    data: { id: name, source: start, target: end, weight1: cost, weight2: time, label: edgeLabel },
-  });
 }
 
 /*  Method for getting all nodes in the graph
