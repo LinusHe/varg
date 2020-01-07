@@ -228,7 +228,7 @@ export function createEdge(name, start, end, cost, time, edgeLabel) {
 /*  Method for getting all nodes in the graph
 
 
-  @return: Array of nodes
+  @return: Array of the ids of the nodes
 
   */
 
@@ -243,32 +243,76 @@ export function getNodes(){
   return nodesArray
 }
 
+export function getNodeArr(){
+  return cy.nodes()
+}
+
+export function getNodePosSum(input){
+  let nodeArr = cy.nodes()
+  if (input === 'x'){
+    let posx = 0;
+    for (let i=0; i< nodeArr.length; i++){
+      posx += nodeArr[i].position('x')
+    }
+    return posx
+  }
+  else if (input === 'y'){
+    let posy = 0;
+    for (let i=0; i< nodeArr.length; i++){
+      posy += nodeArr[i].position('y')
+    }
+    return posy
+  }
+  else return null
+}
+
+export function NodeToPointVector(pointx, pointy, node){
+  let one= node.position('x') - pointx
+  let two= node.position('y') - pointy
+  let sum= Math.pow(one,2) + Math.pow(two,2)
+  return Math.sqrt(sum)
+}
+
 export function getZoom (){
   return cy.zoom()
 }
 
-export function getMaxZoom (){
+export function MaxZoom (){
   return cy.maxZoom()
 }
 
-export function getMinZoom (){
+export function setMaxZoom(ZoomLevel){
+  cy.maxZoom(ZoomLevel)
+}
+
+export function MinZoom (){
   return cy.minZoom()
+}
+
+export function setMinZoom(ZoomLevel){
+  cy.minZoom(ZoomLevel)
 }
 
 export function setZoom (ZoomLevel) {
   cy.zoom(ZoomLevel)
 }
 
-export default {run,
-                createNode,
-                toString, 
-                createEdge, 
-                SaveMe, 
-                Load, 
-                findPath, 
-                getNodes,
-                getZoom,
-                setZoom,
-                getMaxZoom,
-                getMinZoom
-              }
+export default {
+  run,
+  createNode,
+  toString, 
+  createEdge, 
+  SaveMe, 
+  Load, 
+  findPath, 
+  getNodes,
+  getNodeArr,
+  getNodePosSum,
+  NodeToPointVector,
+  getZoom,
+  setZoom,
+  MaxZoom,
+  setMaxZoom,
+  MinZoom,
+  setMinZoom
+}

@@ -283,7 +283,7 @@ export default {
     },
     createNode() {
       // Checks if data was input by the user
-      alert("Hi");
+      //alert("Hi");
       if (document.getElementById("nodeCreateName").value === "") {
         // eslint-disable-next-line no-console
         console.log("Missing nodeName");

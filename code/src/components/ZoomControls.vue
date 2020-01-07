@@ -1,6 +1,6 @@
 <template>
   <div class="zoom-controls">
-    <v-btn class="ma-2" text icon color="grey">
+    <v-btn class="ma-2" @click="ZoomOut" text icon color="grey">
       <v-icon>mdi-arrow-expand-all</v-icon>
     </v-btn>
     <v-btn class="ma-2" @click="ZoomPlus" text icon color="grey">
@@ -13,34 +13,38 @@
 </template>
 
 <script>
-import graph from "@/vargraph/index.js";
+import Zoom from "@/vargraph/Zoom.js";
 
 export default {
   name: "ZoomControls",
   methods: {
 
       ZoomPlus() {
-        if (graph.getMaxZoom() === graph.getZoom()){
+        if (Zoom.getMaxZoom() === Zoom.getZoom()){
           // eslint-disable-next-line no-console
-          console.log('No more zooming in: ' + graph.getMaxZoom())
+          console.log('No more zooming in: ' + Zoom.getMaxZoom())
         }
         else {
-          let CurrentZoom = graph.getZoom()
+          let CurrentZoom = Zoom.getZoom()
           CurrentZoom+=0.1
-          graph.setZoom(CurrentZoom)
+          Zoom.setZoom(CurrentZoom)
         }
       },
 
       ZoomMinus(){
-        if (graph.getMinZoom() === graph.getZoom()){
+        if (Zoom.getMinZoom() === Zoom.getZoom()){
           // eslint-disable-next-line no-console
-          console.log('No more zooming out: ' + graph.getMinZoom())
+          console.log('No more zooming out: ' + Zoom.getMinZoom())
         }
         else {
-          let CurrentZoom = graph.getZoom()
+          let CurrentZoom = Zoom.getZoom()
           CurrentZoom-=0.1
-          graph.setZoom(CurrentZoom)
+          Zoom.setZoom(CurrentZoom)
         }
+      },
+
+      ZoomOut(){
+        Zoom.ZoomOut()
       }
   }
 };
