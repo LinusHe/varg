@@ -90,6 +90,7 @@ export function run() {
   cy.maxZoom(2),
   //  Sets up a new datafield called minZoom with the value 
   cy.data('minZoom', 0.5)
+  cy.data('NodeCount',0)
 
   // Left-Click Listeners:
   cy.on('tap', function (event) {
@@ -122,16 +123,19 @@ export function toString() {
   return output
 }
 
-export function createNode(newName, newShort, newImgurl, newColor) {
+export function createNode( newShort, newImgurl, newColor) {
+  let count = cy.data('NodeCount')
   cy.add({
     data: {
-      id: newName,
+      id: parseInt(count),
       short: newShort,
       imgUrl: newImgurl,
       color: newColor
     },
     position: { x: 500, y: 300 }
   });
+  count++
+  cy.data('NodeCount',count++)
 }
 
 export function createEdge(name, edgeshort, start, end, cost, time, edgeLabel) {
