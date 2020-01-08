@@ -175,10 +175,10 @@
         <v-row>
           <v-col sm="12">
             <v-select
-              @focus="getNodeID()"
+              @focus="getNodeItemsID(); getNodeItemsName()"
               v-model="startSelect"
               id="Startzustand"
-              :items="items"
+              :items="itemsName"
               outlined
               label="Startzustand"
               hide-details
@@ -188,10 +188,10 @@
         <v-row>
           <v-col sm="12">
             <v-select
-              @focus="getNodeID()"
+              @focus="getNodeItemsID(); getNodeItemsName()"
               v-model="endSelect"
               id="Endzustand"
-              :items="items"
+              :items="itemsName"
               label="Endzustand"
               outlined
               hide-details
@@ -256,15 +256,19 @@ export default {
       edgeCreateShort: "",
       edgeCreateCosts: "",
       edgeCreateTime: "",
-      items: [""],
+      itemsName: ["test"],
+      itemsID: [""],
       startSelect: "",
       endSelect: "",
       fab: false,
     };
   },
   methods: {
-    getNodeID() {
-      this.items = graph.getNodeID();
+    getNodeItemsID() {
+      this.itemsID = graph.getNodeID();
+    },
+    getNodeItemsName() {
+      this.itemsName = graph.getNodeName();
     },
     createEdge() {
       let w1 = parseInt(this.edgeCreateCosts)
@@ -272,11 +276,16 @@ export default {
 
       let label = "(" + w1 + "," + w2 + ")";
 
+      let indexStart = this.itemsName.indexOf(this.startSelect);
+      let startID = this.itemsID[indexStart];
+      let indexEnd = this.itemsName.indexOf(this.endSelect);
+      let endID = this.itemsID[indexEnd];
+
       graph.createEdge(
         this.edgeCreateName,
         this.edgeCreateShort,
-        this.startSelect,
-        this.endSelect,
+        startID,
+        endID,
         w1,
         w2,
         label
@@ -292,7 +301,8 @@ export default {
         console.log("Missing nodeName");
       } else {
         graph.createNode(this.nodeCreateName, this.nodeCreateShort, this.nodeCreateImgPath, this.nodeCreateColor ),
-          this.items.push(this.nodeCreateName);
+          this.itemsName.push(this.nodeCreateName);
+          this.itemsID = graph.getNodeID();
       }
       this.clearFields();
       this.nodeCreateGui = false;
