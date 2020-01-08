@@ -222,9 +222,19 @@ export function SaveMe() {
         Output += this.edges[i].data('name') + ' '
       }
       return Output
-    }
-  }
+    },
 
+    freezeEverything()  {
+      for(let i=0; i<this.nodes.length;i++){
+        Object.freeze(this.nodes[i])
+      }
+      for(let i=0; i<this.edges.length;i++){
+        Object.freeze(this.edges[i])
+      }
+    }
+  };
+  content.freezeEverything()
+  Object.freeze(content)
   return content;
 }
 
