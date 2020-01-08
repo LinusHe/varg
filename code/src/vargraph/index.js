@@ -308,6 +308,11 @@ export function updateEdge(id, newName, newShort, newSource, newTarget, newCost,
   edge.data('label', label);
 }
 
+export function removeEdge(id) {
+  let edge = cy.getElementById(id);
+  edge.remove();
+}
+
 function generateEdgeLabel(id, newCost, newTime) {
   return '(' + newCost + ',' + newTime + ')';
 }
@@ -441,5 +446,6 @@ export default {
   setMinZoom,
   updateNode,
   updateEdge,
+  removeEdge,
   getCytoGraph
 }

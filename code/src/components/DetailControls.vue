@@ -191,7 +191,7 @@
             ></v-text-field>
           </v-col>
         </v-row>
-        <!-- Save Buttons -->
+        <!-- Save & Delete Buttons -->
         <v-row>
           <v-spacer sm="4" />
           <v-col sm="4" align="right">
@@ -211,7 +211,7 @@
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="error" text @click="deletedialog = false; edgeGui = false">Löschen</v-btn>
+                <v-btn color="error" text @click="deleteEdge()">Löschen</v-btn>
                 <v-btn color="grey" text @click="deletedialog = false">Abbrechen</v-btn>
               </v-card-actions>
             </v-card>
@@ -307,8 +307,13 @@ export default {
         this.edgeCosts,
         this.edgeTime
       );
-
       this.edgeGui = false;
+    },
+    deleteEdge(){
+      graph.removeEdge(this.id);
+
+      this.deletedialog = false; 
+      this.edgeGui = false
     }
   },
   mounted: function() {
