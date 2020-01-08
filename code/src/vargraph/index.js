@@ -12,23 +12,23 @@ export function run() {
 
     elements: [ // list of graph elements to start with
       { // node a
-        data: { id: 1, name: 'a' }
+        data: { id: -1, name: 'a' }
       },
       { // node b
-        data: { id: 2, name: 'b' }
+        data: { id: -2, name: 'b' }
       },
       { // node b
-        data: { id: 3, name: 'c' }
+        data: { id: -3, name: 'c' }
       },
       { // edge ab 
         //! it's important to wright the weigth as a number and not as a string (for the algorithm)
-        data: { id: 4, name: 'ab', source: 1, target: 2, weight1: 10, weight2: 10, label: '(10,10)' }
+        data: { id: -4, name: 'ab', source: -1, target: -2, weight1: 10, weight2: 10, label: '(10,10)' }
       },
       { // edge ac
-        data: { id: 5, name: 'ac', source: 1, target: 3, weight1: 8, weight2: 1, label: '(8,1)' }
+        data: { id: -5, name: 'ac', source: -1, target: -3, weight1: 8, weight2: 1, label: '(8,1)' }
       },
       { // edge cb
-        data: { id: 6, name: 'cb', source: 3, target: 2, weight1: 9, weight2: 1, label: '(9,1)' }
+        data: { id: -6, name: 'cb', source: -3, target: -2, weight1: 9, weight2: 1, label: '(9,1)' }
       }
 
     ],
@@ -87,8 +87,24 @@ export function run() {
   })
   // Sets maximum and minimum of zoom levels. Difference between one and two
   // is rougly one mouse wheel scroll.
-  cy.minZoom(1);
-  cy.maxZoom(2);
+  cy.minZoom(0.5),
+  cy.maxZoom(2),
+  //  Sets up a new datafield called minZoom with the value 
+  cy.data('minZoom', 0.5)
+  cy.data('IDCount',0)
+
+  // Left-Click Listeners:
+  cy.on('tap', function (event) {
+    var evtTarget = event.target;
+    if (evtTarget === cy) {
+      console.log('tap on background');
+    } else if (evtTarget.isNode()) {
+      console.log('tapped Node: ' + evtTarget.id() + ' short: ' + evtTarget.data('short'));
+    }
+    else {
+      console.log('tapped Edge: ' + evtTarget.id() + ' short: ' + evtTarget.data('short'));
+    }
+  });
 }
 
 // toString(): Collects all nodes of the graph and edges in arrays
@@ -108,22 +124,28 @@ export function toString() {
   return output
 }
 
-export function createNode(newName, newShort, newImgurl, newColor) {
+export function createNode( newName, newShort, newImgurl, newColor) {
+  let count = cy.data('IDCount')
   cy.add({
     data: {
-      id: newName,
+      id: parseInt(count),
+      name: newName,
       short: newShort,
       imgUrl: newImgurl,
       color: newColor
     },
     position: { x: 500, y: 300 }
   });
+  count++
+  cy.data('IDCount',count++)
 }
 
-export function createEdge(name, edgeshort, start, end, cost, time, edgeLabel) {
+export function createEdge(newName, edgeshort, start, end, cost, time, edgeLabel) {
+  let count = cy.data('IDCount')
   cy.add({
     data: {
-      id: name,
+      id: parseInt(count),
+      name: newName,
       short: edgeshort,
       source: start,
       target: end,
@@ -132,6 +154,8 @@ export function createEdge(name, edgeshort, start, end, cost, time, edgeLabel) {
       label: edgeLabel
     },
   });
+  count++
+  cy.data('IDCount',count++)
 }
 
 /*The method finds the shortest Path between 2 nodes(for now between a and b) with the 
@@ -174,27 +198,29 @@ export function findPath(option, start, end) {
 }
 
 
-// SaveMe(): Creates a constant object "content" which 
-//           saves all nodes and egdges in two arrays.
-//           This object is then returned. By calling this function
-//           the current state of the graph can be saved. The object "content"
-//           posses a unique toString method that ouputs all nodes and edges.
-//           Currently for testing purposes.
-
+/* SaveMe(): 
+  Creates a constant object "content" which 
+  saves all nodes and egdges in two arrays.
+  This object is then returned. By calling this function
+  the current state of the graph can be saved. The object "content"
+  posses a unique toString method that ouputs all nodes and edges.
+  Currently for testing purposes.
+*/ 
 
 export function SaveMe() {
   const content = {
     nodes: cy.elements("node"),
     edges: cy.elements("edge"),
+    minZoom: cy.data('minZoom'),
 
     toString() {
-      let Output = 'nodes: '
+      let Output = ' '
       for (let i = 0; i < this.nodes.length; i++) {
-        Output += this.nodes[i].data('id') + ' '
+        Output += this.nodes[i].data('name') + ', position: x:' + this.nodes[i].position('x')+ ', y: '+ this.nodes[i].position('y') + ' '
       }
       Output += ', edges: '
       for (let i = 0; i < this.edges.length; i++) {
-        Output += this.edges[i].data('id') + ' '
+        Output += this.edges[i].data('name') + ' '
       }
       return Output
     }
@@ -221,7 +247,7 @@ export function Load(graph) {
   for (let i = 0; i < graph.nodes.length; i++) {
     let node = graph.nodes[i]
     cy.add({
-      data: { id: node.data('id') },
+      data: { id: node.data('id'), name: node.data('name') },
       position: { x: node.position('x'), y: node.position('y') }
     });
   }
@@ -231,6 +257,7 @@ export function Load(graph) {
     cy.add({
       data: {
         id: edge.data('id'),
+        name: edge.data('name'),
         source: edge.data('source'),
         target: edge.data('target'),
         weight1: edge.data('weigth1'),
@@ -239,24 +266,6 @@ export function Load(graph) {
       },
     });
   }
-}
-
-/*  Method for getting all nodes in the graph
-
-
-  @return: Array of nodes
-
-  */
-
-export function getNodeName() {
-
-  var nodes = cy.nodes()
-  var nodesArray = []
-  for (let i = 0; i < nodes.length; i++) {
-    nodesArray.push(nodes[i].data("name"))
-  }
-
-  return nodesArray
 }
 
 export function updateNode(id, newId, newShort, newImgurl, newColor) {
@@ -271,4 +280,129 @@ export function getCytoGraph() {
   return cy;
 }
 
-export default { run, createNode, toString, createEdge, SaveMe, Load, findPath, getNodeName, getCytoGraph, updateNode }
+export function getNodeID() {
+
+  var nodes = cy.nodes()
+  var nodesArray = []
+  for (let i = 0; i < nodes.length; i++) {
+    nodesArray.push(nodes[i].data("id"))
+  }
+
+  return nodesArray
+}
+
+export function getNodeName() {
+
+  var nodes = cy.nodes()
+  var nodesArray = []
+  for (let i = 0; i < nodes.length; i++) {
+    nodesArray.push(nodes[i].data("name"))
+  }
+
+  return nodesArray
+}
+
+export function getNodeArr(){
+  return cy.nodes()
+}
+
+export function getNodePosSum(input){
+  let nodeArr = cy.nodes()
+  if (input === 'x'){
+    let posx = 0;
+    for (let i=0; i< nodeArr.length; i++){
+      posx += nodeArr[i].position('x')
+    }
+    return posx
+  }
+  else if (input === 'y'){
+    let posy = 0;
+    for (let i=0; i< nodeArr.length; i++){
+      posy += nodeArr[i].position('y')
+    }
+    return posy
+  }
+  else return null
+}
+
+/*
+  NodeToPointVector(pointx, pointy, node):
+
+  Computes the distance of a node to a point by
+  generating a vector out of the given point and
+  the nodes position values and then computes it's 
+  length with the formula l = sqrt(a^2 + b^2) which
+  it then returns.
+
+*/
+
+export function NodeToPointVector(pointx, pointy, node){
+  let one= node.position('x') - pointx
+  let two= node.position('y') - pointy
+  let sum= Math.pow(one,2) + Math.pow(two,2)
+  return Math.sqrt(sum)
+}
+
+export function getZoom (){
+  return cy.zoom()
+}
+
+export function MaxZoom (){
+  return cy.maxZoom()
+}
+
+export function setMaxZoom(ZoomLevel){
+  cy.maxZoom(ZoomLevel)
+}
+
+export function MinZoom (){
+  return cy.minZoom()
+}
+
+/**
+ * setMinZoom(ZoomLevel):
+ * 
+ * It takes the given ZoomLevel
+ * and checks wether or not is smaller then the 
+ * limit that is defined in cy.data. If it is greather
+ * than the limit, it will set the MinZoom as the ZoomLevel.
+ * It will be impossible for the user to ever zoom
+ * past the given limit, which, if implemented well, would
+ * make it so, that the zoom range makes it easy to see
+ * the graph at all times.
+ * 
+ * @param {*} ZoomLevel 
+*/
+
+export function setMinZoom(ZoomLevel){
+  // eslint-disable-next-line no-empty
+  if (ZoomLevel < cy.data('minZoom')) {}
+  else cy.minZoom(ZoomLevel)
+}
+
+export function setZoom (ZoomLevel) {
+  cy.zoom(ZoomLevel)
+}
+
+export default {
+  run,
+  createNode,
+  toString, 
+  createEdge, 
+  SaveMe, 
+  Load, 
+  findPath, 
+  getNodeName,
+  getNodeID,
+  getNodeArr,
+  getNodePosSum,
+  NodeToPointVector,
+  getZoom,
+  setZoom,
+  MaxZoom,
+  setMaxZoom,
+  MinZoom,
+  setMinZoom,
+  updateNode,
+  getCytoGraph
+}

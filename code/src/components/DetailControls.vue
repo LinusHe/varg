@@ -144,8 +144,9 @@
         <v-row>
           <v-col sm="12">
             <v-select
+              @focus="getNodeItemsID(); getNodeItemsName()"
               v-model="startSelect"
-              :items="items"
+              :items="itemsName"
               outlined
               label="Startzustand"
               hide-details
@@ -154,7 +155,14 @@
         </v-row>
         <v-row>
           <v-col sm="12">
-            <v-select v-model="endSelect" :items="items" label="Endzustand" outlined hide-details></v-select>
+            <v-select
+              @focus="getNodeItemsID(); getNodeItemsName()"
+              v-model="endSelect"
+              :items="itemsName"
+              label="Endzustand"
+              outlined
+              hide-details
+            ></v-select>
           </v-col>
         </v-row>
 
@@ -222,7 +230,7 @@ export default {
     return {
       deletedialog: false,
       nodeGui: false,
-      oldId: "",
+      id: "",
       nodeName: "",
       nodeShort: "",
       nodeImgpath: "",
@@ -232,42 +240,49 @@ export default {
       edgeShort: "",
       edgeTime: "",
       edgeCosts: "",
-      items: [],
+      itemsName: [],
+      itemsID: [],
       startSelect: "",
       endSelect: ""
     };
   },
   methods: {
+    getNodeItemsID() {
+      this.itemsID = graph.getNodeID();
+    },
+    getNodeItemsName() {
+      this.itemsName = graph.getNodeName();
+    },
     loadNodeDetails(node) {
-      this.nodeName = node.id();
-      this.oldId = node.id();
-      this.nodeShort = node.data('short');
-      this.nodeImgpath = node.data('imgUrl');
-      this.nodeColor = node.data('color');
+      this.id = node.id();
+      this.nodeName = node.data("name");
+      this.nodeShort = node.data("short");
+      this.nodeImgpath = node.data("imgUrl");
+      this.nodeColor = node.data("color");
       this.edgeGui = false;
       this.nodeGui = true;
     },
     loadEdgeDetails(edge) {
-      this.edgeName = edge.id();
-      this.oldId = edge.id();
-      this.edgeShort = edge.data('short');
-      this.edgeCosts = edge.data('weight1');
-      this.edgeTime = edge.data('weight2');
-      this.startSelect = edge.data('source');
-      this.endSelect = edge.data('target');
+      this.id = edge.id();
+      this.edgeName = edge.data("name");
+      this.edgeShort = edge.data("short");
+      this.edgeCosts = edge.data("weight1");
+      this.edgeTime = edge.data("weight2");
+      this.startSelect = edge.data("source");
+      this.endSelect = edge.data("target");
       this.nodeGui = false;
       this.edgeGui = true;
     },
-    saveNode(){
+    saveNode() {
       graph.updateNode(
         this.oldId,
         this.nodeName,
         this.nodeShort,
         this.nodeImgpath,
         this.nodeColor
-      )
+      );
     },
-    saveEdge(){
+    saveEdge() {
       graph.updateEdge(
         this.oldId,
         this.edgeName,
@@ -275,15 +290,14 @@ export default {
         this.edgeCosts,
         this.edgeTime,
         this.startSelect,
-        this.endSelect,
-      )
+        this.endSelect
+      );
     }
   },
   mounted: function() {
-    this.items = graph.getNodes();
     // Left-Click Listeners:
-    graph.getCytoGraph().on('tap', 'node', n => this.loadNodeDetails(n.target));
-    graph.getCytoGraph().on('tap', 'edge', e => this.loadEdgeDetails(e.target));
+    graph.getCytoGraph().on("tap", "node", n => this.loadNodeDetails(n.target));
+    graph.getCytoGraph().on("tap", "edge", e => this.loadEdgeDetails(e.target));
   }
 };
 </script>
