@@ -213,13 +213,13 @@ export function SaveMe() {
     minZoom: cy.data('minZoom'),
 
     toString() {
-      let Output = 'nodes: '
+      let Output = ' '
       for (let i = 0; i < this.nodes.length; i++) {
-        Output += this.nodes[i].data('id') + ' '
+        Output += this.nodes[i].data('name') + ', position: x:' + this.nodes[i].position('x')+ ', y: '+ this.nodes[i].position('y') + ' '
       }
       Output += ', edges: '
       for (let i = 0; i < this.edges.length; i++) {
-        Output += this.edges[i].data('id') + ' '
+        Output += this.edges[i].data('name') + ' '
       }
       return Output
     }

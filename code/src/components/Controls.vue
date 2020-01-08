@@ -139,7 +139,8 @@ export default {
       } else {
         let instance = this.vars.testDatabase.load(Input);
         // eslint-disable-next-line no-console
-        console.log(instance.getGraph().toString());
+        console.log('name: '+instance.getName()+' '+instance.getGraph().toString());
+        this.vars.testDatabase.logContent()
         graph.Load(instance.getGraph());
       }
     },
