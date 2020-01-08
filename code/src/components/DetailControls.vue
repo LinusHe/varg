@@ -353,8 +353,7 @@ export default {
     graph.getCytoGraph().on("tap", "node", n => this.loadNodeDetails(n.target));
     graph.getCytoGraph().on("tap", "edge", e => this.loadEdgeDetails(e.target));
 
-    // Right-Click:
-    graph.getCytoGraph().on("cxttap", e => console.log("rightclick at " + e.target.group()));
+    
   }
 };
 </script>
