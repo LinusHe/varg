@@ -76,16 +76,16 @@
             </div>
           </v-col>
         </v-row>
-        <!-- Create Buttons -->
+        <!-- Save & Delete Buttons -->
         <v-row>
           <v-spacer sm="4" />
           <v-col sm="4" align="right">
             <v-btn color="success" outlined @click="saveNode">Speichern</v-btn>
           </v-col>
-          <v-dialog v-model="deletedialog" persistent max-width="350">
+          <v-dialog v-model="nodeDeleteDialog" persistent max-width="400">
             <template v-slot:activator="{ on }">
               <v-col sm="4" align="right">
-                <v-btn color="error" v-on="on" outlined>Löschen</v-btn>
+                <v-btn color="error" v-on="on" @click="getInvolvedEdges" outlined>Löschen</v-btn>
               </v-col>
             </template>
             <v-card>
@@ -93,11 +93,21 @@
               <v-card-text>
                 Soll der Zustand
                 <b>{{nodeName}}</b> endgültig gelöscht werden? Diese Aktion kann nicht rückgängig gemacht werden.
+                <span
+                  v-show="deleteInvEdges"
+                >
+                  <br />
+                  <br />
+                  <b>ACHTUNG!</b>
+                  <br />Die folgenden Verbindungen werden ebenfalls gelöscht:
+                  <br />
+                  <b style="white-space: pre-line">{{ involvedEdges }}</b>
+                </span>
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="error" text @click="deletedialog = false; nodeGui = false">Löschen</v-btn>
-                <v-btn color="grey" text @click="deletedialog = false">Abbrechen</v-btn>
+                <v-btn color="error" text @click="deleteNode()">Löschen</v-btn>
+                <v-btn color="grey" text @click="nodeDeleteDialog = false">Abbrechen</v-btn>
               </v-card-actions>
             </v-card>
           </v-dialog>
@@ -197,7 +207,7 @@
           <v-col sm="4" align="right">
             <v-btn color="success" outlined @click="saveEdge()">Speichern</v-btn>
           </v-col>
-          <v-dialog v-model="deletedialog" persistent max-width="350">
+          <v-dialog v-model="edgeDeleteDialog" persistent max-width="400">
             <template v-slot:activator="{ on }">
               <v-col sm="4" align="right">
                 <v-btn color="error" v-on="on" outlined>Löschen</v-btn>
@@ -212,7 +222,7 @@
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="error" text @click="deleteEdge()">Löschen</v-btn>
-                <v-btn color="grey" text @click="deletedialog = false">Abbrechen</v-btn>
+                <v-btn color="grey" text @click="edgeDeleteDialog = false">Abbrechen</v-btn>
               </v-card-actions>
             </v-card>
           </v-dialog>
@@ -229,7 +239,8 @@ export default {
   name: "DetailControls",
   data() {
     return {
-      deletedialog: false,
+      nodeDeleteDialog: false,
+      edgeDeleteDialog: false,
       nodeGui: false,
       id: "",
       nodeName: "",
@@ -244,7 +255,9 @@ export default {
       itemsName: [],
       itemsID: [],
       startSelect: "",
-      endSelect: ""
+      endSelect: "",
+      deleteInvEdges: false,
+      involvedEdges: ""
     };
   },
   methods: {
@@ -309,11 +322,28 @@ export default {
       );
       this.edgeGui = false;
     },
-    deleteEdge(){
+    deleteEdge() {
       graph.removeEdge(this.id);
 
-      this.deletedialog = false; 
-      this.edgeGui = false
+      this.edgeDeleteDialog = false;
+      this.edgeGui = false;
+    },
+    getInvolvedEdges() {
+      this.involvedEdges = "";
+      // check if edges are involved with node
+      let edgesArray = graph.getEdgesByNode(this.id);
+      if (edgesArray.length > 0) {
+        edgesArray.forEach(
+          edge => (this.involvedEdges += "• "+edge.data("name") + '\n')
+        );
+        this.deleteInvEdges = true;
+      }
+    },
+    deleteNode() {
+      graph.removeNode(this.id);
+      this.nodeDeleteDialog = false;
+      this.nodeGui = false;
+      this.deleteInvEdges = false;
     }
   },
   mounted: function() {

@@ -308,9 +308,33 @@ export function updateEdge(id, newName, newShort, newSource, newTarget, newCost,
   edge.data('label', label);
 }
 
+// Edge with 'id' will be removed
 export function removeEdge(id) {
   let edge = cy.getElementById(id);
   edge.remove();
+}
+
+// Node and all involved edges will be removed
+export function removeNode(id) {
+  let node = cy.getElementById(id);
+  let edgesArray = getEdgesByNode(id);
+  // removes all involved edges
+  edgesArray.forEach(edge => edge.remove())
+  // removes the node
+  node.remove();
+}
+
+
+// Returns all edges, where a specific node is involved
+export function getEdgesByNode(id) {
+  let edgesArray = [];
+  let allEdges = cy.edges();
+  allEdges.forEach(element => {
+    if(element.data('source') == id || element.data('target') == id){
+      edgesArray.push(element);
+    }
+  });
+  return edgesArray;
 }
 
 function generateEdgeLabel(id, newCost, newTime) {
@@ -447,5 +471,7 @@ export default {
   updateNode,
   updateEdge,
   removeEdge,
+  removeNode,
+  getEdgesByNode,
   getCytoGraph
 }
