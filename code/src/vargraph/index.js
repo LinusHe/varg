@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 import cytoscape from 'cytoscape'
-import { detailControls } from '../components/DetailControls';
 
 let cy;
 
@@ -279,6 +278,25 @@ export function updateNode(id, newName, newShort, newImgurl, newColor) {
   node.data('color', newColor);
 }
 
+export function updateEdge(id, newName, newShort, newSource, newTarget, newCost, newTime) {
+  let edge = cy.getElementById(id);
+  console.log('incoming var: ' + newSource)
+  console.log('vorher '+edge.data('source'));
+  edge.data('name', newName);
+  edge.data('short', newShort);
+  edge.data('source', newSource);
+  edge.data('target', newTarget);
+  edge.data('weight1', newCost);
+  edge.data('weight2', newTime);
+  generateEdgeLabel(edge);
+  console.log('nachher '+edge.data('source'));
+}
+
+function generateEdgeLabel(edge) {
+  let lblString = '(' + edge.data('weight1') + ',' + edge.data('weight2') + ')';
+  edge.data('label', lblString);
+}
+
 export function getCytoGraph() {
   return cy;
 }
@@ -407,5 +425,6 @@ export default {
   MinZoom,
   setMinZoom,
   updateNode,
+  updateEdge,
   getCytoGraph
 }

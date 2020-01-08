@@ -170,17 +170,6 @@
         <v-row>
           <v-col sm="6">
             <v-text-field
-              id="edgeTime"
-              label="Kosten / Stück"
-              suffix="€"
-              v-model="edgeTime"
-              type="number"
-              outlined
-              hide-details
-            ></v-text-field>
-          </v-col>
-          <v-col sm="6">
-            <v-text-field
               id="edgeCosts"
               label="Zeit / Stück"
               suffix="Sek."
@@ -190,12 +179,23 @@
               hint="Einheit ist in den Einstellungen wählbar"
             ></v-text-field>
           </v-col>
+          <v-col sm="6">
+            <v-text-field
+              id="edgeTime"
+              label="Kosten / Stück"
+              suffix="€"
+              v-model="edgeTime"
+              type="number"
+              outlined
+              hide-details
+            ></v-text-field>
+          </v-col>
         </v-row>
         <!-- Save Buttons -->
         <v-row>
           <v-spacer sm="4" />
           <v-col sm="4" align="right">
-            <v-btn color="success" outlined @click="edgeGui = false">Speichern</v-btn>
+            <v-btn color="success" outlined @click="saveEdge()">Speichern</v-btn>
           </v-col>
           <v-dialog v-model="deletedialog" persistent max-width="350">
             <template v-slot:activator="{ on }">
@@ -223,6 +223,7 @@
 </template>
 
 <script>
+/* eslint-disable no-console */
 import graph from "@/vargraph/index.js";
 export default {
   name: "DetailControls",
@@ -286,17 +287,27 @@ export default {
         this.nodeImgpath,
         this.nodeColor
       );
+
+      this.nodeGui = false;
     },
     saveEdge() {
+      let indexStart = this.itemsName.indexOf(this.startSelect);
+      let startID = this.itemsID[indexStart];
+      let indexEnd = this.itemsName.indexOf(this.endSelect);
+      let endID = this.itemsID[indexEnd];
+      console.log('changed to ' + startID)
+
       graph.updateEdge(
-        this.oldId,
+        this.id,
         this.edgeName,
         this.edgeShort,
+        startID,
+        endID,
         this.edgeCosts,
-        this.edgeTime,
-        this.startSelect,
-        this.endSelect
+        this.edgeTime
       );
+
+      this.edgeGui = false;
     }
   },
   mounted: function() {
