@@ -263,13 +263,18 @@ export default {
       this.nodeGui = true;
     },
     loadEdgeDetails(edge) {
+      let startIndex = this.itemsID.indexOf(edge.data("source"));
+      let startName = this.itemsName[startIndex];
+      let endIndex = this.itemsID.indexOf(edge.data("target"));
+      let endName = this.itemsName[endIndex];
+
       this.id = edge.id();
       this.edgeName = edge.data("name");
       this.edgeShort = edge.data("short");
       this.edgeCosts = edge.data("weight1");
       this.edgeTime = edge.data("weight2");
-      this.startSelect = edge.data("source");
-      this.endSelect = edge.data("target");
+      this.startSelect = startName;
+      this.endSelect = endName;
       this.nodeGui = false;
       this.edgeGui = true;
     },
@@ -295,6 +300,8 @@ export default {
     }
   },
   mounted: function() {
+    this.getNodeItemsID();
+    this.getNodeItemsName();
     // Left-Click Listeners:
     graph.getCytoGraph().on("tap", "node", n => this.loadNodeDetails(n.target));
     graph.getCytoGraph().on("tap", "edge", e => this.loadEdgeDetails(e.target));
