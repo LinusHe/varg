@@ -144,7 +144,7 @@
         <v-row>
           <v-col sm="12">
             <v-select
-              @focus="getNodeItemsID(); getNodeItemsName()"
+              @focus="getNodeItemsName(); getNodeItemsID();"
               v-model="startSelect"
               :items="itemsName"
               outlined
@@ -156,7 +156,7 @@
         <v-row>
           <v-col sm="12">
             <v-select
-              @focus="getNodeItemsID(); getNodeItemsName()"
+              @focus="getNodeItemsName(); getNodeItemsID()"
               v-model="endSelect"
               :items="itemsName"
               label="Endzustand"
@@ -264,6 +264,8 @@ export default {
       this.nodeGui = true;
     },
     loadEdgeDetails(edge) {
+      this.getNodeItemsID();
+      this.getNodeItemsName();
       let startIndex = this.itemsID.indexOf(edge.data("source"));
       let startName = this.itemsName[startIndex];
       let endIndex = this.itemsID.indexOf(edge.data("target"));
@@ -295,7 +297,6 @@ export default {
       let startID = this.itemsID[indexStart];
       let indexEnd = this.itemsName.indexOf(this.endSelect);
       let endID = this.itemsID[indexEnd];
-      console.log('changed to ' + startID)
 
       graph.updateEdge(
         this.id,

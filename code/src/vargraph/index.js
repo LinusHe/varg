@@ -123,6 +123,7 @@ export function toString() {
   return output
 }
 
+
 export function createNode(newName, newShort, newImgurl, newColor) {
   let count = cy.data('IDCount')
   cy.add({
@@ -139,7 +140,16 @@ export function createNode(newName, newShort, newImgurl, newColor) {
   cy.data('IDCount', count++)
 }
 
-export function createEdge(newName, edgeshort, start, end, cost, time, edgeLabel) {
+
+// Do not use this function by default! It's just for re-creating edges in "updateEdge(..)"
+function createEdgeWithID(id, newName, edgeshort, start, end, cost, time, edgeLabel) {
+  let originalCount = cy.data('IDCount');
+  cy.data('IDCount', id);
+  createEdge(newName, edgeshort, start, end, cost, time, edgeLabel);
+  cy.data('IDCount', originalCount);
+}
+
+export function createEdge(newName, edgeshort, start, end, cost, time, newlabel) {
   let count = cy.data('IDCount')
   cy.add({
     data: {
@@ -150,9 +160,10 @@ export function createEdge(newName, edgeshort, start, end, cost, time, edgeLabel
       target: end,
       weight1: cost,
       weight2: time,
-      label: edgeLabel
+      label: newlabel,
     },
   });
+
   count++
   cy.data('IDCount', count++)
 }
@@ -280,21 +291,25 @@ export function updateNode(id, newName, newShort, newImgurl, newColor) {
 
 export function updateEdge(id, newName, newShort, newSource, newTarget, newCost, newTime) {
   let edge = cy.getElementById(id);
-  console.log('incoming var: ' + newSource)
-  console.log('vorher '+edge.data('source'));
+  let label = generateEdgeLabel(id, newCost, newTime);
+
+  // Generate New Edge, if source or target are changing
+  if (edge.data('source') != newSource || edge.data('target') != newTarget) {
+    edge.remove();
+    createEdgeWithID(id, newName, newShort, newSource, newTarget, newCost, newTime, label)
+  }
+
   edge.data('name', newName);
   edge.data('short', newShort);
   edge.data('source', newSource);
   edge.data('target', newTarget);
   edge.data('weight1', newCost);
   edge.data('weight2', newTime);
-  generateEdgeLabel(edge);
-  console.log('nachher '+edge.data('source'));
+  edge.data('label', label);
 }
 
-function generateEdgeLabel(edge) {
-  let lblString = '(' + edge.data('weight1') + ',' + edge.data('weight2') + ')';
-  edge.data('label', lblString);
+function generateEdgeLabel(id, newCost, newTime) {
+  return '(' + newCost + ',' + newTime + ')';
 }
 
 export function getCytoGraph() {
