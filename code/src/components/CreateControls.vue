@@ -53,11 +53,7 @@
 
     <!-- Create-Zustand Controls -->
     <v-slide-x-reverse-transition>
-      <v-card
-        class="detail-card"
-        v-show="nodeCreateGui"
-        transition="scroll-y-transition"
-      >
+      <v-card class="detail-card" v-show="nodeCreateGui" transition="scroll-y-transition">
         <v-btn class="btn-close ma-2" @click="nodeCreateGui= false" text icon color="primary">
           <v-icon>mdi-close</v-icon>
         </v-btn>
@@ -256,11 +252,11 @@ export default {
       edgeCreateShort: "",
       edgeCreateCosts: "",
       edgeCreateTime: "",
-      itemsName: ["test"],
-      itemsID: [""],
+      itemsName: [],
+      itemsID: [],
       startSelect: "",
       endSelect: "",
-      fab: false,
+      fab: false
     };
   },
   methods: {
@@ -271,8 +267,8 @@ export default {
       this.itemsName = graph.getNodeName();
     },
     createEdge() {
-      let w1 = parseInt(this.edgeCreateCosts)
-      let w2 = parseInt(this.edgeCreateTime)
+      let w1 = parseInt(this.edgeCreateCosts);
+      let w2 = parseInt(this.edgeCreateTime);
 
       let label = "(" + w1 + "," + w2 + ")";
 
@@ -300,14 +296,19 @@ export default {
         // eslint-disable-next-line no-console
         console.log("Missing nodeName");
       } else {
-        graph.createNode(this.nodeCreateName, this.nodeCreateShort, this.nodeCreateImgPath, this.nodeCreateColor ),
+        graph.createNode(
+          this.nodeCreateName,
+          this.nodeCreateShort,
+          this.nodeCreateImgPath,
+          this.nodeCreateColor
+        ),
           this.itemsName.push(this.nodeCreateName);
-          this.itemsID = graph.getNodeID();
+        this.itemsID = graph.getNodeID();
       }
       this.clearFields();
       this.nodeCreateGui = false;
     },
-    clearFields(){
+    clearFields() {
       this.nodeCreateName = "";
       this.nodeCreateShort = "";
       this.nodeCreateImgPath = "";

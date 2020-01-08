@@ -4,7 +4,7 @@
       <v-card align="center">
         <v-row>
           <p class="headline ma-auto">Optimieren</p>
-          <v-dialog v-model="dialog" persistent max-width="350">
+          <v-dialog v-model="dialog" max-width="350">
             <template v-slot:activator="{ on }">
               <v-btn class="btn-settings" v-on="on" text icon color="lightgrey">
                 <v-icon>mdi-settings</v-icon>
@@ -17,8 +17,18 @@
                 zwischen denen die Optimierungsfunktion angewendet werden soll:
                 <br />
                 <br />
-                <v-select @focus="getNode()" v-model="startSelect" :items="items" label="Startzustand" ></v-select>
-                <v-select @focus="getNode()" v-model="endSelect" :items="items" label="Endzustand" ></v-select>
+                <v-select
+                  @focus="getNodeItemsID(); getNodeItemsName()"
+                  v-model="startSelect"
+                  :items="itemsName"
+                  label="Startzustand"
+                ></v-select>
+                <v-select
+                  @focus="getNodeItemsID(); getNodeItemsName()"
+                  v-model="endSelect"
+                  :items="itemsName"
+                  label="Endzustand"
+                ></v-select>
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
@@ -47,26 +57,34 @@ export default {
   data() {
     return {
       option: "optionTime",
-      items: [],
+      itemsName: [""],
+      itemsID: [""],
       dialog: false,
       startSelect: "",
-      endSelect: "",
+      endSelect: ""
     };
   },
   methods: {
-    getNode(){
-      this.items = graph.getNodeID()
+    getNodeItemsID() {
+      this.itemsID = graph.getNodeID();
+    },
+    getNodeItemsName() {
+      this.itemsName = graph.getNodeName();
     },
     changeOption: function() {
+      let indexStart = this.itemsName.indexOf(this.startSelect);
+      let startID = this.itemsID[indexStart];
+      let indexEnd = this.itemsName.indexOf(this.endSelect);
+      let endID = this.itemsID[indexEnd];
+
       if (this.option === "optionTime") {
         this.option = "optionCosts";
-        graph.findPath(this.option, this.startSelect, this.endSelect);
+        graph.findPath(this.option, startID, endID);
       } else {
         this.option = "optionTime";
-        graph.findPath(this.option, this.startSelect, this.endSelect);
+        graph.findPath(this.option, startID, endID);
       }
     }
   }
-
 };
 </script>
