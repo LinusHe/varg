@@ -88,10 +88,10 @@ export function run() {
   // Sets maximum and minimum of zoom levels. Difference between one and two
   // is rougly one mouse wheel scroll.
   cy.minZoom(0.5),
-  cy.maxZoom(2),
-  //  Sets up a new datafield called minZoom with the value 
-  cy.data('minZoom', 0.5)
-  cy.data('IDCount',0)
+    cy.maxZoom(2),
+    //  Sets up a new datafield called minZoom with the value 
+    cy.data('minZoom', 0.5)
+  cy.data('IDCount', 0)
 
   // Left-Click Listeners:
   cy.on('tap', function (event) {
@@ -124,7 +124,7 @@ export function toString() {
   return output
 }
 
-export function createNode( newName, newShort, newImgurl, newColor) {
+export function createNode(newName, newShort, newImgurl, newColor) {
   let count = cy.data('IDCount')
   cy.add({
     data: {
@@ -137,7 +137,7 @@ export function createNode( newName, newShort, newImgurl, newColor) {
     position: { x: 500, y: 300 }
   });
   count++
-  cy.data('IDCount',count++)
+  cy.data('IDCount', count++)
 }
 
 export function createEdge(newName, edgeshort, start, end, cost, time, edgeLabel) {
@@ -155,7 +155,7 @@ export function createEdge(newName, edgeshort, start, end, cost, time, edgeLabel
     },
   });
   count++
-  cy.data('IDCount',count++)
+  cy.data('IDCount', count++)
 }
 
 /*The method finds the shortest Path between 2 nodes(for now between a and b) with the 
@@ -205,7 +205,7 @@ export function findPath(option, start, end) {
   the current state of the graph can be saved. The object "content"
   posses a unique toString method that ouputs all nodes and edges.
   Currently for testing purposes.
-*/ 
+*/
 
 export function SaveMe() {
   const content = {
@@ -216,7 +216,7 @@ export function SaveMe() {
     toString() {
       let Output = ' '
       for (let i = 0; i < this.nodes.length; i++) {
-        Output += this.nodes[i].data('name') + ', position: x:' + this.nodes[i].position('x')+ ', y: '+ this.nodes[i].position('y') + ' '
+        Output += this.nodes[i].data('name') + ', position: x:' + this.nodes[i].position('x') + ', y: ' + this.nodes[i].position('y') + ' '
       }
       Output += ', edges: '
       for (let i = 0; i < this.edges.length; i++) {
@@ -247,7 +247,10 @@ export function Load(graph) {
   for (let i = 0; i < graph.nodes.length; i++) {
     let node = graph.nodes[i]
     cy.add({
-      data: { id: node.data('id'), name: node.data('name') },
+      data: {
+        id: node.data('id'),
+        name: node.data('name')
+      },
       position: { x: node.position('x'), y: node.position('y') }
     });
   }
@@ -268,11 +271,11 @@ export function Load(graph) {
   }
 }
 
-export function updateNode(id, newId, newShort, newImgurl, newColor) {
+export function updateNode(id, newName, newShort, newImgurl, newColor) {
   let node = cy.getElementById(id);
-  node.data('id', newId);
+  node.data('name', newName);
   node.data('short', newShort);
-  node.data('imgurl', newImgurl);
+  node.data('imgUrl', newImgurl);
   node.data('color', newColor);
 }
 
@@ -302,22 +305,22 @@ export function getNodeName() {
   return nodesArray
 }
 
-export function getNodeArr(){
+export function getNodeArr() {
   return cy.nodes()
 }
 
-export function getNodePosSum(input){
+export function getNodePosSum(input) {
   let nodeArr = cy.nodes()
-  if (input === 'x'){
+  if (input === 'x') {
     let posx = 0;
-    for (let i=0; i< nodeArr.length; i++){
+    for (let i = 0; i < nodeArr.length; i++) {
       posx += nodeArr[i].position('x')
     }
     return posx
   }
-  else if (input === 'y'){
+  else if (input === 'y') {
     let posy = 0;
-    for (let i=0; i< nodeArr.length; i++){
+    for (let i = 0; i < nodeArr.length; i++) {
       posy += nodeArr[i].position('y')
     }
     return posy
@@ -336,26 +339,26 @@ export function getNodePosSum(input){
 
 */
 
-export function NodeToPointVector(pointx, pointy, node){
-  let one= node.position('x') - pointx
-  let two= node.position('y') - pointy
-  let sum= Math.pow(one,2) + Math.pow(two,2)
+export function NodeToPointVector(pointx, pointy, node) {
+  let one = node.position('x') - pointx
+  let two = node.position('y') - pointy
+  let sum = Math.pow(one, 2) + Math.pow(two, 2)
   return Math.sqrt(sum)
 }
 
-export function getZoom (){
+export function getZoom() {
   return cy.zoom()
 }
 
-export function MaxZoom (){
+export function MaxZoom() {
   return cy.maxZoom()
 }
 
-export function setMaxZoom(ZoomLevel){
+export function setMaxZoom(ZoomLevel) {
   cy.maxZoom(ZoomLevel)
 }
 
-export function MinZoom (){
+export function MinZoom() {
   return cy.minZoom()
 }
 
@@ -374,24 +377,24 @@ export function MinZoom (){
  * @param {*} ZoomLevel 
 */
 
-export function setMinZoom(ZoomLevel){
+export function setMinZoom(ZoomLevel) {
   // eslint-disable-next-line no-empty
-  if (ZoomLevel < cy.data('minZoom')) {}
+  if (ZoomLevel < cy.data('minZoom')) { }
   else cy.minZoom(ZoomLevel)
 }
 
-export function setZoom (ZoomLevel) {
+export function setZoom(ZoomLevel) {
   cy.zoom(ZoomLevel)
 }
 
 export default {
   run,
   createNode,
-  toString, 
-  createEdge, 
-  SaveMe, 
-  Load, 
-  findPath, 
+  toString,
+  createEdge,
+  SaveMe,
+  Load,
+  findPath,
   getNodeName,
   getNodeID,
   getNodeArr,

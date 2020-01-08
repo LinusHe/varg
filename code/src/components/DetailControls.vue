@@ -280,7 +280,7 @@ export default {
     },
     saveNode() {
       graph.updateNode(
-        this.oldId,
+        this.id,
         this.nodeName,
         this.nodeShort,
         this.nodeImgpath,
