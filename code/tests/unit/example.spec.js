@@ -1,12 +1,5 @@
 import { mount } from '@vue/test-utils'
-//import Controls from '../components/Controls.vue'
-import Counter from './counter'
-
-const wrapper = mount(Counter)
-
-const vm = wrapper.vm
-
-console.log(wrapper)
+import Counter from '../../src/vargraph/counter.js'
 
 describe('Counter', () => {
   // Now mount the component and you have the wrapper
@@ -19,5 +12,12 @@ describe('Counter', () => {
   // it's also easy to check for the existence of elements
   it('has a button', () => {
     expect(wrapper.contains('button')).toBe(true)
+  })
+
+  it('button click should increment the count', () => {
+    expect(wrapper.vm.count).toBe(0)
+    const button = wrapper.find('button')
+    button.trigger('click')
+    expect(wrapper.vm.count).toBe(1)
   })
 })
