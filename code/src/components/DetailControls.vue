@@ -334,7 +334,7 @@ export default {
       let edgesArray = graph.getEdgesByNode(this.id);
       if (edgesArray.length > 0) {
         edgesArray.forEach(
-          edge => (this.involvedEdges += "• "+edge.data("name") + '\n')
+          edge => (this.involvedEdges += "• " + edge.data("name") + "\n")
         );
         this.deleteInvEdges = true;
       }
@@ -352,6 +352,9 @@ export default {
     // Left-Click Listeners:
     graph.getCytoGraph().on("tap", "node", n => this.loadNodeDetails(n.target));
     graph.getCytoGraph().on("tap", "edge", e => this.loadEdgeDetails(e.target));
+
+    // Right-Click:
+    graph.getCytoGraph().on("cxttap", e => console.log("rightclick at " + e.target.group()));
   }
 };
 </script>

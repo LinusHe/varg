@@ -91,19 +91,6 @@ export function run() {
     //  Sets up a new datafield called minZoom with the value 
     cy.data('minZoom', 0.5)
   cy.data('IDCount', 0)
-
-  // Left-Click Listeners:
-  cy.on('tap', function (event) {
-    var evtTarget = event.target;
-    if (evtTarget === cy) {
-      console.log('tap on background');
-    } else if (evtTarget.isNode()) {
-      console.log('tapped Node: ' + evtTarget.id() + ' short: ' + evtTarget.data('short'));
-    }
-    else {
-      console.log('tapped Edge: ' + evtTarget.id() + ' short: ' + evtTarget.data('short'));
-    }
-  });
 }
 
 // toString(): Collects all nodes of the graph and edges in arrays
@@ -330,7 +317,7 @@ export function getEdgesByNode(id) {
   let edgesArray = [];
   let allEdges = cy.edges();
   allEdges.forEach(element => {
-    if(element.data('source') == id || element.data('target') == id){
+    if (element.data('source') == id || element.data('target') == id) {
       edgesArray.push(element);
     }
   });
