@@ -210,6 +210,7 @@ export function SaveMe() {
   const content = {
     nodes: cy.elements("node"),
     edges: cy.elements("edge"),
+    minZoom: cy.data('minZoom'),
 
     toString() {
       let Output = 'nodes: '
