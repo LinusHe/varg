@@ -64,14 +64,16 @@
             <div class="radio-container">
               <label for="nodeColor" class="color-label v-label v-label--active theme--light">Farbe</label>
               <v-radio-group v-model="nodeColor" id="nodeColor" row>
-                <v-radio class="color-radio-blue" color="blue" value="blue"></v-radio>
-                <v-radio class="color-radio-green" color="green" value="green"></v-radio>
-                <v-radio class="color-radio-purple" color="purple" value="purple"></v-radio>
-                <v-radio class="color-radio-pink" color="pink" value="pink"></v-radio>
-                <v-radio class="color-radio-red" color="red" value="red"></v-radio>
-                <v-radio class="color-radio-orange" color="orange" value="orange"></v-radio>
-                <v-radio class="color-radio-yellow" color="yellow" value="yellow"></v-radio>
-                <v-radio class="color-radio-lightyellow" color="lightyellow" value="lightyellow"></v-radio>
+                <!-- Attention: If you change the color, change also the corresponding color in the color-class
+                                in the src/styles/components/DetailControls.less -->
+                <v-radio class="color-radio-1" color="#2699FB" value="2699FB"></v-radio>
+                <v-radio class="color-radio-2" color="#00CEC9" value="00CEC9"></v-radio>
+                <v-radio class="color-radio-3" color="#6C5CE7" value="6C5CE7"></v-radio>
+                <v-radio class="color-radio-4" color="#FD79A8" value="FD79A8"></v-radio>
+                <v-radio class="color-radio-5" color="#FF7675" value="FF7675"></v-radio>
+                <v-radio class="color-radio-6" color="#FAB1A0" value="FAB1A0"></v-radio>
+                <v-radio class="color-radio-7" color="#FDCB6E" value="FDCB6E"></v-radio>
+                <v-radio class="color-radio-8" color="#FFEAA7" value="FFEAA7"></v-radio>
               </v-radio-group>
             </div>
           </v-col>

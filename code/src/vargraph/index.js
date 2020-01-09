@@ -4,6 +4,7 @@ import cytoscape from 'cytoscape'
 
 let cy;
 
+// run(): Startup-Function
 export function run() {
   cy = cytoscape({
 
@@ -93,10 +94,16 @@ export function run() {
   cy.data('IDCount', 0)
 }
 
+
+// getCytoGraph(): Returns the CytoGraph
+export function getCytoGraph() {
+  return cy;
+}
+
+
 // toString(): Collects all nodes of the graph and edges in arrays
 //             and then outputs their ID in a string.
 //             Currently for testing purposes.
-
 export function toString() {
   let output = ''
   let nodeArr = this.nodes
@@ -111,6 +118,8 @@ export function toString() {
 }
 
 
+// createNode(..): Adds a node to the Cytograph with an automatic 
+//                 generated (increasing) ID + the properties given
 export function createNode(newName, newShort, newImgurl, newColor) {
   let count = cy.data('IDCount')
   cy.add({
@@ -128,14 +137,8 @@ export function createNode(newName, newShort, newImgurl, newColor) {
 }
 
 
-// Do not use this function by default! It's just for re-creating edges in "updateEdge(..)"
-function createEdgeWithID(id, newName, edgeshort, start, end, cost, time, edgeLabel) {
-  let originalCount = cy.data('IDCount');
-  cy.data('IDCount', id);
-  createEdge(newName, edgeshort, start, end, cost, time, edgeLabel);
-  cy.data('IDCount', originalCount);
-}
-
+// createEdge(..): Adds an edge to the Cytograph with an automatic 
+//                 generated (increasing) ID + the properties given
 export function createEdge(newName, edgeshort, start, end, cost, time, newlabel) {
   let count = cy.data('IDCount')
   cy.add({
@@ -155,16 +158,20 @@ export function createEdge(newName, edgeshort, start, end, cost, time, newlabel)
   cy.data('IDCount', count++)
 }
 
-/*The method finds the shortest Path between 2 nodes(for now between a and b) with the 
-  Dijkstra Algorithm
+
+// createEdgeWithID(..): DO NOT USE THIS FUNCTION BY DEFAULT!
+//                       It's just for re-creating edges in "updateEdge(..)"
+//                       Use the normal createEdge(..) function with increasing IDs
+function createEdgeWithID(id, newName, edgeshort, start, end, cost, time, edgeLabel) {
+  let originalCount = cy.data('IDCount');
+  cy.data('IDCount', id);
+  createEdge(newName, edgeshort, start, end, cost, time, edgeLabel);
+  cy.data('IDCount', originalCount);
+}
 
 
-  */
-
-
-/*The method finds the shortest Path between 2 nodes(for now between a and b) with the 
-  Dijkstra Algorithm
-  */
+// findPath(.. ): The method finds the shortest Path between 2 nodes
+//                (for now between a and b) with the Dijkstra Algorithm
 export function findPath(option, start, end) {
 
   var startNode = "#" + start
@@ -203,7 +210,6 @@ export function findPath(option, start, end) {
   posses a unique toString method that ouputs all nodes and edges.
   Currently for testing purposes.
 */
-
 export function SaveMe() {
   const content = {
     nodes: cy.elements("node"),
@@ -226,6 +232,7 @@ export function SaveMe() {
   return content;
 }
 
+
 //  Load(graph): Intended is a function which allows the current 
 //               graph that is displayed in the container to be overwritten 
 //               by another graph (which would probably be saved in the database).
@@ -235,12 +242,9 @@ export function SaveMe() {
 //               SaveMe() and then reconstructs the graph using that object by adding every element
 //               (nodes first, edges second) and defining every data value by referencing the graph that is written
 //               in the database.
-
 export function Load(graph) {
-
   cy.elements('node').remove()
   cy.elements('edge').remove()
-
   for (let i = 0; i < graph.nodes.length; i++) {
     let node = graph.nodes[i]
     cy.add({
@@ -251,7 +255,6 @@ export function Load(graph) {
       position: { x: node.position('x'), y: node.position('y') }
     });
   }
-
   for (let i = 0; i < graph.edges.length; i++) {
     let edge = graph.edges[i]
     cy.add({
@@ -268,6 +271,8 @@ export function Load(graph) {
   }
 }
 
+
+// updateNode(..): Updates a node by ID with the given arguments
 export function updateNode(id, newName, newShort, newImgurl, newColor) {
   let node = cy.getElementById(id);
   node.data('name', newName);
@@ -276,16 +281,16 @@ export function updateNode(id, newName, newShort, newImgurl, newColor) {
   node.data('color', newColor);
 }
 
+
+// updateNode(..): Updates an Edge by ID with the given arguments
 export function updateEdge(id, newName, newShort, newSource, newTarget, newCost, newTime) {
   let edge = cy.getElementById(id);
   let label = generateEdgeLabel(id, newCost, newTime);
-
   // Generate New Edge, if source or target are changing
   if (edge.data('source') != newSource || edge.data('target') != newTarget) {
     edge.remove();
     createEdgeWithID(id, newName, newShort, newSource, newTarget, newCost, newTime, label)
   }
-
   edge.data('name', newName);
   edge.data('short', newShort);
   edge.data('source', newSource);
@@ -295,13 +300,15 @@ export function updateEdge(id, newName, newShort, newSource, newTarget, newCost,
   edge.data('label', label);
 }
 
-// Edge with 'id' will be removed
+
+// removeEdge(id): Edge with 'id' will be removed from Graph
 export function removeEdge(id) {
   let edge = cy.getElementById(id);
   edge.remove();
 }
 
-// Node and all involved edges will be removed
+
+// removeNode(id): Node with 'id' and all involved edges will be removed
 export function removeNode(id) {
   let node = cy.getElementById(id);
   let edgesArray = getEdgesByNode(id);
@@ -312,7 +319,8 @@ export function removeNode(id) {
 }
 
 
-// Returns all edges, where a specific node is involved
+// getEdgesByNode(id): Returns all edges, where a specific node is 
+//                     involved (as source or target)
 export function getEdgesByNode(id) {
   let edgesArray = [];
   let allEdges = cy.edges();
@@ -324,40 +332,42 @@ export function getEdgesByNode(id) {
   return edgesArray;
 }
 
+
+// generateEdgeLabel(..): Creates and Returns the Edge-Label based on the Weights
 function generateEdgeLabel(id, newCost, newTime) {
   return '(' + newCost + ',' + newTime + ')';
 }
 
-export function getCytoGraph() {
-  return cy;
-}
 
+// getNodeID(): Returns an Array with all Node IDs of the Graph
 export function getNodeID() {
-
   var nodes = cy.nodes()
   var nodesArray = []
   for (let i = 0; i < nodes.length; i++) {
     nodesArray.push(nodes[i].data("id"))
   }
-
   return nodesArray
 }
 
-export function getNodeName() {
 
+// getNodeID(): Returns an Array with all Node Names of the Graph
+export function getNodeName() {
   var nodes = cy.nodes()
   var nodesArray = []
   for (let i = 0; i < nodes.length; i++) {
     nodesArray.push(nodes[i].data("name"))
   }
-
   return nodesArray
 }
 
+
+// getNodeID(): Returns an Array with all Node Objects of the Graph
 export function getNodeArr() {
   return cy.nodes()
 }
 
+
+// getNodeID(): ??
 export function getNodePosSum(input) {
   let nodeArr = cy.nodes()
   if (input === 'x') {
@@ -377,6 +387,7 @@ export function getNodePosSum(input) {
   else return null
 }
 
+
 /*
   NodeToPointVector(pointx, pointy, node):
 
@@ -387,7 +398,6 @@ export function getNodePosSum(input) {
   it then returns.
 
 */
-
 export function NodeToPointVector(pointx, pointy, node) {
   let one = node.position('x') - pointx
   let two = node.position('y') - pointy
@@ -395,21 +405,30 @@ export function NodeToPointVector(pointx, pointy, node) {
   return Math.sqrt(sum)
 }
 
+
+// getZoom(): returns the current Zoom Level of the Graph
 export function getZoom() {
   return cy.zoom()
 }
 
+
+// MaxZoom(): returns the Max-Zoom Level of the Graph
 export function MaxZoom() {
   return cy.maxZoom()
 }
 
+
+// MaxZoom(): sets the Max-Zoom Level of the Graph
 export function setMaxZoom(ZoomLevel) {
   cy.maxZoom(ZoomLevel)
 }
 
+
+// MinZoom(): returns the Min-Zoom Level of the Graph
 export function MinZoom() {
   return cy.minZoom()
 }
+
 
 /**
  * setMinZoom(ZoomLevel):
@@ -425,13 +444,14 @@ export function MinZoom() {
  * 
  * @param {*} ZoomLevel 
 */
-
 export function setMinZoom(ZoomLevel) {
   // eslint-disable-next-line no-empty
   if (ZoomLevel < cy.data('minZoom')) { }
   else cy.minZoom(ZoomLevel)
 }
 
+
+// setZoom(level): sets the zoom to a specific Level
 export function setZoom(ZoomLevel) {
   cy.zoom(ZoomLevel)
 }
