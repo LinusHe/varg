@@ -1,7 +1,7 @@
 <template>
   <div class="node-controls">
-    <DetailControls />
-    <CreateControls />
+    <DetailControls ref="detailConrols" />
+    <CreateControls ref="createConrols" />
     <RightClickMenu ref="rcmenu" />
   </div>
 </template>

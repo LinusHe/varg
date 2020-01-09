@@ -7,7 +7,7 @@
       <v-container fill-height grid-list-md>
         <v-layout row wrap align-center align="center">
           <VarGraph />
-          <Controls />
+          <MenuControls />
           <ZoomControls />
           <OptimizeControls />
           <NodeControls />
@@ -19,7 +19,7 @@
 
 <script>
 // @ is an alias to /src
-import Controls from "@/components/Controls.vue";
+import MenuControls from "@/components/MenuControls.vue";
 import VarGraph from "@/components/VarGraph.vue";
 import GraphHeader from "@/components/GraphHeader.vue";
 import ZoomControls from "@/components/ZoomControls.vue";
@@ -31,7 +31,7 @@ export default {
   name: "graph",
   components: {
     GraphHeader,
-    Controls,
+    MenuControls,
     VarGraph,
     ZoomControls,
     OptimizeControls,

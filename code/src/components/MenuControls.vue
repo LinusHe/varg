@@ -87,7 +87,7 @@ import BasicData from "@/vargraph/BasicData.js";
 import TestDatabase from "@/vargraph/TestDatabase.js";
 
 export default {
-  name: "Controls",
+  name: "MenuControls",
   created() {
     this.vars = {
       testDatabase: new TestDatabase()

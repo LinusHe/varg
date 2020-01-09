@@ -82,12 +82,10 @@
           <v-col sm="4" align="right">
             <v-btn color="success" outlined @click="saveNode">Speichern</v-btn>
           </v-col>
+          <v-col sm="4" align="right">
+            <v-btn color="error" @click="openNodeDeleteMenu" outlined>Löschen</v-btn>
+          </v-col>
           <v-dialog v-model="nodeDeleteDialog" persistent max-width="400">
-            <template v-slot:activator="{ on }">
-              <v-col sm="4" align="right">
-                <v-btn color="error" v-on="on" @click="getInvolvedEdges" outlined>Löschen</v-btn>
-              </v-col>
-            </template>
             <v-card>
               <v-card-title class="headline">Zustand löschen</v-card-title>
               <v-card-text>
@@ -207,12 +205,10 @@
           <v-col sm="4" align="right">
             <v-btn color="success" outlined @click="saveEdge()">Speichern</v-btn>
           </v-col>
+          <v-col sm="4" align="right">
+            <v-btn color="error" @click="openEdgeDeleteMenu" outlined>Löschen</v-btn>
+          </v-col>
           <v-dialog v-model="edgeDeleteDialog" persistent max-width="400">
-            <template v-slot:activator="{ on }">
-              <v-col sm="4" align="right">
-                <v-btn color="error" v-on="on" outlined>Löschen</v-btn>
-              </v-col>
-            </template>
             <v-card>
               <v-card-title class="headline">Verbindung löschen</v-card-title>
               <v-card-text>
@@ -261,22 +257,14 @@ export default {
     };
   },
   methods: {
-    getNodeItemsID() {
-      this.itemsID = graph.getNodeID();
-    },
-    getNodeItemsName() {
-      this.itemsName = graph.getNodeName();
-    },
-    loadNodeDetails(node) {
+    loadNodeData(node) {
       this.id = node.id();
       this.nodeName = node.data("name");
       this.nodeShort = node.data("short");
       this.nodeImgpath = node.data("imgUrl");
       this.nodeColor = node.data("color");
-      this.edgeGui = false;
-      this.nodeGui = true;
     },
-    loadEdgeDetails(edge) {
+    loadEdgeData(edge) {
       this.getNodeItemsID();
       this.getNodeItemsName();
       let startIndex = this.itemsID.indexOf(edge.data("source"));
@@ -291,8 +279,28 @@ export default {
       this.edgeTime = edge.data("weight2");
       this.startSelect = startName;
       this.endSelect = endName;
+    },
+    getNodeItemsID() {
+      this.itemsID = graph.getNodeID();
+    },
+    getNodeItemsName() {
+      this.itemsName = graph.getNodeName();
+    },
+    openNodeDetails(node) {
+      this.loadNodeData(node);
+      this.$parent.$refs.createConrols.deactivateGui();
+      this.edgeGui = false;
+      this.nodeGui = true;
+    },
+    openEdgeDetails(edge) {
+      this.loadEdgeData(edge);
+      this.$parent.$refs.createConrols.deactivateGui();
       this.nodeGui = false;
       this.edgeGui = true;
+    },
+    deactivateGui(){
+      this.nodeGui = false;
+      this.edgeGui = false;
     },
     saveNode() {
       graph.updateNode(
@@ -328,6 +336,13 @@ export default {
       this.edgeDeleteDialog = false;
       this.edgeGui = false;
     },
+    openEdgeDeleteMenu() {
+      this.edgeDeleteDialog = true;
+    },
+    openNodeDeleteMenu() {
+      this.getInvolvedEdges();
+      this.nodeDeleteDialog = true;
+    },
     getInvolvedEdges() {
       this.involvedEdges = "";
       // check if edges are involved with node
@@ -350,10 +365,8 @@ export default {
     this.getNodeItemsID();
     this.getNodeItemsName();
     // Left-Click Listeners:
-    graph.getCytoGraph().on("tap", "node", n => this.loadNodeDetails(n.target));
-    graph.getCytoGraph().on("tap", "edge", e => this.loadEdgeDetails(e.target));
-
-    
+    graph.getCytoGraph().on("tap", "node", n => this.openNodeDetails(n.target));
+    graph.getCytoGraph().on("tap", "edge", e => this.openEdgeDetails(e.target));
   }
 };
 </script>

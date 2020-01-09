@@ -23,7 +23,7 @@
         <v-tooltip left>
           <template v-slot:activator="{ on }">
             <v-btn
-              @click="nodeCreateGui = true; edgeCreateGui = false"
+              @click="openNodeGui"
               v-on="on"
               fab
               dark
@@ -37,7 +37,7 @@
         <v-tooltip left>
           <template v-slot:activator="{ on }">
             <v-btn
-              @click="nodeCreateGui = false; edgeCreateGui = true"
+              @click="openEdgeGui"
               v-on="on"
               fab
               dark
@@ -260,6 +260,20 @@ export default {
     };
   },
   methods: {
+    deactivateGui(){
+      this.nodeCreateGui = false;
+      this.edgeCreateGui = false;
+    },
+    openNodeGui(){
+      this.$parent.$refs.detailConrols.deactivateGui();
+      this.nodeCreateGui = true;
+      this.edgeCreateGui = false;
+    },
+    openEdgeGui(){
+      this.$parent.$refs.detailConrols.deactivateGui();
+      this.nodeCreateGui = false;
+      this.edgeCreateGui = true;
+    },
     getNodeItemsID() {
       this.itemsID = graph.getNodeID();
     },
