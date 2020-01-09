@@ -106,7 +106,7 @@
                 for="nodeCreateColor"
                 class="color-label v-label v-label--active theme--light"
               >Farbe</label>
-              <v-radio-group v-model="nodeColor" id="nodeColor" row>
+              <v-radio-group v-model="nodeCreateColor" id="nodeCreateColor" row>
                 <!-- Attention: If you change the color, change also the corresponding color in the color-class
                                 in the src/styles/components/DetailControls.less -->
                 <v-radio class="color-radio-1" color="#2699FB" value="2699FB"></v-radio>
