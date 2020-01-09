@@ -135,7 +135,6 @@ export function createNode( newName, newShort, newImgurl, newColor) {
     },
     position: { x: 500, y: 300 }
   });
-  count++
   cy.data('IDCount',count++)
 }
 
@@ -153,7 +152,6 @@ export function createEdge(newName, edgeshort, start, end, cost, time, edgeLabel
       label: edgeLabel
     },
   });
-  count++
   cy.data('IDCount',count++)
 }
 
@@ -388,6 +386,11 @@ export function setZoom (ZoomLevel) {
   cy.zoom(ZoomLevel)
 }
 
+export function CreateJSon (){
+  console.log(cy.json())
+  return cy.json()
+}
+
 export default {
   run,
   createNode,
@@ -406,5 +409,6 @@ export default {
   MaxZoom,
   setMaxZoom,
   MinZoom,
-  setMinZoom
+  setMinZoom,
+  CreateJSon
 }

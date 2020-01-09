@@ -48,11 +48,11 @@
       <v-row align="center">
         <v-tooltip right>
           <template v-slot:activator="{ on }">
-            <v-btn v-on="on" fab dark small depressed color="primary">
+            <v-btn @click="ExportJSon" v-on="on" fab dark small depressed color="primary">
               <v-icon dark>mdi-image</v-icon>
             </v-btn>
           </template>
-          <span>Als Bild speichern</span>
+          <span>Als JSon speichern</span>
         </v-tooltip>
       </v-row>
 
@@ -86,6 +86,8 @@ import graph from "@/vargraph/index.js";
 import BasicData from "@/vargraph/BasicData.js";
 import TestDatabase from "@/vargraph/TestDatabase.js";
 
+const fs= require('fs')
+
 export default {
   name: "Controls",
   created() {
@@ -94,6 +96,14 @@ export default {
     };
   },
   methods: {
+    ExportJSon: function () {
+      let content=graph.CreateJSon()
+      fs.writefileSync('./graph.json',JSON.stringify(content, null, 2), function (err){
+        if (err) throw err;
+          // eslint-disable-next-line no-console
+          console.log("Saved")
+      })
+    },
     // SaveGraph(): creates an instance of BasicData if a valid input (any string input)
     // was given by the user along with the current date (provided by the JS Date object).
     // It also utilizes the toString method of graph to output all current nodes of the graph (for testing purposes).
