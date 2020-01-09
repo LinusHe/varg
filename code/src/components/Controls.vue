@@ -94,16 +94,6 @@ export default {
     };
   },
   methods: {
-    createNode() {
-      // Checks if data was input by the user
-      if (document.getElementById("nodeName").value === "") {
-        // eslint-disable-next-line no-console
-        console.log("Missing nodeName");
-      } else {
-        graph.createNode(document.getElementById("nodeName").value),
-          this.items.push(document.getElementById("nodeName").value);
-      }
-    },
     // SaveGraph(): creates an instance of BasicData if a valid input (any string input)
     // was given by the user along with the current date (provided by the JS Date object).
     // It also utilizes the toString method of graph to output all current nodes of the graph (for testing purposes).
@@ -133,20 +123,6 @@ export default {
       }
     },
 
-    createEdge() {
-      var w1 = parseInt(document.getElementById("weightOne").value);
-      var w2 = parseInt(document.getElementById("weightTwo").value);
-      var label = "(" + w1 + "," + w2 + ")";
-      graph.createEdge(
-        document.getElementById("edgeName").value,
-        this.edgeStart,
-        this.edgeEnd,
-        w1,
-        w2,
-        label
-      );
-    },
-
     findPathForCosts() {
       graph.findPath("optionCosts");
     },
@@ -163,7 +139,8 @@ export default {
       } else {
         let instance = this.vars.testDatabase.load(Input);
         // eslint-disable-next-line no-console
-        console.log(instance.getGraph().toString());
+        console.log('name: '+instance.getName()+' '+instance.getGraph().toString());
+        this.vars.testDatabase.logContent()
         graph.Load(instance.getGraph());
       }
     },

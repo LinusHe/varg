@@ -53,11 +53,7 @@
 
     <!-- Create-Zustand Controls -->
     <v-slide-x-reverse-transition>
-      <v-card
-        class="detail-card"
-        v-show="nodeCreateGui"
-        transition="scroll-y-transition"
-      >
+      <v-card class="detail-card" v-show="nodeCreateGui" transition="scroll-y-transition">
         <v-btn class="btn-close ma-2" @click="nodeCreateGui= false" text icon color="primary">
           <v-icon>mdi-close</v-icon>
         </v-btn>
@@ -175,10 +171,10 @@
         <v-row>
           <v-col sm="12">
             <v-select
-              @focus="getNodes()"
+              @focus="getNodeItemsID(); getNodeItemsName()"
               v-model="startSelect"
               id="Startzustand"
-              :items="items"
+              :items="itemsName"
               outlined
               label="Startzustand"
               hide-details
@@ -188,10 +184,10 @@
         <v-row>
           <v-col sm="12">
             <v-select
-              @focus="getNodes()"
+              @focus="getNodeItemsID(); getNodeItemsName()"
               v-model="endSelect"
               id="Endzustand"
-              :items="items"
+              :items="itemsName"
               label="Endzustand"
               outlined
               hide-details
@@ -256,28 +252,36 @@ export default {
       edgeCreateShort: "",
       edgeCreateCosts: "",
       edgeCreateTime: "",
-      items: [""],
+      itemsName: [],
+      itemsID: [],
       startSelect: "",
       endSelect: "",
-      fab: false,
+      fab: false
     };
   },
   methods: {
-    getNodes() {
-      this.items = graph.getNodes();
+    getNodeItemsID() {
+      this.itemsID = graph.getNodeID();
+    },
+    getNodeItemsName() {
+      this.itemsName = graph.getNodeName();
     },
     createEdge() {
-      //alert('Hi')
-      let w1 = parseInt(this.edgeCreateCosts)
-      let w2 = parseInt(this.edgeCreateTime)
+      let w1 = parseInt(this.edgeCreateCosts);
+      let w2 = parseInt(this.edgeCreateTime);
 
       let label = "(" + w1 + "," + w2 + ")";
+
+      let indexStart = this.itemsName.indexOf(this.startSelect);
+      let startID = this.itemsID[indexStart];
+      let indexEnd = this.itemsName.indexOf(this.endSelect);
+      let endID = this.itemsID[indexEnd];
 
       graph.createEdge(
         this.edgeCreateName,
         this.edgeCreateShort,
-        this.startSelect,
-        this.endSelect,
+        startID,
+        endID,
         w1,
         w2,
         label
@@ -292,13 +296,19 @@ export default {
         // eslint-disable-next-line no-console
         console.log("Missing nodeName");
       } else {
-        graph.createNode(this.nodeCreateName, this.nodeCreateShort, this.nodeCreateImgPath, this.nodeCreateColor ),
-          this.items.push(this.nodeCreateName);
+        graph.createNode(
+          this.nodeCreateName,
+          this.nodeCreateShort,
+          this.nodeCreateImgPath,
+          this.nodeCreateColor
+        ),
+          this.itemsName.push(this.nodeCreateName);
+        this.itemsID = graph.getNodeID();
       }
       this.clearFields();
       this.nodeCreateGui = false;
     },
-    clearFields(){
+    clearFields() {
       this.nodeCreateName = "";
       this.nodeCreateShort = "";
       this.nodeCreateImgPath = "";
