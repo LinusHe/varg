@@ -109,7 +109,7 @@
               <v-radio-group v-model="nodeCreateColor" id="nodeCreateColor" row>
                 <!-- Attention: If you change the color, change also the corresponding color in the color-class
                                 in the src/styles/components/DetailControls.less -->
-                <v-radio class="color-radio-1" color="#2699FB" value="2699FB"></v-radio>
+                <v-radio checked="checked" class="color-radio-1" color="#2699FB" value="2699FB"></v-radio>
                 <v-radio class="color-radio-2" color="#00CEC9" value="00CEC9"></v-radio>
                 <v-radio class="color-radio-3" color="#6C5CE7" value="6C5CE7"></v-radio>
                 <v-radio class="color-radio-4" color="#FD79A8" value="FD79A8"></v-radio>
@@ -248,7 +248,7 @@ export default {
       nodeCreateName: "",
       nodeCreateShort: "",
       nodeCreateImgPath: "",
-      nodeCreateColor: "",
+      nodeCreateColor: "2699FB",
       edgeCreateGui: false,
       edgeCreateName: "",
       edgeCreateShort: "",

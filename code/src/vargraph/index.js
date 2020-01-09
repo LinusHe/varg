@@ -12,13 +12,13 @@ export function run() {
 
     elements: [ // list of graph elements to start with
       { // node a
-        data: { id: -1, name: 'a' }
+        data: { id: -1, name: 'Knoten A', short: 'A', color: '2699FB' }
       },
       { // node b
-        data: { id: -2, name: 'b' }
+        data: { id: -2, name: 'Knoten B', short: 'B', color: '00CEC9' }
       },
       { // node b
-        data: { id: -3, name: 'c' }
+        data: { id: -3, name: 'Knoten C', short: 'C', color: 'FF7675' }
       },
       { // edge ab 
         //! it's important to wright the weigth as a number and not as a string (for the algorithm)
@@ -37,7 +37,7 @@ export function run() {
       {
         selector: 'node',
         style: {
-          'background-color': '#69e',
+          'background-color': '#2699FB',
           'label': 'data(name)',
         }
       },
@@ -57,7 +57,10 @@ export function run() {
       {
         selector: ':selected',
         style: {
-          'background-color': 'black',
+          'border': 'black',
+          "border-width": 1.5,
+          "border-opacity": 1.0,
+          "border-color": "#737373",
           'line-color': 'black',
           'target-arrow-color': 'black',
           'source-arrow-color': 'black',
@@ -65,19 +68,7 @@ export function run() {
 
         }
 
-      },
-      {
-        selector: ':selected',
-        style: {
-          'background-color': 'black',
-          'line-color': 'black',
-          'target-arrow-color': 'black',
-          'source-arrow-color': 'black',
-          'text-outline-color': 'black'
-
-        }
       }
-
     ],
 
     layout: {
@@ -87,11 +78,16 @@ export function run() {
   })
   // Sets maximum and minimum of zoom levels. Difference between one and two
   // is rougly one mouse wheel scroll.
-  cy.minZoom(0.5),
-    cy.maxZoom(2),
-    //  Sets up a new datafield called minZoom with the value 
-    cy.data('minZoom', 0.5)
-  cy.data('IDCount', 0)
+  cy.minZoom(0.5);
+  cy.maxZoom(2);
+  //  Sets up a new datafield called minZoom with the value 
+  cy.data('minZoom', 0.5);
+  cy.data('IDCount', 0);
+
+  // Apply Color for nodes
+  cy.nodes().forEach(n => {
+    n.style('background-color', '#' + n.data('color'))
+  });
 }
 
 
@@ -129,6 +125,9 @@ export function createNode(newName, newShort, newImgurl, newColor) {
       short: newShort,
       imgUrl: newImgurl,
       color: newColor
+    },
+    style: {
+      'background-color': '#' + newColor
     },
     position: { x: 500, y: 300 }
   });
@@ -279,6 +278,7 @@ export function updateNode(id, newName, newShort, newImgurl, newColor) {
   node.data('short', newShort);
   node.data('imgUrl', newImgurl);
   node.data('color', newColor);
+  node.style('background-color', '#' + newColor);
 }
 
 
