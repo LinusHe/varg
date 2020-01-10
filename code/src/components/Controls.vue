@@ -86,8 +86,6 @@ import graph from "@/vargraph/index.js";
 import BasicData from "@/vargraph/BasicData.js";
 import TestDatabase from "@/vargraph/TestDatabase.js";
 
-const fs= require('fs')
-
 export default {
   name: "Controls",
   created() {
@@ -97,12 +95,11 @@ export default {
   },
   methods: {
     ExportJSon: function () {
+      // eslint-disable-next-line no-unused-vars
       let content=graph.CreateJSon()
-      fs.writefileSync('./graph.json',JSON.stringify(content, null, 2), function (err){
-        if (err) throw err;
-          // eslint-disable-next-line no-console
-          console.log("Saved")
-      })
+      content = JSON.stringify(content, null, 2)
+      // eslint-disable-next-line no-console
+      console.log(content)
     },
     // SaveGraph(): creates an instance of BasicData if a valid input (any string input)
     // was given by the user along with the current date (provided by the JS Date object).
