@@ -95,11 +95,16 @@ export default {
   },
   methods: {
     ExportJSon: function () {
-      // eslint-disable-next-line no-unused-vars
       let content=graph.CreateJSon()
       content = JSON.stringify(content, null, 2)
       // eslint-disable-next-line no-console
       console.log(content)
+      let link = document.createElement('link')
+      link.download='Graph.json'
+      let file = new Blob([content],{type: 'text/plain'})
+      link.href = URL.createObjectURL(file)
+      link.click()
+      URL.revokeObjectURL(link.href)
     },
     // SaveGraph(): creates an instance of BasicData if a valid input (any string input)
     // was given by the user along with the current date (provided by the JS Date object).
