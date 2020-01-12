@@ -83,6 +83,7 @@
 
 <script>
 import graph from "@/vargraph/index.js";
+import ExJSon from "@/vargraph/JSonPersistence.js"
 import BasicData from "@/vargraph/BasicData.js";
 import TestDatabase from "@/vargraph/TestDatabase.js";
 
@@ -95,7 +96,7 @@ export default {
   },
   methods: {
     ExportJSon: function () {
-      let content=graph.CreateJSon()
+      let content=ExJSon.CreateJSon()
       content = JSON.stringify(content, null, 2)
       // eslint-disable-next-line no-console
       console.log(content)
@@ -125,7 +126,7 @@ export default {
         let instance = this.vars.testDatabase.load(Input);
         // eslint-disable-next-line no-console
         this.vars.testDatabase.logContent()
-        graph.LoadJSon(instance.getGraph());
+        ExJSon.LoadJSon(instance.getGraph());
       }
     },
     // SaveGraph(): creates an instance of BasicData if a valid input (any string input)

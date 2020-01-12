@@ -386,28 +386,15 @@ export function setZoom (ZoomLevel) {
   cy.zoom(ZoomLevel)
 }
 
-export function CreateJSon (){
-  console.log(cy.json())
-  return cy.json()
-}
-
-export function LoadJSon (content){
-  console.log("Loading Graph per JSon")
-  content = JSON.parse(content)
-
-  cy.elements('node').remove()
-  cy.elements('edge').remove()
-
-  cy.json(content)
+export function GetCytoGraph(){
+  return cy
 }
 
 export default {
   run,
   createNode,
   toString, 
-  createEdge, 
-  SaveMe, 
-  Load, 
+  createEdge,  
   findPath, 
   getNodeName,
   getNodeID,
@@ -420,6 +407,5 @@ export default {
   setMaxZoom,
   MinZoom,
   setMinZoom,
-  CreateJSon,
-  LoadJSon
+  GetCytoGraph
 }
