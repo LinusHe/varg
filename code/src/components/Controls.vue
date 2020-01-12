@@ -97,6 +97,7 @@ export default {
   methods: {
     ExportJSon: function () {
       let content=ExJSon.CreateJSon()
+      //Stringify makes content readable
       content = JSON.stringify(content, null, 2)
       // eslint-disable-next-line no-console
       console.log(content)

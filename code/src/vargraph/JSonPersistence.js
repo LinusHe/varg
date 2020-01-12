@@ -9,7 +9,7 @@ export function CreateJSon (){
 export function LoadJSon (content){
     // eslint-disable-next-line no-console
     console.log("Loading Graph per JSon")
-    //Turns stringified JSon back to JSOn format
+    //Turns stringified JSon back to JSon format
     content = JSON.parse(content)
     //wipes every element of the current graph
     graph.GetCytoGraph().elements('node').remove()
