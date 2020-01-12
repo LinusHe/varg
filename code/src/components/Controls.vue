@@ -26,7 +26,7 @@
       <v-row align="center">
         <v-tooltip right>
           <template v-slot:activator="{ on }">
-            <v-btn @click="SaveGraph" v-on="on" fab dark small depressed color="primary">
+            <v-btn @click="ExportJSon" v-on="on" fab dark small depressed color="primary">
               <v-icon dark>mdi-content-save</v-icon>
             </v-btn>
           </template>
@@ -37,7 +37,7 @@
       <v-row align="center">
         <v-tooltip right>
           <template v-slot:activator="{ on }">
-            <v-btn @click="LoadGraph" v-on="on" fab dark small depressed color="primary">
+            <v-btn @click="LoadJSon" v-on="on" fab dark small depressed color="primary">
               <v-icon dark>mdi-open-in-app</v-icon>
             </v-btn>
           </template>
@@ -105,6 +105,28 @@ export default {
       // link.href = URL.createObjectURL(file)
       // link.click()
       // URL.revokeObjectURL(link.href)
+      let name = prompt("Name:");
+      let date = new Date();
+      if (name != "" && name != null) {
+        let save = new BasicData(name, date, content);
+        this.vars.testDatabase.save(save);
+      }
+      else if (name === "") {
+        alert("Fehlender Name");
+      }
+    },
+    LoadJSon() {
+      let Input = prompt("GraphName: ");
+      // Checks if data was input by the user
+      if (Input === "") {
+        // eslint-disable-next-line no-console
+        console.log("Missing graphName");
+      } else {
+        let instance = this.vars.testDatabase.load(Input);
+        // eslint-disable-next-line no-console
+        this.vars.testDatabase.logContent()
+        graph.LoadJSon(instance.getGraph());
+      }
     },
     // SaveGraph(): creates an instance of BasicData if a valid input (any string input)
     // was given by the user along with the current date (provided by the JS Date object).

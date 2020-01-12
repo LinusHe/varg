@@ -391,6 +391,16 @@ export function CreateJSon (){
   return cy.json()
 }
 
+export function LoadJSon (content){
+  console.log("Loading Graph per JSon")
+  content = JSON.parse(content)
+
+  cy.elements('node').remove()
+  cy.elements('edge').remove()
+
+  cy.json(content)
+}
+
 export default {
   run,
   createNode,
@@ -410,5 +420,6 @@ export default {
   setMaxZoom,
   MinZoom,
   setMinZoom,
-  CreateJSon
+  CreateJSon,
+  LoadJSon
 }
