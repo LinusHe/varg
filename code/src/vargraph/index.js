@@ -88,7 +88,8 @@ export function run() {
   // is rougly one mouse wheel scroll.
   cy.minZoom(0.5),
   cy.maxZoom(2),
-  //  Sets up a new datafield called minZoom with the value 
+  //  Sets up a new datafield with the given value
+  //  This is to prevent that usage of cy.minZoom(value) locks up other zoom functionality
   cy.data('minZoom', 0.5)
   cy.data('IDCount',0)
 
