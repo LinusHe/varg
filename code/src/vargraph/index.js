@@ -299,82 +299,10 @@ export function getNodeArr(){
   return cy.nodes()
 }
 
-export function getNodePosSum(input){
-  let nodeArr = cy.nodes()
-  if (input === 'x'){
-    let posx = 0;
-    for (let i=0; i< nodeArr.length; i++){
-      posx += nodeArr[i].position('x')
-    }
-    return posx
-  }
-  else if (input === 'y'){
-    let posy = 0;
-    for (let i=0; i< nodeArr.length; i++){
-      posy += nodeArr[i].position('y')
-    }
-    return posy
-  }
-  else return null
-}
 
-/*
-  NodeToPointVector(pointx, pointy, node):
 
-  Computes the distance of a node to a point by
-  generating a vector out of the given point and
-  the nodes position values and then computes it's 
-  length with the formula l = sqrt(a^2 + b^2) which
-  it then returns.
-
-*/
-
-export function NodeToPointVector(pointx, pointy, node){
-  let one= node.position('x') - pointx
-  let two= node.position('y') - pointy
-  let sum= Math.pow(one,2) + Math.pow(two,2)
-  return Math.sqrt(sum)
-}
-
-export function getZoom (){
-  return cy.zoom()
-}
-
-export function MaxZoom (){
-  return cy.maxZoom()
-}
-
-export function setMaxZoom(ZoomLevel){
-  cy.maxZoom(ZoomLevel)
-}
-
-export function MinZoom (){
-  return cy.minZoom()
-}
-
-/**
- * setMinZoom(ZoomLevel):
- * 
- * It takes the given ZoomLevel
- * and checks wether or not is smaller then the 
- * limit that is defined in cy.data. If it is greather
- * than the limit, it will set the MinZoom as the ZoomLevel.
- * It will be impossible for the user to ever zoom
- * past the given limit, which, if implemented well, would
- * make it so, that the zoom range makes it easy to see
- * the graph at all times.
- * 
- * @param {*} ZoomLevel 
-*/
-
-export function setMinZoom(ZoomLevel){
-  // eslint-disable-next-line no-empty
-  if (ZoomLevel < cy.data('minZoom')) {}
-  else cy.minZoom(ZoomLevel)
-}
-
-export function setZoom (ZoomLevel) {
-  cy.zoom(ZoomLevel)
+export function getCytoGraph() {
+  return cy
 }
 
 export default {
@@ -388,12 +316,5 @@ export default {
   getNodeName,
   getNodeID,
   getNodeArr,
-  getNodePosSum,
-  NodeToPointVector,
-  getZoom,
-  setZoom,
-  MaxZoom,
-  setMaxZoom,
-  MinZoom,
-  setMinZoom
+  getCytoGraph
 }

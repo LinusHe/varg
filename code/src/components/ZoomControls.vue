@@ -25,8 +25,7 @@ export default {
           console.log('No more zooming in: ' + Zoom.getMaxZoom())
         }
         else {
-          let CurrentZoom = Zoom.getZoom()
-          CurrentZoom+=0.1
+          let CurrentZoom = Zoom.getZoom() + 0.1
           Zoom.setZoom(CurrentZoom)
         }
       },

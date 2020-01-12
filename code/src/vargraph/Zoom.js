@@ -1,48 +1,29 @@
 import graph from "@/vargraph/index.js";
 
 export function getZoom (){
-    return graph.getZoom()
+    return graph.getCytoGraph().zoom()
 }
   
 export function getMaxZoom (){
-    return graph.MaxZoom()
+    return graph.getCytoGraph().maxZoom()
 }
   
 export function getMinZoom (){
-    return graph.MinZoom()
+    return graph.getCytoGraph().minZoom()
 }
 
 export function setZoom (ZoomLevel){
-    graph.setZoom(ZoomLevel)
+    graph.getCytoGraph().zoom(ZoomLevel)
+    graph.getCytoGraph().center()
 }
 
 export function setMinZoom(ZoomLevel){
-    graph.setMinZoom(ZoomLevel)
-}
-
-
-//ZoomOut():    
+    graph.getCytoGraph().minZoom(ZoomLevel)
+}   
 
 export function ZoomOut() {
-   let MaxVektor = 0;
-   let nodeArr=graph.getNodeArr()
-   let posx=graph.getNodePosSum('x')
-   let posy=graph.getNodePosSum('y')
-   posx= posx / nodeArr.length
-   posy= posy / nodeArr.length
-   for(let i=0;i<nodeArr.length;i++){
-       let vector = graph.NodeToPointVector(posx, posy, nodeArr[i])
-       if (vector > MaxVektor){
-           MaxVektor=vector
-       }
-   }
-   let ZoomLevel = 2 - (MaxVektor/400)
-   this.setMinZoom(ZoomLevel)
-   this.setZoom({
-       level : ZoomLevel,
-       position : {x: posx, y: posy},
-       renderedposition : {x: posx, y: posy}
-   })
+    graph.getCytoGraph().fit(0, 150);
+    graph.getCytoGraph().minZoom(graph.getCytoGraph().zoom())
 }
 
 export default {getZoom, getMaxZoom, getMinZoom, setZoom, ZoomOut, setMinZoom}
