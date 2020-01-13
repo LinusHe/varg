@@ -459,5 +459,10 @@ export default {
   getNodeName,
   getNodeID,
   getNodeArr,
+  updateNode,
+  updateEdge,
+  removeEdge,
+  removeNode,
+  getEdgesByNode,
   getCytoGraph
 }
