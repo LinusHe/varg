@@ -178,8 +178,7 @@ export function createNode(newName, newShort, newImgurl, newColor) {
     },
     position: { x: 500, y: 300 }
   });
-  count++
-  cy.data('IDCount', count++)
+  cy.data('IDCount',count++)
 }
 
 
@@ -200,9 +199,7 @@ export function createEdge(newName, edgeshort, start, end, cost, time, newlabel)
       label: newlabel,
     },
   });
-
   cy.data('IDCount', count++);
-
 }
 
 
@@ -273,9 +270,19 @@ export function SaveMe() {
         Output += this.edges[i].data('name') + ' '
       }
       return Output
-    }
-  }
+    },
 
+    freezeEverything()  {
+      for(let i=0; i<this.nodes.length;i++){
+        Object.freeze(this.nodes[i])
+      }
+      for(let i=0; i<this.edges.length;i++){
+        Object.freeze(this.edges[i])
+      }
+    }
+  };
+  content.freezeEverything()
+  Object.freeze(content)
   return content;
 }
 
@@ -449,13 +456,15 @@ export function getNodeArr() {
   return cy.nodes()
 }
 
+export function GetCytoGraph(){
+  return cy
+}
+
 export default {
   run,
   createNode,
   toString,
   createEdge,
-  SaveMe,
-  Load,
   findPath,
   getNodeName,
   getNodeID,
