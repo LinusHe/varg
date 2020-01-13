@@ -1,0 +1,45 @@
+ //Was removed because of superior functionality of cy.json() function
+ 
+ // SaveGraph(): creates an instance of BasicData if a valid input (any string input)
+    // was given by the user along with the current date (provided by the JS Date object).
+    // It also utilizes the toString method of graph to output all current nodes of the graph (for testing purposes).
+    // This method should also (in future development) do the following:
+    //  - Write new entries into the database
+    //  - Check entries within the database to avoid entries with the same name
+    //  - Update existing entries
+    SaveGraph: function() {
+      var name = prompt("Name:");
+      var date = new Date();
+      if (name != "" && name != null) {
+        let newGraph = graph.SaveMe();
+        let save = new BasicData(name, date, newGraph);
+        alert(
+          "graph name: " +
+            save.getName() +
+            "\nsave time: " +
+            save.getDate() +
+            "\nnodes: " +
+            save.getGraph().toString()
+        );
+        //save.getGraph().SaveMe();
+        this.vars.testDatabase.save(save);
+        this.vars.testDatabase.logContent();
+      } else if (name === "") {
+        alert("Fehlender Name");
+      }
+    },
+
+    LoadGraph() {
+      let Input = prompt("GraphName: ");
+      // Checks if data was input by the user
+      if (Input === "") {
+        // eslint-disable-next-line no-console
+        console.log("Missing graphName");
+      } else {
+        let instance = this.vars.testDatabase.load(Input);
+        // eslint-disable-next-line no-console
+        console.log('name: '+instance.getName()+' '+instance.getGraph().toString());
+        this.vars.testDatabase.logContent()
+        graph.Load(instance.getGraph());
+      }
+    },
