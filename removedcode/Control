@@ -1,0 +1,125 @@
+ //Was removed because of superior functionality of cy.json() function
+ 
+ // SaveGraph(): creates an instance of BasicData if a valid input (any string input)
+    // was given by the user along with the current date (provided by the JS Date object).
+    // It also utilizes the toString method of graph to output all current nodes of the graph (for testing purposes).
+    // This method should also (in future development) do the following:
+    //  - Write new entries into the database
+    //  - Check entries within the database to avoid entries with the same name
+    //  - Update existing entries
+    SaveGraph: function() {
+      var name = prompt("Name:");
+      var date = new Date();
+      if (name != "" && name != null) {
+        let newGraph = graph.SaveMe();
+        let save = new BasicData(name, date, newGraph);
+        alert(
+          "graph name: " +
+            save.getName() +
+            "\nsave time: " +
+            save.getDate() +
+            "\nnodes: " +
+            save.getGraph().toString()
+        );
+        //save.getGraph().SaveMe();
+        this.vars.testDatabase.save(save);
+        this.vars.testDatabase.logContent();
+      } else if (name === "") {
+        alert("Fehlender Name");
+      }
+    },
+
+    LoadGraph() {
+      let Input = prompt("GraphName: ");
+      // Checks if data was input by the user
+      if (Input === "") {
+        // eslint-disable-next-line no-console
+        console.log("Missing graphName");
+      } else {
+        let instance = this.vars.testDatabase.load(Input);
+        // eslint-disable-next-line no-console
+        console.log('name: '+instance.getName()+' '+instance.getGraph().toString());
+        this.vars.testDatabase.logContent()
+        graph.Load(instance.getGraph());
+      }
+    },
+
+    /* SaveMe(): 
+  Creates a constant object "content" which 
+  saves all nodes and egdges in two arrays.
+  This object is then returned. By calling this function
+  the current state of the graph can be saved. The object "content"
+  posses a unique toString method that ouputs all nodes and edges.
+  Currently for testing purposes.
+*/
+export function SaveMe() {
+  const content = {
+    nodes: cy.elements("node"),
+    edges: cy.elements("edge"),
+    minZoom: cy.data('minZoom'),
+
+    toString() {
+      let Output = ' '
+      for (let i = 0; i < this.nodes.length; i++) {
+        Output += this.nodes[i].data('name') + ', position: x:' + this.nodes[i].position('x') + ', y: ' + this.nodes[i].position('y') + ' '
+      }
+      Output += ', edges: '
+      for (let i = 0; i < this.edges.length; i++) {
+        Output += this.edges[i].data('name') + ' '
+      }
+      return Output
+    },
+
+    freezeEverything()  {
+      for(let i=0; i<this.nodes.length;i++){
+        Object.freeze(this.nodes[i])
+      }
+      for(let i=0; i<this.edges.length;i++){
+        Object.freeze(this.edges[i])
+      }
+    }
+  };
+  content.freezeEverything()
+  Object.freeze(content)
+  return content;
+}
+
+//remoeved from index.js
+
+//  Load(graph): Intended is a function which allows the current 
+//               graph that is displayed in the container to be overwritten 
+//               by another graph (which would probably be saved in the database).
+//               This would allow the user to switch between different graphs without
+//               losing progress.
+//               Currently Load(graph) gets the "content" object of 
+//               SaveMe() and then reconstructs the graph using that object by adding every element
+//               (nodes first, edges second) and defining every data value by referencing the graph that is written
+//               in the database.
+export function Load(graph) {
+  cy.elements('node').remove()
+  cy.elements('edge').remove()
+  for (let i = 0; i < graph.nodes.length; i++) {
+    let node = graph.nodes[i]
+    cy.add({
+      data: {
+        id: node.data('id'),
+        name: node.data('name')
+      },
+      position: { x: node.position('x'), y: node.position('y') }
+    });
+  }
+  for (let i = 0; i < graph.edges.length; i++) {
+    let edge = graph.edges[i]
+    cy.add({
+      data: {
+        id: edge.data('id'),
+        name: edge.data('name'),
+        source: edge.data('source'),
+        target: edge.data('target'),
+        weight1: edge.data('weigth1'),
+        weight2: edge.data('weight2'),
+        label: edge.data('label')
+      },
+    });
+  }
+}
