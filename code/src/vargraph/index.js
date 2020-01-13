@@ -185,8 +185,11 @@ export function createNode(newName, newShort, newImgurl, newColor) {
 
 // createEdge(..): Adds an edge to the Cytograph with an automatic 
 //                 generated (increasing) ID + the properties given
-export function createEdge(newName, edgeshort, start, end, cost, time, newlabel) {
+export function createEdge(newName, edgeshort, start, end, cost, time) {
   let count = cy.data('IDCount')
+
+  let newlabel = ''
+  newlabel = generateEdgeLabel(parseInt(count), cost, time);
   cy.add({
     data: {
       id: parseInt(count),
@@ -208,10 +211,10 @@ export function createEdge(newName, edgeshort, start, end, cost, time, newlabel)
 // createEdgeWithID(..): DO NOT USE THIS FUNCTION BY DEFAULT!
 //                       It's just for re-creating edges in "updateEdge(..)"
 //                       Use the normal createEdge(..) function with increasing IDs
-function createEdgeWithID(id, newName, edgeshort, start, end, cost, time, edgeLabel) {
+function createEdgeWithID(id, newName, edgeshort, start, end, cost, time) {
   let originalCount = cy.data('IDCount');
   cy.data('IDCount', id);
-  createEdge(newName, edgeshort, start, end, cost, time, edgeLabel);
+  createEdge(newName, edgeshort, start, end, cost, time);
   cy.data('IDCount', originalCount);
 }
 

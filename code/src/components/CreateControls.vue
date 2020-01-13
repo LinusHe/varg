@@ -286,8 +286,6 @@ export default {
       let w1 = parseInt(this.edgeCreateCosts);
       let w2 = parseInt(this.edgeCreateTime);
 
-      let label = "(" + w1 + "," + w2 + ")";
-
       let indexStart = this.itemsName.indexOf(this.startSelect);
       let startID = this.itemsID[indexStart];
       let indexEnd = this.itemsName.indexOf(this.endSelect);
@@ -299,8 +297,7 @@ export default {
         startID,
         endID,
         w1,
-        w2,
-        label
+        w2
       );
       this.clearFields();
       this.edgeCreateGui = false;
