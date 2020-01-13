@@ -27,7 +27,7 @@ export function run() {
         data: { id: -5, name: 'ac', source: -1, target: -3, weight1: 8, weight2: 1, label: '(8,1)' }
       },
       { // edge cb
-        data: { id: -6, name: 'cb', source: -3, target: -2, weight1: 9, weight2: 1, label: '(9,1)' }
+        data: { id: -6, name: 'cb', source: -3, target: -2, weight1: 5, weight2: 1, label: '(5,1)' }
       }
 
     ],
@@ -54,7 +54,7 @@ export function run() {
         }
       },
       {
-        selector: ':selected',
+        selector: 'edge.highlighted',
         style: {
           'background-color': 'black',
           'line-color': 'black',
@@ -66,7 +66,7 @@ export function run() {
 
       },
       {
-        selector: ':selected',
+        selector: 'node.highlighted',
         style: {
           'background-color': 'black',
           'line-color': 'black',
@@ -75,7 +75,8 @@ export function run() {
           'text-outline-color': 'black'
 
         }
-      }
+
+      },
 
     ],
 
@@ -169,30 +170,36 @@ export function createEdge(newName, edgeshort, start, end, cost, time, edgeLabel
   */
 export function findPath(option, start, end) {
 
-  var startNode = "#" + start
-  var endNode = "#" + end
+  cy.$("highlighted").removeClass("highlighted")
+  let startNodes = cy.collection()
 
+  for(let i = 0; i < start.length; i++){
+    startNodes = startNodes.union(cy.getElementById(start[i])) 
+  }
+  console.log(startNodes)
+  
+  var endNode = "#" + end
 
   cy.$(':selected').unselect()
 
   if (option === "optionCosts") {
-    var dijkstraCosts = cy.elements().dijkstra(startNode, function (edge) {
+    var dijkstraCosts = cy.elements().dijkstra(startNodes, function (edge) {
       return edge.data('weight1');
     });
 
     //saves the shortes path to a specific node
     var pathToBCosts = dijkstraCosts.pathTo(cy.$(endNode));
 
-    pathToBCosts.select()
+    pathToBCosts.addClass('highlighted')
   }
 
   if (option === "optionTime") {
-    var dijkstraTime = cy.elements().dijkstra(startNode, function (edge) {
+    var dijkstraTime = cy.elements().dijkstra(startNodes, function (edge) {
       return edge.data('weight2');
     });
 
     var pathToBTime = dijkstraTime.pathTo(cy.$(endNode));
-    pathToBTime.select()
+    pathToBTime.addClass('highlighted')
   }
 }
 

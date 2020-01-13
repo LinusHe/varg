@@ -1,3 +1,4 @@
+
 <template>
   <v-container class="optimize-container" fillwidth>
     <div class="optimize-controls">
@@ -21,6 +22,7 @@
                   @focus="getNodeItemsID(); getNodeItemsName()"
                   v-model="startSelect"
                   :items="itemsName"
+                  :multiple="true"
                   label="Startzustand"
                 ></v-select>
                 <v-select
@@ -32,7 +34,7 @@
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="green darken-1" text @click="dialog = false">Anwenden</v-btn>
+                <v-btn color="green darken-1" text @click="dialog = false" @focus='changeOption("optionTime")'>Anwenden</v-btn>
               </v-card-actions>
             </v-card>
           </v-dialog>
@@ -50,6 +52,9 @@
 </template>
 
 <script>
+/* eslint-disable no-console */
+/* eslint-disable no-unused-vars */
+
 import graph from "../vargraph";
 
 export default {
@@ -72,17 +77,23 @@ export default {
       this.itemsName = graph.getNodeName();
     },
     changeOption: function() {
-      let indexStart = this.itemsName.indexOf(this.startSelect);
-      let startID = this.itemsID[indexStart];
+
+      let startIDs = []
+      for(let i=0; i<this.startSelect.length; i++){
+        let indexStart = this.itemsName.indexOf(this.startSelect[i])
+        startIDs.push(this.itemsID[indexStart])
+        
+      }
+      
       let indexEnd = this.itemsName.indexOf(this.endSelect);
       let endID = this.itemsID[indexEnd];
 
       if (this.option === "optionTime") {
         this.option = "optionCosts";
-        graph.findPath(this.option, startID, endID);
+        graph.findPath(this.option, startIDs, endID);
       } else {
         this.option = "optionTime";
-        graph.findPath(this.option, startID, endID);
+        graph.findPath(this.option, startIDs, endID);
       }
     }
   }
