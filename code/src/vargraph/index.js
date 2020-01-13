@@ -54,7 +54,7 @@ export function run() {
         }
       },
       {
-        selector: 'edge.highlighted',
+        selector: '.highlighted',
         style: {
           'background-color': 'black',
           'line-color': 'black',
@@ -64,19 +64,7 @@ export function run() {
 
         }
 
-      },
-      {
-        selector: 'node.highlighted',
-        style: {
-          'background-color': 'black',
-          'line-color': 'black',
-          'target-arrow-color': 'black',
-          'source-arrow-color': 'black',
-          'text-outline-color': 'black'
-
-        }
-
-      },
+      }
 
     ],
 
@@ -170,38 +158,59 @@ export function createEdge(newName, edgeshort, start, end, cost, time, edgeLabel
   */
 export function findPath(option, start, end) {
 
-  cy.$("highlighted").removeClass("highlighted")
-  let startNodes = cy.collection()
-
-  for(let i = 0; i < start.length; i++){
-    startNodes = startNodes.union(cy.getElementById(start[i])) 
-  }
-  console.log(startNodes)
+  var minDistance = 0
   
-  var endNode = "#" + end
+  cy.elements().removeClass('highlighted')
 
-  cy.$(':selected').unselect()
 
-  if (option === "optionCosts") {
-    var dijkstraCosts = cy.elements().dijkstra(startNodes, function (edge) {
-      return edge.data('weight1');
-    });
+  
+    var endNode = "#" + end
+    
+    if (option === "optionCosts") {
+      console.log("costs")
+      var pathToEndCosts
+      for(let i = 0; i< start.length; i++){
+        let startNode = "#" + start[i]
+        var dijkstraCosts = cy.elements().dijkstra(startNode, function (edge) {
+          return edge.data('weight1');
+          });
+        if(i === 0){
+          minDistance = dijkstraCosts.distanceTo(cy.$(endNode))
+          pathToEndCosts = dijkstraCosts.pathTo(cy.$(endNode))
+        }
+        else if(minDistance > dijkstraCosts.distanceTo(cy.$(endNode))){
+          minDistance =dijkstraCosts.distanceTo(cy.$(endNode))
+          pathToEndCosts = dijkstraCosts.pathTo(cy.$(endNode))
+        } 
 
-    //saves the shortes path to a specific node
-    var pathToBCosts = dijkstraCosts.pathTo(cy.$(endNode));
+        //saves the shortes path to a specific node
+       }
 
-    pathToBCosts.addClass('highlighted')
-  }
-
-  if (option === "optionTime") {
-    var dijkstraTime = cy.elements().dijkstra(startNodes, function (edge) {
-      return edge.data('weight2');
-    });
-
-    var pathToBTime = dijkstraTime.pathTo(cy.$(endNode));
-    pathToBTime.addClass('highlighted')
+       pathToEndCosts.addClass('highlighted')
+    }
+  
+    if (option === "optionTime") {
+      console.log("time")
+    
+      var pathToEndTime
+      for(let i = 0; i< start.length; i++){
+        let startNode = "#" + start[i]
+        var dijkstraTime = cy.elements().dijkstra(startNode, function (edge) {
+          return edge.data('weight2');
+          });
+        if(i === 0){
+          minDistance = dijkstraTime.distanceTo(cy.$(endNode))
+          pathToEndTime = dijkstraTime.pathTo(cy.$(endNode))
+        }
+        else if(minDistance > dijkstraTime.distanceTo(cy.$(endNode))){
+          minDistance = dijkstraTime.distanceTo(cy.$(endNode))
+          pathToEndTime = dijkstraTime.pathTo(cy.$(endNode))
+        } 
+      }
+       pathToEndTime.addClass('highlighted')
   }
 }
+
 
 
 /* SaveMe(): 
