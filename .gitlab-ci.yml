@@ -9,7 +9,7 @@ cache:
     - node_modules/
 
 install_dependencies:
-  stage: set up image
+  stage: .pre
   script:
     - cd code
     - npm install
