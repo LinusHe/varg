@@ -23,5 +23,5 @@ build_code:
   script: 
   - ls
   - cd code
-  - ls
+  - npm install
   - npm run build
