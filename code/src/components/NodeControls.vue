@@ -2,6 +2,7 @@
   <div class="node-controls">
     <DetailControls ref="detailConrols" />
     <CreateControls ref="createConrols" />
+    <ModifyDataControls ref="modifyDataControls" />
     <RightClickMenu ref="rcmenu" />
   </div>
 </template>
@@ -10,6 +11,7 @@
 /* eslint-disable no-console */
 import DetailControls from "@/components/DetailControls.vue";
 import CreateControls from "@/components/CreateControls.vue";
+import ModifyDataControls from "@/components/ModifyDataControls.vue";
 import RightClickMenu from "@/components/RightClickMenu.vue";
 import graph from "@/vargraph/index.js";
 export default {
@@ -17,6 +19,7 @@ export default {
   components: {
     DetailControls,
     CreateControls,
+    ModifyDataControls,
     RightClickMenu
   },
   mounted: function() {

@@ -291,12 +291,14 @@ export default {
     openNodeDetails(node) {
       this.loadNodeData(node);
       this.$parent.$refs.createConrols.deactivateGui();
+      this.$parent.$refs.modifyDataControls.deactivateGui();
       this.edgeGui = false;
       this.nodeGui = true;
     },
     openEdgeDetails(edge) {
       this.loadEdgeData(edge);
       this.$parent.$refs.createConrols.deactivateGui();
+      this.$parent.$refs.modifyDataControls.deactivateGui();
       this.nodeGui = false;
       this.edgeGui = true;
     },

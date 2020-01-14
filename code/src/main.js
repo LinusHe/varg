@@ -7,6 +7,8 @@ import vuetify from './plugins/vuetify'
 
 Vue.config.productionTip = false
 
+export const eventBus = new Vue()
+
 Vue.directive('click-outside', {
   bind: function (el, binding, vnode) {
     this.event = function (event) {
