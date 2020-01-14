@@ -13,6 +13,7 @@ install_dependencies:
   script:
     - ls
     - cd code
+    - ls
     - npm install
     - npm install -g @vue/cli
     - npm install -g @vue/cli-service-global
@@ -22,4 +23,5 @@ build_code:
   script: 
   - ls
   - cd code
+  - ls
   - npm run build
