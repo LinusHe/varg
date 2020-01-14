@@ -11,13 +11,11 @@ cache:
 install_dependencies:
   stage: .pre
   script:
+    - ls
     - cd code
     - npm install
     - npm install -g @vue/cli
     - npm install -g @vue/cli-service-global
-  artifacts:
-    paths:
-      - node_modules/
 
 build_code:
   stage: build
