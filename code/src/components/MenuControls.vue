@@ -122,19 +122,18 @@ export default {
       var date = new Date();
       if (name != "" && name != null) {
         let newGraph = graph.SaveMe();
-          let save = new BasicData(name, date, newGraph);
-          alert(
-            "graph name: " +
-            save.getName() +
-            "\nsave time: " +
-            save.getDate() +
-            "\nnodes: " +
-            save.getGraph().toString()
-          );
-          //save.getGraph().SaveMe();
-          this.vars.testDatabase.save(save);
-          this.vars.testDatabase.logContent();
-        }
+        let save = new BasicData(name, date, newGraph);
+        alert(
+          "graph name: " +
+          save.getName() +
+          "\nsave time: " +
+          save.getDate() +
+          "\nnodes: " +
+          save.getGraph().toString()
+        );
+        this.vars.testDatabase.save(save);
+        this.vars.testDatabase.logContent();
+      }
       else if (name === "") {
         alert("Fehlender Name");
       }
