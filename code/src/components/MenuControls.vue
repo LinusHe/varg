@@ -40,6 +40,7 @@
             <v-btn @click="LoadJSon" v-on="on" fab dark small depressed color="primary">
               <v-icon dark>mdi-open-in-app</v-icon>
             </v-btn>
+            <input type="file" ref="file" accept=".json" style="display: none" />
           </template>
           <span>Graph laden</span>
         </v-tooltip>
@@ -48,11 +49,11 @@
       <v-row align="center">
         <v-tooltip right>
           <template v-slot:activator="{ on }">
-            <v-btn @click="ExportJSon" v-on="on" fab dark small depressed color="primary">
+            <v-btn @click="ExportPng" v-on="on" fab dark small depressed color="primary">
               <v-icon dark>mdi-image</v-icon>
             </v-btn>
           </template>
-          <span>Als JSon speichern</span>
+          <span>Als Bild speichern</span>
         </v-tooltip>
       </v-row>
 
@@ -82,10 +83,12 @@
 </template>
 
 <script>
+/* eslint-disable no-console */
 import graph from "@/vargraph/index.js";
-import ExJSon from "@/vargraph/JSonPersistence.js"
+import ExJSon from "@/vargraph/JSonPersistence.js";
 import BasicData from "@/vargraph/BasicData.js";
 import TestDatabase from "@/vargraph/TestDatabase.js";
+import importExport from "@/vargraph/importExport.js";
 
 export default {
   name: "MenuControls",
@@ -95,12 +98,12 @@ export default {
     };
   },
   methods: {
-    ExportJSon: function () {
-      let content=ExJSon.CreateJSon()
+    ExportJSon: function() {
+      let content = ExJSon.CreateJSon();
       //Stringify makes content readable
-      content = JSON.stringify(content, null, 2)
+      content = JSON.stringify(content, null, 2);
       // eslint-disable-next-line no-console
-      console.log(content)
+      console.log(content);
       // let link = document.createElement('link')
       // link.download='Graph.json'
       // let file = new Blob([content],{type: 'text/plain'})
@@ -112,23 +115,32 @@ export default {
       if (name != "" && name != null) {
         let save = new BasicData(name, date, content);
         this.vars.testDatabase.save(save);
-      }
-      else if (name === "") {
+        // File Output:
+        var answer = window.confirm("Graph Lokal speichern?");
+        if (answer) {
+          // Save Local
+          importExport.saveJson(graph.getCytoGraph(), name)
+        } else {
+          // Cancel
+        }
+      } else if (name === "") {
         alert("Fehlender Name");
       }
     },
+
     LoadJSon() {
-      let Input = prompt("GraphName: ");
-      // Checks if data was input by the user
-      if (Input === "") {
-        // eslint-disable-next-line no-console
-        console.log("Missing graphName");
-      } else {
-        let instance = this.vars.testDatabase.load(Input);
-        // eslint-disable-next-line no-console
-        this.vars.testDatabase.logContent()
-        ExJSon.LoadJSon(instance.getGraph());
+      (this.$refs.file);
+      this.$refs.file.click();
+      this.$refs.file.addEventListener("change", onChange);
+
+      function onChange(event) {
+        importExport.loadGraphFromJson(event);
       }
+      
+    },
+
+    ExportPng() {
+      importExport.saveGraphAsPng(graph.getCytoGraph());
     },
 
     findPathForCosts() {
@@ -137,7 +149,7 @@ export default {
     findPathForTime() {
       graph.findPath("optionTime");
     },
-    
+
     home() {
       window.location.href = "/home/login";
     },
