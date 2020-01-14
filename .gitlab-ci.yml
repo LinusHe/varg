@@ -9,7 +9,7 @@ cache:
     - node_modules/
 
 install_dependencies:
-  stage: build
+  stage: set up image
   script:
     - cd code
     - npm install
@@ -19,6 +19,9 @@ install_dependencies:
     paths:
       - node_modules/
 
-testing_testing:
-  stage: test
-  script: npm run build
+build_code:
+  stage: build
+  script: 
+  - ls
+  - cd code
+  - npm run build
