@@ -4,7 +4,7 @@
       <v-row align="center">
         <v-tooltip right>
           <template v-slot:activator="{ on }">
-            <v-btn v-on="on" fab dark small depressed color="primary" href="#popup1">
+            <v-btn v-on="on" fab dark small depressed color="primary">
               <v-icon dark>mdi-plus</v-icon>
             </v-btn>
           </template>
@@ -37,7 +37,7 @@
       <v-row align="center">
         <v-tooltip right>
           <template v-slot:activator="{ on }">
-            <v-btn @click="ExportJSon" v-on="on" fab dark small depressed color="primary">
+            <v-btn @click="SaveGraph()" v-on="on" fab dark small depressed color="primary">
               <v-icon dark>mdi-content-save</v-icon>
             </v-btn>
           </template>
@@ -48,7 +48,7 @@
       <v-row align="center">
         <v-tooltip right>
           <template v-slot:activator="{ on }">
-            <v-btn @click="LoadJSon" v-on="on" fab dark small depressed color="primary">
+            <v-btn @click="LoadGraph" v-on="on" fab dark small depressed color="primary">
               <v-icon dark>mdi-open-in-app</v-icon>
             </v-btn>
           </template>
@@ -59,11 +59,11 @@
       <v-row align="center">
         <v-tooltip right>
           <template v-slot:activator="{ on }">
-            <v-btn @click="ExportJSon" v-on="on" fab dark small depressed color="primary">
+            <v-btn v-on="on" fab dark small depressed color="primary">
               <v-icon dark>mdi-image</v-icon>
             </v-btn>
           </template>
-          <span>Als JSon speichern</span>
+          <span>Als Bild speichern</span>
         </v-tooltip>
       </v-row>
 
@@ -89,30 +89,12 @@
         </v-tooltip>
       </v-row>
     </v-card>
-    <!--Popup-Fenster-->
-    <div id="popup1" class="overlay"> <!-- Popupfenster (Solange der Button der Erstellung eines neuen Graphs nicht gedrückt ist, bleibt dieses Fenster versteckt) -->
-        <div class="popup">
-           <div class="modal-header"> <!--Header des Popupfenesters -->
-             <h2>Neuer Graph ?</h2>
-             <a class="close" href="#">&times;</a>
-             </div>
-             <div class="content">
-               Dieser Graph Speichern ?  <!-- Inhalt des Popup-Fensters-->
-               </div>
-               <div class="modal-footer"> <!--Footer des Popupfenesters, wo die Funktionsbuttons platziert sind -->
-               <v-btn class="btn" @click="ExportJSon" href="/home/new">Speichern</v-btn> <!--ExportJSon wird abgeruft, um den Graph zu speichern-->
-               <v-btn class="btn" href="/home/new">Verwerfen</v-btn> <!--Graph verwerfen und direkt an die Seite der Erstellung eines neuen Graphs weiterleiten-->
-               <v-btn class="btn" href="#">Abbrechen</v-btn> <!--Popup-Fenster ausblenden und der Graph weiter bearbeiten-->
-               </div>
-           </div>
-       </div>
   </div>
 </template>
 
 <script>
 import graph from "@/vargraph/index.js";
 import {eventBus} from "@/main.js"
-import ExJSon from "@/vargraph/JSonPersistence.js"
 import BasicData from "@/vargraph/BasicData.js";
 import TestDatabase from "@/vargraph/TestDatabase.js";
 
@@ -128,39 +110,32 @@ export default {
     modifyData() {
       eventBus.$emit("modifyData", this.vars.testDatabase)
     },
-    ExportJSon: function () {
-      let content=ExJSon.CreateJSon()
-      //Stringify makes content readable
-      content = JSON.stringify(content, null, 2)
-      // eslint-disable-next-line no-console
-      console.log(content)
-      // let link = document.createElement('link')
-      // link.download='Graph.json'
-      // let file = new Blob([content],{type: 'text/plain'})
-      // link.href = URL.createObjectURL(file)
-      // link.click()
-      // URL.revokeObjectURL(link.href)
-      let name = prompt("Name:");
-      let date = new Date();
+    // SaveGraph(): creates an instance of BasicData if a valid input (any string input)
+    // was given by the user along with the current date (provided by the JS Date object).
+    // It also utilizes the toString method of graph to output all current nodes of the graph (for testing purposes).
+    // This method should also (in future development) do the following:
+    //  - Write new entries into the database
+    //  - Check entries within the database to avoid entries with the same name
+    //  - Update existing entries
+    SaveGraph() {
+      var name = prompt("Name:");
+      var date = new Date();
       if (name != "" && name != null) {
-        let save = new BasicData(name, date, content);
+        let newGraph = graph.SaveMe();
+        let save = new BasicData(name, date, newGraph);
+        alert(
+          "graph name: " +
+          save.getName() +
+          "\nsave time: " +
+          save.getDate() +
+          "\nnodes: " +
+          save.getGraph().toString()
+        );
         this.vars.testDatabase.save(save);
+        this.vars.testDatabase.logContent();
       }
       else if (name === "") {
         alert("Fehlender Name");
-      }
-    },
-    LoadJSon() {
-      let Input = prompt("GraphName: ");
-      // Checks if data was input by the user
-      if (Input === "") {
-        // eslint-disable-next-line no-console
-        console.log("Missing graphName");
-      } else {
-        let instance = this.vars.testDatabase.load(Input);
-        // eslint-disable-next-line no-console
-        this.vars.testDatabase.logContent()
-        ExJSon.LoadJSon(instance.getGraph());
       }
     },
 
@@ -171,6 +146,20 @@ export default {
       graph.findPath("optionTime");
     },
 
+    LoadGraph() {
+      let Input = prompt("GraphName: ");
+      // Checks if data was input by the user
+      if (Input === "") {
+        // eslint-disable-next-line no-console
+        console.log("Missing graphName");
+      } else {
+        let instance = this.vars.testDatabase.load(Input);
+        // eslint-disable-next-line no-console
+        console.log('name: '+instance.getName()+' '+instance.getGraph().toString());
+        this.vars.testDatabase.logContent()
+        graph.Load(instance.getGraph());
+      }
+    },
     home() {
       window.location.href = "/home/login";
     },
