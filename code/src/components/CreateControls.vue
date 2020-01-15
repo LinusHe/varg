@@ -268,11 +268,13 @@ export default {
     },
     openNodeGui(){
       this.$parent.$refs.detailConrols.deactivateGui();
+      this.$parent.$refs.modifyDataControls.deactivateGui();
       this.nodeCreateGui = true;
       this.edgeCreateGui = false;
     },
     openEdgeGui(){
       this.$parent.$refs.detailConrols.deactivateGui();
+      this.$parent.$refs.modifyDataControls.deactivateGui();
       this.nodeCreateGui = false;
       this.edgeCreateGui = true;
     },

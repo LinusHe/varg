@@ -26,6 +26,17 @@
       <v-row align="center">
         <v-tooltip right>
           <template v-slot:activator="{ on }">
+            <v-btn @click="modifyData()" v-on="on" fab dark small depressed color="primary">
+              <v-icon dark>mdi-card-bulleted-settings</v-icon>
+            </v-btn>
+          </template>
+          <span>Daten bearbeiten</span>
+        </v-tooltip>
+      </v-row>
+
+      <v-row align="center">
+        <v-tooltip right>
+          <template v-slot:activator="{ on }">
             <v-btn @click="ExportJSon" v-on="on" fab dark small depressed color="primary">
               <v-icon dark>mdi-content-save</v-icon>
             </v-btn>
@@ -100,6 +111,7 @@
 
 <script>
 import graph from "@/vargraph/index.js";
+import {eventBus} from "@/main.js"
 import ExJSon from "@/vargraph/JSonPersistence.js"
 import BasicData from "@/vargraph/BasicData.js";
 import TestDatabase from "@/vargraph/TestDatabase.js";
@@ -108,10 +120,14 @@ export default {
   name: "MenuControls",
   created() {
     this.vars = {
+      // initializes new instance of TestDatabase when MenuControls is loaded for the first time
       testDatabase: new TestDatabase()
     };
   },
   methods: {
+    modifyData() {
+      eventBus.$emit("modifyData", this.vars.testDatabase)
+    },
     ExportJSon: function () {
       let content=ExJSon.CreateJSon()
       //Stringify makes content readable
