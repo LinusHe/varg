@@ -86,12 +86,12 @@
              <a class="close" href="#">&times;</a>
              </div>
              <div class="content">
-               Dieser Graph Speichern ?
+               Dieser Graph Speichern ?  <!-- Inhalt des Popup-Fensters-->
                </div>
-               <div class="modal-footer"> <!--Footer des Popupfenesters, wo die Funktionstasten platziert sind -->
-               <v-btn class="btn" @click="ExportJSon" href="/home/new">Speichern</v-btn>
-               <v-btn class="btn" href="/home/new">Verwerfen</v-btn>
-               <v-btn class="btn" href="#">Abbrechen</v-btn>
+               <div class="modal-footer"> <!--Footer des Popupfenesters, wo die Funktionsbuttons platziert sind -->
+               <v-btn class="btn" @click="ExportJSon" href="/home/new">Speichern</v-btn> <!--ExportJSon wird abgeruft, um den Graph zu speichern-->
+               <v-btn class="btn" href="/home/new">Verwerfen</v-btn> <!--Graph verwerfen und direkt an die Seite der Erstellung eines neuen Graphs weiterleiten-->
+               <v-btn class="btn" href="#">Abbrechen</v-btn> <!--Popup-Fenster ausblenden und der Graph weiter bearbeiten-->
                </div>
            </div>
        </div>
