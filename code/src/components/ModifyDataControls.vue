@@ -1,7 +1,8 @@
+<!-- @TODO (Erik) Documentation -->
 <template>
   <div class="modify-data-controls">
     <!-- Modify-Data Controls -->
-    <v-slide-x-transition>
+    <v-slide-x-reverse-transition>
       <v-card class="detail-card" v-show="modifyDataGui" transition="scroll-y-transition">
         <v-btn class="btn-close ma-2" @click="modifyDataGui=false" text icon color="primary">
           <v-icon>mdi-close</v-icon>
@@ -32,21 +33,24 @@
           </v-col>
         </v-row>
       
-      
-      
-      
-      
-      
-      
-      
+        <v-row>
+          <v-spacer sm="4" />
+          <v-col sm="4" align="right">
+            <v-btn color="success" outlined @click="saveNewData()">Speichern</v-btn>
+          </v-col>
+          <v-col sm="4" align="right">
+            <v-btn color="lightgrey" outlined @click="deactivateGui()">Abbrechen</v-btn>
+          </v-col>
+        </v-row>
+
       </v-card>
-    </v-slide-x-transition>
+    </v-slide-x-reverse-transition>
   </div>
 </template>
 
 <script>
 import {eventBus} from "@/main.js"
-import TestDatabase from "@/vargraph/TestDatabase.js"
+import BasicData from "@/vargraph/BasicData.js";
 export default {
   name: "ModifyDataControls",
     data() {
@@ -64,11 +68,15 @@ export default {
       this.modifyDataGui = true
     },
     loadGraphData() {
-      // @TODO (Erik) hier werden nur Beispielwerte zugewiesen,
-      // müssen noch durch richtige Werte ersetzt werden!
-      // Graph-Name == Produktname ?
-      this.graphName = this.vars.testDatabase.getContent()[0].getName()
+      // @TODO (Erik) Stückzahl in BasicData speichern
+      this.graphName = this.vars.instance.getName()
       this.quantity = 100
+    },
+    saveNewData() {
+      this.vars.instance.setName(this.graphName)
+      //this.vars.instance.setQuantity(this.quantity)
+      eventBus.$emit("saveNewData", this.vars.instance)
+      this.deactivateGui()
     },
     deactivateGui() {
       this.modifyDataGui = false
@@ -76,10 +84,10 @@ export default {
   },
   created() {
     this.vars = {
-      testDatabase: new TestDatabase()
+      instance: BasicData
     },
-    eventBus.$on("modifyData", (newTestDatabase) => {
-      this.vars.testDatabase = newTestDatabase
+    eventBus.$on("modifyData", (newInstance) => {
+      this.vars.instance = newInstance
       this.openModifyData()
     })
   }

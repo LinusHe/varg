@@ -6,14 +6,13 @@ export default class TestDatabase {
     this.basicDataArray = []
   }
 
-  getContent() {
+  getContent () {
     return this.basicDataArray
   }
 
-  /* The save function is called after clicking the button
-   * "Graph Speichern". It first handles the case of possible
-   * duplicate data names, and then pushes the BasicData element
-   * on the save array.
+  /* firstly handles the case of possible
+   * duplicate data names, then pushes the BasicData element
+   * on the save array
    */
   save (basicData) {
     const index = this.searchExisting(basicData.getName())
@@ -35,6 +34,12 @@ export default class TestDatabase {
     }
   }
 
+  // forces to save basicData over the existing element with the given name
+  forceSave (basicData, name) {
+    const index = this.searchExisting(name)
+    this.basicDataArray[index] = basicData
+  }
+
   /* looks for duplicate data names in the save array
    *
    * @returns {number} index of the element with a duplicate name, -1 if no duplicate was found
@@ -48,8 +53,9 @@ export default class TestDatabase {
     return -1
   }
 
+  // returns existing element with given name
   load (graphName) {
-    const index = this.searchExisting (graphName)
+    const index = this.searchExisting(graphName)
     return this.basicDataArray[index]
   }
 
