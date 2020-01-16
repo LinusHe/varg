@@ -100,7 +100,7 @@ export default {
         // generate filename
         switch (this.format) {
           case ".json":
-            importExport.saveJson(graph.getCytoGraph(), this.filename);
+            importExport.saveGraphAsJson(graph.getCytoGraph(), this.filename);
             break;
 
           case ".png":
