@@ -8,7 +8,7 @@
                     <v-text-field
                             class="mt-2"
                             id="DatabaseName"
-                            label="Datenbankname"
+                            v-bind:label="$t(label)"
                             v-model="DataBaseName"
                             outlined
                             hide-details
@@ -36,15 +36,19 @@ export default {
         return{
             dialog: false,
             DataBaseName: "",
+            label: "Datenbankname"
         };
     },
     methods:    {
+        $t(value){
+            return value
+        },
         setdialog(boolean) {
             this.dialog=boolean
         },
         setLabel(value) {
             this.DataBaseName=""
-            document.getElementById('DatabaseName').label=value
+            this.label=value
         },
         save()  {
             if (this.DataBaseName!= "" && this.DataBaseName!= null){

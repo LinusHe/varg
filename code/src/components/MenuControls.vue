@@ -122,8 +122,8 @@ export default {
         this.vars.testDatabase.logContent();
         this.$refs.SaveMenu.setdialog(false)
       }
-      else if (value === "") {
-        this.$refs.SaveMenu.setLabel("Fehlender Name");
+      else if (value == "" || value == null) {
+        this.$refs.SaveMenu.setLabel("Fehlender Name")
       }
     },
     SaveJSon: function () {
