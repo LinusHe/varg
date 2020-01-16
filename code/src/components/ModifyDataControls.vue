@@ -48,7 +48,7 @@
           </v-col>
         </v-row>
       
-        <!-- Headline -->
+        <!-- latestDate Display -->
         <v-row>
           <v-col sm="12">
             <v-text-field
