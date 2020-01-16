@@ -18,7 +18,6 @@
             </v-col>
             <v-col sm="3">
               <v-select
-                @focus="getFormat()"
                 required
                 v-model="format"
                 :items="formatname"
@@ -28,7 +27,7 @@
             </v-col>
             <v-col sm="1" class="mt-5">
               <v-icon @click="helpDialog = true">mdi-help</v-icon>
-              <v-snackbar color="#ffffff" multi-line v-model="helpDialog" timeout=10000>
+              <v-snackbar color="#ffffff" :timeout="helpTimeout" multi-line v-model="helpDialog">
                 <p style="color: #000000">
                   <br />Wähle das Format
                   <b>.json</b> oder
@@ -52,9 +51,11 @@
             </v-col>
           </v-row>
         </v-form>
-        <v-snackbar color="success" v-model="successDialog" timeout=2000>
-          Download Erfolgreich!
-        </v-snackbar>
+        <v-snackbar
+          color="success"
+          :timeout="successTimeout"
+          v-model="successDialog"
+        >Download Erfolgreich!</v-snackbar>
       </v-card-text>
     </v-card>
   </v-dialog>
@@ -72,7 +73,9 @@ export default {
     formatname: [".json", ".xml", ".png", ".svg", ".jpg"],
     filename: "",
     helpDialog: false,
+    helpTimeout: 10000,
     successDialog: false,
+    successTimeout: 2000,
     valid: true,
     name: "",
     nameRules: [
@@ -109,7 +112,7 @@ export default {
             break;
 
           default:
-            alert("Sorry, hier fehlt noch was!")
+            alert("Sorry, hier fehlt noch was!");
             break;
         }
         this.successDialog = true;
