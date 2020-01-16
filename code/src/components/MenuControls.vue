@@ -40,6 +40,7 @@
             <v-btn @click="LoadJSon" v-on="on" fab dark small depressed color="primary">
               <v-icon dark>mdi-open-in-app</v-icon>
             </v-btn>
+            <input type="file" ref="file" accept=".json" style="display: none" />
           </template>
           <span>Graph laden</span>
         </v-tooltip>
@@ -84,13 +85,14 @@
 </template>
 
 <script>
+/* eslint-disable no-console */
 import graph from "@/vargraph/index.js";
 import ExJSon from "@/vargraph/JSonPersistence.js"
-// eslint-disable-next-line no-unused-vars
 import BasicData from "@/vargraph/BasicData.js";
 import TestDatabase from "@/vargraph/TestDatabase.js";
 import DownloadMenu from "@/components/DownloadMenu.vue";
 import SaveMenu from "@/components/SaveMenu.vue"
+import importExport from "@/vargraph/importExport.js";
 
 export default {
   name: "MenuControls",
@@ -113,7 +115,7 @@ export default {
       if (value != "" && value != null) {
       let content=ExJSon.CreateJSon()
       //Stringify makes content readable
-      content = JSON.stringify(content, null, 2)
+      content = JSON.stringify(content, null, 2);
       // eslint-disable-next-line no-console
       console.log(content)
       let date = new Date();
@@ -130,17 +132,14 @@ export default {
       this.$refs.SaveMenu.setdialog(true)
     },
     LoadJSon() {
-      let Input = prompt("GraphName: ");
-      // Checks if data was input by the user
-      if (Input === "") {
-        // eslint-disable-next-line no-console
-        console.log("Missing graphName");
-      } else {
-        let instance = this.vars.testDatabase.load(Input);
-        // eslint-disable-next-line no-console
-        this.vars.testDatabase.logContent()
-        ExJSon.LoadJSon(instance.getGraph());
+      (this.$refs.file);
+      this.$refs.file.click();
+      this.$refs.file.addEventListener("change", onChange);
+
+      function onChange(event) {
+        importExport.loadGraphFromJson(event);
       }
+      
     },
 
     findPathForCosts() {
@@ -149,7 +148,7 @@ export default {
     findPathForTime() {
       graph.findPath("optionTime");
     },
-    
+
     home() {
       window.location.href = "/home/login";
     },
