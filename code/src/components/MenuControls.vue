@@ -26,7 +26,7 @@
       <v-row align="center">
         <v-tooltip right>
           <template v-slot:activator="{ on }">
-            <v-btn @click="ExportJSon" v-on="on" fab dark small depressed color="primary">
+            <v-btn @click="SaveJSon" v-on="on" fab dark small depressed color="primary">
               <v-icon dark>mdi-content-save</v-icon>
             </v-btn>
           </template>
@@ -80,22 +80,25 @@
       </v-row>
     </v-card>
   <DownloadMenu ref="DownloadMenu"></DownloadMenu>
+  <SaveMenu ref="SaveMenu" v-on:onSaveConfirm="onSaveConfirm"></SaveMenu>
   </div>
 </template>
 
 <script>
 /* eslint-disable no-console */
 import graph from "@/vargraph/index.js";
-import ExJSon from "@/vargraph/JSonPersistence.js";
+import ExJSon from "@/vargraph/JSonPersistence.js"
 import BasicData from "@/vargraph/BasicData.js";
 import TestDatabase from "@/vargraph/TestDatabase.js";
-import DownloadMenu from "@/components/DownloadMenu.vue"
+import DownloadMenu from "@/components/DownloadMenu.vue";
+import SaveMenu from "@/components/SaveMenu.vue"
 import importExport from "@/vargraph/importExport.js";
 
 export default {
   name: "MenuControls",
   components: {
     'DownloadMenu' : DownloadMenu,
+    'SaveMenu'  :   SaveMenu,
   },
   created() {
     this.vars = {
@@ -108,28 +111,26 @@ export default {
       //in order to make components reusable
       this.$refs.DownloadMenu.setdialog(true)
     },
-    ExportJSon: function() {
-      let content = ExJSon.CreateJSon();
+    onSaveConfirm (value){
+      if (value != "" && value != null) {
+      let content=ExJSon.CreateJSon()
       //Stringify makes content readable
       content = JSON.stringify(content, null, 2);
       // eslint-disable-next-line no-console
-      console.log(content);
-      // let link = document.createElement('link')
-      // link.download='Graph.json'
-      // let file = new Blob([content],{type: 'text/plain'})
-      // link.href = URL.createObjectURL(file)
-      // link.click()
-      // URL.revokeObjectURL(link.href)
-      let name = prompt("Name:");
+      console.log(content)
       let date = new Date();
-      if (name != "" && name != null) {
-        let save = new BasicData(name, date, content);
+        let save = new BasicData(value, date, content);
         this.vars.testDatabase.save(save);
-      } else if (name === "") {
-        alert("Fehlender Name");
+        this.vars.testDatabase.logContent();
+        this.$refs.SaveMenu.setdialog(false)
+      }
+      else if (value == "" || value == null) {
+        this.$refs.SaveMenu.setLabel("Fehlender Name")
       }
     },
-
+    SaveJSon: function () {
+      this.$refs.SaveMenu.setdialog(true)
+    },
     LoadJSon() {
       (this.$refs.file);
       this.$refs.file.click();
