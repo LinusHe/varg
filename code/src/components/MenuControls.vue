@@ -48,7 +48,7 @@
       <v-row align="center">
         <v-tooltip right>
           <template v-slot:activator="{ on }">
-            <v-btn @click="ExportJSon" v-on="on" fab dark small depressed color="primary">
+            <v-btn @click="Download" v-on="on" fab dark small depressed color="primary">
               <v-icon dark>mdi-image</v-icon>
             </v-btn>
           </template>
@@ -78,6 +78,7 @@
         </v-tooltip>
       </v-row>
     </v-card>
+  <DownloadMenu ref="DownloadMenu"></DownloadMenu>
   </div>
 </template>
 
@@ -86,15 +87,24 @@ import graph from "@/vargraph/index.js";
 import ExJSon from "@/vargraph/JSonPersistence.js"
 import BasicData from "@/vargraph/BasicData.js";
 import TestDatabase from "@/vargraph/TestDatabase.js";
+import DownloadMenu from "@/components/DownloadMenu.vue"
 
 export default {
   name: "MenuControls",
+  components: {
+    'DownloadMenu' : DownloadMenu,
+  },
   created() {
     this.vars = {
       testDatabase: new TestDatabase()
     };
   },
   methods: {
+    Download : function(){
+      //not-best-practice aka coupling of components is not wanted
+      //in order to make components reusable
+      this.$refs.DownloadMenu.setdialog(true)
+    },
     ExportJSon: function () {
       let content=ExJSon.CreateJSon()
       //Stringify makes content readable
