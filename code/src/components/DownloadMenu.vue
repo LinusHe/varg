@@ -26,7 +26,7 @@
                 label="Format"
               ></v-select>
             </v-col>
-            <v-col sm="1" class="mt-4">
+            <v-col sm="1" class="mt-5">
               <v-icon @click="helpDialog = true">mdi-help</v-icon>
               <v-snackbar color="#ffffff" multi-line v-model="helpDialog" timeout=10000>
                 <p style="color: #000000">
@@ -69,7 +69,7 @@ export default {
   data: () => ({
     dialog: false,
     format: "",
-    formatname: [],
+    formatname: [".json", ".xml", ".png", ".svg", ".jpg"],
     filename: "",
     helpDialog: false,
     successDialog: false,
@@ -104,6 +104,10 @@ export default {
             importExport.saveGraphAsPng(graph.getCytoGraph(), this.filename);
             break;
 
+          case ".jpg":
+            importExport.saveGraphAsJpg(graph.getCytoGraph(), this.filename);
+            break;
+
           default:
             alert("Sorry, hier fehlt noch was!")
             break;
@@ -111,12 +115,6 @@ export default {
         this.successDialog = true;
         this.clearFields();
       }
-    },
-    getFormat: function() {
-      this.formatname.push(".json");
-      this.formatname.push(".xml");
-      this.formatname.push(".png");
-      this.formatname.push(".svg");
     },
     clearFields: function() {
       this.$refs.form.reset();

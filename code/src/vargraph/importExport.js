@@ -1,7 +1,7 @@
 import saveAs from 'file-saver';
 import ExJSon from '@/vargraph/JSonPersistence.js'
 
-export function saveJson(graph, name) {
+export function saveGraphAsJson(graph, name) {
     var filename = "varggraph_" + graph.data("name") + "-" + name + ".json";
     var jsonfile = new Blob([JSON.stringify(graph.json(), null, 2)], { type: 'application/javascript;charset=utf-8' });
     saveAs(jsonfile, filename)
@@ -20,20 +20,40 @@ export function loadGraphFromJson(event) {
 
 export function saveGraphAsPng(graph, name) {
     var filename = "varggraph_" + graph.data("name") + "-" + name + ".png";
+    // Adjust Graph Styling
+    changeStyleForExport(graph);
+    // Generate Img and save it
+    var img = graph.png({ full: true, scale: 1.5 });
+    saveAs(img, filename);
+    // Reset Graph Styling
+    resetStyle(graph);
+
+}
+
+export function saveGraphAsJpg(graph, name) {
+    var filename = "varggraph_" + graph.data("name") + "-" + name + ".jpg";
+    // Adjust Graph Styling
+    changeStyleForExport(graph);
+    // Generate Img and save it
+    var img = graph.jpg({ full: true, scale: 1.5 });
+    saveAs(img, filename);
+    // Reset Graph Styling
+    resetStyle(graph);
+}
+
+function changeStyleForExport(graph) {
     // Show built in Labels for export
     graph.style().selector('node').style('label', 'data(name)');
     graph.style().selector('node').style('font-size', '25px');
     graph.style().selector('node').style('font-weight', 'bolder');
     graph.style().update();
+}
 
-    var img = graph.png({ full: true, scale: 1.5 });
-    saveAs(img, filename);
-
+function resetStyle(graph) {
     // Hide Labels again
     graph.style().selector('node').style('label', '');
     graph.style().update();
-
 }
 
 
-export default { saveJson, loadGraphFromJson, saveGraphAsPng }
+export default { saveGraphAsJson, loadGraphFromJson, saveGraphAsPng, saveGraphAsJpg }
