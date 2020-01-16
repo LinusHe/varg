@@ -8,11 +8,13 @@
                     <v-text-field
                             class="mt-2"
                             id="DatabaseName"
-                            v-bind:label="$t(label)"
+                            label="Datenbankname"
                             v-model="DataBaseName"
                             outlined
                             hide-details
-                    >
+                            required
+                            :rules="[v => !!v || 'Fehlender Name']"
+                            >
                     </v-text-field>
                     <v-card-actions>
                         <v-col sm="6">
@@ -40,9 +42,6 @@ export default {
         };
     },
     methods:    {
-        $t(value){
-            return value
-        },
         setdialog(boolean) {
             this.dialog=boolean
         },

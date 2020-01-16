@@ -125,7 +125,7 @@ export default {
         this.$refs.SaveMenu.setdialog(false)
       }
       else if (value == "" || value == null) {
-        this.$refs.SaveMenu.setLabel("Fehlender Name")
+        //do nothing
       }
     },
     SaveJSon: function () {
