@@ -125,14 +125,6 @@ export default {
       if (name != "" && name != null) {
         let save = new BasicData(name, date, content);
         this.vars.testDatabase.save(save);
-        // File Output:
-        var answer = window.confirm("Graph Lokal speichern?");
-        if (answer) {
-          // Save Local
-          importExport.saveJson(graph.getCytoGraph(), name)
-        } else {
-          // Cancel
-        }
       } else if (name === "") {
         alert("Fehlender Name");
       }
@@ -147,10 +139,6 @@ export default {
         importExport.loadGraphFromJson(event);
       }
       
-    },
-
-    ExportPng() {
-      importExport.saveGraphAsPng(graph.getCytoGraph());
     },
 
     findPathForCosts() {

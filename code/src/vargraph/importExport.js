@@ -18,7 +18,8 @@ export function loadGraphFromJson(event) {
     // TODO: Catch Wrong Format and other Errors!
 }
 
-export function saveGraphAsPng(graph) {
+export function saveGraphAsPng(graph, name) {
+    var filename = "varggraph_" + graph.data("name") + "-" + name + ".png";
     // Show built in Labels for export
     graph.style().selector('node').style('label', 'data(name)');
     graph.style().selector('node').style('font-size', '25px');
@@ -26,7 +27,7 @@ export function saveGraphAsPng(graph) {
     graph.style().update();
 
     var img = graph.png({ full: true, scale: 1.5 });
-    saveAs(img, 'graph.png');
+    saveAs(img, filename);
 
     // Hide Labels again
     graph.style().selector('node').style('label', '');
