@@ -51,11 +51,6 @@
             </v-col>
           </v-row>
         </v-form>
-        <v-snackbar
-          color="success"
-          :timeout="successTimeout"
-          v-model="successDialog"
-        >Download Erfolgreich!</v-snackbar>
       </v-card-text>
     </v-card>
   </v-dialog>
@@ -86,11 +81,6 @@ export default {
   }),
 
   methods: {
-    validate() {
-      if (this.$refs.form.validate()) {
-        this.helpDialog = true;
-      }
-    },
     setdialog: function(boolean) {
       this.dialog = boolean;
     },
@@ -115,7 +105,6 @@ export default {
             alert("Sorry, hier fehlt noch was!");
             break;
         }
-        this.successDialog = true;
         this.clearFields();
       }
     },
