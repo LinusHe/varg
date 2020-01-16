@@ -15,14 +15,14 @@ export default class TestDatabase {
    * on the save array
    */
   save (basicData) {
-    const index = this.searchExisting(basicData.getName())
+    const index = this.searchExisting(basicData.getGraphName())
     if (index >= 0) {
       const input = prompt("Dateiname existiert bereits. 'überschreiben' oder 'kopie' erstellen?")
       if (input === "überschreiben") {
         this.basicDataArray[index] = basicData
       }
       else if (input === "kopie") {
-        basicData.setName(basicData.getName() + " (Kopie)")
+        basicData.setGraphName(basicData.getGraphName() + " (Kopie)")
         this.basicDataArray.push(basicData)
       }
       else {
@@ -46,7 +46,7 @@ export default class TestDatabase {
    */
   searchExisting (graphName) {
     for (var i = 0; i < this.basicDataArray.length; i++) {
-      if (this.basicDataArray[i].getName() === graphName) {
+      if (this.basicDataArray[i].getGraphName() === graphName) {
         return i
       }
     }
@@ -63,7 +63,7 @@ export default class TestDatabase {
   logContent () {
     for (let element of this.basicDataArray) {
       // eslint-disable-next-line no-console
-      console.log("name: " + element.getName() + ", nodes: " + element.getGraph().toString())
+      console.log("name: " + element.getGraphName() + ", nodes: " + element.getGraph().toString())
     }
   }
 }

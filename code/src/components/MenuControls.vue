@@ -135,7 +135,7 @@ export default {
       eventBus.$emit("modifyData", this.vars.instance)
     },
     updateData(newInstance) {
-      this.vars.testDatabase.forceSave(newInstance, this.vars.instance.getName())
+      this.vars.testDatabase.forceSave(newInstance, this.vars.instance.getGraphName())
       this.vars.instance = newInstance
     },
     ExportJSon: function () {

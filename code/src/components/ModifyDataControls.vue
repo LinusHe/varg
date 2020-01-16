@@ -4,7 +4,7 @@
     <!-- Modify-Data Controls -->
     <v-slide-x-reverse-transition>
       <v-card class="detail-card" v-show="modifyDataGui" transition="scroll-y-transition">
-        <v-btn class="btn-close ma-2" @click="modifyDataGui=false" text icon color="primary">
+        <v-btn class="btn-close ma-2" @click="deactivateGui()" text icon color="primary">
           <v-icon>mdi-close</v-icon>
         </v-btn>
 
@@ -12,13 +12,13 @@
         <p class="ml-3 mb-0 font-weight-light font-italic">Graph-Daten</p>
         <p class="prodname ml-3 mr-12 mb-0">{{graphName}}</p>
       
-        <!-- Name Selection -->
+        <!-- graphName Selection -->
         <v-row>
           <v-col sm="12">
             <v-text-field
               class="mt-2"
               id="graphName"
-              label="Produktname"
+              label="Dateiname"
               v-model="graphName"
               outlined
               hide-details
@@ -26,13 +26,43 @@
           </v-col>
         </v-row>
       
-        <!-- Quantity Selection -->
+        <!-- prodName & prodQuant Selection -->
         <v-row>
+          <v-col sm="8">
+            <v-text-field
+              id="prodName"
+              label="Produktname"
+              v-model="prodName"
+              outlined
+              hide-details
+            ></v-text-field>
+          </v-col>
           <v-col sm="4">
-            <v-text-field id="nodeShort" label="Stückzahl" v-model="quantity" outlined hide-details></v-text-field>
+            <v-text-field
+              id="prodQuant" 
+              label="Stückzahl" 
+              v-model="prodQuant" 
+              outlined 
+              hide-details
+            ></v-text-field>
           </v-col>
         </v-row>
       
+        <!-- Headline -->
+        <v-row>
+          <v-col sm="12">
+            <v-text-field
+              id="latestDate"
+              label="Letzte Speicherung"
+              v-model="latestDate"
+              :disabled="true"
+              outlined
+              hide-details
+            ></v-text-field>
+          </v-col>
+        </v-row>
+
+        <!-- Save & Cancel Buttons -->
         <v-row>
           <v-spacer sm="4" />
           <v-col sm="4" align="right">
@@ -57,7 +87,9 @@ export default {
       return {
         modifyDataGui: false,
         graphName: "",
-        quantity: 0
+        latestDate: 0,
+        prodName: "",
+        prodQuant: 0
       }
     },
   methods: {
@@ -69,13 +101,18 @@ export default {
     },
     loadGraphData() {
       // @TODO (Erik) Stückzahl in BasicData speichern
-      this.graphName = this.vars.instance.getName()
-      this.quantity = 100
+      this.graphName = this.vars.instance.getGraphName()
+      this.latestDate = this.vars.instance.getLatestDate()
+      //this.prodName = this.vars.instance.getProdName()
+      //this.prodQuant = this.vars.instance.getProdQuant()
     },
     saveNewData() {
-      this.vars.instance.setName(this.graphName)
-      //this.vars.instance.setQuantity(this.quantity)
+      this.vars.instance.setGraphName(this.graphName)
+      this.vars.instance.setLatestDate(new Date())
+      //this.vars.instance.setProdName(this.prodName)
+      //this.vars.instance.setProdQuant(this.prodQuant)
       eventBus.$emit("saveNewData", this.vars.instance)
+      eventBus.$emit("updateHeader", this.prodName, this.prodQuant)
       this.deactivateGui()
     },
     deactivateGui() {
