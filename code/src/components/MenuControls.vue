@@ -49,10 +49,10 @@
         <v-tooltip right>
           <template v-slot:activator="{ on }">
             <v-btn @click="Download" v-on="on" fab dark small depressed color="primary">
-              <v-icon dark>mdi-image</v-icon>
+              <v-icon dark>mdi-file-download</v-icon>
             </v-btn>
           </template>
-          <span>Als JSon speichern</span>
+          <span>Download</span>
         </v-tooltip>
       </v-row>
 
