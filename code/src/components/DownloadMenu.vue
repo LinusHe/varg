@@ -26,7 +26,7 @@
               ></v-select>
             </v-col>
             <v-col sm="1" class="mt-5">
-              <v-icon @click="helpDialog = true">mdi-help</v-icon>
+              <v-icon @click="helpDialog = true">mdi-help-circle-outline</v-icon>
               <v-snackbar color="#ffffff" :timeout="helpTimeout" multi-line v-model="helpDialog">
                 <p style="color: #000000">
                   <br />Wähle das Format
@@ -42,12 +42,12 @@
               </v-snackbar>
             </v-col>
           </v-row>
-          <v-row>
+          <v-row class="mt-8">
             <v-col sm="6">
-              <v-btn color="success" :disabled="!valid" outlined @click="download">Download</v-btn>
+              <v-btn color="success" block :disabled="!valid" outlined @click="download">Download</v-btn>
             </v-col>
             <v-col sm="6">
-              <v-btn color="error" outlined @click="clearFields">Abbrechen</v-btn>
+              <v-btn color="error" block outlined @click="clearFields">Abbrechen</v-btn>
             </v-col>
           </v-row>
         </v-form>
