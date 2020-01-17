@@ -35,11 +35,7 @@ export function run() {
         data: { id: -11, name: 'Fräsen', source: -1, target: -2, weight1: 1.8, weight2: 1, weight3: 1.8, weight4: 1, label: '' }
       },
       { // edge cb
-<<<<<<< HEAD
-        data: { id: -6, name: 'cb', source: -3, target: -2, weight1: 5, weight2: 1, label: '(5,1)' }
-=======
         data: { id: -12, name: 'Gewinde walzen', source: -3, target: -2, weight1: 2.4, weight2: 0.7, weight3: 2.4, weight4: 0.7, label: '' }
->>>>>>> origin/testbranch1
       }
     ],
 
@@ -227,10 +223,9 @@ function createEdgeWithID(id, newName, edgeshort, start, end, cost, time, costR,
 
 
 // findPath(.. ): The method finds the shortest Path between 2 nodes
-//                (for now between a and b) with the Dijkstra Algorithm
+//                with the Dijkstra Algorithm
 export function findPath(option, start, end) {
 
-<<<<<<< HEAD
   var minDistance = 0
   
   cy.elements().removeClass('highlighted')
@@ -245,36 +240,21 @@ export function findPath(option, start, end) {
       for(let i = 0; i< start.length; i++){
         let startNode = "#" + start[i]
         var dijkstraCosts = cy.elements().dijkstra(startNode, function (edge) {
-          return edge.data('weight1');
+          return edge.data('weight1')+ edge.data('weight3');
           });
         if(i === 0){
+          //saves the shortest distance to a sspecific node(in this case endNode)
           minDistance = dijkstraCosts.distanceTo(cy.$(endNode))
+          //saves the shortes path to a specific node
           pathToEndCosts = dijkstraCosts.pathTo(cy.$(endNode))
         }
         else if(minDistance > dijkstraCosts.distanceTo(cy.$(endNode))){
           minDistance =dijkstraCosts.distanceTo(cy.$(endNode))
           pathToEndCosts = dijkstraCosts.pathTo(cy.$(endNode))
         } 
-=======
-  var startNode = "#" + start
-  var endNode = "#" + end
 
-
-  cy.$(':selected').unselect()
-
-  if (option === "optionCosts") {
-    var dijkstraCosts = cy.elements().dijkstra(startNode, function (edge) {
-      return edge.data('weight1') + edge.data('weight3');
-    });
-
-    //saves the shortes path to a specific node
-    var pathToBCosts = dijkstraCosts.pathTo(cy.$(endNode));
->>>>>>> origin/testbranch1
-
-        //saves the shortes path to a specific node
+        
        }
-
-<<<<<<< HEAD
        pathToEndCosts.addClass('highlighted')
     }
   
@@ -285,7 +265,7 @@ export function findPath(option, start, end) {
       for(let i = 0; i< start.length; i++){
         let startNode = "#" + start[i]
         var dijkstraTime = cy.elements().dijkstra(startNode, function (edge) {
-          return edge.data('weight2');
+          return edge.data('weight2')+ edge.data('weight4');
           });
         if(i === 0){
           minDistance = dijkstraTime.distanceTo(cy.$(endNode))
@@ -297,15 +277,6 @@ export function findPath(option, start, end) {
         } 
       }
        pathToEndTime.addClass('highlighted')
-=======
-  if (option === "optionTime") {
-    var dijkstraTime = cy.elements().dijkstra(startNode, function (edge) {
-      return edge.data('weight2') + edge.data('weight4');
-    });
-
-    var pathToBTime = dijkstraTime.pathTo(cy.$(endNode));
-    pathToBTime.select()
->>>>>>> origin/testbranch1
   }
 }
 

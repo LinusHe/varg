@@ -42,7 +42,7 @@
         <v-row align="center">
           <div class="switch-container">
             <p class="switch-text-left">Zeit</p>
-            <v-switch v-bind="optimizingOption" class="switch-button" color="primary" flat inset @change="changeOption(); optimizing()" ></v-switch>
+            <v-switch v-model="optimizingOption" class="switch-button" color="primary" flat inset @change="optimizing()" ></v-switch>
             <p class="switch-text-right">Kosten</p>
           </div>
         </v-row>
@@ -61,7 +61,7 @@ export default {
   name: "OptimizeControls",
   data() {
     return {
-      optimizingOption: "optionTime",
+      optimizingOption: false, // True means option costs and false is option time
       itemsName: [""],
       itemsID: [""],
       dialog: false,
@@ -71,16 +71,6 @@ export default {
   },
   methods: {
 
-    changeOption: function(){
-    
-      if(this.optimizingOption === "optionTime"){
-        this.optimizingOption = "optionCosts"
-
-      }
-      else{
-        this.optimizingOption = "optionTime"
-      }
-    },
     getNodeItemsID() {
       this.itemsID = graph.getNodeID();
     },
@@ -88,6 +78,15 @@ export default {
       this.itemsName = graph.getNodeName();
     },
     optimizing: function() {
+
+      let option
+      if(this.optimizingOption === false){  // True means option costs and false is option time
+        option= "optionTime"
+      }
+      else{
+        option= "optionCosts"
+      }
+
 
       let startIDs = []
       for(let i=0; i<this.startSelect.length; i++){
@@ -99,7 +98,7 @@ export default {
       let indexEnd = this.itemsName.indexOf(this.endSelect);
       let endID = this.itemsID[indexEnd];
 
-      graph.findPath(this.optimizingOption, startIDs, endID)
+      graph.findPath(option, startIDs, endID)
 
     }
   }

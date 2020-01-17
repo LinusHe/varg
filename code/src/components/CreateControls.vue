@@ -315,10 +315,10 @@ export default {
       this.itemsName = graph.getNodeName();
     },
     createEdge() {
-      let w1 = parseInt(this.edgeCreateCosts);
-      let w2 = parseInt(this.edgeCreateTime);
-      let w1R = parseInt(this.edgeCreateCostsR);
-      let w2R = parseInt(this.edgeCreateTimeR);
+      let w1 = parseFloat(this.edgeCreateCosts);
+      let w2 = parseFloat(this.edgeCreateTime);
+      let w1R = parseFloat(this.edgeCreateCostsR);
+      let w2R = parseFloat(this.edgeCreateTimeR);
 
       let indexStart = this.itemsName.indexOf(this.startSelect);
       let startID = this.itemsID[indexStart];
