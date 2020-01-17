@@ -4,7 +4,7 @@
       <v-row align="center">
         <v-tooltip right>
           <template v-slot:activator="{ on }">
-            <v-btn v-on="on" fab dark small depressed color="primary">
+            <v-btn v-on="on" fab dark small depressed color="primary" href="#popup1">
               <v-icon dark>mdi-plus</v-icon>
             </v-btn>
           </template>
@@ -78,6 +78,23 @@
         </v-tooltip>
       </v-row>
     </v-card>
+
+    <div id="popup1" class="overlay"> <!-- Popupfenster (Solange der Button der Erstellung einer neuen Graph nicht gedrückt ist, bleibt dieses Fenster versteckt) -->
+    <div class="popup">
+      <div class="modal-header"> <!--Header des Popupfenesters -->
+      <h2>Neuer Graph ?</h2>
+      <a class="close" href="#">&times;</a>
+      </div>
+      <div class="content">
+        Dieser Graph speichern?
+        </div>
+        <div class="modal-footer"> <!--Footer des Popupfenesters, wo die Funktionstasten platziert sind -->
+        <v-btn class="btn" @click="SaveGraph()" href="/home/new">Speichern</v-btn>
+        <v-btn class="btn" href="/home/new">Verwerfen</v-btn>
+        <v-btn class="btn" href="#">Abbrechen</v-btn>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -87,7 +104,7 @@ import BasicData from "@/vargraph/BasicData.js";
 import TestDatabase from "@/vargraph/TestDatabase.js";
 
 export default {
-  name: "Controls",
+  name: "MenuControls",
   created() {
     this.vars = {
       testDatabase: new TestDatabase()

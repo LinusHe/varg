@@ -23,7 +23,7 @@
         <v-tooltip left>
           <template v-slot:activator="{ on }">
             <v-btn
-              @click="nodeCreateGui = true; edgeCreateGui = false"
+              @click="openNodeGui"
               v-on="on"
               fab
               dark
@@ -37,7 +37,7 @@
         <v-tooltip left>
           <template v-slot:activator="{ on }">
             <v-btn
-              @click="nodeCreateGui = false; edgeCreateGui = true"
+              @click="openEdgeGui"
               v-on="on"
               fab
               dark
@@ -107,14 +107,16 @@
                 class="color-label v-label v-label--active theme--light"
               >Farbe</label>
               <v-radio-group v-model="nodeCreateColor" id="nodeCreateColor" row>
-                <v-radio class="color-radio-blue" color="blue" value="blue"></v-radio>
-                <v-radio class="color-radio-green" color="green" value="green"></v-radio>
-                <v-radio class="color-radio-purple" color="purple" value="purple"></v-radio>
-                <v-radio class="color-radio-pink" color="pink" value="pink"></v-radio>
-                <v-radio class="color-radio-red" color="red" value="red"></v-radio>
-                <v-radio class="color-radio-orange" color="orange" value="orange"></v-radio>
-                <v-radio class="color-radio-yellow" color="yellow" value="yellow"></v-radio>
-                <v-radio class="color-radio-lightyellow" color="lightyellow" value="lightyellow"></v-radio>
+                <!-- Attention: If you change the color, change also the corresponding color in the color-class
+                                in the src/styles/components/DetailControls.less -->
+                <v-radio checked="checked" class="color-radio-1" color="#2699FB" value="2699FB"></v-radio>
+                <v-radio class="color-radio-2" color="#00CEC9" value="00CEC9"></v-radio>
+                <v-radio class="color-radio-3" color="#6C5CE7" value="6C5CE7"></v-radio>
+                <v-radio class="color-radio-4" color="#FD79A8" value="FD79A8"></v-radio>
+                <v-radio class="color-radio-5" color="#FF7675" value="FF7675"></v-radio>
+                <v-radio class="color-radio-6" color="#FAB1A0" value="FAB1A0"></v-radio>
+                <v-radio class="color-radio-7" color="#FDCB6E" value="FDCB6E"></v-radio>
+                <v-radio class="color-radio-8" color="#FFEAA7" value="FFEAA7"></v-radio>
               </v-radio-group>
             </div>
           </v-col>
@@ -217,9 +219,41 @@
               v-model="edgeCreateTime"
               outlined
               hint="Einheit ist in den Einstellungen wählbar"
+              hide-details
             ></v-text-field>
           </v-col>
         </v-row>
+
+        <!-- Rüstkosten  -->
+        <v-row>
+          <v-col sm="6">
+            <v-text-field
+              id="edgeCreateCostsR"
+              label="Rüstkosten"
+              suffix="€"
+              type="number"
+              v-model="edgeCreateCostsR"
+              outlined
+              hide-details
+            ></v-text-field>
+          </v-col>
+          <v-col sm="6">
+            <v-text-field
+              id="edgeCreateTimeR"
+              label="Rüstzeit"
+              suffix="Sek."
+              type="number"
+              v-model="edgeCreateTimeR"
+              outlined
+              hide-details
+            ></v-text-field>
+          </v-col>
+        </v-row>
+
+
+
+
+
 
         <!-- Create Buttons -->
         <v-row>
@@ -246,7 +280,7 @@ export default {
       nodeCreateName: "",
       nodeCreateShort: "",
       nodeCreateImgPath: "",
-      nodeCreateColor: "",
+      nodeCreateColor: "2699FB",
       edgeCreateGui: false,
       edgeCreateName: "",
       edgeCreateShort: "",
@@ -260,6 +294,20 @@ export default {
     };
   },
   methods: {
+    deactivateGui(){
+      this.nodeCreateGui = false;
+      this.edgeCreateGui = false;
+    },
+    openNodeGui(){
+      this.$parent.$refs.detailConrols.deactivateGui();
+      this.nodeCreateGui = true;
+      this.edgeCreateGui = false;
+    },
+    openEdgeGui(){
+      this.$parent.$refs.detailConrols.deactivateGui();
+      this.nodeCreateGui = false;
+      this.edgeCreateGui = true;
+    },
     getNodeItemsID() {
       this.itemsID = graph.getNodeID();
     },
@@ -269,8 +317,8 @@ export default {
     createEdge() {
       let w1 = parseInt(this.edgeCreateCosts);
       let w2 = parseInt(this.edgeCreateTime);
-
-      let label = "(" + w1 + "," + w2 + ")";
+      let w1R = parseInt(this.edgeCreateCostsR);
+      let w2R = parseInt(this.edgeCreateTimeR);
 
       let indexStart = this.itemsName.indexOf(this.startSelect);
       let startID = this.itemsID[indexStart];
@@ -284,7 +332,8 @@ export default {
         endID,
         w1,
         w2,
-        label
+        w1R,
+        w2R
       );
       this.clearFields();
       this.edgeCreateGui = false;
