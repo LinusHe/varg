@@ -219,9 +219,41 @@
               v-model="edgeCreateTime"
               outlined
               hint="Einheit ist in den Einstellungen wählbar"
+              hide-details
             ></v-text-field>
           </v-col>
         </v-row>
+
+        <!-- Rüstkosten  -->
+        <v-row>
+          <v-col sm="6">
+            <v-text-field
+              id="edgeCreateCostsR"
+              label="Rüstkosten"
+              suffix="€"
+              type="number"
+              v-model="edgeCreateCostsR"
+              outlined
+              hide-details
+            ></v-text-field>
+          </v-col>
+          <v-col sm="6">
+            <v-text-field
+              id="edgeCreateTimeR"
+              label="Rüstzeit"
+              suffix="Sek."
+              type="number"
+              v-model="edgeCreateTimeR"
+              outlined
+              hide-details
+            ></v-text-field>
+          </v-col>
+        </v-row>
+
+
+
+
+
 
         <!-- Create Buttons -->
         <v-row>
@@ -285,10 +317,10 @@ export default {
       this.itemsName = graph.getNodeName();
     },
     createEdge() {
-      let w1 = parseInt(this.edgeCreateCosts);
-      let w2 = parseInt(this.edgeCreateTime);
-
-      let label = "(" + w1 + "," + w2 + ")";
+      let w1 = parseFloat(this.edgeCreateCosts);
+      let w2 = parseFloat(this.edgeCreateTime);
+      let w1R = parseFloat(this.edgeCreateCostsR);
+      let w2R = parseFloat(this.edgeCreateTimeR);
 
       let indexStart = this.itemsName.indexOf(this.startSelect);
       let startID = this.itemsID[indexStart];
@@ -302,7 +334,8 @@ export default {
         endID,
         w1,
         w2,
-        label
+        w1R,
+        w2R
       );
       this.clearFields();
       this.edgeCreateGui = false;

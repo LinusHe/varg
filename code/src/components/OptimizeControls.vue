@@ -1,3 +1,4 @@
+
 <template>
   <v-container class="optimize-container" fillwidth>
     <div class="optimize-controls">
@@ -21,6 +22,7 @@
                   @focus="getNodeItemsID(); getNodeItemsName()"
                   v-model="startSelect"
                   :items="itemsName"
+                  :multiple="true"
                   label="Startzustand"
                 ></v-select>
                 <v-select
@@ -32,7 +34,7 @@
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="green darken-1" text @click="dialog = false">Anwenden</v-btn>
+                <v-btn color="green darken-1" text @click="dialog = false" @focus='optimizing()'>Anwenden</v-btn>
               </v-card-actions>
             </v-card>
           </v-dialog>
@@ -40,7 +42,7 @@
         <v-row align="center">
           <div class="switch-container">
             <p class="switch-text-left">Zeit</p>
-            <v-switch class="switch-button" color="primary" flat inset @change="changeOption"></v-switch>
+            <v-switch v-model="optimizingOption" class="switch-button" color="primary" flat inset @change="optimizing()" ></v-switch>
             <p class="switch-text-right">Kosten</p>
           </div>
         </v-row>
@@ -50,13 +52,16 @@
 </template>
 
 <script>
+/* eslint-disable no-console */
+/* eslint-disable no-unused-vars */
+
 import graph from "../vargraph";
 
 export default {
   name: "OptimizeControls",
   data() {
     return {
-      option: "optionTime",
+      optimizingOption: false, // True means option costs and false is option time
       itemsName: [""],
       itemsID: [""],
       dialog: false,
@@ -65,25 +70,36 @@ export default {
     };
   },
   methods: {
+
     getNodeItemsID() {
       this.itemsID = graph.getNodeID();
     },
     getNodeItemsName() {
       this.itemsName = graph.getNodeName();
     },
-    changeOption: function() {
-      let indexStart = this.itemsName.indexOf(this.startSelect);
-      let startID = this.itemsID[indexStart];
+    optimizing: function() {
+
+      let option
+      if(this.optimizingOption === false){  // True means option costs and false is option time
+        option= "optionTime"
+      }
+      else{
+        option= "optionCosts"
+      }
+
+
+      let startIDs = []
+      for(let i=0; i<this.startSelect.length; i++){
+        let indexStart = this.itemsName.indexOf(this.startSelect[i])
+        startIDs.push(this.itemsID[indexStart])
+        
+      }
+      
       let indexEnd = this.itemsName.indexOf(this.endSelect);
       let endID = this.itemsID[indexEnd];
 
-      if (this.option === "optionTime") {
-        this.option = "optionCosts";
-        graph.findPath(this.option, startID, endID);
-      } else {
-        this.option = "optionTime";
-        graph.findPath(this.option, startID, endID);
-      }
+      graph.findPath(option, startIDs, endID)
+
     }
   }
 };
