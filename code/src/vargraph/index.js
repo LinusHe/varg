@@ -29,13 +29,13 @@ export function run() {
       },
       { // edge ab 
         //! it's important to wright the weigth as a number and not as a string (for the algorithm)
-        data: { id: -10, name: 'Schneiden', source: -1, target: -2, weight1: 2, weight2: 0.3, weight3: 2, weight4: 0.3, label: '' },
+        data: { id: -10, name: 'Schneiden', source: -1, target: -2, weight1: 2, weight2: 0.3, label: '' },
       },
       { // edge ac
-        data: { id: -11, name: 'Fräsen', source: -1, target: -2, weight1: 1.8, weight2: 1, weight3: 1.8, weight4: 1, label: '' }
+        data: { id: -11, name: 'Fräsen', source: -1, target: -2, weight1: 1.8, weight2: 1, label: '' }
       },
       { // edge cb
-        data: { id: -12, name: 'Gewinde walzen', source: -3, target: -2, weight1: 2.4, weight2: 0.7, weight3: 2.4, weight4: 0.7, label: '' }
+        data: { id: -12, name: 'Gewinde walzen', source: -3, target: -2, weight1: 2.4, weight2: 0.7, label: '' }
       }
     ],
 
@@ -77,7 +77,7 @@ export function run() {
         }
       },
       {
-        selector: '.highlighted',
+        selector: ':selected',
         style: {
           "border-width": 5.5,
           "border-opacity": 0.5,
@@ -96,7 +96,7 @@ export function run() {
       // name: 'klay',
       rows: 1,
       padding: 150,
-      spacingFactor: 1.8,
+      spacingFactor: 1.2,
       grid: {
         spacing: 150,
         fixedAlignment: 'BALANCED',
@@ -128,7 +128,7 @@ export function run() {
   };
 
   cy.edges().forEach(e => {
-    e.data('label', generateEdgeLabel(e.id(), e.data('weight1'), e.data('weight2'), e.data('weight3'), e.data('weight4')));
+    e.data('label', generateEdgeLabel(e.id(), e.data('weight1'), e.data('weight2')));
     e.layoutDimensions(options);
   });
 
@@ -185,12 +185,10 @@ export function createNode(newName, newShort, newImgurl, newColor) {
 
 // createEdge(..): Adds an edge to the Cytograph with an automatic 
 //                 generated (increasing) ID + the properties given
-export function createEdge(newName, edgeshort, start, end, cost, time, costR, timeR
-  ) {
-  let count = cy.data('IDCount')
-
-  let newlabel = ''
-  newlabel = generateEdgeLabel(parseInt(count), cost, time, costR, timeR);
+export function createEdge(newName, edgeshort, start, end, cost, time, newlabel) {
+  let count = cy.data('IDCount');
+  count++
+  newlabel =   generateEdgeLabel(count, cost, time);
   cy.add({
     data: {
       id: parseInt(count),
@@ -200,8 +198,6 @@ export function createEdge(newName, edgeshort, start, end, cost, time, costR, ti
       target: end,
       weight1: cost,
       weight2: time,
-      weight3: costR,
-      weight4: timeR,
       label: newlabel,
     },
   });
@@ -212,72 +208,44 @@ export function createEdge(newName, edgeshort, start, end, cost, time, costR, ti
 // createEdgeWithID(..): DO NOT USE THIS FUNCTION BY DEFAULT!
 //                       It's just for re-creating edges in "updateEdge(..)"
 //                       Use the normal createEdge(..) function with increasing IDs
-function createEdgeWithID(id, newName, edgeshort, start, end, cost, time, costR, timeR) {
+function createEdgeWithID(id, newName, edgeshort, start, end, cost, time, edgeLabel) {
   let originalCount = cy.data('IDCount');
   cy.data('IDCount', id);
-  createEdge(newName, edgeshort, start, end, cost, time, costR, timeR);
+  createEdge(newName, edgeshort, start, end, cost, time, edgeLabel);
   cy.data('IDCount', originalCount);
 }
 
 
 // findPath(.. ): The method finds the shortest Path between 2 nodes
-//                with the Dijkstra Algorithm
+//                (for now between a and b) with the Dijkstra Algorithm
 export function findPath(option, start, end) {
 
-  var minDistance = 0
-  
-  cy.elements().removeClass('highlighted')
+  var startNode = "#" + start
+  var endNode = "#" + end
 
 
-  
-    var endNode = "#" + end
-    
-    if (option === "optionCosts") {
-      console.log("costs")
-      var pathToEndCosts
-      for(let i = 0; i< start.length; i++){
-        let startNode = "#" + start[i]
-        var dijkstraCosts = cy.elements().dijkstra(startNode, function (edge) {
-          return edge.data('weight1')+ edge.data('weight3');
-          });
-        if(i === 0){
-          //saves the shortest distance to a sspecific node(in this case endNode)
-          minDistance = dijkstraCosts.distanceTo(cy.$(endNode))
-          //saves the shortes path to a specific node
-          pathToEndCosts = dijkstraCosts.pathTo(cy.$(endNode))
-        }
-        else if(minDistance > dijkstraCosts.distanceTo(cy.$(endNode))){
-          minDistance =dijkstraCosts.distanceTo(cy.$(endNode))
-          pathToEndCosts = dijkstraCosts.pathTo(cy.$(endNode))
-        } 
+  cy.$(':selected').unselect()
 
-        
-       }
-       pathToEndCosts.addClass('highlighted')
-    }
-  
-    if (option === "optionTime") {
-      console.log("time")
-    
-      var pathToEndTime
-      for(let i = 0; i< start.length; i++){
-        let startNode = "#" + start[i]
-        var dijkstraTime = cy.elements().dijkstra(startNode, function (edge) {
-          return edge.data('weight2')+ edge.data('weight4');
-          });
-        if(i === 0){
-          minDistance = dijkstraTime.distanceTo(cy.$(endNode))
-          pathToEndTime = dijkstraTime.pathTo(cy.$(endNode))
-        }
-        else if(minDistance > dijkstraTime.distanceTo(cy.$(endNode))){
-          minDistance = dijkstraTime.distanceTo(cy.$(endNode))
-          pathToEndTime = dijkstraTime.pathTo(cy.$(endNode))
-        } 
-      }
-       pathToEndTime.addClass('highlighted')
+  if (option === "optionCosts") {
+    var dijkstraCosts = cy.elements().dijkstra(startNode, function (edge) {
+      return edge.data('weight1');
+    });
+
+    //saves the shortes path to a specific node
+    var pathToBCosts = dijkstraCosts.pathTo(cy.$(endNode));
+
+    pathToBCosts.select()
+  }
+
+  if (option === "optionTime") {
+    var dijkstraTime = cy.elements().dijkstra(startNode, function (edge) {
+      return edge.data('weight2');
+    });
+
+    var pathToBTime = dijkstraTime.pathTo(cy.$(endNode));
+    pathToBTime.select()
   }
 }
-
 
 
 /* SaveMe(): 
@@ -353,8 +321,6 @@ export function Load(graph) {
         target: edge.data('target'),
         weight1: edge.data('weigth1'),
         weight2: edge.data('weight2'),
-        weight3: edge.data('weigth3'),
-        weight4: edge.data('weight4'),
         label: edge.data('label')
       },
     });
@@ -374,13 +340,13 @@ export function updateNode(id, newName, newShort, newImgurl, newColor) {
 
 
 // updateNode(..): Updates an Edge by ID with the given arguments
-export function updateEdge(id, newName, newShort, newSource, newTarget, newCost, newTime, newCostR, newTimeR) {
+export function updateEdge(id, newName, newShort, newSource, newTarget, newCost, newTime) {
   let edge = cy.getElementById(id);
-  let label = generateEdgeLabel(id, newCost, newTime, newCostR, newTimeR);
+  let label = generateEdgeLabel(id, newCost, newTime);
   // Generate New Edge, if source or target are changing
   if (edge.data('source') != newSource || edge.data('target') != newTarget) {
     edge.remove();
-    createEdgeWithID(id, newName, newShort, newSource, newTarget, newCost, newTime, newCostR, newTimeR)
+    createEdgeWithID(id, newName, newShort, newSource, newTarget, newCost, newTime, label)
   }
   edge.data('name', newName);
   edge.data('short', newShort);
@@ -388,8 +354,6 @@ export function updateEdge(id, newName, newShort, newSource, newTarget, newCost,
   edge.data('target', newTarget);
   edge.data('weight1', newCost);
   edge.data('weight2', newTime);
-  edge.data('weight3', newCostR);
-  edge.data('weight4', newTimeR);
   edge.data('label', label);
 }
 
@@ -461,9 +425,9 @@ export function getEdgesByNode(id) {
 
 
 // generateEdgeLabel(..): Creates and Returns the Edge-Label based on the Weights
-function generateEdgeLabel(id, newCost, newTime, newCostR, newTimeR) {
+function generateEdgeLabel(id, newCost, newTime) {
   var e = cy.getElementById(id);
-  return e.data('name') + '\nKosten: ' + newCost + '€ | Zeit: ' + newTime + 's' + '\nRüstkosten: ' + newCostR + '€ | Rüstzeit: ' + newTimeR + 's';
+  return e.data('name') + '\nKosten: ' + newCost + '€ | Zeit: ' + newTime + 's';
 }
 
 
