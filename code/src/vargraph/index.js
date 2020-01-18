@@ -166,7 +166,7 @@ export function toString() {
 //                 generated (increasing) ID + the properties given
 export function createNode(newName, newShort, newImgurl, newColor) {
   let count = cy.data('IDCount')
-  count++
+  
   cy.add({
     data: {
       id: parseInt(count),
@@ -180,6 +180,7 @@ export function createNode(newName, newShort, newImgurl, newColor) {
     },
     position: { x: 500, y: 300 }
   });
+  count++
   cy.data('IDCount',count)
 }
 
@@ -189,7 +190,7 @@ export function createNode(newName, newShort, newImgurl, newColor) {
 export function createEdge(newName, edgeshort, start, end, cost, time, costR, timeR
   ) {
   let count = cy.data('IDCount')
-  count++
+
   let newlabel = ''
   newlabel = generateEdgeLabel(parseInt(count), cost, time, costR, timeR);
   cy.add({
@@ -206,6 +207,7 @@ export function createEdge(newName, edgeshort, start, end, cost, time, costR, ti
       label: newlabel,
     },
   });
+  count++
   cy.data('IDCount', count);
 }
 
