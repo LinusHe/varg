@@ -12,6 +12,7 @@
       placeholder="beispiel@htwk-leipzig.de"
       outlined
       clearable
+      autofocus
       @focus="clearError()" 
     ></v-text-field>
     <v-text-field
