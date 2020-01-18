@@ -12,6 +12,10 @@
       placeholder="beispiel@htwk-leipzig.de"
       outlined
       clearable
+<<<<<<< HEAD
+=======
+      autofocus
+>>>>>>> LoginBranch
       @focus="clearError()" 
     ></v-text-field>
     <v-text-field
@@ -59,7 +63,11 @@ export default {
         
         if(this.input.email != "" && this.input.password != "") {
           if(this.input.email == "VarG" && this.input.password == "2020") {
+<<<<<<< HEAD
             this.$store.commit('increment');
+=======
+            this.$emit("authenticated", true);
+>>>>>>> LoginBranch
             this.$router.replace("/home/menu");
           } else {
             this.error = 'Falscher Nutzername oder falsches Passwort'

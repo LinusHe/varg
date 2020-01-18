@@ -31,7 +31,11 @@
       login() {
         if(this.input.username != "" && this.input.password != "") {
           if(this.input.username == "VarG" && this.input.password == "2020") {
+<<<<<<< HEAD
             this.$emit("auth", true);
+=======
+            this.$emit("authenticated", true);
+>>>>>>> LoginBranch
             this.$router.replace("/home");
           } else {
             this.error = 'Falscher Nutzername oder falsches Passwort'
