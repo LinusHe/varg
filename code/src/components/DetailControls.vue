@@ -1,0 +1,237 @@
+<template>
+  <div class="detail-controls">
+    <!-- ONLY FOR TESTING! @TODO -->
+    <v-card style="position: absolute; top: -100px; right: 50px" max-width="400">
+      <v-card-title>Test!</v-card-title>
+      <v-card-text>
+        <p>Später soll die GUI beim Klick auf die Knoten / Kanten im Graphen erscheinen. Zum testen gibts die Buttons hier:</p>
+        <v-btn @click="nodeGui = true; edgeGui = false">klick auf knoten</v-btn>
+        <v-btn @click="nodeGui = false; edgeGui = true">klick auf kante</v-btn>
+      </v-card-text>
+    </v-card>
+
+    <!-- Re-Activate Button -->
+    <!-- <v-card class="activate-button" v-show="reopen">
+      <v-btn @click="show= !show" class="ma-2" text icon color="primary">
+        <v-icon>mdi-triangle</v-icon>
+      </v-btn>
+    </v-card>-->
+
+    <!-- Detail-Zustand Controls -->
+    <v-slide-x-reverse-transition>
+      <v-card
+        class="detail-card"
+        v-show="nodeGui"
+        transition="scroll-y-transition"
+      >
+        <v-btn class="btn-close ma-2" @click="nodeGui= false" text icon color="primary">
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
+
+        <!-- Headline -->
+        <p class="ml-3 mb-0 font-weight-light font-italic">Zustandseigenschaften</p>
+        <p class="prodname ml-3 mr-12 mb-0">{{nodeName}}</p>
+
+        <!-- Name Selection -->
+        <v-row>
+          <v-col sm="12">
+            <v-text-field
+              class="mt-2"
+              id="nodeName"
+              label="Bezeichnung"
+              v-model="nodeName"
+              outlined
+              hide-details
+            ></v-text-field>
+          </v-col>
+        </v-row>
+
+        <!-- Shortcut & Icon Upload -->
+        <v-row>
+          <v-col sm="3">
+            <v-text-field id="nodeShort" label="Kürzel" v-model="nodeShort" outlined hide-details></v-text-field>
+          </v-col>
+          <v-col sm="9">
+            <v-text-field
+              id="nodeImgpath"
+              label="Icon/Bild"
+              v-model="nodeImgpath"
+              outlined
+              hide-details
+            ></v-text-field>
+          </v-col>
+        </v-row>
+
+        <!-- Color Selection -->
+        <v-row>
+          <v-col sm="12">
+            <div class="radio-container">
+              <label for="nodeColor" class="color-label v-label v-label--active theme--light">Farbe</label>
+              <v-radio-group v-model="nodeColor" id="nodeColor" row>
+                <v-radio class="color-radio-blue" color="blue" value="blue"></v-radio>
+                <v-radio class="color-radio-green" color="green" value="green"></v-radio>
+                <v-radio class="color-radio-purple" color="purple" value="purple"></v-radio>
+                <v-radio class="color-radio-pink" color="pink" value="pink"></v-radio>
+                <v-radio class="color-radio-red" color="red" value="red"></v-radio>
+                <v-radio class="color-radio-orange" color="orange" value="orange"></v-radio>
+                <v-radio class="color-radio-yellow" color="yellow" value="yellow"></v-radio>
+                <v-radio class="color-radio-lightyellow" color="lightyellow" value="lightyellow"></v-radio>
+              </v-radio-group>
+            </div>
+          </v-col>
+        </v-row>
+        <!-- Create Buttons -->
+        <v-row>
+          <v-spacer sm=4 />
+          <v-col sm="4" align="right">
+            <v-btn color="success" outlined @click="nodeGui = false">Speichern</v-btn>
+          </v-col>
+          <v-dialog v-model="deletedialog" persistent max-width="350">
+            <template v-slot:activator="{ on }">
+              <v-col sm="4" align="right">
+            <v-btn color="error" v-on="on" outlined>Löschen</v-btn>
+          </v-col>
+            </template>
+            <v-card>
+              <v-card-title class="headline">Zustand löschen</v-card-title>
+              <v-card-text>Soll der Zustand <b>{{nodeName}}</b> endgültig gelöscht werden? Diese Aktion kann nicht rückgängig gemacht werden.</v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="error" text @click="deletedialog = false; nodeGui = false">Löschen</v-btn>
+                <v-btn color="grey" text @click="deletedialog = false">Abbrechen</v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+        </v-row>
+      </v-card>
+    </v-slide-x-reverse-transition>
+
+    <!-- Detail-Verbindung Controls -->
+    <v-slide-x-reverse-transition>
+      <v-card class="detail-card" v-show="edgeGui" transition="scroll-y-transition">
+        <v-btn class="btn-close ma-2" @click="edgeGui= false" text icon color="primary">
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
+
+        <!-- Headline -->
+        <p class="ml-3 mb-0 font-weight-light font-italic">Verbindungseigenschaften</p>
+        <p class="prodname ml-3 mr-12 mb-0">{{edgeName}}</p>
+
+        <!-- Name Selection -->
+        <v-row>
+          <v-col sm="9">
+            <v-text-field
+              class="mt-2"
+              id="edgeName"
+              label="Bezeichnung"
+              v-model="edgeName"
+              outlined
+              hide-details
+            ></v-text-field>
+          </v-col>
+          <v-col sm="3">
+            <v-text-field
+              class="mt-2"
+              id="edgeShort"
+              label="Kürzel"
+              v-model="edgeShort"
+              outlined
+              hide-details
+            ></v-text-field>
+          </v-col>
+        </v-row>
+
+        <!-- Start und Endzustand -->
+        <v-row>
+          <v-col sm="12">
+            <v-select
+              v-model="startSelect"
+              :items="items"
+              outlined
+              label="Startzustand"
+              hide-details
+            ></v-select>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col sm="12">
+            <v-select v-model="endSelect" :items="items" label="Endzustand" outlined hide-details></v-select>
+          </v-col>
+        </v-row>
+
+        <!-- Time & Costs  -->
+        <v-row>
+          <v-col sm="6">
+            <v-text-field
+              id="edgeTime"
+              label="Kosten / Stück"
+              suffix="€"
+              v-model="edgeTime"
+              type="number"
+              outlined
+              hide-details
+            ></v-text-field>
+          </v-col>
+          <v-col sm="6">
+            <v-text-field
+              id="edgeCosts"
+              label="Zeit / Stück"
+              suffix="Sek."
+              type="number"
+              v-model="edgeCosts"
+              outlined
+              hint="Einheit ist in den Einstellungen wählbar"
+            ></v-text-field>
+          </v-col>
+        </v-row>
+        <!-- Save Buttons -->
+        <v-row>
+          <v-spacer sm=4 />
+          <v-col sm="4" align="right">
+            <v-btn color="success" outlined @click="edgeGui = false">Speichern</v-btn>
+          </v-col>
+          <v-dialog v-model="deletedialog" persistent max-width="350">
+            <template v-slot:activator="{ on }">
+              <v-col sm="4" align="right">
+            <v-btn color="error" v-on="on" outlined>Löschen</v-btn>
+          </v-col>
+            </template>
+            <v-card>
+              <v-card-title class="headline">Verbindung löschen</v-card-title>
+              <v-card-text>Soll die Verbindung <b>{{edgeName}}</b> endgültig gelöscht werden? Diese Aktion kann nicht rückgängig gemacht werden.</v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="error" text @click="deletedialog = false; edgeGui = false">Löschen</v-btn>
+                <v-btn color="grey" text @click="deletedialog = false">Abbrechen</v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+        </v-row>
+      </v-card>
+    </v-slide-x-reverse-transition>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "DetailControls",
+  data() {
+    return {
+      deletedialog: false,
+      nodeGui: false,
+      nodeName: "Stahlrohre",
+      nodeShort: "ST",
+      nodeImgpath: "uploads/funztNochNicht.png",
+      nodeColor: "blue",
+      edgeGui: false,
+      edgeName: "Maschinelles Walzen",
+      edgeShort: "MWA",
+      edgeTime: "10",
+      edgeCosts: "10",
+      items: ["Stahlrohre", "Gewahlzter Stahl"],
+      startSelect: "Stahlrohre",
+      endSelect: "Gewahlzter Stahl"
+    };
+  }
+};
+</script>
