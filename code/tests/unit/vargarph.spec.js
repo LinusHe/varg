@@ -115,6 +115,7 @@ import cytoscape from 'cytoscape';
 
     function findpath(option, start, end){
 
+
       var minDistance = 0
       
       cy.elements().removeClass('highlighted')
@@ -124,7 +125,7 @@ import cytoscape from 'cytoscape';
         var endNode = "#" + end
         
         if (option === "optionCosts") {
-          console.log("costs")
+          
           var pathToEndCosts
           for(let i = 0; i< start.length; i++){
             let startNode = "#" + start[i]
@@ -144,7 +145,6 @@ import cytoscape from 'cytoscape';
     
             
            }
-           console.log(pathToEndCosts)
            pathToEndCosts.addClass('highlighted')
            
            let array = []
@@ -155,7 +155,6 @@ import cytoscape from 'cytoscape';
         }
       
         if (option === "optionTime") {
-          console.log("time")
         
           var pathToEndTime
           for(let i = 0; i< start.length; i++){
@@ -192,15 +191,34 @@ import cytoscape from 'cytoscape';
 
 
     it('should expect the least time and costs path from a new node(Edelstahl) to Schrauben', function(){
-      cy.add(
-        { // node Edelstahl
-        data: { id: 0 , name: 'Edelstahl' },
-        },
-        { // edge cb
-          data: { id: 1, name: 'Härten', source: 0, target: -2, weight1: 0.1, weight2: 0.1, weight3: 0.2, weight4: 0.1, label: '' }
-        });
-
+        cy.add(
+            { // node Edelstahl
+                data: { id: 0 , name: 'Edelstahl' },
+            })
+        cy.add(
+            { // edge Härten
+                data: { id: 1, name: 'Härten', source: 0, target: -2, weight1: 0.1, weight2: 0.1, weight3: 0.2, weight4: 0.1, label: '' }
+            });
+    
       expect(findpath("optionTime", ["-1","0"], "-3")).toMatchObject(["Edelstahl", "Härten", "Stahlrohre", "Gewinde walzen", "Schrauben"])
       expect(findpath("optionCosts", ["-1","0"], "-3")).toMatchObject(["Edelstahl", "Härten", "Stahlrohre", "Gewinde walzen", "Schrauben"])
     });
+
+
+    it('should use the path with negative wait', function(){
+       
+        cy.add(
+            { // node Edelstahl
+                data: { id: 2 , name: 'Aluminium' },
+            })
+        cy.add(
+            { // edge Härten
+                data: { id: 3, name: 'Biegen', source: 2, target: -2, weight1: 0, weight2: 0, weight3: 0, weight4: 0, label: '' }
+            });
+        })
+    
+    expect(findpath("optionTime", ["-1","2"], "-3")).toMatchObject(["Aluminium", "Biegen", "Stahlrohre", "Gewinde walzen", "Schrauben"])
+
   });
+
+
