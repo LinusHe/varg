@@ -11,9 +11,13 @@ export default class TestDatabase {
    * duplicate data names, and then pushes the BasicData element
    * on the save array.
    */
-  save (basicData) {
+  save (basicData, overwrite) {
     const index = this.searchExisting(basicData.getName())
     if (index >= 0) {
+      if (overwrite){
+        this.basicDataArray[index] = basicData
+        return true
+      }
       return false
     //   const input = prompt("Dateiname existiert bereits. 'überschreiben' oder 'kopie' erstellen?")
     //   if (input === "überschreiben") {

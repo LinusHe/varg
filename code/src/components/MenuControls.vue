@@ -80,7 +80,7 @@
       </v-row>
     </v-card>
   <DownloadMenu ref="DownloadMenu"></DownloadMenu>
-  <SaveMenu ref="SaveMenu" v-on:onSaveConfirm="onSaveConfirm"></SaveMenu>
+  <SaveMenu ref="SaveMenu" v-on:onSaveConfirm="onSaveConfirm" v-on:onOverwrite="onOverwrite"></SaveMenu>
   </div>
 </template>
 
@@ -116,12 +116,12 @@ export default {
         let content=ExJSon.CreateJSon()
         //Stringify makes content readable
         content = JSON.stringify(content, null, 2);
-        // eslint-disable-next-line no-console
-        console.log(content)
         let date = new Date();
         let save = new BasicData(value, date, content);
-        if(this.vars.testDatabase.save(save)){
+        if(this.vars.testDatabase.save(save, false)){
           //no dupe
+          // eslint-disable-next-line no-console
+          console.log('save')
           this.$refs.SaveMenu.setdialog(false)
         }
         else {
@@ -133,6 +133,17 @@ export default {
       else if (value == "" || value == null) {
         //do nothing
       }
+    },
+    onOverwrite(value) {
+      let content=ExJSon.CreateJSon()
+      //Stringify makes content readable
+      content = JSON.stringify(content, null, 2);
+      // eslint-disable-next-line no-console
+      console.log('overwrite')
+      let date = new Date();
+      let save = new BasicData(value, date, content);
+      this.vars.testDatabase.save(save,true)
+      this.$refs.SaveMenu.setdialog(false)
     },
     SaveJSon: function () {
       this.$refs.SaveMenu.setdialog(true)

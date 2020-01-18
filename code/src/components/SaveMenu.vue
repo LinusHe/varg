@@ -73,7 +73,7 @@ export default {
         case "Speichern":
           if (this.DataBaseName != "" && this.DataBaseName != null) {
           this.$emit('onSaveConfirm', this.DataBaseName);
-          } else ;
+          }
         break;
 
         case "Überschreiben":
