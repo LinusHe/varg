@@ -66,7 +66,7 @@
         <v-row>
           <v-spacer sm="4" />
           <v-col sm="4" align="right">
-            <v-btn color="success" outlined @click="saveNewData()">Speichern</v-btn>
+            <v-btn color="success" outlined @click="applyNewData()">Übernehmen</v-btn>
           </v-col>
           <v-col sm="4" align="right">
             <v-btn color="lightgrey" outlined @click="deactivateGui()">Abbrechen</v-btn>
@@ -87,13 +87,15 @@ export default {
       return {
         modifyDataGui: false,
         graphName: "",
-        latestDate: 0,
+        latestDate: "",
         prodName: "",
-        prodQuant: 0
+        prodQuant: ""
       }
     },
   methods: {
     openModifyData() {
+      // eslint-disable-next-line no-console
+      console.log(this.vars.instance.graphName)
       this.loadGraphData()
       this.$parent.$refs.createConrols.deactivateGui();
       this.$parent.$refs.detailConrols.deactivateGui();
@@ -101,17 +103,27 @@ export default {
     },
     loadGraphData() {
       // @TODO (Erik) Stückzahl in BasicData speichern
-      this.graphName = this.vars.instance.getGraphName()
-      this.latestDate = this.vars.instance.getLatestDate()
-      //this.prodName = this.vars.instance.getProdName()
-      //this.prodQuant = this.vars.instance.getProdQuant()
+      if(this.vars.instance.graphName == undefined) {
+        // eslint-disable-next-line no-console
+        console.log("undefined")
+        this.graphName = ""
+        this.latestDate = "noch nicht gespeichert"
+      }
+      else {
+        // eslint-disable-next-line no-console
+        console.log("defined")
+        this.graphName = this.vars.instance.getGraphName()
+        this.latestDate = this.vars.instance.getLatestDate()
+        //this.prodName = this.vars.instance.getProdName()
+        //this.prodQuant = this.vars.instance.getProdQuant()
+      }
     },
-    saveNewData() {
+    applyNewData() {
       this.vars.instance.setGraphName(this.graphName)
       this.vars.instance.setLatestDate(new Date())
       //this.vars.instance.setProdName(this.prodName)
       //this.vars.instance.setProdQuant(this.prodQuant)
-      eventBus.$emit("saveNewData", this.vars.instance)
+      eventBus.$emit("applyNewData", this.vars.instance)
       eventBus.$emit("updateHeader", this.prodName, this.prodQuant)
       this.deactivateGui()
     },
