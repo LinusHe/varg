@@ -189,7 +189,7 @@ export function createNode(newName, newShort, newImgurl, newColor) {
 export function createEdge(newName, edgeshort, start, end, cost, time, costR, timeR
   ) {
   let count = cy.data('IDCount')
-
+  count++
   let newlabel = ''
   newlabel = generateEdgeLabel(parseInt(count), cost, time, costR, timeR);
   cy.add({
