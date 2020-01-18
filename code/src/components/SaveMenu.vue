@@ -3,10 +3,10 @@
     <v-card>
       <v-card-title class="headline">Graph in Datenbank speichern</v-card-title>
       <v-card-text>
-        Legen Sie einen Namen für den Graphen in der Datenbank fest.
         <v-form ref="form" v-model="valid" lazy-validation>
           <v-row>
             <v-col sm="12">
+              {{message}}
               <v-text-field
                 class="mt-6"
                 id="DatabaseName"
@@ -15,12 +15,13 @@
                 outlined
                 required
                 :rules="[v => !!v || 'Fehlender Name']"
+                @input="switchbtntext"
               ></v-text-field>
             </v-col>
           </v-row>
             <v-row>
               <v-col sm="6">
-                <v-btn color="success" :disabled="!valid" block outlined @click="save">Speichern</v-btn>
+                <v-btn color="success" :disabled="!valid" block outlined @click="save">{{btntext}}</v-btn>
               </v-col>
               <v-col sm="6">
                 <v-btn color="error" block outlined @click="clearFields">Abbrechen</v-btn>
@@ -40,10 +41,24 @@ export default {
       valid: true,
       dialog: false,
       DataBaseName: "",
-      label: "Datenbankname"
+      label: "Datenbankname",
+      message: "Legen Sie einen Namen für den Graphen in der Datenbank fest.",
+      btntext: "Speichern"
     };
   },
   methods: {
+    switchbtntext(){
+      if (this.btntext == "Überschreiben")  {
+        this.setbtntext("Speichern")
+        this.setmsg("Legen Sie einen Namen für den Graphen in der Datenbank fest.")
+      }
+    },
+    setbtntext(value){
+      this.btntext=value
+    },
+    setmsg(value) {
+      this.message=value
+    },
     setdialog(boolean) {
       this.dialog = boolean;
     },
@@ -52,9 +67,25 @@ export default {
       this.label = value;
     },
     save() {
-      if (this.DataBaseName != "" && this.DataBaseName != null) {
-        this.$emit("onSaveConfirm", this.DataBaseName);
-      } else this.$emit("onSaveConfirm", null);
+      if(this.$refs.form.validate()){
+         switch(this.btntext){
+
+        case "Speichern":
+          if (this.DataBaseName != "" && this.DataBaseName != null) {
+          this.$emit('onSaveConfirm', this.DataBaseName);
+          } else ;
+        break;
+
+        case "Überschreiben":
+          if (this.DataBaseName != "" && this.DataBaseName != null) {
+          this.$emit('onOverwrite', this.DataBaseName);
+          }
+          break;
+
+        default:
+          break;
+       }
+      }
     },
     clearFields() {
       this.dialog = false;

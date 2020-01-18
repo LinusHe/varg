@@ -14,20 +14,22 @@ export default class TestDatabase {
   save (basicData) {
     const index = this.searchExisting(basicData.getName())
     if (index >= 0) {
-      const input = prompt("Dateiname existiert bereits. 'überschreiben' oder 'kopie' erstellen?")
-      if (input === "überschreiben") {
-        this.basicDataArray[index] = basicData
-      }
-      else if (input === "kopie") {
-        basicData.setName(basicData.getName() + " (Kopie)")
-        this.basicDataArray.push(basicData)
-      }
-      else {
-        alert ("Nicht gespeichert")
-      }
+      return false
+    //   const input = prompt("Dateiname existiert bereits. 'überschreiben' oder 'kopie' erstellen?")
+    //   if (input === "überschreiben") {
+    //     this.basicDataArray[index] = basicData
+    //   }
+    //   else if (input === "kopie") {
+    //     basicData.setName(basicData.getName() + " (Kopie)")
+    //     this.basicDataArray.push(basicData)
+    //   }
+    //   else {
+    //     alert ("Nicht gespeichert")
+    //   }
     }
     else {
       this.basicDataArray.push(basicData)
+      return true
     }
   }
 

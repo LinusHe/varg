@@ -91,7 +91,7 @@ import ExJSon from "@/vargraph/JSonPersistence.js"
 import BasicData from "@/vargraph/BasicData.js";
 import TestDatabase from "@/vargraph/TestDatabase.js";
 import DownloadMenu from "@/components/DownloadMenu.vue";
-import SaveMenu from "@/components/SaveMenu.vue"
+import SaveMenu from "@/components/SaveMenu.vue";
 import importExport from "@/vargraph/importExport.js";
 
 export default {
@@ -113,16 +113,22 @@ export default {
     },
     onSaveConfirm (value){
       if (value != "" && value != null) {
-      let content=ExJSon.CreateJSon()
-      //Stringify makes content readable
-      content = JSON.stringify(content, null, 2);
-      // eslint-disable-next-line no-console
-      console.log(content)
-      let date = new Date();
+        let content=ExJSon.CreateJSon()
+        //Stringify makes content readable
+        content = JSON.stringify(content, null, 2);
+        // eslint-disable-next-line no-console
+        console.log(content)
+        let date = new Date();
         let save = new BasicData(value, date, content);
-        this.vars.testDatabase.save(save);
-        this.vars.testDatabase.logContent();
-        this.$refs.SaveMenu.setdialog(false)
+        if(this.vars.testDatabase.save(save)){
+          //no dupe
+          this.$refs.SaveMenu.setdialog(false)
+        }
+        else {
+          //dupe case
+          this.$refs.SaveMenu.setmsg("Es existiert bereits eine Datei unter diesen Namen. Wollen Sie diese überschreiben ?")
+          this.$refs.SaveMenu.setbtntext("Überschreiben")
+        }
       }
       else if (value == "" || value == null) {
         //do nothing
@@ -158,7 +164,7 @@ export default {
   },
   data: function() {
     return {
-      items: ["a", "b", "c"]
+      items: ["a", "b", "c"],
     };
   }
 };
