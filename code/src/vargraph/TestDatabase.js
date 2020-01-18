@@ -6,13 +6,10 @@ export default class TestDatabase {
     this.basicDataArray = []
   }
 
-<<<<<<< HEAD
-=======
   getContent() {
     return this.basicDataArray
   }
 
->>>>>>> LoginBranch
   /* The save function is called after clicking the button
    * "Graph Speichern". It first handles the case of possible
    * duplicate data names, and then pushes the BasicData element

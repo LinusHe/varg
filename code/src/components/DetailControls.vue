@@ -1,22 +1,14 @@
 <template>
   <div class="detail-controls">
     <!-- ONLY FOR TESTING! @TODO -->
-<<<<<<< HEAD
-    <v-card style="position: absolute; top: -100px; right: 50px" max-width="400">
-=======
     <!-- <v-card style="position: absolute; top: -100px; right: 50px" max-width="400">
->>>>>>> LoginBranch
       <v-card-title>Test!</v-card-title>
       <v-card-text>
         <p>Später soll die GUI beim Klick auf die Knoten / Kanten im Graphen erscheinen. Zum testen gibts die Buttons hier:</p>
         <v-btn @click="nodeGui = true; edgeGui = false">klick auf knoten</v-btn>
         <v-btn @click="nodeGui = false; edgeGui = true">klick auf kante</v-btn>
       </v-card-text>
-<<<<<<< HEAD
-    </v-card>
-=======
     </v-card>-->
->>>>>>> LoginBranch
 
     <!-- Re-Activate Button -->
     <!-- <v-card class="activate-button" v-show="reopen">
@@ -27,15 +19,7 @@
 
     <!-- Detail-Zustand Controls -->
     <v-slide-x-reverse-transition>
-<<<<<<< HEAD
-      <v-card
-        class="detail-card"
-        v-show="nodeGui"
-        transition="scroll-y-transition"
-      >
-=======
       <v-card class="detail-card" v-show="nodeGui" transition="scroll-y-transition">
->>>>>>> LoginBranch
         <v-btn class="btn-close ma-2" @click="nodeGui= false" text icon color="primary">
           <v-icon>mdi-close</v-icon>
         </v-btn>
@@ -80,16 +64,6 @@
             <div class="radio-container">
               <label for="nodeColor" class="color-label v-label v-label--active theme--light">Farbe</label>
               <v-radio-group v-model="nodeColor" id="nodeColor" row>
-<<<<<<< HEAD
-                <v-radio class="color-radio-blue" color="blue" value="blue"></v-radio>
-                <v-radio class="color-radio-green" color="green" value="green"></v-radio>
-                <v-radio class="color-radio-purple" color="purple" value="purple"></v-radio>
-                <v-radio class="color-radio-pink" color="pink" value="pink"></v-radio>
-                <v-radio class="color-radio-red" color="red" value="red"></v-radio>
-                <v-radio class="color-radio-orange" color="orange" value="orange"></v-radio>
-                <v-radio class="color-radio-yellow" color="yellow" value="yellow"></v-radio>
-                <v-radio class="color-radio-lightyellow" color="lightyellow" value="lightyellow"></v-radio>
-=======
                 <!-- Attention: If you change the color, change also the corresponding color in the color-class
                                 in the src/styles/components/DetailControls.less -->
                 <v-radio class="color-radio-1" color="#2699FB" value="2699FB"></v-radio>
@@ -100,32 +74,10 @@
                 <v-radio class="color-radio-6" color="#FAB1A0" value="FAB1A0"></v-radio>
                 <v-radio class="color-radio-7" color="#FDCB6E" value="FDCB6E"></v-radio>
                 <v-radio class="color-radio-8" color="#FFEAA7" value="FFEAA7"></v-radio>
->>>>>>> LoginBranch
               </v-radio-group>
             </div>
           </v-col>
         </v-row>
-<<<<<<< HEAD
-        <!-- Create Buttons -->
-        <v-row>
-          <v-spacer sm=4 />
-          <v-col sm="4" align="right">
-            <v-btn color="success" outlined @click="nodeGui = false">Speichern</v-btn>
-          </v-col>
-          <v-dialog v-model="deletedialog" persistent max-width="350">
-            <template v-slot:activator="{ on }">
-              <v-col sm="4" align="right">
-            <v-btn color="error" v-on="on" outlined>Löschen</v-btn>
-          </v-col>
-            </template>
-            <v-card>
-              <v-card-title class="headline">Zustand löschen</v-card-title>
-              <v-card-text>Soll der Zustand <b>{{nodeName}}</b> endgültig gelöscht werden? Diese Aktion kann nicht rückgängig gemacht werden.</v-card-text>
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="error" text @click="deletedialog = false; nodeGui = false">Löschen</v-btn>
-                <v-btn color="grey" text @click="deletedialog = false">Abbrechen</v-btn>
-=======
         <!-- Save & Delete Buttons -->
         <v-row>
           <v-spacer sm="4" />
@@ -156,7 +108,6 @@
                 <v-spacer></v-spacer>
                 <v-btn color="error" text @click="deleteNode()">Löschen</v-btn>
                 <v-btn color="grey" text @click="nodeDeleteDialog = false">Abbrechen</v-btn>
->>>>>>> LoginBranch
               </v-card-actions>
             </v-card>
           </v-dialog>
@@ -203,14 +154,9 @@
         <v-row>
           <v-col sm="12">
             <v-select
-<<<<<<< HEAD
-              v-model="startSelect"
-              :items="items"
-=======
               @focus="getNodeItemsName(); getNodeItemsID();"
               v-model="startSelect"
               :items="itemsName"
->>>>>>> LoginBranch
               outlined
               label="Startzustand"
               hide-details
@@ -219,9 +165,6 @@
         </v-row>
         <v-row>
           <v-col sm="12">
-<<<<<<< HEAD
-            <v-select v-model="endSelect" :items="items" label="Endzustand" outlined hide-details></v-select>
-=======
             <v-select
               @focus="getNodeItemsName(); getNodeItemsID()"
               v-model="endSelect"
@@ -230,7 +173,6 @@
               outlined
               hide-details
             ></v-select>
->>>>>>> LoginBranch
           </v-col>
         </v-row>
 
@@ -238,15 +180,6 @@
         <v-row>
           <v-col sm="6">
             <v-text-field
-<<<<<<< HEAD
-              id="edgeTime"
-              label="Kosten / Stück"
-              suffix="€"
-              v-model="edgeTime"
-              type="number"
-              outlined
-              hide-details
-=======
               id="edgeCosts"
               label="Zeit / Stück"
               suffix="Sek."
@@ -254,42 +187,10 @@
               v-model="edgeCosts"
               outlined
               hint="Einheit ist in den Einstellungen wählbar"
->>>>>>> LoginBranch
             ></v-text-field>
           </v-col>
           <v-col sm="6">
             <v-text-field
-<<<<<<< HEAD
-              id="edgeCosts"
-              label="Zeit / Stück"
-              suffix="Sek."
-              type="number"
-              v-model="edgeCosts"
-              outlined
-              hint="Einheit ist in den Einstellungen wählbar"
-            ></v-text-field>
-          </v-col>
-        </v-row>
-        <!-- Save Buttons -->
-        <v-row>
-          <v-spacer sm=4 />
-          <v-col sm="4" align="right">
-            <v-btn color="success" outlined @click="edgeGui = false">Speichern</v-btn>
-          </v-col>
-          <v-dialog v-model="deletedialog" persistent max-width="350">
-            <template v-slot:activator="{ on }">
-              <v-col sm="4" align="right">
-            <v-btn color="error" v-on="on" outlined>Löschen</v-btn>
-          </v-col>
-            </template>
-            <v-card>
-              <v-card-title class="headline">Verbindung löschen</v-card-title>
-              <v-card-text>Soll die Verbindung <b>{{edgeName}}</b> endgültig gelöscht werden? Diese Aktion kann nicht rückgängig gemacht werden.</v-card-text>
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="error" text @click="deletedialog = false; edgeGui = false">Löschen</v-btn>
-                <v-btn color="grey" text @click="deletedialog = false">Abbrechen</v-btn>
-=======
               id="edgeTime"
               label="Kosten / Stück"
               suffix="€"
@@ -320,7 +221,6 @@
                 <v-spacer></v-spacer>
                 <v-btn color="error" text @click="deleteEdge()">Löschen</v-btn>
                 <v-btn color="grey" text @click="edgeDeleteDialog = false">Abbrechen</v-btn>
->>>>>>> LoginBranch
               </v-card-actions>
             </v-card>
           </v-dialog>
@@ -331,35 +231,12 @@
 </template>
 
 <script>
-<<<<<<< HEAD
-=======
 /* eslint-disable no-console */
 import graph from "@/vargraph/index.js";
->>>>>>> LoginBranch
 export default {
   name: "DetailControls",
   data() {
     return {
-<<<<<<< HEAD
-      deletedialog: false,
-      nodeGui: false,
-      nodeName: "Stahlrohre",
-      nodeShort: "ST",
-      nodeImgpath: "uploads/funztNochNicht.png",
-      nodeColor: "blue",
-      edgeGui: false,
-      edgeName: "Maschinelles Walzen",
-      edgeShort: "MWA",
-      edgeTime: "10",
-      edgeCosts: "10",
-      items: ["Stahlrohre", "Gewahlzter Stahl"],
-      startSelect: "Stahlrohre",
-      endSelect: "Gewahlzter Stahl"
-    };
-  }
-};
-</script>
-=======
       nodeDeleteDialog: false,
       edgeDeleteDialog: false,
       nodeGui: false,
@@ -497,4 +374,3 @@ export default {
   }
 };
 </script>
->>>>>>> LoginBranch

@@ -1,16 +1,5 @@
 <template>
   <div class="zoom-controls">
-<<<<<<< HEAD
-    <v-btn class="ma-2" @click="ZoomOut" text icon color="grey">
-      <v-icon>mdi-arrow-expand-all</v-icon>
-    </v-btn>
-    <v-btn class="ma-2" @click="ZoomPlus" text icon color="grey">
-      <v-icon>mdi-magnify-plus-outline</v-icon>
-    </v-btn>
-    <v-btn class="ma-2" @click="ZoomMinus" icon color="grey">
-      <v-icon>mdi-magnify-minus-outline</v-icon>
-    </v-btn>
-=======
 
   <v-tooltip bottom>
       <template v-slot:activator="{ on }">
@@ -39,7 +28,6 @@
     <span>Zoomt raus</span>
   </v-tooltip>    
   
->>>>>>> LoginBranch
   </div>
 </template>
 
@@ -56,12 +44,7 @@ export default {
           console.log('No more zooming in: ' + Zoom.getMaxZoom())
         }
         else {
-<<<<<<< HEAD
-          let CurrentZoom = Zoom.getZoom()
-          CurrentZoom+=0.1
-=======
           let CurrentZoom = Zoom.getZoom() + 0.1
->>>>>>> LoginBranch
           Zoom.setZoom(CurrentZoom)
         }
       },
