@@ -19,7 +19,7 @@
         ></v-text-field>
       </v-col>
       <v-col sm="5">
-        <v-text-field id="prodquantity" label="Stückzahl" ></v-text-field>
+        <v-text-field id="prodquantity" label="Stückzahl"></v-text-field>
       </v-col>
 
       <v-col sm="7">
@@ -39,6 +39,7 @@
 </template>
 
 <script>
+
 export default {
   name: "NewGraph"
 };
