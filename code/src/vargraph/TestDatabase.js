@@ -15,7 +15,7 @@ export default class TestDatabase {
    * on the save array
    */
   save (basicData, overwrite) {
-    const index = this.searchExisting(basicData.getName())
+    const index = this.searchExisting(basicData.getGraphName())
     if (index >= 0) {
       if (overwrite){
         this.basicDataArray[index] = basicData
