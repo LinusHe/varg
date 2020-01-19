@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 <template>
   <div class="create-controls-container">
     <!-- Selection Hover-Button -->
@@ -334,6 +335,7 @@ export default {
         endID,
         w1,
         w2,
+        // eslint-disable-next-line no-undef
         label
       );
       this.clearFields();
