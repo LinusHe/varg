@@ -20,6 +20,7 @@
               id="graphName"
               label="Dateiname"
               v-model="graphName"
+              :disabled="disabled"
               outlined
               hide-details
             ></v-text-field>
@@ -33,6 +34,7 @@
               id="prodName"
               label="Produktname"
               v-model="prodName"
+              :disabled="disabled"
               outlined
               hide-details
             ></v-text-field>
@@ -42,6 +44,7 @@
               id="prodQuant" 
               label="Stückzahl" 
               v-model="prodQuant" 
+              :disabled="disabled"
               outlined 
               hide-details
             ></v-text-field>
@@ -66,7 +69,7 @@
         <v-row>
           <v-spacer sm="4" />
           <v-col sm="4" align="right">
-            <v-btn color="success" outlined @click="applyNewData()">Übernehmen</v-btn>
+            <v-btn color="success" :disabled="disabled" outlined @click="applyNewData()">Übernehmen</v-btn>
           </v-col>
           <v-col sm="4" align="right">
             <v-btn color="lightgrey" outlined @click="deactivateGui()">Abbrechen</v-btn>
@@ -86,6 +89,7 @@ export default {
     data() {
       return {
         modifyDataGui: false,
+        disabled: false,
         graphName: "",
         latestDate: "",
         prodName: "",
@@ -94,24 +98,22 @@ export default {
     },
   methods: {
     openModifyData() {
-      // eslint-disable-next-line no-console
-      console.log(this.vars.instance.graphName)
       this.loadGraphData()
       this.$parent.$refs.createConrols.deactivateGui();
       this.$parent.$refs.detailConrols.deactivateGui();
       this.modifyDataGui = true
     },
     loadGraphData() {
-      // @TODO (Erik) Stückzahl in BasicData speichern
+      // @TODO (Erik) Stückzahl usw. in cy.json speichern
       if(this.vars.instance.graphName == undefined) {
-        // eslint-disable-next-line no-console
-        console.log("undefined")
-        this.graphName = ""
+        this.disabled = true
+        this.graphName = "(noch nichts geladen - WIP)"
         this.latestDate = "noch nicht gespeichert"
+        this.prodName = ""
+        this.prodQuant = ""
       }
       else {
-        // eslint-disable-next-line no-console
-        console.log("defined")
+        this.disabled = false
         this.graphName = this.vars.instance.getGraphName()
         this.latestDate = this.vars.instance.getLatestDate()
         //this.prodName = this.vars.instance.getProdName()
