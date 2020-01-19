@@ -285,15 +285,22 @@ export default {
       this.itemsName = graph.getNodeName();
     },
     createEdge() {
-      let w1 = parseInt(this.edgeCreateCosts);
-      let w2 = parseInt(this.edgeCreateTime);
+      let w1 = parseFloat(this.edgeCreateCosts);
+      let w2 = parseFloat(this.edgeCreateTime);
+      let w1R = parseFloat(this.edgeCreateCostsR);
+      let w2R = parseFloat(this.edgeCreateTimeR);
 
-      let label = "(" + w1 + "," + w2 + ")";
+      if(w1 < 0 || w1 < 0  || w1R < 0 || w2R < 0 ){
+        alert("You can't use negative numbers")
+        return
+      }
+
 
       let indexStart = this.itemsName.indexOf(this.startSelect);
       let startID = this.itemsID[indexStart];
       let indexEnd = this.itemsName.indexOf(this.endSelect);
       let endID = this.itemsID[indexEnd];
+
 
       graph.createEdge(
         this.edgeCreateName,

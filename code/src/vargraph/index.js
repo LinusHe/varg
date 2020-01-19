@@ -77,7 +77,7 @@ export function run() {
         }
       },
       {
-        selector: ':selected',
+        selector: '.highlighted',
         style: {
           "border-width": 5.5,
           "border-opacity": 0.5,
@@ -88,6 +88,7 @@ export function run() {
           'source-arrow-color': 'black',
           'text-outline-color': 'black',
         }
+
 
       }
     ],
@@ -165,7 +166,7 @@ export function toString() {
 //                 generated (increasing) ID + the properties given
 export function createNode(newName, newShort, newImgurl, newColor) {
   let count = cy.data('IDCount')
-  count++
+  
   cy.add({
     data: {
       id: parseInt(count),
@@ -179,16 +180,19 @@ export function createNode(newName, newShort, newImgurl, newColor) {
     },
     position: { x: 500, y: 300 }
   });
+  count++
   cy.data('IDCount',count)
 }
 
 
 // createEdge(..): Adds an edge to the Cytograph with an automatic 
 //                 generated (increasing) ID + the properties given
-export function createEdge(newName, edgeshort, start, end, cost, time, newlabel) {
-  let count = cy.data('IDCount');
-  count++
-  newlabel =   generateEdgeLabel(count, cost, time);
+export function createEdge(newName, edgeshort, start, end, cost, time, costR, timeR
+  ) {
+  let count = cy.data('IDCount')
+
+  let newlabel = ''
+  newlabel = generateEdgeLabel(parseInt(count), cost, time, costR, timeR);
   cy.add({
     data: {
       id: parseInt(count),
@@ -201,6 +205,7 @@ export function createEdge(newName, edgeshort, start, end, cost, time, newlabel)
       label: newlabel,
     },
   });
+  count++
   cy.data('IDCount', count);
 }
 
@@ -217,35 +222,67 @@ function createEdgeWithID(id, newName, edgeshort, start, end, cost, time, edgeLa
 
 
 // findPath(.. ): The method finds the shortest Path between 2 nodes
-//                (for now between a and b) with the Dijkstra Algorithm
+//                with the Dijkstra Algorithm
 export function findPath(option, start, end) {
 
-  var startNode = "#" + start
-  var endNode = "#" + end
+  console.log(end)
+
+  var minDistance = 0
+  
+  cy.elements().removeClass('highlighted')
 
 
-  cy.$(':selected').unselect()
+  
+    var endNode = "#" + end
+    
+    if (option === "optionCosts") {
+      console.log("costs")
+      var pathToEndCosts
+      for(let i = 0; i< start.length; i++){
+        let startNode = "#" + start[i]
+        var dijkstraCosts = cy.elements().dijkstra(startNode, function (edge) {
+          return edge.data('weight1')+ edge.data('weight3');
+          });
+        if(i === 0){
+          //saves the shortest distance to a sspecific node(in this case endNode)
+          minDistance = dijkstraCosts.distanceTo(cy.$(endNode))
+          //saves the shortes path to a specific node
+          pathToEndCosts = dijkstraCosts.pathTo(cy.$(endNode))
+        }
+        else if(minDistance > dijkstraCosts.distanceTo(cy.$(endNode))){
+          minDistance =dijkstraCosts.distanceTo(cy.$(endNode))
+          pathToEndCosts = dijkstraCosts.pathTo(cy.$(endNode))
+        } 
 
-  if (option === "optionCosts") {
-    var dijkstraCosts = cy.elements().dijkstra(startNode, function (edge) {
-      return edge.data('weight1');
-    });
-
-    //saves the shortes path to a specific node
-    var pathToBCosts = dijkstraCosts.pathTo(cy.$(endNode));
-
-    pathToBCosts.select()
-  }
-
-  if (option === "optionTime") {
-    var dijkstraTime = cy.elements().dijkstra(startNode, function (edge) {
-      return edge.data('weight2');
-    });
-
-    var pathToBTime = dijkstraTime.pathTo(cy.$(endNode));
-    pathToBTime.select()
+        
+       }
+       pathToEndCosts.addClass('highlighted')
+    
+    }
+  
+    if (option === "optionTime") {
+      console.log("time")
+    
+      var pathToEndTime
+      for(let i = 0; i< start.length; i++){
+        let startNode = "#" + start[i]
+        var dijkstraTime = cy.elements().dijkstra(startNode, function (edge) {
+          return edge.data('weight2')+ edge.data('weight4');
+          });
+        if(i === 0){
+          minDistance = dijkstraTime.distanceTo(cy.$(endNode))
+          pathToEndTime = dijkstraTime.pathTo(cy.$(endNode))
+        }
+        else if(minDistance > dijkstraTime.distanceTo(cy.$(endNode))){
+          minDistance = dijkstraTime.distanceTo(cy.$(endNode))
+          pathToEndTime = dijkstraTime.pathTo(cy.$(endNode))
+        } 
+      }
+       pathToEndTime.addClass('highlighted')
   }
 }
+
+
 
 
 /* SaveMe(): 

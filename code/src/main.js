@@ -4,7 +4,8 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import vuetify from './plugins/vuetify'
-
+import Vuex from 'vuex'
+import {store} from './store/store.js'
 Vue.config.productionTip = false
 
 export const eventBus = new Vue()
@@ -23,7 +24,10 @@ Vue.directive('click-outside', {
   },
 });
 
+
+
 new Vue({
+  store,
   router,
   vuetify,
   render: h => h(App)

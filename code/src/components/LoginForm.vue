@@ -12,7 +12,6 @@
       placeholder="beispiel@htwk-leipzig.de"
       outlined
       clearable
-      autofocus
       @focus="clearError()" 
     ></v-text-field>
     <v-text-field
@@ -60,7 +59,7 @@ export default {
         
         if(this.input.email != "" && this.input.password != "") {
           if(this.input.email == "VarG" && this.input.password == "2020") {
-            this.$emit("authenticated", true);
+            this.$store.commit('increment');
             this.$router.replace("/home/menu");
           } else {
             this.error = 'Falscher Nutzername oder falsches Passwort'
