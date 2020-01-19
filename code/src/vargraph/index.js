@@ -31,12 +31,25 @@ export function run() {
         //! it's important to wright the weigth as a number and not as a string (for the algorithm)
         data: { id: -10, name: 'Schneiden', source: -1, target: -2, weight1: 2, weight2: 0.3, weight3: 20, weight4: 10, label: '' },
       },
-      { // edge ac
-        data: { id: -11, name: 'Fräsen', source: -1, target: -2, weight1: 1.8, weight2: 1, weight3: 15, weight4: 30, label: '' }
+      { // edge ab
+        data: { id: -11, name: 'Fräsen', source: -1, target: -2, weight1: 1.8, weight2: 1, label: '' }
       },
-      { // edge cb
-        data: { id: -12, name: 'Gewinde walzen', source: -3, target: -2, weight1: 2.4, weight2: 0.7, weight3: 10, weight4: 20, label: '' }
+      { // edge bc
+        data: { id: -12, name: 'Gewinde walzen', source: -2, target: -3, weight1: 2.4, weight2: 0.7, label: '' }
+      },
+      { // edge bc2
+        data: { id: -14, name: 'Gewinde schneiden', source: -2, target: -3, weight1: 2.1, weight2: 0.9, label: 'Gewinde schneiden' }
+      },
+      { // edge bc3
+        data: { id: -15, name: 'Gewinde irgw', source: -2, target: -3, weight1: 2.1, weight2: 0.9, label: 'Gewinde irgw' }
+      },
+      { // edge bc4
+        data: { id: -16, name: 'Gewinde 4', source: -2, target: -3, weight1: 2.1, weight2: 0.9, label: 'Gewinde 4' }
       }
+      // ,
+      // { // edge ac
+      // data: { id: -13, name: 'Abkürzung', source: -1, target: -3, weight1: 4, weight2: 2.3, label: 'Abkürzung' }
+      // }
     ],
 
     data: {
@@ -63,12 +76,13 @@ export function run() {
           'line-color': '#2699FB',
           'target-arrow-color': '#2699FB',
           'curve-style': 'bezier',
-          'control-point-distance': '80px',
-          'control-point-weight': '0.5', // '0': curve towards source node, '1': towards target node.
+          // 'control-point-distance': '80px', // replaced with 'control-point-step-size'
+          'control-point-step-size': '100px', // distance between successive bezier edges.
+         // 'control-point-weight': '0.5', // '0': curve towards source node, '1': towards target node. 0.5 is default!
           'font-size': '14px',
           'color': '#777',
-          'source-distance-from-node': '10px',
-          'target-distance-from-node': '10px',
+          'source-distance-from-node': '10px', // remove or set to 0 for connected edges
+          'target-distance-from-node': '10px', // remove or set to 0 for connected edges
           'text-wrap': 'wrap',
           'text-background-color': '#fff',
           'text-background-opacity': 1,
@@ -121,6 +135,10 @@ export function run() {
   //  This is to prevent that usage of cy.minZoom(value) locks up other zoom functionality
   cy.data('minZoom', 0.5);
   cy.data('IDCount', 0);
+  cy.data('graphName', 'TESTNAME')
+  cy.data('latestSave', 'TESTDATE')
+  cy.data('prodName', 'TESTPRODUCT')
+  cy.data('prodQuant', 69420)
 
   // TODO: Remove that line, when newgraph page is working!
   cy.data("name", "TESTPRODUKT")

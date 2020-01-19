@@ -132,12 +132,22 @@ export default {
   created() {
     this.vars = {
       // initializes new instance of TestDatabase when MenuControls is loaded for the first time
-      testDatabase: new TestDatabase()
-    };
+      testDatabase: new TestDatabase(),
+      instance: BasicData
+    },
+    // event bus listens to signal "applyNewData" with instance attached
+    eventBus.$on("applyNewData", (newInstance) => {
+      this.updateData(newInstance)
+    })
   },
   methods: {
     modifyData() {
-      eventBus.$emit("modifyData", this.vars.testDatabase)
+      // event bus broadcasts signal "modifyData" and attaches instance to it
+      eventBus.$emit("modifyData", this.vars.instance)
+    },
+    updateData(newInstance) {
+      this.vars.testDatabase.forceSave(newInstance, this.vars.instance.getGraphName())
+      this.vars.instance = newInstance
     },
     Download : function(){
       //not-best-practice aka coupling of components is not wanted
