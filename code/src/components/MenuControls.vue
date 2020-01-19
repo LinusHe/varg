@@ -121,12 +121,22 @@ export default {
   created() {
     this.vars = {
       // initializes new instance of TestDatabase when MenuControls is loaded for the first time
-      testDatabase: new TestDatabase()
-    };
+      testDatabase: new TestDatabase(),
+      instance: BasicData
+    },
+    // event bus listens to signal "applyNewData" with instance attached
+    eventBus.$on("applyNewData", (newInstance) => {
+      this.updateData(newInstance)
+    })
   },
   methods: {
     modifyData() {
-      eventBus.$emit("modifyData", this.vars.testDatabase)
+      // event bus broadcasts signal "modifyData" and attaches instance to it
+      eventBus.$emit("modifyData", this.vars.instance)
+    },
+    updateData(newInstance) {
+      this.vars.testDatabase.forceSave(newInstance, this.vars.instance.getGraphName())
+      this.vars.instance = newInstance
     },
     ExportJSon: function () {
       let content=ExJSon.CreateJSon()
@@ -145,6 +155,8 @@ export default {
       if (name != "" && name != null) {
         let save = new BasicData(name, date, content);
         this.vars.testDatabase.save(save);
+        // eslint-disable-next-line no-console
+        this.vars.testDatabase.logContent();
       }
       else if (name === "") {
         alert("Fehlender Name");
@@ -157,10 +169,10 @@ export default {
         // eslint-disable-next-line no-console
         console.log("Missing graphName");
       } else {
-        let instance = this.vars.testDatabase.load(Input);
+        this.vars.instance = this.vars.testDatabase.load(Input);
         // eslint-disable-next-line no-console
         this.vars.testDatabase.logContent()
-        ExJSon.LoadJSon(instance.getGraph());
+        ExJSon.LoadJSon(this.vars.instance.getGraph());
       }
     },
 
