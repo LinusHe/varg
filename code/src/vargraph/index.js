@@ -39,6 +39,11 @@ export function run() {
       }
     ],
 
+    data: {
+      "name": "TESTPRODUKT",
+      "quantity": 1000,
+    },
+
     style: [ // the stylesheet for the graph
       {
         selector: 'node',
@@ -116,6 +121,9 @@ export function run() {
   //  This is to prevent that usage of cy.minZoom(value) locks up other zoom functionality
   cy.data('minZoom', 0.5);
   cy.data('IDCount', 0);
+
+  // TODO: Remove that line, when newgraph page is working!
+  cy.data("name", "TESTPRODUKT")
 
   // Apply Color for nodes
   cy.nodes().forEach(n => {
