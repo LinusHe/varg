@@ -29,13 +29,13 @@ export function run() {
       },
       { // edge ab 
         //! it's important to wright the weigth as a number and not as a string (for the algorithm)
-        data: { id: -10, name: 'Schneiden', source: -1, target: -2, weight1: 2, weight2: 0.3, label: '' },
+        data: { id: -10, name: 'Schneiden', source: -1, target: -2, weight1: 2, weight2: 0.3, weight3: 20, weight4: 10, label: '' },
       },
       { // edge ac
-        data: { id: -11, name: 'Fräsen', source: -1, target: -2, weight1: 1.8, weight2: 1, label: '' }
+        data: { id: -11, name: 'Fräsen', source: -1, target: -2, weight1: 1.8, weight2: 1, weight3: 15, weight4: 30, label: '' }
       },
       { // edge cb
-        data: { id: -12, name: 'Gewinde walzen', source: -3, target: -2, weight1: 2.4, weight2: 0.7, label: '' }
+        data: { id: -12, name: 'Gewinde walzen', source: -3, target: -2, weight1: 2.4, weight2: 0.7, weight3: 10, weight4: 20, label: '' }
       }
     ],
 
@@ -129,7 +129,7 @@ export function run() {
   };
 
   cy.edges().forEach(e => {
-    e.data('label', generateEdgeLabel(e.id(), e.data('weight1'), e.data('weight2')));
+    e.data('label', generateEdgeLabel(e.id(), e.data('weight1'), e.data('weight2'), e.data('weight3'), e.data('weight4')));
     e.layoutDimensions(options);
   });
 
@@ -187,12 +187,12 @@ export function createNode(newName, newShort, newImgurl, newColor) {
 
 // createEdge(..): Adds an edge to the Cytograph with an automatic 
 //                 generated (increasing) ID + the properties given
-export function createEdge(newName, edgeshort, start, end, cost, time, costR, timeR
+export function createEdge(newName, edgeshort, start, end, cost, time, sucost, sutime
   ) {
   let count = cy.data('IDCount')
 
   let newlabel = ''
-  newlabel = generateEdgeLabel(parseInt(count), cost, time, costR, timeR);
+  newlabel = generateEdgeLabel(parseInt(count), cost, time, sucost, sutime);
   cy.add({
     data: {
       id: parseInt(count),
@@ -202,6 +202,8 @@ export function createEdge(newName, edgeshort, start, end, cost, time, costR, ti
       target: end,
       weight1: cost,
       weight2: time,
+      weight3: sucost,
+      weight4: sutime,
       label: newlabel,
     },
   });
@@ -213,10 +215,10 @@ export function createEdge(newName, edgeshort, start, end, cost, time, costR, ti
 // createEdgeWithID(..): DO NOT USE THIS FUNCTION BY DEFAULT!
 //                       It's just for re-creating edges in "updateEdge(..)"
 //                       Use the normal createEdge(..) function with increasing IDs
-function createEdgeWithID(id, newName, edgeshort, start, end, cost, time, edgeLabel) {
+function createEdgeWithID(id, newName, edgeshort, start, end, cost, time, sucost, sutime, edgeLabel) {
   let originalCount = cy.data('IDCount');
   cy.data('IDCount', id);
-  createEdge(newName, edgeshort, start, end, cost, time, edgeLabel);
+  createEdge(newName, edgeshort, start, end, cost, time, sucost, sutime, edgeLabel);
   cy.data('IDCount', originalCount);
 }
 
@@ -358,6 +360,8 @@ export function Load(graph) {
         target: edge.data('target'),
         weight1: edge.data('weigth1'),
         weight2: edge.data('weight2'),
+        weight3: edge.data('weigth3'),
+        weight4: edge.data('weight4'),
         label: edge.data('label')
       },
     });
@@ -377,13 +381,13 @@ export function updateNode(id, newName, newShort, newImgurl, newColor) {
 
 
 // updateNode(..): Updates an Edge by ID with the given arguments
-export function updateEdge(id, newName, newShort, newSource, newTarget, newCost, newTime) {
+export function updateEdge(id, newName, newShort, newSource, newTarget, newCost, newTime, newsuCost, newsuTime) {
   let edge = cy.getElementById(id);
   let label = generateEdgeLabel(id, newCost, newTime);
   // Generate New Edge, if source or target are changing
   if (edge.data('source') != newSource || edge.data('target') != newTarget) {
     edge.remove();
-    createEdgeWithID(id, newName, newShort, newSource, newTarget, newCost, newTime, label)
+    createEdgeWithID(id, newName, newShort, newSource, newTarget, newCost, newTime, newsuCost, newsuTime, label)
   }
   edge.data('name', newName);
   edge.data('short', newShort);
@@ -391,6 +395,8 @@ export function updateEdge(id, newName, newShort, newSource, newTarget, newCost,
   edge.data('target', newTarget);
   edge.data('weight1', newCost);
   edge.data('weight2', newTime);
+  edge.data('weight3', newsuCost);
+  edge.data('weight4', newsuTime);
   edge.data('label', label);
 }
 
@@ -462,9 +468,9 @@ export function getEdgesByNode(id) {
 
 
 // generateEdgeLabel(..): Creates and Returns the Edge-Label based on the Weights
-function generateEdgeLabel(id, newCost, newTime) {
+function generateEdgeLabel(id, newCost, newTime, newsuCost, newsuTime) {
   var e = cy.getElementById(id);
-  return e.data('name') + '\nKosten: ' + newCost + '€ | Zeit: ' + newTime + 's';
+  return e.data('name') + '\nKosten: ' + newCost + '€ | Zeit: ' + newTime + 's' + '\nRüstkosten: ' + newsuCost + '€ | Rüstzeit: ' + newsuTime + 's';
 }
 
 

@@ -218,6 +218,29 @@
               type="number"
               v-model="edgeCreateTime"
               outlined
+            ></v-text-field>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col sm="6">
+            <v-text-field
+              id="edgeCreatesuCosts"
+              label="Kosten / Rüst"
+              suffix="€"
+              type="number"
+              v-model="edgeCreatesuCosts"
+              outlined
+              hide-details
+            ></v-text-field>
+          </v-col>
+          <v-col sm="6">
+            <v-text-field
+              id="edgeCreatesuTime"
+              label="Zeit / Rüst"
+              suffix="Sek."
+              type="number"
+              v-model="edgeCreatesuTime"
+              outlined
               hint="Einheit ist in den Einstellungen wählbar"
             ></v-text-field>
           </v-col>
@@ -254,6 +277,8 @@ export default {
       edgeCreateShort: "",
       edgeCreateCosts: "",
       edgeCreateTime: "",
+      edgeCreatesuCosts: "",
+      edgeCreatesuTime: "",
       itemsName: [],
       itemsID: [],
       startSelect: "",
@@ -287,8 +312,8 @@ export default {
     createEdge() {
       let w1 = parseFloat(this.edgeCreateCosts);
       let w2 = parseFloat(this.edgeCreateTime);
-      let w1R = parseFloat(this.edgeCreateCostsR);
-      let w2R = parseFloat(this.edgeCreateTimeR);
+      let w1R = parseFloat(this.edgeCreatesuCosts);
+      let w2R = parseFloat(this.edgeCreatesuTime);
 
       if(w1 < 0 || w1 < 0  || w1R < 0 || w2R < 0 ){
         alert("You can't use negative numbers")
@@ -342,6 +367,8 @@ export default {
       this.edgeCreateShort = "";
       this.edgeCreateCosts = "";
       this.edgeCreateTime = "";
+      this.edgeCreatesuCosts = "";
+      this.edgeCreatesuTime = "";
       this.startSelect = "";
       this.endSelect = "";
     }
