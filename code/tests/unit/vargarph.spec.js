@@ -202,21 +202,6 @@ import cytoscape from 'cytoscape';
     expect(findpath("optionTime", ["-1","0"], "-3")).toMatchObject(["Edelstahl", "Härten", "Stahlrohre", "Gewinde walzen", "Schrauben"])
     expect(findpath("optionCosts", ["-1","0"], "-3")).toMatchObject(["Edelstahl", "Härten", "Stahlrohre", "Gewinde walzen", "Schrauben"])
   });
-
-
-    it('should use the path with negative wait', function(){
-       
-        cy.add(
-            { // node Edelstahl
-                data: { id: 2 , name: 'Aluminium' },
-         })
-        cy.add(
-            { // edge Härten
-                data: { id: 3, name: 'Biegen', source: 2, target: -2, weight1: -1, weight2: -1, weight3: -1, weight4: -1, label: '' }
-        });
-
-            expect(findpath("optionTime", ["-1","2"], "-3")).toMatchObject(["Aluminium", "Biegen", "Stahlrohre", "Gewinde walzen", "Schrauben"])
-        })
     
 
   });
