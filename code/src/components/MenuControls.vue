@@ -124,8 +124,8 @@ export default {
       testDatabase: new TestDatabase(),
       instance: BasicData
     },
-    // event bus listens to signal "saveNewData" with instance attached
-    eventBus.$on("saveNewData", (newInstance) => {
+    // event bus listens to signal "applyNewData" with instance attached
+    eventBus.$on("applyNewData", (newInstance) => {
       this.updateData(newInstance)
     })
   },

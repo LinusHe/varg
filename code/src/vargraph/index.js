@@ -115,6 +115,10 @@ export function run() {
   //  This is to prevent that usage of cy.minZoom(value) locks up other zoom functionality
   cy.data('minZoom', 0.5);
   cy.data('IDCount', 0);
+  cy.data('graphName', 'TESTNAME')
+  cy.data('latestSave', 'TESTDATE')
+  cy.data('prodName', 'TESTPRODUCT')
+  cy.data('prodQuant', 69420)
 
   // Apply Color for nodes
   cy.nodes().forEach(n => {
