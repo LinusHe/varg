@@ -1,9 +1,10 @@
+<!-- @TODO (Erik) Documentation -->
 <template>
   <div class="modify-data-controls">
     <!-- Modify-Data Controls -->
-    <v-slide-x-transition>
+    <v-slide-x-reverse-transition>
       <v-card class="detail-card" v-show="modifyDataGui" transition="scroll-y-transition">
-        <v-btn class="btn-close ma-2" @click="modifyDataGui=false" text icon color="primary">
+        <v-btn class="btn-close ma-2" @click="deactivateGui()" text icon color="primary">
           <v-icon>mdi-close</v-icon>
         </v-btn>
 
@@ -11,49 +12,88 @@
         <p class="ml-3 mb-0 font-weight-light font-italic">Graph-Daten</p>
         <p class="prodname ml-3 mr-12 mb-0">{{graphName}}</p>
       
-        <!-- Name Selection -->
+        <!-- graphName Selection -->
         <v-row>
           <v-col sm="12">
             <v-text-field
               class="mt-2"
               id="graphName"
-              label="Produktname"
+              label="Dateiname"
               v-model="graphName"
+              :disabled="disabled"
               outlined
               hide-details
             ></v-text-field>
           </v-col>
         </v-row>
       
-        <!-- Quantity Selection -->
+        <!-- prodName & prodQuant Selection -->
         <v-row>
+          <v-col sm="8">
+            <v-text-field
+              id="prodName"
+              label="Produktname"
+              v-model="prodName"
+              :disabled="disabled"
+              outlined
+              hide-details
+            ></v-text-field>
+          </v-col>
           <v-col sm="4">
-            <v-text-field id="nodeShort" label="Stückzahl" v-model="quantity" outlined hide-details></v-text-field>
+            <v-text-field
+              id="prodQuant" 
+              label="Stückzahl" 
+              v-model="prodQuant" 
+              :disabled="disabled"
+              outlined 
+              hide-details
+            ></v-text-field>
           </v-col>
         </v-row>
       
-      
-      
-      
-      
-      
-      
-      
+        <!-- latestDate Display -->
+        <v-row>
+          <v-col sm="12">
+            <v-text-field
+              id="latestDate"
+              label="Letzte Speicherung"
+              v-model="latestDate"
+              :disabled="true"
+              outlined
+              hide-details
+            ></v-text-field>
+          </v-col>
+        </v-row>
+
+        <!-- Save & Cancel Buttons -->
+        <v-row>
+          <v-spacer sm="4" />
+          <v-col sm="4" align="right">
+            <v-btn color="success" :disabled="disabled" outlined @click="applyNewData()">Übernehmen</v-btn>
+          </v-col>
+          <v-col sm="4" align="right">
+            <v-btn color="lightgrey" outlined @click="deactivateGui()">Abbrechen</v-btn>
+          </v-col>
+        </v-row>
+
       </v-card>
-    </v-slide-x-transition>
+    </v-slide-x-reverse-transition>
   </div>
 </template>
 
 <script>
 import {eventBus} from "@/main.js"
-import TestDatabase from "@/vargraph/TestDatabase.js"
+import BasicData from "@/vargraph/BasicData.js";
 export default {
   name: "ModifyDataControls",
     data() {
       return {
         modifyDataGui: false,
+        disabled: false,
         graphName: "",
-        quantity: 0
+        latestDate: "",
+        prodName: "",
+        prodQuant: ""
       }
     },
   methods: {
@@ -64,11 +104,30 @@ export default {
       this.modifyDataGui = true
     },
     loadGraphData() {
-      // @TODO (Erik) hier werden nur Beispielwerte zugewiesen,
-      // müssen noch durch richtige Werte ersetzt werden!
-      // Graph-Name == Produktname ?
-      this.graphName = this.vars.testDatabase.getContent()[0].getName()
-      this.quantity = 100
+      // @TODO (Erik) Stückzahl usw. in cy.json speichern
+      if(this.vars.instance.graphName == undefined) {
+        this.disabled = true
+        this.graphName = "(noch nichts geladen - WIP)"
+        this.latestDate = "noch nicht gespeichert"
+        this.prodName = ""
+        this.prodQuant = ""
+      }
+      else {
+        this.disabled = false
+        this.graphName = this.vars.instance.getGraphName()
+        this.latestDate = this.vars.instance.getLatestDate()
+        //this.prodName = this.vars.instance.getProdName()
+        //this.prodQuant = this.vars.instance.getProdQuant()
+      }
+    },
+    applyNewData() {
+      this.vars.instance.setGraphName(this.graphName)
+      this.vars.instance.setLatestDate(new Date())
+      //this.vars.instance.setProdName(this.prodName)
+      //this.vars.instance.setProdQuant(this.prodQuant)
+      eventBus.$emit("applyNewData", this.vars.instance)
+      eventBus.$emit("updateHeader", this.prodName, this.prodQuant)
+      this.deactivateGui()
     },
     deactivateGui() {
       this.modifyDataGui = false
@@ -76,10 +135,10 @@ export default {
   },
   created() {
     this.vars = {
-      testDatabase: new TestDatabase()
+      instance: BasicData
     },
-    eventBus.$on("modifyData", (newTestDatabase) => {
-      this.vars.testDatabase = newTestDatabase
+    eventBus.$on("modifyData", (newInstance) => {
+      this.vars.instance = newInstance
       this.openModifyData()
     })
   }
