@@ -322,10 +322,17 @@ export default {
       let w1R = parseFloat(this.edgeCreateCostsR);
       let w2R = parseFloat(this.edgeCreateTimeR);
 
+      if(w1 < 0 || w1 < 0  || w1R < 0 || w2R < 0 ){
+        alert("You can't use negative numbers")
+        return
+      }
+
+
       let indexStart = this.itemsName.indexOf(this.startSelect);
       let startID = this.itemsID[indexStart];
       let indexEnd = this.itemsName.indexOf(this.endSelect);
       let endID = this.itemsID[indexEnd];
+
 
       graph.createEdge(
         this.edgeCreateName,

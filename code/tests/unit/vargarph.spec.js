@@ -189,20 +189,19 @@ import cytoscape from 'cytoscape';
       expect(findpath("optionTime", ["-1"], "-3")).toMatchObject(["Rohmaterial: Stahl", "Schneiden", "Stahlrohre", "Gewinde walzen", "Schrauben"])
     });
 
-
     it('should expect the least time and costs path from a new node(Edelstahl) to Schrauben', function(){
-        cy.add(
-            { // node Edelstahl
-                data: { id: 0 , name: 'Edelstahl' },
-            })
-        cy.add(
-            { // edge Härten
-                data: { id: 1, name: 'Härten', source: 0, target: -2, weight1: 0.1, weight2: 0.1, weight3: 0.2, weight4: 0.1, label: '' }
-            });
-    
-      expect(findpath("optionTime", ["-1","0"], "-3")).toMatchObject(["Edelstahl", "Härten", "Stahlrohre", "Gewinde walzen", "Schrauben"])
-      expect(findpath("optionCosts", ["-1","0"], "-3")).toMatchObject(["Edelstahl", "Härten", "Stahlrohre", "Gewinde walzen", "Schrauben"])
-    });
+      cy.add(
+          { // node Edelstahl
+              data: { id: 0 , name: 'Edelstahl' },
+          })
+      cy.add(
+          { // edge Härten
+              data: { id: 1, name: 'Härten', source: 0, target: -2, weight1: 0.1, weight2: 0.1, weight3: 0.2, weight4: 0.1, label: '' }
+          });
+  
+    expect(findpath("optionTime", ["-1","0"], "-3")).toMatchObject(["Edelstahl", "Härten", "Stahlrohre", "Gewinde walzen", "Schrauben"])
+    expect(findpath("optionCosts", ["-1","0"], "-3")).toMatchObject(["Edelstahl", "Härten", "Stahlrohre", "Gewinde walzen", "Schrauben"])
+  });
 
 
     it('should use the path with negative wait', function(){
@@ -210,14 +209,15 @@ import cytoscape from 'cytoscape';
         cy.add(
             { // node Edelstahl
                 data: { id: 2 , name: 'Aluminium' },
-            })
+         })
         cy.add(
             { // edge Härten
-                data: { id: 3, name: 'Biegen', source: 2, target: -2, weight1: 0, weight2: 0, weight3: 0, weight4: 0, label: '' }
-            });
+                data: { id: 3, name: 'Biegen', source: 2, target: -2, weight1: -1, weight2: -1, weight3: -1, weight4: -1, label: '' }
+        });
+
+            expect(findpath("optionTime", ["-1","2"], "-3")).toMatchObject(["Aluminium", "Biegen", "Stahlrohre", "Gewinde walzen", "Schrauben"])
         })
     
-    expect(findpath("optionTime", ["-1","2"], "-3")).toMatchObject(["Aluminium", "Biegen", "Stahlrohre", "Gewinde walzen", "Schrauben"])
 
   });
 
