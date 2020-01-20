@@ -217,10 +217,10 @@ export default {
     },
 
     home() {
-      window.location.href = "/home/login";
+      router.push({name: 'Varg - Login'})
     },
     datenbank() {
-      window.location.href = "/database";
+      router.push({name: 'Varg - Datenbank import'})
     }
   },
   data: function() {
