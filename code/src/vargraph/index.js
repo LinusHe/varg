@@ -29,27 +29,23 @@ export function run() {
       },
       { // edge ab 
         //! it's important to wright the weigth as a number and not as a string (for the algorithm)
-        data: { id: -10, name: 'Schneiden', source: -1, target: -2, weight1: 2, weight2: 0.3, weight3: 20, weight4: 10, label: '' },
+        data: { id: -10, name: 'Schneiden', source: -1, target: -2, cost: 2, time: 0.3, sucost: 15, sutime: 45, label: '' },
       },
       { // edge ab
-        data: { id: -11, name: 'Fräsen', source: -1, target: -2, weight1: 1.8, weight2: 1, label: '' }
+        data: { id: -11, name: 'Fräsen', source: -1, target: -2, cost: 1.8, time: 1, sucost: 20, sutime: 15, label: '' }
       },
       { // edge bc
-        data: { id: -12, name: 'Gewinde walzen', source: -2, target: -3, weight1: 2.4, weight2: 0.7, label: '' }
+        data: { id: -12, name: 'Gewinde walzen', source: -2, target: -3, cost: 2.4, time: 2.7, sucost: 10, sutime: 10, label: '' }
       },
       { // edge bc2
-        data: { id: -14, name: 'Gewinde schneiden', source: -2, target: -3, weight1: 2.1, weight2: 0.9, label: 'Gewinde schneiden' }
+        data: { id: -14, name: 'Gewinde schneiden', source: -2, target: -3, cost: 2.1, time: 1.8, sucost: 10, sutime: 15, label: 'Gewinde schneiden' }
       },
       { // edge bc3
-        data: { id: -15, name: 'Gewinde irgw', source: -2, target: -3, weight1: 2.1, weight2: 0.9, label: 'Gewinde irgw' }
+        data: { id: -15, name: 'Gewinde irgw', source: -2, target: -3, cost: 2.1, time: 0.8, sucost: 25, sutime: 30, label: 'Gewinde irgw' }
       },
       { // edge bc4
-        data: { id: -16, name: 'Gewinde 4', source: -2, target: -3, weight1: 2.1, weight2: 0.9, label: 'Gewinde 4' }
+        data: { id: -16, name: 'Gewinde 4', source: -2, target: -3, cost: 2.1, time: 0.9, sucost: 30, sutime: 25, label: 'Gewinde 4' }
       }
-      // ,
-      // { // edge ac
-      // data: { id: -13, name: 'Abkürzung', source: -1, target: -3, weight1: 4, weight2: 2.3, label: 'Abkürzung' }
-      // }
     ],
 
     data: {
@@ -77,7 +73,7 @@ export function run() {
           'target-arrow-color': '#2699FB',
           'curve-style': 'bezier',
           // 'control-point-distance': '80px', // replaced with 'control-point-step-size'
-          'control-point-step-size': '100px', // distance between successive bezier edges.
+          'control-point-step-size': '130px', // distance between successive bezier edges.
          // 'control-point-weight': '0.5', // '0': curve towards source node, '1': towards target node. 0.5 is default!
           'font-size': '14px',
           'color': '#777',
@@ -155,7 +151,7 @@ export function run() {
   };
 
   cy.edges().forEach(e => {
-    e.data('label', generateEdgeLabel(e.id(), e.data('weight1'), e.data('weight2'), e.data('weight3'), e.data('weight4')));
+    e.data('label', generateEdgeLabel(e.id(), e.data('name'), e.data('cost'), e.data('time'), e.data('sucost'), e.data('sutime')));
     e.layoutDimensions(options);
   });
 
@@ -213,38 +209,35 @@ export function createNode(newName, newShort, newImgurl, newColor) {
 
 // createEdge(..): Adds an edge to the Cytograph with an automatic 
 //                 generated (increasing) ID + the properties given
-export function createEdge(newName, edgeshort, start, end, cost, time, sucost, sutime
+export function createEdge(newName, edgeshort, start, end, newcost, newtime, newsucost, newsutime
   ) {
   let count = cy.data('IDCount')
 
-  let newlabel = ''
-  newlabel = generateEdgeLabel(parseInt(count), cost, time, sucost, sutime);
+  let newlabel = generateEdgeLabel(parseInt(count), newName, newcost, newtime, newsucost, newsutime);
   cy.add({
     data: {
       id: parseInt(count),
-      name: newName,
       short: edgeshort,
+      name: newName,
       source: start,
       target: end,
-      weight1: cost,
-      weight2: time,
-      weight3: sucost,
-      weight4: sutime,
+      cost: newcost,
+      time: newtime,
+      sucost: newsucost,
+      sutime: newsutime,
       label: newlabel,
     },
   });
-  count++
-  cy.data('IDCount', count);
 }
 
 
 // createEdgeWithID(..): DO NOT USE THIS FUNCTION BY DEFAULT!
 //                       It's just for re-creating edges in "updateEdge(..)"
 //                       Use the normal createEdge(..) function with increasing IDs
-function createEdgeWithID(id, newName, edgeshort, start, end, cost, time, sucost, sutime, edgeLabel) {
+function createEdgeWithID(id, newName, edgeshort, start, end, newcost, newtime, newsucost, newsutime, edgeLabel) {
   let originalCount = cy.data('IDCount');
   cy.data('IDCount', id);
-  createEdge(newName, edgeshort, start, end, cost, time, sucost, sutime, edgeLabel);
+  createEdge(newName, edgeshort, start, end, newcost, newtime, newsucost, newsutime, edgeLabel);
   cy.data('IDCount', originalCount);
 }
 
@@ -269,7 +262,7 @@ export function findPath(option, start, end) {
       for(let i = 0; i< start.length; i++){
         let startNode = "#" + start[i]
         var dijkstraCosts = cy.elements().dijkstra(startNode, function (edge) {
-          return edge.data('weight1')+ edge.data('weight3');
+          return edge.data('cost')+ edge.data('sucost');
           });
         if(i === 0){
           //saves the shortest distance to a sspecific node(in this case endNode)
@@ -295,7 +288,7 @@ export function findPath(option, start, end) {
       for(let i = 0; i< start.length; i++){
         let startNode = "#" + start[i]
         var dijkstraTime = cy.elements().dijkstra(startNode, function (edge) {
-          return edge.data('weight2')+ edge.data('weight4');
+          return edge.data('time')+ edge.data('sutime');
           });
         if(i === 0){
           minDistance = dijkstraTime.distanceTo(cy.$(endNode))
@@ -384,10 +377,10 @@ export function Load(graph) {
         name: edge.data('name'),
         source: edge.data('source'),
         target: edge.data('target'),
-        weight1: edge.data('weigth1'),
-        weight2: edge.data('weight2'),
-        weight3: edge.data('weigth3'),
-        weight4: edge.data('weight4'),
+        cost: edge.data('cost'),
+        time: edge.data('time'),
+        sucost: edge.data('sucost'),
+        sutime: edge.data('sutime'),
         label: edge.data('label')
       },
     });
@@ -407,22 +400,22 @@ export function updateNode(id, newName, newShort, newImgurl, newColor) {
 
 
 // updateNode(..): Updates an Edge by ID with the given arguments
-export function updateEdge(id, newName, newShort, newSource, newTarget, newCost, newTime, newsuCost, newsuTime) {
+export function updateEdge(id, newName, newShort, newSource, newTarget, newCost, newTime, newsucost, newsutime) {
   let edge = cy.getElementById(id);
-  let label = generateEdgeLabel(id, newCost, newTime);
+  let label = generateEdgeLabel(id, newName, newCost, newTime, newsucost, newsutime);
   // Generate New Edge, if source or target are changing
   if (edge.data('source') != newSource || edge.data('target') != newTarget) {
     edge.remove();
-    createEdgeWithID(id, newName, newShort, newSource, newTarget, newCost, newTime, newsuCost, newsuTime, label)
+    createEdgeWithID(id, newName, newShort, newSource, newTarget, newCost, newTime, newsucost, newsutime, label)
   }
   edge.data('name', newName);
   edge.data('short', newShort);
   edge.data('source', newSource);
   edge.data('target', newTarget);
-  edge.data('weight1', newCost);
-  edge.data('weight2', newTime);
-  edge.data('weight3', newsuCost);
-  edge.data('weight4', newsuTime);
+  edge.data('cost', newCost);
+  edge.data('time', newTime);
+  edge.data('sucost', newsucost);
+  edge.data('sutime', newsutime);
   edge.data('label', label);
 }
 
@@ -494,9 +487,9 @@ export function getEdgesByNode(id) {
 
 
 // generateEdgeLabel(..): Creates and Returns the Edge-Label based on the Weights
-function generateEdgeLabel(id, newCost, newTime, newsuCost, newsuTime) {
+function generateEdgeLabel(id, newName, newcost, newtime, newsucost, newsutime) {
   var e = cy.getElementById(id);
-  return e.data('name') + '\nKosten: ' + newCost + '€ | Zeit: ' + newTime + 's' + '\nRüstkosten: ' + newsuCost + '€ | Rüstzeit: ' + newsuTime + 's';
+  return newName + '\nKosten: ' + newcost + '€ | Zeit: ' + newtime + 's' + '\nRüstkosten: ' + newsucost + '€ | Rüstzeit: ' + newsutime + 's';
 }
 
 

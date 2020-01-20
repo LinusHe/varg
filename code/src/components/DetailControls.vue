@@ -181,19 +181,19 @@
           <v-col sm="6">
             <v-text-field
               id="edgeCosts"
-              label="Zeit / Stück"
-              suffix="Sek."
+              label="Kosten / Stück"
+              suffix="€"
               type="number"
               v-model="edgeCosts"
               outlined
-              hint="Einheit ist in den Einstellungen wählbar"
+              hide-details
             ></v-text-field>
           </v-col>
           <v-col sm="6">
             <v-text-field
               id="edgeTime"
-              label="Kosten / Stück"
-              suffix="€"
+              label="Zeit / Stück"
+              suffix="Sek."
               v-model="edgeTime"
               type="number"
               outlined
@@ -201,6 +201,31 @@
             ></v-text-field>
           </v-col>
         </v-row>
+        <v-row>
+          <v-col sm="6">
+            <v-text-field
+              id="edgesuCosts"
+              label="Kosten / Rüst"
+              suffix="€"
+              type="number"
+              v-model="edgesuCosts"
+              outlined
+              hint="Einheit ist in den Einstellungen wählbar"
+            ></v-text-field>
+          </v-col>
+          <v-col sm="6">
+            <v-text-field
+              id="edgesuTime"
+              label="Zeit / Rüst"
+              suffix="Sek."
+              v-model="edgesuTime"
+              type="number"
+              outlined
+              hide-details
+            ></v-text-field>
+          </v-col>
+        </v-row>
+
         <!-- Save & Delete Buttons -->
         <v-row>
           <v-spacer sm="4" />
@@ -248,8 +273,10 @@ export default {
       edgeGui: false,
       edgeName: "",
       edgeShort: "",
-      edgeTime: "",
       edgeCosts: "",
+      edgeTime: "",
+      edgesuCosts: "",
+      edgesuTime: "",
       itemsName: [],
       itemsID: [],
       startSelect: "",
@@ -277,8 +304,10 @@ export default {
       this.id = edge.id();
       this.edgeName = edge.data("name");
       this.edgeShort = edge.data("short");
-      this.edgeCosts = edge.data("weight1");
-      this.edgeTime = edge.data("weight2");
+      this.edgeCosts = edge.data("cost");
+      this.edgeTime = edge.data("time");
+      this.edgesuCosts = edge.data("sucost");
+      this.edgesuTime = edge.data("sutime");
       this.startSelect = startName;
       this.endSelect = endName;
     },
@@ -330,7 +359,9 @@ export default {
         startID,
         endID,
         this.edgeCosts,
-        this.edgeTime
+        this.edgeTime,
+        this.edgesuCosts,
+        this.edgesuTime
       );
       this.edgeGui = false;
     },

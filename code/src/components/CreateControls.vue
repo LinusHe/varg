@@ -219,6 +219,7 @@
               type="number"
               v-model="edgeCreateTime"
               outlined
+              hide-details
             ></v-text-field>
           </v-col>
         </v-row>
@@ -311,12 +312,12 @@ export default {
       this.itemsName = graph.getNodeName();
     },
     createEdge() {
-      let w1 = parseFloat(this.edgeCreateCosts);
-      let w2 = parseFloat(this.edgeCreateTime);
-      let w1R = parseFloat(this.edgeCreatesuCosts);
-      let w2R = parseFloat(this.edgeCreatesuTime);
+      let newcost = parseFloat(this.edgeCreateCosts);
+      let newtime = parseFloat(this.edgeCreateTime);
+      let newsucost = parseFloat(this.edgeCreatesuCosts);
+      let newsutime = parseFloat(this.edgeCreatesuTime);
 
-      if(w1 < 0 || w1 < 0  || w1R < 0 || w2R < 0 ){
+      if(newcost < 0 || newtime < 0  || newsucost < 0 || newsutime < 0 ){
         alert("You can't use negative numbers")
         return
       }
@@ -333,10 +334,10 @@ export default {
         this.edgeCreateShort,
         startID,
         endID,
-        w1,
-        w2,
-        // eslint-disable-next-line no-undef
-        label
+        newcost,
+        newtime,
+        newsucost,
+        newsutime,
       );
       this.clearFields();
       this.edgeCreateGui = false;
