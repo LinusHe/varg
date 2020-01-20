@@ -17,7 +17,6 @@
             </v-col>
         </v-card>
     </v-dialog>
-    <SaveMenu ref="SaveMenu" v-on:onSaveConfirm="onSaveConfirm" v-on:onOverwrite="onOverwrite"></SaveMenu>
 </div>
 
 
@@ -50,16 +49,12 @@
 </template>
 
 <script>
-import SaveMenu from "@/components/SaveMenu.vue"
 import ExJSon from "@/vargraph/JSonPersistence.js"
 import BasicData from "@/vargraph/BasicData.js";
 import router from '@/router/index.js'
 
 export default {
     name: 'NewGraphMenu.vue',
-    components: {
-        'SaveMenu'  :   SaveMenu,
-    },
     data () {
         return{
             dialog: false,
@@ -81,13 +76,13 @@ export default {
                     //no dupe
                     // eslint-disable-next-line no-console
                     console.log('save')
-                    this.$refs.SaveMenu.setdialog(false)
+                    this.$parent.$refs.saveMenu.setdialog(false)
                     router.push({name: 'newGraph'});
                 }
             else {
                 //dupe case
-                this.$refs.SaveMenu.setmsg("Es existiert bereits eine Datei unter diesen Namen. Wollen Sie diese überschreiben ?")
-                this.$refs.SaveMenu.setbtntext("Überschreiben")
+                this.$parent.$refs.saveMenu.setmsg("Es existiert bereits eine Datei unter diesen Namen. Wollen Sie diese überschreiben ?")
+                this.$parent.$refs.saveMenu.setbtntext("Überschreiben")
             }
         }
       else if (value == "" || value == null) {
@@ -103,11 +98,12 @@ export default {
             let date = new Date();
             let save = new BasicData(value, date, content);
             this.database.save(save,true)
-            this.$refs.SaveMenu.setdialog(false)
+            this.$parent.$refs.saveMenu.setdialog(false)
             router.push({name: 'newGraph'});
         },
         showSaveMenu()  {
-            this.$refs.SaveMenu.setdialog(true)
+            this.$parent.$refs.saveMenu.setdialog(true)
+            this.dialog = false;
         },
         setdialog(value){
             this.dialog=value

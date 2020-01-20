@@ -74,36 +74,36 @@ export default {
     clickedItem(clickId) {
       if (clickId == "n1") {
         // Edit Node
-        this.$parent.$refs.detailConrols.openNodeDetails(
+        this.$parent.$refs.detailControls.openNodeDetails(
           graph.getCytoGraph().getElementById(this.targetID)
         );
       } else if (clickId == "n2") {
         // Delete Node
-        this.$parent.$refs.detailConrols.loadNodeData(
+        this.$parent.$refs.detailControls.loadNodeData(
           graph.getCytoGraph().getElementById(this.targetID)
         );
-        this.$parent.$refs.detailConrols.openNodeDeleteMenu(
+        this.$parent.$refs.detailControls.openNodeDeleteMenu(
           graph.getCytoGraph().getElementById(this.targetID)
         );
       } else if (clickId == "e1") {
         // Edit Edge
-        this.$parent.$refs.detailConrols.openEdgeDetails(
+        this.$parent.$refs.detailControls.openEdgeDetails(
           graph.getCytoGraph().getElementById(this.targetID)
         );
       } else if (clickId == "e2") {
         // Delete Edge
-        this.$parent.$refs.detailConrols.loadEdgeData(
+        this.$parent.$refs.detailControls.loadEdgeData(
           graph.getCytoGraph().getElementById(this.targetID)
         );
-        this.$parent.$refs.detailConrols.openEdgeDeleteMenu(
+        this.$parent.$refs.detailControls.openEdgeDeleteMenu(
           graph.getCytoGraph().getElementById(this.targetID)
         );
       } else if (clickId == "b1") {
         // Create Node
-        this.$parent.$refs.createConrols.openNodeGui();
+        this.$parent.$refs.createControls.openNodeGui();
       } else if (clickId == "b2") {
         // Create Edge
-        this.$parent.$refs.createConrols.openEdgeGui();
+        this.$parent.$refs.createControls.openEdgeGui();
       }
     }
   }

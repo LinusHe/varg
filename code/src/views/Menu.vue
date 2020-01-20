@@ -8,7 +8,7 @@
 
 <script>
 // @ is an alias to /src
-import HomeMenu from "@/components/HomeMenu";
+import HomeMenu from "@/components/home/HomeMenu";
 
 export default {
   name: "Menu",

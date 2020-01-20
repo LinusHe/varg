@@ -25,7 +25,7 @@
 
 <script>
 // @ is an alias to /src
-import HtwkLogoHeader from "@/components/HtwkLogoHeader";
+import HtwkLogoHeader from "@/components/basic/HtwkLogoHeader";
 
 export default {
   name: "home",

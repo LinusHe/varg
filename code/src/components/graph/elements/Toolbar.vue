@@ -90,9 +90,6 @@
         </v-tooltip>
       </v-row>
     </v-card>
-  <NewGraphMenu ref="NewGraphMenu" v-on:newGraph="onNewGraphConfirm"></NewGraphMenu>
-  <DownloadMenu ref="DownloadMenu"></DownloadMenu>
-  <SaveMenu ref="SaveMenu" v-on:onSaveConfirm="onSaveConfirm" v-on:onOverwrite="onOverwrite"></SaveMenu>
   </div>
 </template>
 
@@ -103,22 +100,14 @@ import {eventBus} from "@/main.js"
 import ExJSon from "@/vargraph/JSonPersistence.js"
 import BasicData from "@/vargraph/BasicData.js";
 import TestDatabase from "@/vargraph/TestDatabase.js";
-import DownloadMenu from "@/components/DownloadMenu.vue";
-import SaveMenu from "@/components/SaveMenu.vue";
-import NewGraphMenu from "@/components/NewGraphMenu.vue"
 import importExport from "@/vargraph/importExport.js";
 import router from '@/router/index.js'
 
 export default {
-  name: "MenuControls",
-  components: {
-    'DownloadMenu' : DownloadMenu,
-    'SaveMenu'  :   SaveMenu,
-    'NewGraphMenu'  : NewGraphMenu,
-  },
+  name: "Toolbar",
   created() {
     this.vars = {
-      // initializes new instance of TestDatabase when MenuControls is loaded for the first time
+      // initializes new instance of TestDatabase when Toolbar is loaded for the first time
       testDatabase: new TestDatabase(),
       instance: BasicData
     },
@@ -130,20 +119,20 @@ export default {
   methods: {
     //Shows Menu to open up a new Graph with options
     NewGraph(){
-      this.$refs.NewGraphMenu.setObject(this.vars.testDatabase)
-      this.$refs.NewGraphMenu.setdialog(true)
+      this.$parent.$refs.newGraphMenu.setObject(this.vars.testDatabase)
+      this.$parent.$refs.newGraphMenu.setdialog(true)
     },
     //handles saving case and discard case
     onNewGraphConfirm(value){
       if (value){
         //save Case
-        this.$refs.NewGraphMenu.showSaveMenu();
+        this.$parent.$refs.newGraphMenu.showSaveMenu();
       }
       else{
         //discard case
         graph.getCytoGraph().nodes().remove()
         graph.getCytoGraph().edges().remove()
-        this.$refs.NewGraphMenu.setdialog(false)
+        this.$parent.$refs.newGraphMenu.setdialog(false)
         //this works!!!
         router.push({name: 'newGraph'});
       }
@@ -159,7 +148,7 @@ export default {
     Download : function(){
       //not-best-practice aka coupling of components is not wanted
       //in order to make components reusable
-      this.$refs.DownloadMenu.setdialog(true)
+      this.$parent.$refs.downloadMenu.setdialog(true)
     },
     onSaveConfirm (value){
       if (value != "" && value != null) {
@@ -172,12 +161,12 @@ export default {
           //no dupe
           // eslint-disable-next-line no-console
           console.log('save')
-          this.$refs.SaveMenu.setdialog(false)
+          this.$parent.$refs.saveMenu.setdialog(false)
         }
         else {
           //dupe case
-          this.$refs.SaveMenu.setmsg("Es existiert bereits eine Datei unter diesen Namen. Wollen Sie diese überschreiben ?")
-          this.$refs.SaveMenu.setbtntext("Überschreiben")
+          this.$parent.$refs.saveMenu.setmsg("Es existiert bereits eine Datei unter diesen Namen. Wollen Sie diese überschreiben ?")
+          this.$parent.$refs.saveMenu.setbtntext("Überschreiben")
         }
       }
       else if (value == "" || value == null) {
@@ -193,10 +182,10 @@ export default {
       let date = new Date();
       let save = new BasicData(value, date, content);
       this.vars.testDatabase.save(save,true)
-      this.$refs.SaveMenu.setdialog(false)
+      this.$parent.$refs.saveMenu.setdialog(false)
     },
     SaveJSon: function () {
-      this.$refs.SaveMenu.setdialog(true)
+      this.$parent.$refs.saveMenu.setdialog(true)
     },
     LoadJSon() {
       (this.$refs.file);

@@ -55,7 +55,7 @@
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
 
-import graph from "../vargraph";
+import graph from "@/vargraph";
 
 export default {
   name: "OptimizeControls",

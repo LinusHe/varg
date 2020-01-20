@@ -99,8 +99,8 @@ export default {
   methods: {
     openModifyData() {
       this.loadGraphData()
-      this.$parent.$refs.createConrols.deactivateGui();
-      this.$parent.$refs.detailConrols.deactivateGui();
+      this.$parent.$refs.createControls.deactivateGui();
+      this.$parent.$refs.detailControls.deactivateGui();
       this.modifyDataGui = true
     },
     loadGraphData() {
