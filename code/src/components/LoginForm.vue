@@ -22,9 +22,10 @@
       placeholder="******"
       outlined
       @focus="clearError()" 
+      @keyup.enter="login()"
     ></v-text-field>
     <!--<router-link to="menu" tag="button">-->
-      <v-btn class="login-button" @click="login()" @keyup.enter="login()" large color="primary">Login</v-btn>
+      <v-btn class="login-button" @click="login()"  large color="primary">Login</v-btn>
     <!--</router-link>-->
 
     <a align="center" class="font-italic mt-6" color="error">Passwort vergessen?</a>
