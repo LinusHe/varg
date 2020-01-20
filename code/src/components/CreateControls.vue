@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 <template>
   <div class="create-controls-container">
     <!-- Selection Hover-Button -->
@@ -218,6 +219,29 @@
               type="number"
               v-model="edgeCreateTime"
               outlined
+            ></v-text-field>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col sm="6">
+            <v-text-field
+              id="edgeCreatesuCosts"
+              label="Kosten / Rüst"
+              suffix="€"
+              type="number"
+              v-model="edgeCreatesuCosts"
+              outlined
+              hide-details
+            ></v-text-field>
+          </v-col>
+          <v-col sm="6">
+            <v-text-field
+              id="edgeCreatesuTime"
+              label="Zeit / Rüst"
+              suffix="Sek."
+              type="number"
+              v-model="edgeCreatesuTime"
+              outlined
               hint="Einheit ist in den Einstellungen wählbar"
             ></v-text-field>
           </v-col>
@@ -254,6 +278,8 @@ export default {
       edgeCreateShort: "",
       edgeCreateCosts: "",
       edgeCreateTime: "",
+      edgeCreatesuCosts: "",
+      edgeCreatesuTime: "",
       itemsName: [],
       itemsID: [],
       startSelect: "",
@@ -285,15 +311,22 @@ export default {
       this.itemsName = graph.getNodeName();
     },
     createEdge() {
-      let w1 = parseInt(this.edgeCreateCosts);
-      let w2 = parseInt(this.edgeCreateTime);
+      let w1 = parseFloat(this.edgeCreateCosts);
+      let w2 = parseFloat(this.edgeCreateTime);
+      let w1R = parseFloat(this.edgeCreatesuCosts);
+      let w2R = parseFloat(this.edgeCreatesuTime);
 
-      let label = "(" + w1 + "," + w2 + ")";
+      if(w1 < 0 || w1 < 0  || w1R < 0 || w2R < 0 ){
+        alert("You can't use negative numbers")
+        return
+      }
+
 
       let indexStart = this.itemsName.indexOf(this.startSelect);
       let startID = this.itemsID[indexStart];
       let indexEnd = this.itemsName.indexOf(this.endSelect);
       let endID = this.itemsID[indexEnd];
+
 
       graph.createEdge(
         this.edgeCreateName,
@@ -302,6 +335,7 @@ export default {
         endID,
         w1,
         w2,
+        // eslint-disable-next-line no-undef
         label
       );
       this.clearFields();
@@ -335,6 +369,8 @@ export default {
       this.edgeCreateShort = "";
       this.edgeCreateCosts = "";
       this.edgeCreateTime = "";
+      this.edgeCreatesuCosts = "";
+      this.edgeCreatesuTime = "";
       this.startSelect = "";
       this.endSelect = "";
     }

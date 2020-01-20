@@ -1,26 +1,46 @@
 export default class BasicData {
-  constructor(name, date, graph)
+  /* graphName: file/save name
+   * latestDate: date + time of latest save
+   * prodName: product name
+   * prodQuant: production quantity
+   * graph: cy.json
+   */
+  constructor (graphName, latestDate, /*prodName, prodQuant,*/ graph)
   {
-    this.name=name;
-    this.date=date;
-    this.graph=graph;
+    this.graphName = graphName
+    this.latestDate = latestDate
+    /*this.prodName = prodName
+    this.prodQuant = prodQuant*/
+    this.graph = graph
   }
-  getName() {
-    return this.name;
+  getGraphName () {
+    return this.graphName
   }
-  setName(newName) {
-    this.name = newName;
+  setGraphName (newGraphName) {
+    this.graphName = newGraphName
   }
-  getDate() {
-    return this.date;
+  getLatestDate () {
+    return this.latestDate
   }
-  setDate(newDate) {
-    this.date = newDate;
+  setLatestDate (newDate) {
+    this.latestDate = newDate
   }
-  getGraph() {
-    return this.graph;
+  /*getProdName () {
+    return this.getProdName
   }
-  setGraph(newGraph) {
-    this.graph = newGraph;
+  setProdName (newProdName) {
+    this.prodName = newProdName
+  }
+  getProdQuant () {
+    return this.prodQuant
+  }
+  setProdQuant (newProdQuant) {
+    this.prodQuant = newProdQuant
+  }*/
+  getGraph () {
+    return this.graph
+  }
+  setGraph (newGraph) {
+    this.graph = newGraph
   }
 }

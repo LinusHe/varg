@@ -37,7 +37,7 @@
       <v-row align="center">
         <v-tooltip right>
           <template v-slot:activator="{ on }">
-            <v-btn @click="ExportJSon" v-on="on" fab dark small depressed color="primary">
+            <v-btn @click="SaveJSon" v-on="on" fab dark small depressed color="primary">
               <v-icon dark>mdi-content-save</v-icon>
             </v-btn>
           </template>
@@ -51,6 +51,7 @@
             <v-btn @click="LoadJSon" v-on="on" fab dark small depressed color="primary">
               <v-icon dark>mdi-open-in-app</v-icon>
             </v-btn>
+            <input type="file" ref="file" accept=".json" style="display: none" />
           </template>
           <span>Graph laden</span>
         </v-tooltip>
@@ -59,11 +60,11 @@
       <v-row align="center">
         <v-tooltip right>
           <template v-slot:activator="{ on }">
-            <v-btn @click="ExportJSon" v-on="on" fab dark small depressed color="primary">
-              <v-icon dark>mdi-image</v-icon>
+            <v-btn @click="Download" v-on="on" fab dark small depressed color="primary">
+              <v-icon dark>mdi-file-download</v-icon>
             </v-btn>
           </template>
-          <span>Als JSon speichern</span>
+          <span>Download</span>
         </v-tooltip>
       </v-row>
 
@@ -100,68 +101,105 @@
                Dieser Graph Speichern ?  <!-- Inhalt des Popup-Fensters-->
                </div>
                <div class="modal-footer"> <!--Footer des Popupfenesters, wo die Funktionsbuttons platziert sind -->
-               <v-btn class="btn" @click="ExportJSon" href="/home/new">Speichern</v-btn> <!--ExportJSon wird abgeruft, um den Graph zu speichern-->
+               <v-btn class="btn" @click="SaveJSon" href="/home/new" >Speichern</v-btn> <!--ExportJSon wird abgeruft, um den Graph zu speichern-->
                <v-btn class="btn" href="/home/new">Verwerfen</v-btn> <!--Graph verwerfen und direkt an die Seite der Erstellung eines neuen Graphs weiterleiten-->
                <v-btn class="btn" href="#">Abbrechen</v-btn> <!--Popup-Fenster ausblenden und der Graph weiter bearbeiten-->
                </div>
            </div>
        </div>
+  <DownloadMenu ref="DownloadMenu"></DownloadMenu>
+  <SaveMenu ref="SaveMenu" v-on:onSaveConfirm="onSaveConfirm" v-on:onOverwrite="onOverwrite"></SaveMenu>
   </div>
 </template>
 
 <script>
+/* eslint-disable no-console */
 import graph from "@/vargraph/index.js";
 import {eventBus} from "@/main.js"
 import ExJSon from "@/vargraph/JSonPersistence.js"
 import BasicData from "@/vargraph/BasicData.js";
 import TestDatabase from "@/vargraph/TestDatabase.js";
+import DownloadMenu from "@/components/DownloadMenu.vue";
+import SaveMenu from "@/components/SaveMenu.vue";
+import importExport from "@/vargraph/importExport.js";
 
 export default {
   name: "MenuControls",
+  components: {
+    'DownloadMenu' : DownloadMenu,
+    'SaveMenu'  :   SaveMenu,
+  },
   created() {
     this.vars = {
       // initializes new instance of TestDatabase when MenuControls is loaded for the first time
-      testDatabase: new TestDatabase()
-    };
+      testDatabase: new TestDatabase(),
+      instance: BasicData
+    },
+    // event bus listens to signal "applyNewData" with instance attached
+    eventBus.$on("applyNewData", (newInstance) => {
+      this.updateData(newInstance)
+    })
   },
   methods: {
     modifyData() {
-      eventBus.$emit("modifyData", this.vars.testDatabase)
+      // event bus broadcasts signal "modifyData" and attaches instance to it
+      eventBus.$emit("modifyData", this.vars.instance)
     },
-    ExportJSon: function () {
+    updateData(newInstance) {
+      this.vars.testDatabase.forceSave(newInstance, this.vars.instance.getGraphName())
+      this.vars.instance = newInstance
+    },
+    Download : function(){
+      //not-best-practice aka coupling of components is not wanted
+      //in order to make components reusable
+      this.$refs.DownloadMenu.setdialog(true)
+    },
+    onSaveConfirm (value){
+      if (value != "" && value != null) {
+        let content=ExJSon.CreateJSon()
+        //Stringify makes content readable
+        content = JSON.stringify(content, null, 2);
+        let date = new Date();
+        let save = new BasicData(value, date, content);
+        if(this.vars.testDatabase.save(save, false)){
+          //no dupe
+          // eslint-disable-next-line no-console
+          console.log('save')
+          this.$refs.SaveMenu.setdialog(false)
+        }
+        else {
+          //dupe case
+          this.$refs.SaveMenu.setmsg("Es existiert bereits eine Datei unter diesen Namen. Wollen Sie diese überschreiben ?")
+          this.$refs.SaveMenu.setbtntext("Überschreiben")
+        }
+      }
+      else if (value == "" || value == null) {
+        //do nothing
+      }
+    },
+    onOverwrite(value) {
       let content=ExJSon.CreateJSon()
       //Stringify makes content readable
-      content = JSON.stringify(content, null, 2)
+      content = JSON.stringify(content, null, 2);
       // eslint-disable-next-line no-console
-      console.log(content)
-      // let link = document.createElement('link')
-      // link.download='Graph.json'
-      // let file = new Blob([content],{type: 'text/plain'})
-      // link.href = URL.createObjectURL(file)
-      // link.click()
-      // URL.revokeObjectURL(link.href)
-      let name = prompt("Name:");
+      console.log('overwrite')
       let date = new Date();
-      if (name != "" && name != null) {
-        let save = new BasicData(name, date, content);
-        this.vars.testDatabase.save(save);
-      }
-      else if (name === "") {
-        alert("Fehlender Name");
-      }
+      let save = new BasicData(value, date, content);
+      this.vars.testDatabase.save(save,true)
+      this.$refs.SaveMenu.setdialog(false)
+    },
+    SaveJSon: function () {
+      this.$refs.SaveMenu.setdialog(true)
     },
     LoadJSon() {
-      let Input = prompt("GraphName: ");
-      // Checks if data was input by the user
-      if (Input === "") {
-        // eslint-disable-next-line no-console
-        console.log("Missing graphName");
-      } else {
-        let instance = this.vars.testDatabase.load(Input);
-        // eslint-disable-next-line no-console
-        this.vars.testDatabase.logContent()
-        ExJSon.LoadJSon(instance.getGraph());
+      (this.$refs.file);
+      this.$refs.file.click();
+      this.$refs.file.addEventListener("change", onChange);
+
+      function onChange(event) {
+        importExport.loadGraphFromJson(event);
       }
+      
     },
 
     findPathForCosts() {
@@ -180,7 +218,7 @@ export default {
   },
   data: function() {
     return {
-      items: ["a", "b", "c"]
+      items: ["a", "b", "c"],
     };
   }
 };

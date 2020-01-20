@@ -1,0 +1,27 @@
+image: node:12.14.1
+
+stages:
+  - build
+  - test
+
+cache:
+  paths:
+    - node_modules/
+
+install_dependencies:
+  stage: .pre
+  script:
+    - ls
+    - cd code
+    - ls
+    - npm install
+    - npm install -g @vue/cli
+    - npm install -g @vue/cli-service-global
+
+build_code:
+  stage: build
+  script: 
+  - ls
+  - cd code
+  - npm install
+  - npm run build
