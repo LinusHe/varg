@@ -1,0 +1,124 @@
+<template>
+<div>
+    <v-dialog v-model="dialog" max-width="380">
+        <v-card>
+            <v-card-title class="headline"> Neuer Graph ? </v-card-title>
+            <v-card-text>
+                Dieser Graph Speichern ?
+            </v-card-text>
+            <v-col>
+                <v-btn color="success" block outlined @click="save">Speichern</v-btn>
+            </v-col>
+            <v-col>
+                <v-btn color="error" block outlined @click="discard">Verwerfen</v-btn>
+            </v-col>
+            <v-col>
+                <v-btn color="error" block outlined @click="dialog=false">Abbrechen</v-btn>
+            </v-col>
+        </v-card>
+    </v-dialog>
+    <SaveMenu ref="SaveMenu" v-on:onSaveConfirm="onSaveConfirm" v-on:onOverwrite="onOverwrite"></SaveMenu>
+</div>
+
+
+
+
+<!--Popup-Fenster-->
+<!-- <div id="popup1" class="overlay"> 
+    Popupfenster (Solange der Button der Erstellung eines neuen Graphs nicht gedrückt ist, bleibt dieses Fenster versteckt) -->
+    <!-- <div class="popup"> -->
+        <!--<div class="modal-header"> Header des Popupfenesters -->
+            <!-- <h2>Neuer Graph ?</h2> -->
+            <!--<a class="close" href="#">&times;</a>
+            </div>
+        <div class="content">
+            Dieser Graph Speichern ?   Inhalt des Popup-Fensters
+        </div>
+        Footer des Popupfenesters, wo die Funktionsbuttons platziert sind
+            <div class="modal-footer"> 
+                Save wird abgeruft, um den Graph zu speichern
+               <v-btn class="btn" @click="SaveJSon" href="/home/new" >Speichern</v-btn> 
+               Doesn't work right now because of rerouting (wait for Loginteam to make that possible)
+               Graph verwerfen und direkt an die Seite der Erstellung eines neuen Graphs weiterleiten
+               <v-btn class="btn" href="/home/new">Verwerfen</v-btn>
+               Doesn't work right now because of rerouting (wait for Loginteam to make that possible)
+               Popup-Fenster ausblenden und der Graph weiter bearbeiten
+               <v-btn class="btn" href="#">Abbrechen</v-btn>
+            </div>
+        </div>
+    </div>-->
+</template>
+
+<script>
+import SaveMenu from "@/components/SaveMenu.vue"
+import ExJSon from "@/vargraph/JSonPersistence.js"
+import BasicData from "@/vargraph/BasicData.js";
+import router from '@/router/index.js'
+
+export default {
+    name: 'NewGraphMenu.vue',
+    components: {
+        'SaveMenu'  :   SaveMenu,
+    },
+    data () {
+        return{
+            dialog: false,
+            database: null
+        };
+    },
+    methods:    {
+        setObject(DataBaseObject) {
+            this.database=DataBaseObject
+        },
+        onSaveConfirm (value){
+            if (value != "" && value != null) {
+                let content=ExJSon.CreateJSon()
+                //Stringify makes content readable
+                content = JSON.stringify(content, null, 2);
+                let date = new Date();
+                let save = new BasicData(value, date, content);
+                if(this.database.save(save, false)){
+                    //no dupe
+                    // eslint-disable-next-line no-console
+                    console.log('save')
+                    this.$refs.SaveMenu.setdialog(false)
+                    router.push({name: 'newGraph'});
+                }
+            else {
+                //dupe case
+                this.$refs.SaveMenu.setmsg("Es existiert bereits eine Datei unter diesen Namen. Wollen Sie diese überschreiben ?")
+                this.$refs.SaveMenu.setbtntext("Überschreiben")
+            }
+        }
+      else if (value == "" || value == null) {
+        //do nothing
+      }
+    },
+        onOverwrite(value) {
+            let content=ExJSon.CreateJSon()
+            //Stringify makes content readable
+            content = JSON.stringify(content, null, 2);
+            // eslint-disable-next-line no-console
+            console.log('overwrite')
+            let date = new Date();
+            let save = new BasicData(value, date, content);
+            this.database.save(save,true)
+            this.$refs.SaveMenu.setdialog(false)
+            router.push({name: 'newGraph'});
+        },
+        showSaveMenu()  {
+            this.$refs.SaveMenu.setdialog(true)
+        },
+        setdialog(value){
+            this.dialog=value
+        },
+        save()  {
+            this.$emit('newGraph',true)
+        },
+        discard()   {
+            this.$emit('newGraph',false)
+        }
+    }
+}
+</script>
+   

@@ -35,6 +35,7 @@ const routes = [
       },
       {
         path: 'new',
+        name: 'newGraph',
         component: NewGraph,
         meta: {
           requiresAuth: true

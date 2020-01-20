@@ -4,7 +4,7 @@
       <v-row align="center">
         <v-tooltip right>
           <template v-slot:activator="{ on }">
-            <v-btn v-on="on" fab dark small depressed color="primary" href="#popup1">
+            <v-btn v-on="on" fab dark small depressed color="primary" @click="NewGraph">
               <v-icon dark>mdi-plus</v-icon>
             </v-btn>
           </template>
@@ -90,23 +90,7 @@
         </v-tooltip>
       </v-row>
     </v-card>
-    <!--Popup-Fenster-->
-    <div id="popup1" class="overlay"> <!-- Popupfenster (Solange der Button der Erstellung eines neuen Graphs nicht gedrückt ist, bleibt dieses Fenster versteckt) -->
-        <div class="popup">
-           <div class="modal-header"> <!--Header des Popupfenesters -->
-             <h2>Neuer Graph ?</h2>
-             <a class="close" href="#">&times;</a>
-             </div>
-             <div class="content">
-               Dieser Graph Speichern ?  <!-- Inhalt des Popup-Fensters-->
-               </div>
-               <div class="modal-footer"> <!--Footer des Popupfenesters, wo die Funktionsbuttons platziert sind -->
-               <v-btn class="btn" @click="SaveJSon" href="/home/new" >Speichern</v-btn> <!--ExportJSon wird abgeruft, um den Graph zu speichern-->
-               <v-btn class="btn" href="/home/new">Verwerfen</v-btn> <!--Graph verwerfen und direkt an die Seite der Erstellung eines neuen Graphs weiterleiten-->
-               <v-btn class="btn" href="#">Abbrechen</v-btn> <!--Popup-Fenster ausblenden und der Graph weiter bearbeiten-->
-               </div>
-           </div>
-       </div>
+  <NewGraphMenu ref="NewGraphMenu" v-on:newGraph="onNewGraphConfirm"></NewGraphMenu>
   <DownloadMenu ref="DownloadMenu"></DownloadMenu>
   <SaveMenu ref="SaveMenu" v-on:onSaveConfirm="onSaveConfirm" v-on:onOverwrite="onOverwrite"></SaveMenu>
   </div>
@@ -121,13 +105,16 @@ import BasicData from "@/vargraph/BasicData.js";
 import TestDatabase from "@/vargraph/TestDatabase.js";
 import DownloadMenu from "@/components/DownloadMenu.vue";
 import SaveMenu from "@/components/SaveMenu.vue";
+import NewGraphMenu from "@/components/NewGraphMenu.vue"
 import importExport from "@/vargraph/importExport.js";
+import router from '@/router/index.js'
 
 export default {
   name: "MenuControls",
   components: {
     'DownloadMenu' : DownloadMenu,
     'SaveMenu'  :   SaveMenu,
+    'NewGraphMenu'  : NewGraphMenu,
   },
   created() {
     this.vars = {
@@ -141,6 +128,26 @@ export default {
     })
   },
   methods: {
+    //Shows Menu to open up a new Graph with options
+    NewGraph(){
+      this.$refs.NewGraphMenu.setObject(this.vars.testDatabase)
+      this.$refs.NewGraphMenu.setdialog(true)
+    },
+    //handles saving case and discard case
+    onNewGraphConfirm(value){
+      if (value){
+        //save Case
+        this.$refs.NewGraphMenu.showSaveMenu();
+      }
+      else{
+        //discard case
+        graph.getCytoGraph().nodes().remove()
+        graph.getCytoGraph().edges().remove()
+        this.$refs.NewGraphMenu.setdialog(false)
+        //this works!!!
+        router.push({name: 'newGraph'});
+      }
+    },
     modifyData() {
       // event bus broadcasts signal "modifyData" and attaches instance to it
       eventBus.$emit("modifyData", this.vars.instance)
