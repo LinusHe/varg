@@ -8,7 +8,7 @@
 
 <script>
 // @ is an alias to /src
-import NewGraph from "@/components/newGraph";
+import NewGraph from "@/components/home/NewGraph";
 
 export default {
   name: "newgraph",

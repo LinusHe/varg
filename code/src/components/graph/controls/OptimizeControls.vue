@@ -1,6 +1,6 @@
 
 <template>
-  <v-container class="optimize-container" fillwidth>
+  <v-container class="optimize-container">
     <div class="optimize-controls">
       <v-card align="center">
         <v-row>

@@ -1,21 +1,5 @@
 <template>
   <div class="detail-controls">
-    <!-- ONLY FOR TESTING! @TODO -->
-    <!-- <v-card style="position: absolute; top: -100px; right: 50px" max-width="400">
-      <v-card-title>Test!</v-card-title>
-      <v-card-text>
-        <p>Später soll die GUI beim Klick auf die Knoten / Kanten im Graphen erscheinen. Zum testen gibts die Buttons hier:</p>
-        <v-btn @click="nodeGui = true; edgeGui = false">klick auf knoten</v-btn>
-        <v-btn @click="nodeGui = false; edgeGui = true">klick auf kante</v-btn>
-      </v-card-text>
-    </v-card>-->
-
-    <!-- Re-Activate Button -->
-    <!-- <v-card class="activate-button" v-show="reopen">
-      <v-btn @click="show= !show" class="ma-2" text icon color="primary">
-        <v-icon>mdi-triangle</v-icon>
-      </v-btn>
-    </v-card>-->
 
     <!-- Detail-Zustand Controls -->
     <v-slide-x-reverse-transition>
@@ -311,6 +295,20 @@ export default {
       this.startSelect = startName;
       this.endSelect = endName;
     },
+    handleDetails(target) {
+      if (target === graph.getCytoGraph()) {
+        this.closeMenus();
+      } else if (target.group() == "nodes") {
+        this.openNodeDetails(target);
+      } else if (target.group() == "edges") {
+        this.openEdgeDetails(target);
+      }
+    },
+    closeMenus() {
+      this.deactivateGui();
+      this.$parent.$refs.modifyDataControls.deactivateGui();
+      this.$parent.$refs.createControls.deactivateGui();
+    },
     getNodeItemsID() {
       this.itemsID = graph.getNodeID();
     },
@@ -399,9 +397,6 @@ export default {
   mounted: function() {
     this.getNodeItemsID();
     this.getNodeItemsName();
-    // Left-Click Listeners:
-    graph.getCytoGraph().on("tap", "node", n => this.openNodeDetails(n.target));
-    graph.getCytoGraph().on("tap", "edge", e => this.openEdgeDetails(e.target));
   }
 };
 </script>

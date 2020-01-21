@@ -71,9 +71,10 @@ export function run() {
           'label': 'data(label)',
           'line-color': '#2699FB',
           'target-arrow-color': '#2699FB',
+          'target-arrow-shape': 'triangle',
           'curve-style': 'bezier',
           // 'control-point-distance': '80px', // replaced with 'control-point-step-size'
-          'control-point-step-size': '130px', // distance between successive bezier edges.
+          'control-point-step-size': '150px', // distance between successive bezier edges.
          // 'control-point-weight': '0.5', // '0': curve towards source node, '1': towards target node. 0.5 is default!
           'font-size': '14px',
           'color': '#777',
@@ -95,15 +96,27 @@ export function run() {
         selector: '.highlighted',
         style: {
           "border-width": 5.5,
+          "border-opacity": 1,
+          "border-color": "#FF7675",
+          'line-color': '#FF7675',
+          'text-border-color': '#FF7675',
+          'target-arrow-color': '#FF7675',
+          'source-arrow-color': 'black',
+          'text-outline-color': 'black',
+        }
+      },
+      {
+        selector: ':selected',
+        style: {
+          "border-width": 5.5,
           "border-opacity": 0.5,
           "border-color": "#737373",
           'line-color': '#00398b',
           'text-border-color': '#00398b',
-          'target-arrow-color': 'black',
+          'target-arrow-color': '#00398b',
           'source-arrow-color': 'black',
           'text-outline-color': 'black',
         }
-
 
       }
     ],
