@@ -38,6 +38,7 @@
               v-model="nodeImgpath"
               outlined
               hide-details
+              clearable
             ></v-text-field>
           </v-col>
         </v-row>

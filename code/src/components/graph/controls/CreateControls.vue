@@ -95,6 +95,7 @@
               v-model="nodeCreateImgPath"
               outlined
               hide-details
+              clearable
             ></v-text-field>
           </v-col>
         </v-row>
