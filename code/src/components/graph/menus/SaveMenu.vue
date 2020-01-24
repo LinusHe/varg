@@ -74,8 +74,11 @@ export default {
       this.label = value;
     },
     save() {
+      //Checks if menu formular was filled in correctly
       if(this.$refs.form.validate()){
-         switch(this.btntext){
+        //switching on string values is possible in JS and 
+        //is used here to determine in which state the menu is
+        switch(this.btntext){
 
         case "Speichern":
           if (this.DataBaseName != "" && this.DataBaseName != null) {
@@ -89,6 +92,9 @@ export default {
               // eslint-disable-next-line no-console
               console.log('save')
               this.$parent.$refs.saveMenu.setdialog(false)
+              if (this.$parent.$refs.newGraphMenu.dialog){
+                router.push({name: "newGraph"})
+              }
             }
             else {
               //dupe case
@@ -101,6 +107,7 @@ export default {
         case "Überschreiben":
           if (this.DataBaseName != "" && this.DataBaseName != null) {
             let date =new Date();
+            //Creates raw JSon Data that is unreadable 
             let content=ExJSon.CreateJSon()
             //Stringify makes content readable
             content = JSON.stringify(content, null, 2);
@@ -108,6 +115,11 @@ export default {
             this.database.save(save, true)
             //  eslint-disable-next-line no-console
             console.log('overwrite')
+            // > Little trick: this should only be true if the user has previously opened 
+            //   the newGraph menu - which creates the intended UX.
+            if (this.$parent.$refs.newGraphMenu.dialog){
+                router.push({name: "newGraph"})
+            }
           }
           break;
 
