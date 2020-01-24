@@ -123,20 +123,6 @@ export default {
       this.$parent.$refs.newGraphMenu.setdialog(true)
     },
     //handles saving case and discard case
-    onNewGraphConfirm(value){
-      if (value){
-        //save Case
-        this.$parent.$refs.newGraphMenu.showSaveMenu();
-      }
-      else{
-        //discard case
-        graph.getCytoGraph().nodes().remove()
-        graph.getCytoGraph().edges().remove()
-        this.$parent.$refs.newGraphMenu.setdialog(false)
-        //this works!!!
-        router.push({name: 'newGraph'});
-      }
-    },
     modifyData() {
       // event bus broadcasts signal "modifyData" and attaches instance to it
       eventBus.$emit("modifyData", this.vars.instance)

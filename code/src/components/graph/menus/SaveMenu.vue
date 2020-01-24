@@ -91,7 +91,8 @@ export default {
               //no dupe
               // eslint-disable-next-line no-console
               console.log('save')
-              this.$parent.$refs.saveMenu.setdialog(false)
+              this.setdialog(false)
+              this.clearFields()
               if (this.$parent.$refs.newGraphMenu.dialog){
                 router.push({name: "newGraph"})
               }
@@ -117,6 +118,8 @@ export default {
             console.log('overwrite')
             // > Little trick: this should only be true if the user has previously opened 
             //   the newGraph menu - which creates the intended UX.
+            this.setdialog(false)
+            this.clearFields()
             if (this.$parent.$refs.newGraphMenu.dialog){
                 router.push({name: "newGraph"})
             }
