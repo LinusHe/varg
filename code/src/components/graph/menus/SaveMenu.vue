@@ -34,6 +34,12 @@
 </template>
 
 <script>
+import ExJSon from "@/vargraph/JSonPersistence.js"
+import BasicData from "@/vargraph/BasicData.js";
+// eslint-disable-next-line no-unused-vars
+import router from '@/router/index.js'
+
+
 export default {
   name: "SaveMenu",
   data() {
@@ -43,7 +49,8 @@ export default {
       DataBaseName: "",
       label: "Datenbankname",
       message: "Legen Sie einen Namen für den Graphen in der Datenbank fest.",
-      btntext: "Speichern"
+      btntext: "Speichern",
+      database: this.$parent.$refs.toolbar.vars.testDatabase
     };
   },
   methods: {
@@ -72,13 +79,35 @@ export default {
 
         case "Speichern":
           if (this.DataBaseName != "" && this.DataBaseName != null) {
-          this.$emit('onSaveConfirm', this.DataBaseName);
+            let content=ExJSon.CreateJSon()
+            //Stringify makes content readable
+            content = JSON.stringify(content, null, 2);
+            let date = new Date();
+            let save = new BasicData(this.DataBaseName, date, content);
+            if(this.database.save(save, false)){
+              //no dupe
+              // eslint-disable-next-line no-console
+              console.log('save')
+              this.$parent.$refs.saveMenu.setdialog(false)
+            }
+            else {
+              //dupe case
+              this.$parent.$refs.saveMenu.setmsg("Es existiert bereits eine Datei unter diesen Namen. Wollen Sie diese überschreiben ?")
+              this.$parent.$refs.saveMenu.setbtntext("Überschreiben")
+            }
           }
         break;
 
         case "Überschreiben":
           if (this.DataBaseName != "" && this.DataBaseName != null) {
-          this.$emit('onOverwrite', this.DataBaseName);
+            let date =new Date();
+            let content=ExJSon.CreateJSon()
+            //Stringify makes content readable
+            content = JSON.stringify(content, null, 2);
+            let save = new BasicData(this.DataBaseName, date, content);
+            this.database.save(save, true)
+            //  eslint-disable-next-line no-console
+            console.log('overwrite')
           }
           break;
 

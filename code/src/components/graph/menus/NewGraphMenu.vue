@@ -52,6 +52,7 @@
 import ExJSon from "@/vargraph/JSonPersistence.js"
 import BasicData from "@/vargraph/BasicData.js";
 import router from '@/router/index.js'
+import graph from "@/vargraph/index.js";
 
 export default {
     name: 'NewGraphMenu.vue',
@@ -109,12 +110,16 @@ export default {
             this.dialog=value
         },
         save()  {
-            this.$emit('newGraph',true)
+            this.$parent.$refs.saveMenu.setdialog(true)
         },
-        discard()   {
-            this.$emit('newGraph',false)
+        discard()   {    
+            graph.getCytoGraph().nodes().remove()
+            graph.getCytoGraph().edges().remove()
+            this.$parent.$refs.newGraphMenu.setdialog(false)
+            //this works!!!
+            router.push({name: 'newGraph'});
         }
     }
 }
 </script>
-   
+    
