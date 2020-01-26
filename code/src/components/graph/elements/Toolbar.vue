@@ -96,7 +96,6 @@
 <script>
 /* eslint-disable no-console */
 import graph from "@/vargraph/index.js";
-import {eventBus} from "@/main.js"
 import ExJSon from "@/vargraph/JSonPersistence.js"
 import BasicData from "@/vargraph/BasicData.js";
 import TestDatabase from "@/vargraph/TestDatabase.js";
@@ -110,11 +109,7 @@ export default {
       // initializes new instance of TestDatabase when Toolbar is loaded for the first time
       testDatabase: new TestDatabase(),
       instance: BasicData
-    },
-    // event bus listens to signal "applyNewData" with instance attached
-    eventBus.$on("applyNewData", (newInstance) => {
-      this.updateData(newInstance)
-    })
+    }
   },
   methods: {
     //Shows Menu to open up a new Graph with options
@@ -124,8 +119,7 @@ export default {
     },
     //handles saving case and discard case
     modifyData() {
-      // event bus broadcasts signal "modifyData" and attaches instance to it
-      eventBus.$emit("modifyData", this.vars.instance)
+      this.$parent.$refs.modifyDataControls.openModifyData(this.vars.instance)
     },
     updateData(newInstance) {
       this.vars.testDatabase.forceSave(newInstance, this.vars.instance.getGraphName())

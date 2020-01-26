@@ -1,0 +1,17 @@
+/* replaced event bus with parent/child references due to Jest errors
+
+import {eventBus} from "@/main.js"
+
+created() {
+  // event bus listens to signal "applyNewData" with instance attached
+  eventBus.$on("applyNewData", (newInstance) => {
+    this.updateData(newInstance)
+  })
+}
+
+modifyData() {
+  // event bus broadcasts signal "modifyData" and attaches instance to it
+  eventBus.$emit("modifyData", this.vars.instance)*/
+}
+
+*/

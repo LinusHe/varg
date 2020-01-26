@@ -1,0 +1,17 @@
+/* replaced event bus with parent/child references due to Jest errors
+
+import {eventBus} from "@/main.js"
+
+applyNewData() {
+  eventBus.$emit("applyNewData", this.vars.instance)
+  eventBus.$emit("updateHeader", this.prodName, this.prodQuant)*/
+}
+
+created() {
+  eventBus.$on("modifyData", (newInstance) => {
+    this.vars.instance = newInstance
+    this.openModifyData()
+  })
+}
+
+*/

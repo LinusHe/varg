@@ -1,0 +1,12 @@
+/* replaced event bus with parent/child references due to Jest errors
+
+import {eventBus} from "@/main.js"
+
+created () {
+  eventBus.$on("updateHeader", (newProdName, newProdQuant) => {
+    this.prodName = newProdName
+    this.prodQuant = newProdQuant
+  })
+}
+
+*/

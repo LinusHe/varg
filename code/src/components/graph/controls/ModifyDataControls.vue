@@ -82,8 +82,8 @@
 </template>
 
 <script>
-import {eventBus} from "@/main.js"
 import BasicData from "@/vargraph/BasicData.js";
+
 export default {
   name: "ModifyDataControls",
     data() {
@@ -97,7 +97,8 @@ export default {
       }
     },
   methods: {
-    openModifyData() {
+    openModifyData(newInstance) {
+      this.vars.instance = newInstance
       this.loadGraphData()
       this.$parent.$refs.createControls.deactivateGui();
       this.$parent.$refs.detailControls.deactivateGui();
@@ -125,8 +126,8 @@ export default {
       this.vars.instance.setLatestDate(new Date())
       //this.vars.instance.setProdName(this.prodName)
       //this.vars.instance.setProdQuant(this.prodQuant)
-      eventBus.$emit("applyNewData", this.vars.instance)
-      eventBus.$emit("updateHeader", this.prodName, this.prodQuant)
+      this.$parent.$refs.toolbar.updateData(this.vars.instance)
+      this.$parent.$refs.graphHeader.updateData(this.prodName, this.prodQuant)
       this.deactivateGui()
     },
     deactivateGui() {
@@ -136,11 +137,7 @@ export default {
   created() {
     this.vars = {
       instance: BasicData
-    },
-    eventBus.$on("modifyData", (newInstance) => {
-      this.vars.instance = newInstance
-      this.openModifyData()
-    })
+    }
   }
 }
 </script>

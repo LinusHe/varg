@@ -17,22 +17,13 @@ export default class TestDatabase {
   save (basicData, overwrite) {
     const index = this.searchExisting(basicData.getGraphName())
     if (index >= 0) {
-      if (overwrite){
+      if (overwrite) {
         this.basicDataArray[index] = basicData
         return true
       }
-      return false
-    //   const input = prompt("Dateiname existiert bereits. 'überschreiben' oder 'kopie' erstellen?")
-    //   if (input === "überschreiben") {
-    //     this.basicDataArray[index] = basicData
-    //   }
-    //   else if (input === "kopie") {
-    //     basicData.setName(basicData.getName() + " (Kopie)")
-    //     this.basicDataArray.push(basicData)
-    //   }
-    //   else {
-    //     alert ("Nicht gespeichert")
-    //   }
+      else {
+        return false
+      }
     }
     else {
       this.basicDataArray.push(basicData)

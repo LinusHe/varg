@@ -10,21 +10,19 @@
 </template>
 
 <script>
-import {eventBus} from "@/main.js"
-
 export default {
   name: 'GraphHeader',
-  data() {
+  data () {
     return {
       prodName: "",
       prodQuant: 0
     }
   },
-  created() {
-    eventBus.$on("updateHeader", (newProdName, newProdQuant) => {
+  methods: {
+    updateData (newProdName, newProdQuant) {
       this.prodName = newProdName
       this.prodQuant = newProdQuant
-    })
+    }
   }
 }
 </script>

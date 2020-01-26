@@ -7,8 +7,6 @@ import vuetify from './plugins/vuetify'
 import Vuex from 'vuex'
 import {store} from './store/store.js'
 Vue.config.productionTip = false
-// global event bus to communicate between unrelated components (no parent/child relation)
-export const eventBus = new Vue()
 
 Vue.directive('click-outside', {
   bind: function (el, binding, vnode) {
