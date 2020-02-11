@@ -54,7 +54,7 @@
 
     <!-- Create-Zustand Controls -->
     <v-slide-x-reverse-transition>
-      <v-card class="detail-card" v-show="nodeCreateGui" transition="scroll-y-transition">
+      <v-card class="detail-card" id="node-create" v-show="nodeCreateGui" transition="scroll-y-transition">
         <v-btn class="btn-close ma-2" @click="nodeCreateGui= false" text icon color="primary">
           <v-icon>mdi-close</v-icon>
         </v-btn>

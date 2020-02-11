@@ -6,7 +6,7 @@
       <v-row class="button-container">
         <v-col sm="4">
           <v-card outlined align="center">
-            <router-link to="new" tag="button">
+            <router-link to="new" tag="button" id="newGraph">
               <v-btn depressed fab color="primary" class="mt-4">
                 <v-icon>mdi-plus</v-icon>
               </v-btn>
@@ -26,7 +26,7 @@
 
         <v-col sm="4">
           <v-card outlined align="center">
-            <router-link to="/database" tag="button">
+            <router-link to="/database" tag="button" id="database">
               <v-btn depressed fab color="primary" class="mt-4">
                 <v-icon>mdi-database-export</v-icon>
               </v-btn>

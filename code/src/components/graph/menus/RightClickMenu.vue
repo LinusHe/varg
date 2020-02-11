@@ -1,7 +1,7 @@
 <template>
   <div class="rightclick-menu">
     <v-menu v-model="showMenu" :position-x="x" :position-y="y" absolute offset-y>
-      <v-list>
+      <v-list class="rcmenu">
         <v-subheader v-show="visibleTitle">{{ menuTitle }}</v-subheader>
         <v-list-item v-for="(item, index) in items" :key="index" @click="clickedItem(item.id)">
           <v-list-item-icon>

@@ -6,7 +6,7 @@
     <v-alert v-show="error != null">{{ error }}</v-alert>
     <v-text-field
     v-model="input.email"
-      class="mt-8"
+      class="mt-8 email-input"
       id="email"
       label="E-Mail"
       placeholder="beispiel@htwk-leipzig.de"
