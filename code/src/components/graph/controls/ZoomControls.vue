@@ -3,7 +3,7 @@
 
   <v-tooltip bottom>
       <template v-slot:activator="{ on }">
-        <v-btn v-on ="on" class="ma-2" @click="ZoomOut" text icon color="grey">
+        <v-btn v-on ="on" class="ma-2" @click="ZoomOut"  id="zoom-view-all" text icon color="grey">
          <v-icon>mdi-arrow-expand-all</v-icon>
         </v-btn>
       </template>
@@ -12,7 +12,7 @@
     
   <v-tooltip bottom>
     <template v-slot:activator="{ on }">
-      <v-btn v-on ="on" class="ma-2" @click="ZoomPlus" text icon color="grey">
+      <v-btn v-on ="on" class="ma-2" @click="ZoomPlus" id="zoom-plus" text icon color="grey">
         <v-icon>mdi-magnify-plus-outline</v-icon>
       </v-btn>
     </template>
@@ -21,7 +21,7 @@
 
   <v-tooltip bottom>
     <template v-slot:activator="{ on }">
-      <v-btn  v-on ="on" class="ma-2" @click="ZoomMinus" icon color="grey">
+      <v-btn  v-on ="on" class="ma-2" @click="ZoomMinus" id="zoom-minus" icon color="grey">
         <v-icon>mdi-magnify-minus-outline</v-icon>
       </v-btn>
     </template>
