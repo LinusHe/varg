@@ -1,6 +1,6 @@
 <template>
-  <v-dialog v-model="dialog" max-width="380">
-    <v-card>
+  <v-dialog v-model="dialog"  max-width="380">
+    <v-card id="save-menu">
       <v-card-title class="headline">Graph in Datenbank speichern</v-card-title>
       <v-card-text>
         <v-form ref="form" v-model="valid" lazy-validation>
@@ -21,10 +21,10 @@
           </v-row>
             <v-row>
               <v-col sm="6">
-                <v-btn color="success" :disabled="!valid" block outlined @click="save">{{btntext}}</v-btn>
+                <v-btn color="success" :disabled="!valid" block outlined id="save-menu-save" @click="save">{{btntext}}</v-btn>
               </v-col>
               <v-col sm="6">
-                <v-btn color="error" block outlined @click="clearFields">Abbrechen</v-btn>
+                <v-btn color="error" block outlined id="save-menu-cancel" @click="clearFields">Abbrechen</v-btn>
               </v-col>
             </v-row>
         </v-form>

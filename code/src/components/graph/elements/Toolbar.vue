@@ -37,7 +37,7 @@
       <v-row align="center">
         <v-tooltip right>
           <template v-slot:activator="{ on }">
-            <v-btn @click="SaveJSon" v-on="on" fab dark small depressed color="primary">
+            <v-btn @click="SaveJSon" id="save-btn" v-on="on" fab dark small depressed color="primary">
               <v-icon dark>mdi-content-save</v-icon>
             </v-btn>
           </template>
