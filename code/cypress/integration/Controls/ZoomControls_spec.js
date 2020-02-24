@@ -4,7 +4,7 @@
 describe('Zooming', () =>{
     //Cypress is a test engine which runs the website
     //and executes tests similar to how a user would
-    //interact with the app. Because of the current router
+    //interact with the site. Because of the current router
     //rules this means that Cypress has to login itself for each
     //test suites.
     before(() =>{
