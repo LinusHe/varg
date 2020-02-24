@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 describe('Graph Page', () => {
     before(() => {
         // Pre-defined Login Procedure: /cypress/support/commmands.js
