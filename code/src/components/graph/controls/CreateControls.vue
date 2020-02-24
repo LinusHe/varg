@@ -9,6 +9,7 @@
         right
         direction="top"
         transition="slide-y-reverse-transition"
+        id="dial-open"
       >
         <template v-slot:activator>
           <v-tooltip left>
@@ -23,13 +24,7 @@
         </template>
         <v-tooltip left>
           <template v-slot:activator="{ on }">
-            <v-btn
-              @click="openNodeGui"
-              v-on="on"
-              fab
-              dark
-              color="secondary"
-            >
+            <v-btn @click="openNodeGui" v-on="on" fab dark color="secondary" id="dial-add-node">
               <v-icon>mdi-plus-circle-outline</v-icon>
             </v-btn>
           </template>
@@ -37,13 +32,7 @@
         </v-tooltip>
         <v-tooltip left>
           <template v-slot:activator="{ on }">
-            <v-btn
-              @click="openEdgeGui"
-              v-on="on"
-              fab
-              dark
-              color="secondary"
-            >
+            <v-btn @click="openEdgeGui" v-on="on" fab dark color="secondary" id="dial-add-edge">
               <v-icon>mdi-link-variant-plus</v-icon>
             </v-btn>
           </template>
@@ -54,7 +43,12 @@
 
     <!-- Create-Zustand Controls -->
     <v-slide-x-reverse-transition>
-      <v-card class="detail-card" id="node-create" v-show="nodeCreateGui" transition="scroll-y-transition">
+      <v-card
+        class="detail-card"
+        id="node-create"
+        v-show="nodeCreateGui"
+        transition="scroll-y-transition"
+      >
         <v-btn class="btn-close ma-2" @click="nodeCreateGui= false" text icon color="primary">
           <v-icon>mdi-close</v-icon>
         </v-btn>
@@ -110,7 +104,7 @@
               >Farbe</label>
               <v-radio-group v-model="nodeCreateColor" id="nodeCreateColor" row>
                 <!-- Attention: If you change the color, change also the corresponding color in the color-class
-                                in the src/styles/components/DetailControls.less -->
+                in the src/styles/components/DetailControls.less-->
                 <v-radio checked="checked" class="color-radio-1" color="#2699FB" value="2699FB"></v-radio>
                 <v-radio class="color-radio-2" color="#00CEC9" value="00CEC9"></v-radio>
                 <v-radio class="color-radio-3" color="#6C5CE7" value="6C5CE7"></v-radio>
@@ -127,10 +121,15 @@
         <!-- Create Buttons -->
         <v-row>
           <v-col sm="6" align="right">
-            <v-btn color="success" outlined @click="createNode()">Hinzufügen</v-btn>
+            <v-btn color="success" id="btn-create-node" outlined @click="createNode()">Hinzufügen</v-btn>
           </v-col>
           <v-col sm="6">
-            <v-btn color="error" outlined @click="nodeCreateGui = false">Abbrechen</v-btn>
+            <v-btn
+              color="error"
+              id="btn-cancel-node"
+              outlined
+              @click="nodeCreateGui = false"
+            >Abbrechen</v-btn>
           </v-col>
         </v-row>
       </v-card>
@@ -252,10 +251,15 @@
         <!-- Create Buttons -->
         <v-row>
           <v-col sm="6" align="right">
-            <v-btn color="success" outlined @click="createEdge()">Hinzufügen</v-btn>
+            <v-btn color="success" id="btn-create-edge" outlined @click="createEdge()">Hinzufügen</v-btn>
           </v-col>
           <v-col sm="6">
-            <v-btn color="error" outlined @click="edgeCreateGui = false">Abbrechen</v-btn>
+            <v-btn
+              color="error"
+              id="btn-cancel-edge"
+              outlined
+              @click="edgeCreateGui = false"
+            >Abbrechen</v-btn>
           </v-col>
         </v-row>
       </v-card>
@@ -290,17 +294,17 @@ export default {
     };
   },
   methods: {
-    deactivateGui(){
+    deactivateGui() {
       this.nodeCreateGui = false;
       this.edgeCreateGui = false;
     },
-    openNodeGui(){
+    openNodeGui() {
       this.$parent.$refs.detailControls.deactivateGui();
       this.$parent.$refs.modifyDataControls.deactivateGui();
       this.nodeCreateGui = true;
       this.edgeCreateGui = false;
     },
-    openEdgeGui(){
+    openEdgeGui() {
       this.$parent.$refs.detailControls.deactivateGui();
       this.$parent.$refs.modifyDataControls.deactivateGui();
       this.nodeCreateGui = false;
@@ -318,17 +322,15 @@ export default {
       let newsucost = parseFloat(this.edgeCreatesuCosts);
       let newsutime = parseFloat(this.edgeCreatesuTime);
 
-      if(newcost < 0 || newtime < 0  || newsucost < 0 || newsutime < 0 ){
-        alert("You can't use negative numbers")
-        return
+      if (newcost < 0 || newtime < 0 || newsucost < 0 || newsutime < 0) {
+        alert("You can't use negative numbers");
+        return;
       }
-
 
       let indexStart = this.itemsName.indexOf(this.startSelect);
       let startID = this.itemsID[indexStart];
       let indexEnd = this.itemsName.indexOf(this.endSelect);
       let endID = this.itemsID[indexEnd];
-
 
       graph.createEdge(
         this.edgeCreateName,
@@ -338,7 +340,7 @@ export default {
         newcost,
         newtime,
         newsucost,
-        newsutime,
+        newsutime
       );
       this.clearFields();
       this.edgeCreateGui = false;
