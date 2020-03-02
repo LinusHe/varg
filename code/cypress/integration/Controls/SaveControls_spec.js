@@ -49,6 +49,36 @@ describe('SaveControls', () =>{
         cy.get('#save-btn').click()
         cy.get('#DatabaseName').should('be.empty')
         cy.get('#save-menu-save').click()
-        //expect(cy.get('.v-messages__message')).to.contain('Fehlender Name')
+        cy.get('.v-messages__message').should('be.visible')
+        //test dependencie on the prevoius case
+        cy.get('#save-menu-cancel').click()
     });
+
+    //Test for save button with a given name
+    it('should be able to save when given a name', () => {
+        cy.get('#save-btn').click()
+        cy.get('#DatabaseName').type("Hexagon")
+        cy.get('#save-menu-save').click()
+        //maybe test if function has been called (correctly)
+        cy.get('#save-menu').should('not.be.visible')
+    })
+
+    //Denies duplicate with menu
+    it('should deny duplicate names', () => {
+        cy.get('#save-btn').click()
+        cy.get('#DatabaseName').type("Hexagon")
+        cy.get('#save-menu-save').click()
+        cy.get('#save-menu-save > .v-btn__content').contains("Überschreiben")
+        cy.get('#save-menu-cancel').click()
+    }) 
+
+    //Overwrite buttons works correctly
+    it('should allow overwrite when given duplicate names', () => {
+        cy.get('#save-btn').click()
+        cy.get('#DatabaseName').type("Hexagon")
+        cy.get('#save-menu-save').click()
+        cy.get('#save-menu-save > .v-btn__content').contains("Überschreiben")
+        cy.get('#save-menu-save').click()
+        cy.get('#save-menu').should('not.be.visible')
+    })
 })
