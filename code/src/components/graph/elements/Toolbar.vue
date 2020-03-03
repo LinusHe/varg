@@ -82,7 +82,7 @@
       <v-row align="center">
         <v-tooltip right>
           <template v-slot:activator="{ on }">
-            <v-btn @click="home" v-on="on" fab dark small depressed color="primary">
+            <v-btn @click="home" id="logout-btn" v-on="on" fab dark small depressed color="primary">
               <v-icon dark>mdi-logout</v-icon>
             </v-btn>
           </template>
