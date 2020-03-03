@@ -4,7 +4,7 @@
       <v-row align="center">
         <v-tooltip right>
           <template v-slot:activator="{ on }">
-            <v-btn v-on="on" fab dark small depressed color="primary" @click="NewGraph">
+            <v-btn v-on="on" id="newgraph-btn" fab dark small depressed color="primary" @click="NewGraph">
               <v-icon dark>mdi-plus</v-icon>
             </v-btn>
           </template>

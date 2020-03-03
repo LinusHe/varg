@@ -81,4 +81,25 @@ describe('SaveControls', () =>{
         cy.get('#save-menu-save').click()
         cy.get('#save-menu').should('not.be.visible')
     })
+
+    it('should cancel overwrite when typing a different name', () => {
+        cy.get('#save-btn').click()
+        cy.get('#DatabaseName').type("Hexagon")
+        cy.get('#save-menu-save').click()
+        cy.get('#save-menu-save > .v-btn__content').contains("Überschreiben")
+        cy.get('#DatabaseName').clear()
+        cy.get('#DatabaseName').type("Euclid")
+        cy.get('#save-menu-save > .v-btn__content').contains("Speichern")
+        cy.get('#save-menu-cancel').click()
+    })
+
+    it('should allow to save after overwrite with different name', () => {
+        cy.get('#save-btn').click()
+        cy.get('#DatabaseName').type("Hexagon")
+        cy.get('#save-menu-save').click()
+        cy.get('#save-menu-save > .v-btn__content').contains("Überschreiben")
+        cy.get('#DatabaseName').type("2")
+        cy.get('#save-menu-save > .v-btn__content').contains("Speichern")
+        cy.get('#save-menu-save').click()
+    })
 })

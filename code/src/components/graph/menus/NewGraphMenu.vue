@@ -1,19 +1,19 @@
 <template>
 <div>
     <v-dialog v-model="dialog" max-width="380">
-        <v-card>
+        <v-card id="newgraph-menu">
             <v-card-title class="headline"> Neuer Graph ? </v-card-title>
             <v-card-text>
                 Dieser Graph Speichern ?
             </v-card-text>
             <v-col>
-                <v-btn color="success" block outlined @click="save">Speichern</v-btn>
+                <v-btn color="success" id="newgraph-menu-save" block outlined @click="save">Speichern</v-btn>
             </v-col>
             <v-col>
-                <v-btn color="error" block outlined @click="discard">Verwerfen</v-btn>
+                <v-btn color="error" id="newgraph-menu-discard" block outlined @click="discard">Verwerfen</v-btn>
             </v-col>
             <v-col>
-                <v-btn color="error" block outlined @click="dialog=false">Abbrechen</v-btn>
+                <v-btn color="error" id="newgraph-menu-cancel" block outlined @click="dialog=false">Abbrechen</v-btn>
             </v-col>
         </v-card>
     </v-dialog>
