@@ -43,7 +43,7 @@ describe('NewGraphControls', () =>{
 
     //test case for save-btn
     it('should show the save menu on save-btn', () => {
-        cy.get('#newgraph-btn').click()
+        cy.get('#newgraph-btn').click() //this should never be in the final test !
         cy.get('#newgraph-btn').click() //this is because of the bug concerning the toolbar
         cy.get('#newgraph-menu').should('be.visible')
         cy.get('#newgraph-menu-save').should('be.visible')
