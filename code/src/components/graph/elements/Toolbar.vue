@@ -15,7 +15,7 @@
       <v-row align="center">
         <v-tooltip right>
           <template v-slot:activator="{ on }">
-            <v-btn @click="datenbank()" v-on="on" fab dark small depressed color="primary">
+            <v-btn @click="datenbank()" id="database-btn" v-on="on" fab dark small depressed color="primary">
               <v-icon dark>mdi-database-export</v-icon>
             </v-btn>
           </template>
