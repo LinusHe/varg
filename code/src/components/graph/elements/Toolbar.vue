@@ -60,7 +60,7 @@
       <v-row align="center">
         <v-tooltip right>
           <template v-slot:activator="{ on }">
-            <v-btn @click="Download" v-on="on" fab dark small depressed color="primary">
+            <v-btn @click="Download" id="download-btn" v-on="on" fab dark small depressed color="primary">
               <v-icon dark>mdi-file-download</v-icon>
             </v-btn>
           </template>
