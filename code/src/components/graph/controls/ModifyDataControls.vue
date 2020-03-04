@@ -3,7 +3,7 @@
   <div class="modify-data-controls">
     <!-- Modify-Data Controls -->
     <v-slide-x-reverse-transition>
-      <v-card class="detail-card" v-show="modifyDataGui" transition="scroll-y-transition">
+      <v-card id="mdc-gui" class="detail-card" v-show="modifyDataGui" transition="scroll-y-transition">
         <v-btn class="btn-close ma-2" @click="deactivateGui()" text icon color="primary">
           <v-icon>mdi-close</v-icon>
         </v-btn>
@@ -72,7 +72,7 @@
             <v-btn color="success" :disabled="disabled" outlined @click="applyNewData()">Übernehmen</v-btn>
           </v-col>
           <v-col sm="4" align="right">
-            <v-btn color="lightgrey" outlined @click="deactivateGui()">Abbrechen</v-btn>
+            <v-btn id="mdc-gui-cancel" color="lightgrey" outlined @click="deactivateGui()">Abbrechen</v-btn>
           </v-col>
         </v-row>
 
