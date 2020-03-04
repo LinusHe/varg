@@ -1,6 +1,6 @@
 <template>
   <v-dialog v-model="dialog" max-width="450">
-    <v-card>
+    <v-card id="download-menu">
       <v-card-title class="headline">Lade den Graph herunter</v-card-title>
       <v-card-text>
         <v-form ref="form" v-model="valid" lazy-validation>
@@ -18,6 +18,7 @@
             </v-col>
             <v-col sm="3">
               <v-select
+                id="formatselect"
                 required
                 v-model="format"
                 :items="formatname"
@@ -44,10 +45,10 @@
           </v-row>
           <v-row class="mt-8">
             <v-col sm="6">
-              <v-btn color="success" block :disabled="!valid" outlined @click="download">Download</v-btn>
+              <v-btn color="success" block :disabled="!valid" outlined id="download-menu-save" @click="download">Download</v-btn>
             </v-col>
             <v-col sm="6">
-              <v-btn color="error" block outlined @click="clearFields">Abbrechen</v-btn>
+              <v-btn color="error" block outlined id="download-menu-cancel" @click="clearFields">Abbrechen</v-btn>
             </v-col>
           </v-row>
         </v-form>
