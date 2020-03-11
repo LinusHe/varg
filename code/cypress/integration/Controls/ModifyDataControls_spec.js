@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 describe('ModifyDataControls', () => {
 
   // before or beforeEach ?
@@ -10,8 +11,8 @@ describe('ModifyDataControls', () => {
   });
 
   it("should not be visible at startup", () => {
-    cy.get("#mdc-gui").should("not.be.visible")
-  })
+    cy.get("#mdc-gui").should("not.be.visible");
+  });
 
   it('should find the mdc-button', () => {
     cy.get('#mdc-btn').should('be.visible');

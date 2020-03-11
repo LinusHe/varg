@@ -48,11 +48,6 @@ export function run() {
       }
     ],
 
-    data: {
-      "name": "TESTPRODUKT",
-      "quantity": 1000,
-    },
-
     style: [ // the stylesheet for the graph
       {
         selector: 'node',
@@ -135,22 +130,23 @@ export function run() {
         fixedAlignment: 'BALANCED',
       }
     }
-  })
+  });
+
   // Sets maximum and minimum of zoom levels. Difference between one and two
   // is rougly one mouse wheel scroll.
   cy.minZoom(0.5);
   cy.maxZoom(2);
-  //  Sets up a new datafield with the given value
-  //  This is to prevent that usage of cy.minZoom(value) locks up other zoom functionality
-  cy.data('minZoom', 0.5);
-  cy.data('IDCount', 0);
-  cy.data('graphName', 'TESTNAME')
-  cy.data('latestSave', 'TESTDATE')
-  cy.data('prodName', 'TESTPRODUCT')
-  cy.data('prodQuant', 69420)
 
-  // TODO: Remove that line, when newgraph page is working!
-  cy.data("name", "TESTPRODUKT")
+  // Setting up a new datafield with the given values
+
+  // This is to prevent that usage of cy.minZoom(value) locks up other zoom functionality
+  cy.data('minZoom', 0.5);
+
+  // Initialising data types
+  cy.data('IDCount', 0);
+  cy.data('latestSave', null);
+  cy.data('prodName', null);
+  cy.data('prodQuant', null);
 
   // Apply Color for nodes
   cy.nodes().forEach(n => {
