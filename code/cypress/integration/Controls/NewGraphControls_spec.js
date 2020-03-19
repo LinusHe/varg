@@ -43,8 +43,7 @@ describe('NewGraphControls', () =>{
 
     //test case for save-btn
     it('should show the save menu on save-btn', () => {
-        cy.get('#newgraph-btn').click() //this should never be in the final test !
-        cy.get('#newgraph-btn').click() //this is because of the bug concerning the toolbar
+        cy.get('#newgraph-btn').click() //this causes a bug with the toolbar
         cy.get('#newgraph-menu').should('be.visible')
         cy.get('#newgraph-menu-save').should('be.visible')
         cy.get('#newgraph-menu-save').click()
@@ -71,7 +70,6 @@ describe('NewGraphControls', () =>{
     it('should reroute on overwrite', () => {
         cy.server()
         cy.get('#save-btn').click()
-        cy.get('#save-btn').click()
         cy.get('#DatabaseName').type("Hexagon")
         cy.get('#save-menu-save').click()
         cy.get('#newgraph-btn').click()
@@ -89,7 +87,6 @@ describe('NewGraphControls', () =>{
 
     //canceling the save menu should still show the newgraph-menu
     it('should still show newgraph-menu when cancelling the save menu', () => {
-        cy.get('#newgraph-btn').click()
         cy.get('#newgraph-btn').click()
         cy.get('#newgraph-menu-save').click()
         cy.get('#save-menu').should('be.visible')
