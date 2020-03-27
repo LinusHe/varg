@@ -8,7 +8,7 @@
           <v-dialog v-model="dialog" max-width="350">
             <template v-slot:activator="{ on }">
               <v-btn class="btn-settings" v-on="on" text icon color="lightgrey">
-                <v-icon>mdi-settings</v-icon>
+                <v-icon>mdi-cog</v-icon>
               </v-btn>
             </template>
             <v-card>
