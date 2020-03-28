@@ -2,27 +2,44 @@
   <div class="header-graph-container">
     <div id="headertext_out">
       <div id="headertext_in">
-      <p align="left" id="header-prodName">
+        <p align="left" id="header-prodName">
           Produkt:
-          <span v-if="!isEditingName">{{prodName}}</span>
-          <input v-else v-model="prodName" value="prodName">
-          <v-btn v-if="!isEditingName" @click="isEditingName=true" fab dark small depressed color="primary">
-            <v-icon dark>mdi-pencil</v-icon>
-          </v-btn>
-          <v-btn v-else @click="saveNewName()" fab dark small depressed color="primary">
-            <v-icon dark>mdi-content-save-edit</v-icon>
-          </v-btn>
+          <span v-show="!isEditingName" @click="editName()">{{prodName}}</span>
+          <input
+            v-show="isEditingName"
+            v-model="prodName"
+            ref="nameInput"
+            id="nameInput"
+            value="prodName"
+          />
+          <v-icon
+            v-if="!isEditingName"
+            @click="editName()"
+            color="lightgrey"
+            class="ml-2 mb-3"
+            small
+          >mdi-pencil</v-icon>
+          <v-icon v-else @click="saveNewName()" small dark color="green">mdi-check-bold</v-icon>
         </p>
+
         <p align="left" id="header-prodQuant">
           Anzahl:
-          <span v-if="!isEditingQuant">{{prodQuant}}</span>
-          <input v-else v-model="prodQuant" value="prodQuant">
-          <v-btn v-if="!isEditingQuant" @click="isEditingQuant=true" fab dark small depressed color="primary">
-            <v-icon dark>mdi-pencil</v-icon>
-          </v-btn>
-          <v-btn v-else @click="saveNewQuant()" fab dark small depressed color="primary">
-            <v-icon dark>mdi-content-save-edit</v-icon>
-          </v-btn>
+          <span v-show="!isEditingQuant" @click="editQuant()">{{prodQuant}}</span>
+          <input
+            v-show="isEditingQuant"
+            v-model="prodQuant"
+            ref="quantInput"
+            id="quantInput"
+            value="prodQuant"
+          />
+          <v-icon
+            v-if="!isEditingQuant"
+            @click="editQuant()"
+            color="lightgrey"
+            class="ml-2 mb-3"
+            small
+          >mdi-pencil</v-icon>
+          <v-icon v-else @click="saveNewQuant()" small dark color="green">mdi-content-save-edit</v-icon>
         </p>
       </div>
     </div>
@@ -30,47 +47,53 @@
 </template>
 
 <script>
-import graph from '@/vargraph/index.js';
+import graph from "@/vargraph/index.js";
 
 export default {
-  name: 'GraphHeader',
-  data () {
+  name: "GraphHeader",
+  data() {
     return {
-      prodName: 'prodName',
+      prodName: "prodName",
       prodQuant: 0,
       isEditingName: false,
       isEditingQuant: false
     };
   },
   methods: {
-    updateData (newProdName, newProdQuant) {
+    updateData(newProdName, newProdQuant) {
       this.prodName = newProdName;
       this.prodQuant = newProdQuant;
       this.saveNewName();
       this.saveNewQuant();
     },
-    saveNewName () {
-      if (this.prodName != '') {
+    editName() {
+      this.isEditingName = true;
+      this.$nextTick(() => this.$refs.nameInput.focus());
+    },
+    saveNewName() {
+      if (this.prodName != "") {
         this.isEditingName = false;
-        graph.getCytoGraph().data('prodName', this.prodName);
-      }
-      else {
-        alert('Bitte Namen eingeben');
+        graph.getCytoGraph().data("prodName", this.prodName);
+      } else {
+        alert("Bitte Namen eingeben");
       }
     },
-    saveNewQuant () {
-      if (this.prodQuant != '' && !isNaN(this.prodQuant)) {
+    editQuant() {
+      this.isEditingQuant = true;
+      this.$nextTick(() => this.$refs.quantInput.focus());
+    },
+    saveNewQuant() {
+      if (this.prodQuant != "" && !isNaN(this.prodQuant)) {
         this.isEditingQuant = false;
-        graph.getCytoGraph().data('prodQuant', this.prodQuant);
-      }
-      else {
-        alert('Bitte Zahl eingeben');
+        graph.getCytoGraph().data("prodQuant", this.prodQuant);
+      } else {
+        alert("Bitte Zahl eingeben");
       }
     }
-  }/*,
+  } /*,
   mounted () {
     this.prodName = graph.getCytoGraph().data('prodName');
     this.prodQuant = graph.getCytoGraph().data('prodQuant');
   }*/
-}
+};
 </script>
