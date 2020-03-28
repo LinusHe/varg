@@ -11,6 +11,8 @@
             ref="nameInput"
             id="nameInput"
             value="prodName"
+            @keyup.enter="saveNewName()"
+            v-on:blur="saveNewName()"
           />
           <v-icon
             v-if="!isEditingName"
@@ -19,7 +21,7 @@
             class="ml-2 mb-3"
             small
           >mdi-pencil</v-icon>
-          <v-icon v-else @click="saveNewName()" small dark color="green">mdi-check-bold</v-icon>
+          <v-icon v-else @click="saveNewName()" dark color="success" class="ml-2">mdi-check-bold</v-icon>
         </p>
 
         <p align="left" id="header-prodQuant">
@@ -31,6 +33,8 @@
             ref="quantInput"
             id="quantInput"
             value="prodQuant"
+            @keyup.enter="saveNewQuant()"
+            v-on:blur="saveNewQuant()"
           />
           <v-icon
             v-if="!isEditingQuant"
@@ -39,7 +43,7 @@
             class="ml-2 mb-3"
             small
           >mdi-pencil</v-icon>
-          <v-icon v-else @click="saveNewQuant()" small dark color="green">mdi-content-save-edit</v-icon>
+          <v-icon v-else @click="saveNewQuant()" dark color="success" class="ml-2">mdi-check-bold</v-icon>
         </p>
       </div>
     </div>
