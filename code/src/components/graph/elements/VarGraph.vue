@@ -1,37 +1,42 @@
 <template>
-  <div id="cy"></div>
+  <div id="cy">
+    <cytoscape
+      ref="cyRef"
+      :config="config"
+      :preConfig="preConfig"
+      :afterCreated="afterCreated"
+      v-on:mousedown="blankClick"
+      v-on:cxttapstart="rightClick"
+    >
+      <cy-element
+        v-for="def in elements"
+        :key="`${def.data.id}`"
+        :definition="def"
+        v-on:mousedown="elementClick($event, def.data.id)"
+      />
+    </cytoscape>
+  </div>
 </template>
 
 <script>
-import graph from "@/vargraph/index.js";
+/* eslint-disable no-console */
+import config from "@/vargraph/init/config.js";
+import elements from "@/vargraph/init/exampleElements.js";
+
+// import methods
+import init from "@/vargraph/init/init"
+import clickEvents from "@/vargraph/events/clicks"
+// activate methods
+const methods = Object.assign({}, init, clickEvents);
+
 export default {
   name: "VarGraph",
-  mounted: function() {
-    graph.run();
-
-    // Event Listeners:
-    //  Left Click
-    graph
-      .getCytoGraph()
-      .on("tap", e =>
-        this.$parent.$refs.detailControls.handleDetails(e.target)
-      );
-    // graph
-    //   .getCytoGraph()
-    //   .on("tap", "node", n =>
-    //     this.$parent.$refs.detailControls.openNodeDetails(n.target)
-    //   );
-    // graph
-    //   .getCytoGraph()
-    //   .on("tap", "edge", e =>
-    //     this.$parent.$refs.detailControls.openEdgeDetails(e.target)
-    //   );
-    // Right Click
-    graph
-      .getCytoGraph()
-      .on("cxttap", e =>
-        this.$parent.$refs.rightClickMenu.openMenu(window.event, e.target)
-      );
-  }
+  data() {
+    return {
+      config,
+      elements
+    };
+  },
+  methods
 };
 </script>

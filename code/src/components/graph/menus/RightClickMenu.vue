@@ -54,7 +54,7 @@ export default {
       ];
     },
     openMenu(e, target) {
-      if (target === graph.getCytoGraph()) {
+      if (target.constructor.name == "Core") {
         this.backgroundMenu();
       } else if (target.group() == "nodes") {
         this.targetID = target.data("id");
