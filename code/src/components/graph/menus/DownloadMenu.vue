@@ -58,7 +58,7 @@
 </template>
 
 <script>
-import importExport from "@/vargraph/importExport.js";
+import fileManager from "@/vargraph/importExport/FileManager.js";
 import graph from "@/vargraph/index.js";
 
 /* eslint-disable no-console */
@@ -91,15 +91,15 @@ export default {
         // generate filename
         switch (this.format) {
           case ".json":
-            importExport.saveGraphAsJson(graph.getCytoGraph(), this.filename);
+            fileManager.saveGraphAsJson(graph.getCytoGraph(), this.filename);
             break;
 
           case ".png":
-            importExport.saveGraphAsPng(graph.getCytoGraph(), this.filename);
+            fileManager.saveGraphAsPng(graph.getCytoGraph(), this.filename);
             break;
 
           case ".jpg":
-            importExport.saveGraphAsJpg(graph.getCytoGraph(), this.filename);
+            fileManager.saveGraphAsJpg(graph.getCytoGraph(), this.filename);
             break;
 
           default:

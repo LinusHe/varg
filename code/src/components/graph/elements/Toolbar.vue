@@ -99,7 +99,7 @@ import graph from "@/vargraph/index.js";
 import ExJSon from "@/vargraph/JSonPersistence.js"
 import BasicData from "@/vargraph/BasicData.js";
 import TestDatabase from "@/vargraph/TestDatabase.js";
-import importExport from "@/vargraph/importExport.js";
+import fileManager from "@/vargraph/importExport/FileManager.js";
 import router from '@/router/index.js'
 
 export default {
@@ -173,7 +173,7 @@ export default {
       this.$refs.file.addEventListener("change", onChange);
 
       function onChange(event) {
-        importExport.loadGraphFromJson(event);
+        fileManager.loadGraphFromJson(event);
       }
       
     },

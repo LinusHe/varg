@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import Zoom from "@/vargraph/Zoom.js";
+import Zoom from "@/vargraph/graph/Zoom.js";
 
 export default {
   name: "ZoomControls",

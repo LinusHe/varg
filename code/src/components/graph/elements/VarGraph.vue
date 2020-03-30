@@ -7,6 +7,7 @@
       :afterCreated="afterCreated"
       v-on:mousedown="blankClick"
       v-on:cxttapstart="rightClick"
+      :sync="true"
     >
       <cy-element
         v-for="def in elements"
@@ -20,14 +21,33 @@
 
 <script>
 /* eslint-disable no-console */
-import config from "@/vargraph/init/config.js";
+import config from "@/vargraph/init/cytoscapeConfig.js";
 import elements from "@/vargraph/init/exampleElements.js";
 
 // import methods
-import init from "@/vargraph/init/init"
-import clickEvents from "@/vargraph/events/clicks"
+import init from "@/vargraph/init/init";
+import clickEvents from "@/vargraph/events/clicks";
+import graph from "@/vargraph/graph/graph";
+import nodes from "@/vargraph/graph/nodes";
+import edges from "@/vargraph/graph/edges";
+import optimizations from "@/vargraph/graph/optimizations";
+import labels from "@/vargraph/graph/labels";
+import saveGraph from "@/vargraph/importExport/saveGraph";
+import loadGraph from "@/vargraph/importExport/loadGraph";
+
 // activate methods
-const methods = Object.assign({}, init, clickEvents);
+const methods = Object.assign(
+  {},
+  init,
+  clickEvents,
+  graph,
+  nodes,
+  edges,
+  optimizations,
+  labels,
+  saveGraph,
+  loadGraph
+);
 
 export default {
   name: "VarGraph",
@@ -37,6 +57,6 @@ export default {
       elements
     };
   },
-  methods
+  methods // see -> code\src\vargraph Files
 };
 </script>

@@ -17,11 +17,19 @@ export default {
   afterCreated(cy) {
     // cy: this is the cytoscape instance
     console.log("after created", cy);
-    this.init(cy);
+    this.init();
+
+    console.log(this.$root.$children[0].$children[0].$children[0].$children[0].$refs["vargraph"]);
+    console.log(this.$refs["cyRef"].instance);
+    this.$refs["cyRef"].instance.fit();
   },
 
   // initialize default data
-  init(cy) {
+  init() {
+    // get cytoscape instance
+    let cy = this.$refs["cyRef"].instance;
+
+
     // Sets maximum and minimum of zoom levels. Difference between one and two
     // is rougly one mouse wheel scroll.
     cy.minZoom(0.5);
@@ -44,27 +52,26 @@ export default {
     });
 
     // Generate Edge Labels
-    // var options = {
-    //   edgeDimensionsIncludeLabels: true,
-    //   "text-event": "yes"
-    // };
+    var options = {
+      edgeDimensionsIncludeLabels: true,
+      "text-event": "yes"
+    };
 
-    // cy.edges().forEach(e => {
-    //   e.data(
-    //     "label",
-    //     generateEdgeLabel(
-    //       e.id(),
-    //       e.data("name"),
-    //       e.data("cost"),
-    //       e.data("time"),
-    //       e.data("sucost"),
-    //       e.data("sutime")
-    //     )
-    //   );
-    //   e.layoutDimensions(options);
-    // });
+    cy.edges().forEach(e => {
+      e.data(
+        "label",
+        this.generateEdgeLabel(
+          e.data("name"),
+          e.data("cost"),
+          e.data("time"),
+          e.data("sucost"),
+          e.data("sutime")
+        )
+      );
+      e.layoutDimensions(options);
+    });
 
-    // // Generates Node HTML Label
-    // updateNodeLabel(cy);
+    // Generates Node HTML Label
+    this.updateNodeLabel(cy);
   }
 };
