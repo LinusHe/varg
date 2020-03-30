@@ -7,17 +7,19 @@
 
 export default {
   // getNodeID(): Returns an Array with all Node Objects of the Graph
-  getNodeArr() {
+  getNodeArr(graphComponent) {
     // get cytoscape instance
-    let cy = this.$refs["cyRef"].instance;
+    let cy = graphComponent.$refs["cyRef"].instance;
 
     return cy.nodes();
   },
 
   // getNodeID(): Returns an Array with all Node IDs of the Graph
-  getNodeID() {
+  getNodeID(graphComponent) {
     // get cytoscape instance
-    let cy = this.$refs["cyRef"].instance;
+    // console.log(this)
+    let cy = graphComponent.$refs["cyRef"].instance;
+
 
     var nodes = cy.nodes();
     var nodesArray = [];
@@ -28,9 +30,9 @@ export default {
   },
 
   // getNodeName(): Returns an Array with all Node Names of the Graph
-  getNodeName() {
+  getNodeName(graphComponent) {
     // get cytoscape instance
-    let cy = this.$refs["cyRef"].instance;
+    let cy = graphComponent.$refs["cyRef"].instance;
 
     var nodes = cy.nodes();
     var nodesArray = [];
@@ -42,9 +44,9 @@ export default {
 
   // createNode(..): Adds a node to the Cytograph with an automatic
   //                 generated (increasing) ID + the properties given
-  createNode(newName, newShort, newImgurl, newColor) {
+  createNode(graphComponent, newName, newShort, newImgurl, newColor) {
     // get cytoscape instance
-    let cy = this.$refs["cyRef"].instance;
+    let cy = graphComponent.$refs["cyRef"].instance;
 
     // get current id counter
     let count = cy.data("IDCount");
@@ -70,9 +72,9 @@ export default {
   },
 
   // updateNode(..): Updates a node by ID with the given arguments
-  updateNode(id, newName, newShort, newImgurl, newColor) {
+  updateNode(graphComponent, id, newName, newShort, newImgurl, newColor) {
     // get cytoscape instance
-    let cy = this.$refs["cyRef"].instance;
+    let cy = graphComponent.$refs["cyRef"].instance;
 
     // get node element
     let node = cy.getElementById(id);
@@ -86,12 +88,12 @@ export default {
   },
 
   // removeNode(id): Node with 'id' and all involved edges will be removed
-  removeNode(id) {
+  removeNode(graphComponent, id) {
     // get cytoscape instance
-    let cy = this.$refs["cyRef"].instance;
+    let cy = graphComponent.$refs["cyRef"].instance;
 
     let node = cy.getElementById(id);
-    let edgesArray = this.getEdgesByNode(id);
+    let edgesArray = this.getEdgesByNode(graphComponent, id);
     // removes all involved edges
     edgesArray.forEach(edge => edge.remove());
     // removes the node

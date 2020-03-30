@@ -8,9 +8,9 @@
 export default {
   // findPath(.. ): The method finds the shortest Path between 2 nodes
   //                with the Dijkstra Algorithm
-  findPath(option, start, end) {
+  findPath(graphComponent, option, start, end) {
     // get cytoscape instance
-    let cy = this.$refs["cyRef"].instance;
+    let cy = graphComponent.$refs["cyRef"].instance;
 
     var minDistance = 0;
 

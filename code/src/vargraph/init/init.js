@@ -17,17 +17,17 @@ export default {
   afterCreated(cy) {
     // cy: this is the cytoscape instance
     console.log("after created", cy);
-    this.init();
+    this.init(this);
 
-    console.log(this.$root.$children[0].$children[0].$children[0].$children[0].$refs["vargraph"]);
+    console.log(this.$root.$children[0].$children[0].$children[0].$children[0].$refs["vargraph"].$refs["cyRef"].instance);
     console.log(this.$refs["cyRef"].instance);
     this.$refs["cyRef"].instance.fit();
   },
 
   // initialize default data
-  init() {
+  init(graphComponent) {
     // get cytoscape instance
-    let cy = this.$refs["cyRef"].instance;
+    let cy = graphComponent.$refs["cyRef"].instance;
 
 
     // Sets maximum and minimum of zoom levels. Difference between one and two
@@ -72,6 +72,6 @@ export default {
     });
 
     // Generates Node HTML Label
-    this.updateNodeLabel(cy);
+    this.updateNodeLabel(graphComponent, cy);
   }
 };

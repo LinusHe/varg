@@ -6,6 +6,10 @@
 // This File contains methods for the whole graph
 
 export default {
+  getCytoGraph(graphComponent) {
+    return graphComponent.$refs["cyRef"].instance;
+  },
+
   // toString(): Collects all nodes of the graph and edges in arrays
   //             and then outputs their ID in a string.
   //             Currently for testing purposes.

@@ -268,7 +268,7 @@
 </template>
 
 <script>
-import graph from "@/vargraph/index.js";
+/* eslint-disable no-console */
 
 export default {
   name: "CreateControls",
@@ -294,6 +294,9 @@ export default {
     };
   },
   methods: {
+    getGraph() {
+      return this.$parent.$refs["vargraph"];
+    },
     deactivateGui() {
       this.nodeCreateGui = false;
       this.edgeCreateGui = false;
@@ -311,10 +314,10 @@ export default {
       this.edgeCreateGui = true;
     },
     getNodeItemsID() {
-      this.itemsID = graph.getNodeID();
+      this.itemsID = this.getGraph().getNodeID(this.getGraph());
     },
     getNodeItemsName() {
-      this.itemsName = graph.getNodeName();
+      this.itemsName = this.getGraph().getNodeName(this.getGraph());
     },
     createEdge() {
       let newcost = parseFloat(this.edgeCreateCosts);
@@ -332,7 +335,8 @@ export default {
       let indexEnd = this.itemsName.indexOf(this.endSelect);
       let endID = this.itemsID[indexEnd];
 
-      graph.createEdge(
+      this.getGraph().createEdge(
+        this.getGraph(),
         this.edgeCreateName,
         this.edgeCreateShort,
         startID,
@@ -352,14 +356,15 @@ export default {
         // eslint-disable-next-line no-console
         console.log("Missing nodeName");
       } else {
-        graph.createNode(
+        this.getGraph().createNode(
+          this.getGraph(),
           this.nodeCreateName,
           this.nodeCreateShort,
           this.nodeCreateImgPath,
           this.nodeCreateColor
         ),
           this.itemsName.push(this.nodeCreateName);
-        this.itemsID = graph.getNodeID();
+        this.itemsID = this.getGraph().getNodeID(this.getGraph());
       }
       this.clearFields();
       this.nodeCreateGui = false;

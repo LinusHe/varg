@@ -15,9 +15,9 @@ export default {
   //               SaveMe() and then reconstructs the graph using that object by adding every element
   //               (nodes first, edges second) and defining every data value by referencing the graph that is written
   //               in the database.
-  Load(graph) {
+  Load(graphComponent, graph) {
     // get cytoscape instance
-    let cy = this.$refs["cyRef"].instance;
+    let cy = graphComponent.$refs["cyRef"].instance;
 
     cy.elements("node").remove();
     cy.elements("edge").remove();

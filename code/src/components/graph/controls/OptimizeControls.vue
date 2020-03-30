@@ -34,7 +34,12 @@
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="green darken-1" text @click="dialog = false" @focus='optimizing()'>Anwenden</v-btn>
+                <v-btn
+                  color="green darken-1"
+                  text
+                  @click="dialog = false"
+                  @focus="optimizing()"
+                >Anwenden</v-btn>
               </v-card-actions>
             </v-card>
           </v-dialog>
@@ -42,7 +47,14 @@
         <v-row align="center">
           <div class="switch-container">
             <p class="switch-text-left">Zeit</p>
-            <v-switch v-model="optimizingOption" class="switch-button" color="primary" flat inset @change="optimizing()" ></v-switch>
+            <v-switch
+              v-model="optimizingOption"
+              class="switch-button"
+              color="primary"
+              flat
+              inset
+              @change="optimizing()"
+            ></v-switch>
             <p class="switch-text-right">Kosten</p>
           </div>
         </v-row>
@@ -54,8 +66,6 @@
 <script>
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
-
-import graph from "@/vargraph";
 
 export default {
   name: "OptimizeControls",
@@ -70,36 +80,34 @@ export default {
     };
   },
   methods: {
-
+    getGraph() {
+      return this.$parent.$refs["vargraph"];
+    },
     getNodeItemsID() {
-      this.itemsID = graph.getNodeID();
+      this.itemsID = this.getGraph().getNodeID(this.getGraph());
     },
     getNodeItemsName() {
-      this.itemsName = graph.getNodeName();
+      this.itemsName = this.getGraph().getNodeName(this.getGraph());
     },
     optimizing: function() {
-
-      let option
-      if(this.optimizingOption === false){  // True means option costs and false is option time
-        option= "optionTime"
+      let option;
+      if (this.optimizingOption === false) {
+        // True means option costs and false is option time
+        option = "optionTime";
+      } else {
+        option = "optionCosts";
       }
-      else{
-        option= "optionCosts"
+
+      let startIDs = [];
+      for (let i = 0; i < this.startSelect.length; i++) {
+        let indexStart = this.itemsName.indexOf(this.startSelect[i]);
+        startIDs.push(this.itemsID[indexStart]);
       }
 
-
-      let startIDs = []
-      for(let i=0; i<this.startSelect.length; i++){
-        let indexStart = this.itemsName.indexOf(this.startSelect[i])
-        startIDs.push(this.itemsID[indexStart])
-        
-      }
-      
       let indexEnd = this.itemsName.indexOf(this.endSelect);
       let endID = this.itemsID[indexEnd];
 
-      graph.findPath(option, startIDs, endID)
-
+      this.getGraph().findPath(this.getGraph(), option, startIDs, endID);
     }
   }
 };

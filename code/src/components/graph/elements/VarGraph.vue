@@ -5,7 +5,7 @@
       :config="config"
       :preConfig="preConfig"
       :afterCreated="afterCreated"
-      v-on:mousedown="blankClick"
+      v-on:tap="blankClick"
       v-on:cxttapstart="rightClick"
       :sync="true"
     >
@@ -13,7 +13,7 @@
         v-for="def in elements"
         :key="`${def.data.id}`"
         :definition="def"
-        v-on:mousedown="elementClick($event, def.data.id)"
+        v-on:tap="elementClick($event, def.data.id)"
       />
     </cytoscape>
   </div>

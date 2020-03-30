@@ -14,9 +14,9 @@ export default {
   posses a unique toString method that ouputs all nodes and edges.
   Currently for testing purposes.
   */
-  SaveMe() {
+  SaveMe(graphComponent) {
     // get cytoscape instance
-    let cy = this.$refs["cyRef"].instance;
+    let cy = graphComponent.$refs["cyRef"].instance;
     
     const content = {
       nodes: cy.elements("node"),

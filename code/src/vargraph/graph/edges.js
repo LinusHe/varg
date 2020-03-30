@@ -8,9 +8,9 @@
 export default {
   // getEdgesByNode(id): Returns all edges, where a specific node is
   //                     involved (as source or target)
-  getEdgesByNode(id) {
+  getEdgesByNode(graphComponent, id) {
     // get cytoscape instance
-    let cy = this.$refs["cyRef"].instance;
+    let cy = graphComponent.$refs["cyRef"].instance;
 
     let edgesArray = [];
     let allEdges = cy.edges();
@@ -25,6 +25,7 @@ export default {
   // createEdge(..): Adds an edge to the Cytograph with an automatic
   //                 generated (increasing) ID + the properties given
   createEdge(
+    graphComponent,
     newName,
     edgeshort,
     start,
@@ -35,7 +36,7 @@ export default {
     newsutime
   ) {
     // get cytoscape instance
-    let cy = this.$refs["cyRef"].instance;
+    let cy = graphComponent.$refs["cyRef"].instance;
 
     // get id counter
     let count = cy.data("IDCount");
@@ -68,6 +69,7 @@ export default {
   //                       It's just for re-creating edges in "updateEdge(..)"
   //                       Use the normal createEdge(..) function with increasing IDs
   createEdgeWithID(
+    graphComponent,
     id,
     newName,
     edgeshort,
@@ -80,7 +82,7 @@ export default {
     edgeLabel
   ) {
     // get cytoscape instance
-    let cy = this.$refs["cyRef"].instance;
+    let cy = graphComponent.$refs["cyRef"].instance;
 
     // get id counter
     let originalCount = cy.data("IDCount");
@@ -88,6 +90,7 @@ export default {
     // replace counter with own id
     cy.data("IDCount", id);
     this.createEdge(
+      graphComponent,
       newName,
       edgeshort,
       start,
@@ -105,6 +108,7 @@ export default {
 
   // updateEdge(..): Updates an Edge by ID with the given arguments
   updateEdge(
+    graphComponent,
     id,
     newName,
     newShort,
@@ -116,7 +120,7 @@ export default {
     newsutime
   ) {
     // get cytoscape instance
-    let cy = this.$refs["cyRef"].instance;
+    let cy = graphComponent.$refs["cyRef"].instance;
 
     // get edge by id
     let edge = cy.getElementById(id);
@@ -134,6 +138,7 @@ export default {
     if (edge.data("source") != newSource || edge.data("target") != newTarget) {
       edge.remove();
       this.createEdgeWithID(
+        graphComponent,
         id,
         newName,
         newShort,
@@ -160,9 +165,9 @@ export default {
   },
 
   // removeEdge(id): Edge with 'id' will be removed from Graph
-  removeEdge(id) {
+  removeEdge(graphComponent, id) {
     // get cytoscape instance
-    let cy = this.$refs["cyRef"].instance;
+    let cy = graphComponent.$refs["cyRef"].instance;
 
     // get edge element
     let edge = cy.getElementById(id);

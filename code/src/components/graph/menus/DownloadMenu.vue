@@ -59,7 +59,6 @@
 
 <script>
 import fileManager from "@/vargraph/importExport/FileManager.js";
-import graph from "@/vargraph/index.js";
 
 /* eslint-disable no-console */
 export default {
@@ -82,6 +81,9 @@ export default {
   }),
 
   methods: {
+    getGraph() {
+      return this.$parent.$refs["vargraph"];
+    },
     setdialog: function(boolean) {
       this.dialog = boolean;
     },
@@ -91,15 +93,15 @@ export default {
         // generate filename
         switch (this.format) {
           case ".json":
-            fileManager.saveGraphAsJson(graph.getCytoGraph(), this.filename);
+            fileManager.saveGraphAsJson(this.getGraph().getCytoGraph(this.getGraph()), this.filename);
             break;
 
           case ".png":
-            fileManager.saveGraphAsPng(graph.getCytoGraph(), this.filename);
+            fileManager.saveGraphAsPng(this.getGraph().getCytoGraph(this.getGraph()), this.filename);
             break;
 
           case ".jpg":
-            fileManager.saveGraphAsJpg(graph.getCytoGraph(), this.filename);
+            fileManager.saveGraphAsJpg(this.getGraph().getCytoGraph(this.getGraph()), this.filename);
             break;
 
           default:

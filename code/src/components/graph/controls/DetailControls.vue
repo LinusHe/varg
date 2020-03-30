@@ -242,7 +242,6 @@
 
 <script>
 /* eslint-disable no-console */
-import graph from "@/vargraph/index.js";
 export default {
   name: "DetailControls",
   data() {
@@ -271,6 +270,9 @@ export default {
     };
   },
   methods: {
+    getGraph() {
+      return this.$parent.$refs["vargraph"];
+    },
     loadNodeData(node) {
       this.id = node.id();
       this.nodeName = node.data("name");
@@ -297,7 +299,7 @@ export default {
       this.endSelect = endName;
     },
     handleDetails(target) {
-      if (target === graph.getCytoGraph()) {
+      if (target === this.getGraph().getCytoGraph(this.getGraph())) {
         this.closeMenus();
       } else if (target.group() == "nodes") {
         this.openNodeDetails(target);
@@ -311,10 +313,10 @@ export default {
       this.$parent.$refs.createControls.deactivateGui();
     },
     getNodeItemsID() {
-      this.itemsID = graph.getNodeID();
+      this.itemsID = this.getGraph().getNodeID(this.getGraph());
     },
     getNodeItemsName() {
-      this.itemsName = graph.getNodeName();
+      this.itemsName = this.getGraph().getNodeName(this.getGraph());
     },
     openNodeDetails(node) {
       this.loadNodeData(node);
@@ -335,7 +337,8 @@ export default {
       this.edgeGui = false;
     },
     saveNode() {
-      graph.updateNode(
+      this.getGraph().updateNode(
+        this.getGraph(),
         this.id,
         this.nodeName,
         this.nodeShort,
@@ -351,7 +354,8 @@ export default {
       let indexEnd = this.itemsName.indexOf(this.endSelect);
       let endID = this.itemsID[indexEnd];
 
-      graph.updateEdge(
+      this.getGraph().updateEdge(
+        this.getGraph(),
         this.id,
         this.edgeName,
         this.edgeShort,
@@ -365,7 +369,7 @@ export default {
       this.edgeGui = false;
     },
     deleteEdge() {
-      graph.removeEdge(this.id);
+      this.getGraph().removeEdge(this.getGraph(), this.id);
 
       this.edgeDeleteDialog = false;
       this.edgeGui = false;
@@ -380,7 +384,7 @@ export default {
     getInvolvedEdges() {
       this.involvedEdges = "";
       // check if edges are involved with node
-      let edgesArray = graph.getEdgesByNode(this.id);
+      let edgesArray = this.getGraph().getEdgesByNode(this.getGraph(), this.id);
       if (edgesArray.length > 0) {
         edgesArray.forEach(
           edge => (this.involvedEdges += "• " + edge.data("name") + "\n")
@@ -389,7 +393,7 @@ export default {
       }
     },
     deleteNode() {
-      graph.removeNode(this.id);
+      this.getGraph().removeNode(this.getGraph(), this.id);
       this.nodeDeleteDialog = false;
       this.nodeGui = false;
       this.deleteInvEdges = false;

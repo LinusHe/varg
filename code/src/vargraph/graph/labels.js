@@ -23,9 +23,9 @@ export default {
     );
   },
 
-  updateNodeLabel() {
+  updateNodeLabel(graphComponent) {
     // get cytoscape instance
-    let cy = this.$refs["cyRef"].instance;
+    let cy = graphComponent.$refs["cyRef"].instance;
 
     cy.nodeHtmlLabel([
       {

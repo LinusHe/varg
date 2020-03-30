@@ -51,8 +51,6 @@
 </template>
 
 <script>
-import graph from "@/vargraph/index.js";
-
 export default {
   name: "GraphHeader",
   data() {
@@ -64,6 +62,9 @@ export default {
     };
   },
   methods: {
+    getGraph() {
+      return this.$parent.$refs["vargraph"];
+    },
     updateData(newProdName, newProdQuant) {
       this.prodName = newProdName;
       this.prodQuant = newProdQuant;
@@ -77,7 +78,9 @@ export default {
     saveNewName() {
       if (this.prodName != "") {
         this.isEditingName = false;
-        graph.getCytoGraph().data("prodName", this.prodName);
+        this.getGraph()
+          .getCytoGraph(this.getGraph())
+          .data("prodName", this.prodName);
       } else {
         alert("Bitte Namen eingeben");
       }
@@ -89,7 +92,9 @@ export default {
     saveNewQuant() {
       if (this.prodQuant != "" && !isNaN(this.prodQuant)) {
         this.isEditingQuant = false;
-        graph.getCytoGraph().data("prodQuant", this.prodQuant);
+        this.getGraph()
+          .getCytoGraph(this.getGraph())
+          .data("prodQuant", this.prodQuant);
       } else {
         alert("Bitte Zahl eingeben");
       }

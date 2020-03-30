@@ -15,7 +15,6 @@
 </template>
 
 <script>
-import graph from "@/vargraph/index.js";
 export default {
   name: "RightClickControls",
   data() {
@@ -30,6 +29,9 @@ export default {
     };
   },
   methods: {
+    getGraph() {
+      return this.$parent.$refs["vargraph"];
+    },
     backgroundMenu() {
       this.visibleTitle = false;
       this.items = [
@@ -75,28 +77,28 @@ export default {
       if (clickId == "n1") {
         // Edit Node
         this.$parent.$refs.detailControls.openNodeDetails(
-          graph.getCytoGraph().getElementById(this.targetID)
+          this.getGraph().getCytoGraph(this.getGraph()).getElementById(this.targetID)
         );
       } else if (clickId == "n2") {
         // Delete Node
         this.$parent.$refs.detailControls.loadNodeData(
-          graph.getCytoGraph().getElementById(this.targetID)
+          this.getGraph().getCytoGraph(this.getGraph()).getElementById(this.targetID)
         );
         this.$parent.$refs.detailControls.openNodeDeleteMenu(
-          graph.getCytoGraph().getElementById(this.targetID)
+          this.getGraph().getCytoGraph(this.getGraph()).getElementById(this.targetID)
         );
       } else if (clickId == "e1") {
         // Edit Edge
         this.$parent.$refs.detailControls.openEdgeDetails(
-          graph.getCytoGraph().getElementById(this.targetID)
+          this.getGraph().getCytoGraph(this.getGraph()).getElementById(this.targetID)
         );
       } else if (clickId == "e2") {
         // Delete Edge
         this.$parent.$refs.detailControls.loadEdgeData(
-          graph.getCytoGraph().getElementById(this.targetID)
+          this.getGraph().getCytoGraph(this.getGraph()).getElementById(this.targetID)
         );
         this.$parent.$refs.detailControls.openEdgeDeleteMenu(
-          graph.getCytoGraph().getElementById(this.targetID)
+          this.getGraph().getCytoGraph(this.getGraph()).getElementById(this.targetID)
         );
       } else if (clickId == "b1") {
         // Create Node

@@ -1,34 +1,35 @@
 <template>
-<div>
+  <div>
     <v-dialog v-model="dialog" max-width="380">
-        <v-card id="newgraph-menu">
-            <v-card-title class="headline"> Neuer Graph ? </v-card-title>
-            <v-card-text>
-                Dieser Graph Speichern ?
-            </v-card-text>
-            <v-col>
-                <v-btn color="success" id="newgraph-menu-save" block outlined @click="save">Speichern</v-btn>
-            </v-col>
-            <v-col>
-                <v-btn color="error" id="newgraph-menu-discard" block outlined @click="discard">Verwerfen</v-btn>
-            </v-col>
-            <v-col>
-                <v-btn color="error" id="newgraph-menu-cancel" block outlined @click="dialog=false">Abbrechen</v-btn>
-            </v-col>
-        </v-card>
+      <v-card id="newgraph-menu">
+        <v-card-title class="headline">Neuer Graph ?</v-card-title>
+        <v-card-text>Dieser Graph Speichern ?</v-card-text>
+        <v-col>
+          <v-btn color="success" id="newgraph-menu-save" block outlined @click="save">Speichern</v-btn>
+        </v-col>
+        <v-col>
+          <v-btn color="error" id="newgraph-menu-discard" block outlined @click="discard">Verwerfen</v-btn>
+        </v-col>
+        <v-col>
+          <v-btn
+            color="error"
+            id="newgraph-menu-cancel"
+            block
+            outlined
+            @click="dialog=false"
+          >Abbrechen</v-btn>
+        </v-col>
+      </v-card>
     </v-dialog>
-</div>
+  </div>
 
-
-
-
-<!--Popup-Fenster-->
-<!-- <div id="popup1" class="overlay"> 
-    Popupfenster (Solange der Button der Erstellung eines neuen Graphs nicht gedrückt ist, bleibt dieses Fenster versteckt) -->
-    <!-- <div class="popup"> -->
-        <!--<div class="modal-header"> Header des Popupfenesters -->
-            <!-- <h2>Neuer Graph ?</h2> -->
-            <!--<a class="close" href="#">&times;</a>
+  <!--Popup-Fenster-->
+  <!-- <div id="popup1" class="overlay"> 
+  Popupfenster (Solange der Button der Erstellung eines neuen Graphs nicht gedrückt ist, bleibt dieses Fenster versteckt)-->
+  <!-- <div class="popup"> -->
+  <!--<div class="modal-header"> Header des Popupfenesters -->
+  <!-- <h2>Neuer Graph ?</h2> -->
+  <!--<a class="close" href="#">&times;</a>
             </div>
         <div class="content">
             Dieser Graph Speichern ?   Inhalt des Popup-Fensters
@@ -45,81 +46,89 @@
                <v-btn class="btn" href="#">Abbrechen</v-btn>
             </div>
         </div>
-    </div>-->
+  </div>-->
 </template>
 
 <script>
-import ExJSon from "@/vargraph/JSonPersistence.js"
+import ExJSon from "@/vargraph/JSonPersistence.js";
 import BasicData from "@/vargraph/BasicData.js";
-import router from '@/router/index.js'
-import graph from "@/vargraph/index.js";
+import router from "@/router/index.js";
 
 export default {
-    name: 'NewGraphMenu.vue',
-    data () {
-        return{
-            dialog: false,
-            database: null
-        };
+  name: "NewGraphMenu.vue",
+  data() {
+    return {
+      dialog: false,
+      database: null
+    };
+  },
+  methods: {
+    getGraph() {
+      return this.$parent.$refs["vargraph"];
     },
-    methods:    {
-        setObject(DataBaseObject) {
-            this.database=DataBaseObject
-        },
-        onSaveConfirm (value){
-            if (value != "" && value != null) {
-                let content=ExJSon.CreateJSon()
-                //Stringify makes content readable
-                content = JSON.stringify(content, null, 2);
-                let date = new Date();
-                let save = new BasicData(value, date, content);
-                if(this.database.save(save, false)){
-                    //no dupe
-                    // eslint-disable-next-line no-console
-                    console.log('save')
-                    this.$parent.$refs.saveMenu.setdialog(false)
-                    router.push({name: 'newGraph'});
-                }
-            else {
-                //dupe case
-                this.$parent.$refs.saveMenu.setmsg("Es existiert bereits eine Datei unter diesen Namen. Wollen Sie diese überschreiben ?")
-                this.$parent.$refs.saveMenu.setbtntext("Überschreiben")
-            }
+    setObject(DataBaseObject) {
+      this.database = DataBaseObject;
+    },
+    onSaveConfirm(value) {
+      if (value != "" && value != null) {
+        let content = ExJSon.CreateJSon();
+        //Stringify makes content readable
+        content = JSON.stringify(content, null, 2);
+        let date = new Date();
+        let save = new BasicData(value, date, content);
+        if (this.database.save(save, false)) {
+          //no dupe
+          // eslint-disable-next-line no-console
+          console.log("save");
+          this.$parent.$refs.saveMenu.setdialog(false);
+          router.push({ name: "newGraph" });
+        } else {
+          //dupe case
+          this.$parent.$refs.saveMenu.setmsg(
+            "Es existiert bereits eine Datei unter diesen Namen. Wollen Sie diese überschreiben ?"
+          );
+          this.$parent.$refs.saveMenu.setbtntext("Überschreiben");
         }
-      else if (value == "" || value == null) {
+      } else if (value == "" || value == null) {
         //do nothing
       }
     },
-        onOverwrite(value) {
-            let content=ExJSon.CreateJSon()
-            //Stringify makes content readable
-            content = JSON.stringify(content, null, 2);
-            // eslint-disable-next-line no-console
-            console.log('overwrite')
-            let date = new Date();
-            let save = new BasicData(value, date, content);
-            this.database.save(save,true)
-            this.$parent.$refs.saveMenu.setdialog(false)
-            router.push({name: 'newGraph'});
-        },
-        showSaveMenu()  {
-            this.$parent.$refs.saveMenu.setdialog(true)
-            this.dialog = false;
-        },
-        setdialog(value){
-            this.dialog=value
-        },
-        save()  {
-            this.$parent.$refs.saveMenu.setdialog(true)
-        },
-        discard()   {    
-            graph.getCytoGraph().nodes().remove()
-            graph.getCytoGraph().edges().remove()
-            this.$parent.$refs.newGraphMenu.setdialog(false)
-            //this works!!!
-            router.push({name: 'newGraph'});
-        }
+    onOverwrite(value) {
+      let content = ExJSon.CreateJSon();
+      //Stringify makes content readable
+      content = JSON.stringify(content, null, 2);
+      // eslint-disable-next-line no-console
+      console.log("overwrite");
+      let date = new Date();
+      let save = new BasicData(value, date, content);
+      this.database.save(save, true);
+      this.$parent.$refs.saveMenu.setdialog(false);
+      router.push({ name: "newGraph" });
+    },
+    showSaveMenu() {
+      this.$parent.$refs.saveMenu.setdialog(true);
+      this.dialog = false;
+    },
+    setdialog(value) {
+      this.dialog = value;
+    },
+    save() {
+      this.$parent.$refs.saveMenu.setdialog(true);
+    },
+    discard() {
+      this.getGraph()
+        .getCytoGraph(this.getGraph())
+        .nodes()
+        .remove();
+      this.getGraph()
+        .getCytoGraph(this.getGraph())
+        .edges()
+        .remove();
+      this.$parent.$refs.newGraphMenu.setdialog(false);
+      //this works!!!
+      router.push({ name: "newGraph" });
     }
-}
+  }
+};
 </script>
     
