@@ -1,82 +1,95 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
-import Login from '../views/Login.vue'
-import Graph from '../views/Graph.vue'
-import Database from '../views/Database.vue'
-import Menu from '../views/Menu.vue'
-import NewGraph from '../views/NewGraph.vue'
+import Vue from "vue";
+import VueRouter from "vue-router";
+import Home from "../views/Home.vue";
+import Login from "../views/Login.vue";
+import Graph from "../views/Graph.vue";
+import Database from "../views/Database.vue";
+import Menu from "../views/Menu.vue";
+import NewGraph from "../views/NewGraph.vue";
 //import Vuex from 'vuex'
-import {store} from '../store/store.js'
+import { store } from "../store/store.js";
 
 //var auth;
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '/', redirect: '/home/login'
+    path: "/",
+    redirect: "/home/login"
   },
   {
-    path: '/home',
-    name: 'Varg - Login',
+    path: "/home",
+    name: "Varg - Login",
     component: Home,
     children: [
       {
-        path: 'login',
-        component: Login
-        
-      },
-      {
-        path: 'menu',
-        component: Menu,
+        path: "login",
+        component: Login,
         meta: {
-          requiresAuth: true
+          title: "Varg - Login"
         }
       },
       {
-        path: 'new',
-        name: 'newGraph',
+        path: "menu",
+        component: Menu,
+        meta: {
+          requiresAuth: true,
+          title: "Varg - Hauptmenü"
+        }
+      },
+      {
+        path: "new",
+        name: "newGraph",
         component: NewGraph,
         meta: {
-          requiresAuth: true
+          requiresAuth: true,
+          title: "Varg - Neuer Graph"
         }
       }
     ]
   },
   {
-    path: '/graph',
-    name: 'Varg - Graph Editor',
+    path: "/graph",
+    name: "graph",
     component: Graph,
     meta: {
-      requiresAuth: true
+      requiresAuth: true,
+      requiresGraph: true,
+      title: "Varg - Graph Editor"
     }
   },
   {
-    path: '/database',
-    name: 'Varg - Datenbank import',
+    path: "/database",
+    name: "Varg - Datenbank import",
     component: Database,
     meta: {
       requiresAuth: true
     }
   }
-
-]
+];
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: "history",
   base: process.env.BASE_URL,
   routes
-})
-
+});
 
 router.beforeEach((to, from, next) => {
+  const nearestWithTitle = to.matched
+    .slice()
+    .reverse()
+    .find(r => r.meta && r.meta.title);
+
+  // If a route with a title was found, set the document (page) title to that value.
+  if (nearestWithTitle) document.title = nearestWithTitle.meta.title;
+
   // Check for requiresAuth guard
   if (to.matched.some(record => record.meta.requiresAuth)) {
     // Check if NO logged user
     if (store.state.count == 0) {
       // Go to login
       next({
-        path: '/home/login',
+        path: "/home/login",
         query: {
           redirect: to.fullPath
         }
@@ -91,7 +104,7 @@ router.beforeEach((to, from, next) => {
     if (this.$main.auth) {
       // Go to login
       next({
-        path: '/',
+        path: "/",
         query: {
           redirect: to.fullPath
         }
@@ -104,7 +117,27 @@ router.beforeEach((to, from, next) => {
     // Proceed to route
     next();
   }
+
+  // Check wether Graph is created
+  if (to.matched.some(record => record.meta.requiresGraph)) {
+    // Check if Graph has no Name
+    if (store.getters.getCyProdName == null) {
+      // Main Menu
+      next({
+        path: "/home/menu",
+        query: {
+          redirect: to.fullPath
+        }
+      });
+    } else {
+      // Proceed to route
+      next();
+    }
+    // Guest proceed optional, maybe later?
+  } else {
+    // Proceed to route
+    next();
+  }
 });
 
-
-export default router
+export default router;

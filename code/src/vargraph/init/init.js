@@ -17,18 +17,21 @@ export default {
   afterCreated(cy) {
     // cy: this is the cytoscape instance
     console.log("after created", cy);
+
+    // run init
     this.init(this);
 
-    console.log(this.$root.$children[0].$children[0].$children[0].$children[0].$refs["vargraph"].$refs["cyRef"].instance);
-    console.log(this.$refs["cyRef"].instance);
-    this.$refs["cyRef"].instance.fit();
+    // fit graph
+    this.getCytoGraph(this).fit();
+
+    // refresh header
+    this.$parent.$refs["graphHeader"].refresh();
   },
 
   // initialize default data
   init(graphComponent) {
     // get cytoscape instance
     let cy = graphComponent.$refs["cyRef"].instance;
-
 
     // Sets maximum and minimum of zoom levels. Difference between one and two
     // is rougly one mouse wheel scroll.
@@ -40,11 +43,15 @@ export default {
     // This is to prevent that usage of cy.minZoom(value) locks up other zoom functionality
     cy.data("minZoom", 0.5);
 
+    // Get Name and Quant from Store.js
+    let prodname = this.$store.getters.getCyProdName;
+    let prodquant = this.$store.getters.getCyProdQuant;
+    console.log(prodname);
     // Initialising data types
     cy.data("IDCount", 0);
     cy.data("latestSave", null);
-    cy.data("prodName", null);
-    cy.data("prodQuant", null);
+    cy.data("prodName", prodname);
+    cy.data("prodQuant", prodquant);
 
     // Apply Color for nodes
     cy.nodes().forEach(n => {

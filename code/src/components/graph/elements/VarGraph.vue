@@ -22,7 +22,8 @@
 <script>
 /* eslint-disable no-console */
 import config from "@/vargraph/init/cytoscapeConfig.js";
-import elements from "@/vargraph/init/exampleElements.js";
+// UN-COMMENT FOLLOWING LINE FOR EXAMPLE ELEMENTS
+// import elements from "@/vargraph/init/exampleElements.js";
 
 // import methods
 import init from "@/vargraph/init/init";
@@ -54,7 +55,7 @@ export default {
   data() {
     return {
       config,
-      elements
+      // elements
     };
   },
   methods // see -> code\src\vargraph Files

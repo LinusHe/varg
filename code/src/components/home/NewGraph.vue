@@ -9,37 +9,67 @@
         um einen neuen VARG-Variantengraph zu erstellen,
         musst du zunächst die Produkt-Ausgangsdaten eingeben:
       </p>
-
-      <v-col sm="7">
-        <v-text-field
-          id="prodname"
-          label="Produktname"
-          counter="25"
-          error-message="Produktname ist zu lang"
-        ></v-text-field>
-      </v-col>
-      <v-col sm="5">
-        <v-text-field id="prodquantity" label="Stückzahl" ></v-text-field>
-      </v-col>
-
-      <v-col sm="7">
-        <v-text-field id="prodfirststate" label="Name des ersten Zustands"></v-text-field>
-      </v-col>
-      <v-col sm="5">
-        <router-link to="/graph" tag="button" class="btn-creategraph-link" block>
-          <v-btn block large color="primary" class="btn-creategraph">Starten</v-btn>
-        </router-link>
-      </v-col>
-
-      <v-row>
-        <a class="additional-state"><v-icon>mdi-plus</v-icon> weiteren Erstzustand anlegen</a>
-      </v-row>
+      <v-form ref="form" v-model="valid" lazy-validation>
+        <v-row>
+          <v-col sm="7">
+            <v-text-field
+              id="prodname"
+              label="Produktname"
+              v-model="prodname"
+              counter="25"
+              @keyup.enter="start()"
+              :rules="[v => !!v || 'Fehlender Name', v => (v || '').length <= 25  ||'Name ist zu lang']"
+            ></v-text-field>
+          </v-col>
+          <v-col sm="5">
+            <v-text-field
+              id="prodquantity"
+              v-model="prodquant"
+              label="Stückzahl"
+              type="number"
+              @keyup.enter="start()"
+              :rules="[v => !!v || 'Feld darf nicht leer sein', v => v > 0 ||'mindestens 1', v => v < 9999999999999999 ||'bist du wahnsinnig!?']"
+            ></v-text-field>
+          </v-col>
+        </v-row>
+        <v-col sm="5">
+          <v-btn
+            @click="start"
+            :disabled="!valid"
+            block
+            large
+            color="primary"
+            class="btn-creategraph"
+          >Starten</v-btn>
+        </v-col>
+      </v-form>
     </v-list-item-content>
   </v-list-item>
 </template>
 
 <script>
 export default {
-  name: "NewGraph"
+  name: "NewGraph",
+  data() {
+    return {
+      prodname: null,
+      prodquant: null,
+      valid: false
+    };
+  },
+  methods: {
+    start() {
+      //Checks if menu formular was filled in correctly
+      if (this.$refs.form.validate()) {
+        
+        // store name and quantity in store.js --> will be loaded in init.js
+        this.$store.commit("setCyProdName", this.prodname);
+        this.$store.commit("setCyProdQuant", this.prodquant);
+
+        // go to graph page
+        this.$router.push({ name: "graph" });
+      }
+    }
+  }
 };
 </script>

@@ -55,8 +55,8 @@ export default {
   name: "GraphHeader",
   data() {
     return {
-      prodName: "prodName",
-      prodQuant: 0,
+      prodName: null,
+      prodQuant: null,
       isEditingName: false,
       isEditingQuant: false
     };
@@ -64,6 +64,10 @@ export default {
   methods: {
     getGraph() {
       return this.$parent.$refs["vargraph"];
+    },
+    refresh() {
+      this.prodName = this.getGraph().getCytoGraph(this.getGraph()).data("prodName");
+      this.prodQuant = this.getGraph().getCytoGraph(this.getGraph()).data("prodQuant");
     },
     updateData(newProdName, newProdQuant) {
       this.prodName = newProdName;
