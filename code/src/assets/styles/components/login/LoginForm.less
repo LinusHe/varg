@@ -2,12 +2,24 @@
     .login-card {
         border: @colorGrey solid 1px;
     }
+
     .login-button {
         width: 200px;
         margin: auto;
         color: #ffffff !important;
     }
+
     a {
         text-align: center;
     }
+
+    .password .mdi:before {
+        display: none;
+    }
+
+    .password.v-input--is-dirty .mdi:before {
+        display: block;
+    }
+
+
 }

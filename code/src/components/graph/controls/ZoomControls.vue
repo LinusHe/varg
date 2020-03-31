@@ -30,8 +30,15 @@
 </template>
 
 <script>
+/* eslint-disable no-console */
+/* eslint-disable no-unused-vars */
+let dialogComponent;
+
 export default {
   name: "ZoomControls",
+  mounted: function() {
+    dialogComponent = this.$parent.$parent.$parent.$parent.$refs["dialogs"];
+  },
   methods: {
     getGraph() {
       return this.$parent.$refs["vargraph"];
@@ -60,6 +67,7 @@ export default {
 
     ZoomOut() {
       this.getGraph().ZoomOut(this.getGraph());
+      dialogComponent.dialogInfo("Graph wurde zentriert", 2000)
     }
   }
 };

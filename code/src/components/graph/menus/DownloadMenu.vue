@@ -27,8 +27,9 @@
               ></v-select>
             </v-col>
             <v-col sm="1" class="mt-5">
-              <v-icon @click="helpDialog = true">mdi-help-circle-outline</v-icon>
-              <v-snackbar color="#ffffff" :timeout="helpTimeout" multi-line v-model="helpDialog">
+              <v-icon @click="openHelpDialog()">mdi-help-circle-outline</v-icon>
+              <!-- <v-icon @click="helpDialog = true">mdi-help-circle-outline</v-icon> -->
+              <!-- <v-snackbar color="#ffffff" :timeout="helpTimeout" multi-line v-model="helpDialog">
                 <p style="color: #000000">
                   <br />Wähle das Format
                   <b>.json</b> oder
@@ -40,15 +41,28 @@
                   <b>.svg</b> aus, um den Graphen in einem Bildvormat herunterzuladen.
                 </p>
                 <v-btn color="primary" text @click="helpDialog = false">Schließen</v-btn>
-              </v-snackbar>
+              </v-snackbar>-->
             </v-col>
           </v-row>
           <v-row class="mt-8">
             <v-col sm="6">
-              <v-btn color="success" block :disabled="!valid" outlined id="download-menu-save" @click="download">Download</v-btn>
+              <v-btn
+                color="success"
+                block
+                :disabled="!valid"
+                outlined
+                id="download-menu-save"
+                @click="download"
+              >Download</v-btn>
             </v-col>
             <v-col sm="6">
-              <v-btn color="error" block outlined id="download-menu-cancel" @click="clearFields">Abbrechen</v-btn>
+              <v-btn
+                color="error"
+                block
+                outlined
+                id="download-menu-cancel"
+                @click="clearFields"
+              >Abbrechen</v-btn>
             </v-col>
           </v-row>
         </v-form>
@@ -58,10 +72,15 @@
 </template>
 
 <script>
-import fileManager from "@/vargraph/importExport/FileManager.js";
-
 /* eslint-disable no-console */
+/* eslint-disable no-unused-vars */
+import fileManager from "@/vargraph/importExport/FileManager.js";
+let dialogComponent;
+
 export default {
+  mounted: function() {
+    dialogComponent = this.$parent.$parent.$parent.$parent.$refs["dialogs"];
+  },
   data: () => ({
     dialog: false,
     format: "",
@@ -79,7 +98,6 @@ export default {
         (v && v.length <= 10) || "Downloadname muss kürzer als 10 Zeichen sein"
     ]
   }),
-
   methods: {
     getGraph() {
       return this.$parent.$refs["vargraph"];
@@ -93,21 +111,31 @@ export default {
         // generate filename
         switch (this.format) {
           case ".json":
-            fileManager.saveGraphAsJson(this.getGraph().getCytoGraph(this.getGraph()), this.filename);
+            fileManager.saveGraphAsJson(
+              this.getGraph().getCytoGraph(this.getGraph()),
+              this.filename
+            );
             break;
 
           case ".png":
-            fileManager.saveGraphAsPng(this.getGraph().getCytoGraph(this.getGraph()), this.filename);
+            fileManager.saveGraphAsPng(
+              this.getGraph().getCytoGraph(this.getGraph()),
+              this.filename
+            );
             break;
 
           case ".jpg":
-            fileManager.saveGraphAsJpg(this.getGraph().getCytoGraph(this.getGraph()), this.filename);
+            fileManager.saveGraphAsJpg(
+              this.getGraph().getCytoGraph(this.getGraph()),
+              this.filename
+            );
             break;
 
           default:
             alert("Sorry, hier fehlt noch was!");
             break;
         }
+        dialogComponent.dialogInfo("Datei wird heruntergeladen...")
         this.clearFields();
       }
     },
@@ -115,6 +143,11 @@ export default {
       this.$refs.form.reset();
       this.$refs.form.resetValidation();
       this.dialog = false;
+    },
+    openHelpDialog() {
+      dialogComponent.dialogInfo(
+        "Wähle das Format <b>.json</b> oder<b>.xml</b> aus, um den Graphen in einem Format herunterzuladen, welches du später wieder im Editor importieren kannst. <br /> <br /> Wähle<b>.png</b> oder<b>.svg</b> aus, um den Graphen in einem Bildvormat herunterzuladen."
+      );
     }
   }
 };

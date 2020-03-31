@@ -34,14 +34,18 @@
 </template>
 
 <script>
+/* eslint-disable no-console */
+/* eslint-disable no-unused-vars */
 import ExJSon from "@/vargraph/JSonPersistence.js"
 import BasicData from "@/vargraph/BasicData.js";
-// eslint-disable-next-line no-unused-vars
 import router from '@/router/index.js'
-
+let dialogComponent;
 
 export default {
   name: "SaveMenu",
+  mounted: function() {
+    dialogComponent = this.$parent.$parent.$parent.$parent.$refs["dialogs"];
+  },
   data() {
     return {
       valid: true,

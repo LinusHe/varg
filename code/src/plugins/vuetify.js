@@ -19,6 +19,7 @@ export default new Vuetify({
         lightgrey: '#797979',
         error: '#FF5252',
         info: '#4D4C4C',
+        infoAlert: '#2196f3',
         success: '#4CAF50',
         warning: '#FFC107',
         // Node Colors

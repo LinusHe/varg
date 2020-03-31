@@ -6,15 +6,6 @@
           <p align="left" id="header-prodName">
             Produkt:
             <span v-show="!isEditingName" @click="editName()">{{prodName}}</span>
-            <!-- <input
-              v-show="isEditingName"
-              v-model="prodName"
-              ref="nameInput"
-              id="nameInput"
-              value="prodName"
-              @keyup.enter="saveNewName()"
-              v-on:blur="saveNewName()"
-            />-->
             <v-form
               ref="formName"
               v-model="validName"
@@ -103,7 +94,14 @@
 </template>
 
 <script>
+/* eslint-disable no-console */
+/* eslint-disable no-unused-vars */
+let dialogComponent;
+
 export default {
+  mounted: function() {
+    dialogComponent = this.$parent.$parent.$parent.$parent.$refs["dialogs"];
+  },
   name: "GraphHeader",
   data() {
     return {
@@ -140,14 +138,19 @@ export default {
     saveNewName() {
       //Checks if menu formular was filled in correctly
       if (this.$refs.formName.validate()) {
-        if (this.prodName != "") {
-          this.isEditingName = false;
-          this.getGraph()
-            .getCytoGraph(this.getGraph())
-            .data("prodName", this.prodName);
-        } else {
-          alert("Bitte Namen eingeben");
-        }
+        this.isEditingName = false;
+        this.getGraph()
+          .getCytoGraph(this.getGraph())
+          .data("prodName", this.prodName);
+        dialogComponent.dialogSuccess("Produktname erfolgreich geändert");
+      } else if (this.prodName.length > 25) {
+        dialogComponent.dialogError(
+          "Produktname nicht geändert: <b>Bitte Namen mit maximal 25 Zeichen eingeben</b>"
+        );
+      } else if (this.prodName.length == 0) {
+        dialogComponent.dialogError(
+          "Produktname nicht geändert: <b>Bitte Namen eingeben</b>"
+        );
       }
     },
     editQuant() {
@@ -156,20 +159,21 @@ export default {
     },
     saveNewQuant() {
       if (this.$refs.formQuant.validate()) {
-        if (this.prodQuant != "" && !isNaN(this.prodQuant)) {
-          this.isEditingQuant = false;
-          this.getGraph()
-            .getCytoGraph(this.getGraph())
-            .data("prodQuant", this.prodQuant);
-        } else {
-          alert("Bitte Zahl eingeben");
-        }
+        this.isEditingQuant = false;
+        this.getGraph()
+          .getCytoGraph(this.getGraph())
+          .data("prodQuant", this.prodQuant);
+        dialogComponent.dialogSuccess("Stückzahl erfolgreich geändert");
+      } else if (this.prodQuant.length == 0) {
+        dialogComponent.dialogError(
+          "Stückzahl nicht geändert: <b>Bitte Stückzahl eingeben</b>"
+        );
+      } else if (this.prodQuant < 1) {
+        dialogComponent.dialogError(
+          "Stückzahl nicht geändert: <b>Es sind nur positive Stückzahlen erlaubt</b>"
+        );
       }
     }
-  } /*,
-  mounted () {
-    this.prodName = graph.getCytoGraph().data('prodName');
-    this.prodQuant = graph.getCytoGraph().data('prodQuant');
-  }*/
+  }
 };
 </script>

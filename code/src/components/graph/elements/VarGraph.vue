@@ -21,6 +21,7 @@
 
 <script>
 /* eslint-disable no-console */
+/* eslint-disable no-unused-vars */
 import config from "@/vargraph/init/cytoscapeConfig.js";
 // UN-COMMENT FOLLOWING LINE FOR EXAMPLE ELEMENTS
 // import elements from "@/vargraph/init/exampleElements.js";

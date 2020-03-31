@@ -269,9 +269,14 @@
 
 <script>
 /* eslint-disable no-console */
+/* eslint-disable no-unused-vars */
+let dialogComponent;
 
 export default {
   name: "CreateControls",
+  mounted: function() {
+    dialogComponent = this.$parent.$parent.$parent.$parent.$refs["dialogs"];
+  },
   data() {
     return {
       nodeCreateGui: false,
@@ -346,6 +351,7 @@ export default {
         newsucost,
         newsutime
       );
+      dialogComponent.dialogSuccess("Kante erfolgreich angelegt");
       this.clearFields();
       this.edgeCreateGui = false;
     },
@@ -368,6 +374,7 @@ export default {
       }
       this.clearFields();
       this.nodeCreateGui = false;
+      dialogComponent.dialogSuccess("Knoten erfolgreich angelegt");
     },
     clearFields() {
       this.nodeCreateName = "";

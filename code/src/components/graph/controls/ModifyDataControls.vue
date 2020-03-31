@@ -3,7 +3,12 @@
   <div class="modify-data-controls">
     <!-- Modify-Data Controls -->
     <v-slide-x-reverse-transition>
-      <v-card id="mdc-gui" class="detail-card" v-show="modifyDataGui" transition="scroll-y-transition">
+      <v-card
+        id="mdc-gui"
+        class="detail-card"
+        v-show="modifyDataGui"
+        transition="scroll-y-transition"
+      >
         <v-btn class="btn-close ma-2" @click="deactivateGui()" text icon color="primary">
           <v-icon>mdi-close</v-icon>
         </v-btn>
@@ -11,7 +16,7 @@
         <!-- Headline -->
         <p class="ml-3 mb-0 font-weight-light font-italic">Graph-Daten</p>
         <p class="prodname ml-3 mr-12 mb-0">{{graphName}}</p>
-      
+
         <!-- graphName Selection -->
         <v-row>
           <v-col sm="12">
@@ -26,7 +31,7 @@
             ></v-text-field>
           </v-col>
         </v-row>
-      
+
         <!-- prodName & prodQuant Selection -->
         <v-row>
           <v-col sm="8">
@@ -41,16 +46,16 @@
           </v-col>
           <v-col sm="4">
             <v-text-field
-              id="prodQuant" 
-              label="Stückzahl" 
-              v-model="prodQuant" 
+              id="prodQuant"
+              label="Stückzahl"
+              v-model="prodQuant"
               :disabled="disabled"
-              outlined 
+              outlined
               hide-details
             ></v-text-field>
           </v-col>
         </v-row>
-      
+
         <!-- latestDate Display -->
         <v-row>
           <v-col sm="12">
@@ -75,69 +80,73 @@
             <v-btn id="mdc-gui-cancel" color="lightgrey" outlined @click="deactivateGui()">Abbrechen</v-btn>
           </v-col>
         </v-row>
-
       </v-card>
     </v-slide-x-reverse-transition>
   </div>
 </template>
 
 <script>
+/* eslint-disable no-console */
+/* eslint-disable no-unused-vars */
 import BasicData from "@/vargraph/BasicData.js";
+let dialogComponent;
 
 export default {
+  mounted: function() {
+    dialogComponent = this.$parent.$parent.$parent.$parent.$refs["dialogs"];
+  },
   name: "ModifyDataControls",
-    data() {
-      return {
-        modifyDataGui: false,
-        disabled: false,
-        graphName: "",
-        latestDate: "",
-        prodName: "",
-        prodQuant: ""
-      }
-    },
+  data() {
+    return {
+      modifyDataGui: false,
+      disabled: false,
+      graphName: "",
+      latestDate: "",
+      prodName: "",
+      prodQuant: ""
+    };
+  },
   methods: {
     openModifyData(newInstance) {
-      this.vars.instance = newInstance
-      this.loadGraphData()
+      this.vars.instance = newInstance;
+      this.loadGraphData();
       this.$parent.$refs.createControls.deactivateGui();
       this.$parent.$refs.detailControls.deactivateGui();
-      this.modifyDataGui = true
+      this.modifyDataGui = true;
     },
     loadGraphData() {
       // @TODO (Erik) Stückzahl usw. in cy.json speichern
-      if(this.vars.instance.graphName == undefined) {
-        this.disabled = true
-        this.graphName = "(noch nichts geladen - WIP)"
-        this.latestDate = "noch nicht gespeichert"
-        this.prodName = ""
-        this.prodQuant = ""
-      }
-      else {
-        this.disabled = false
-        this.graphName = this.vars.instance.getGraphName()
-        this.latestDate = this.vars.instance.getLatestDate()
+      if (this.vars.instance.graphName == undefined) {
+        this.disabled = true;
+        this.graphName = "(noch nichts geladen - WIP)";
+        this.latestDate = "noch nicht gespeichert";
+        this.prodName = "";
+        this.prodQuant = "";
+      } else {
+        this.disabled = false;
+        this.graphName = this.vars.instance.getGraphName();
+        this.latestDate = this.vars.instance.getLatestDate();
         //this.prodName = this.vars.instance.getProdName()
         //this.prodQuant = this.vars.instance.getProdQuant()
       }
     },
     applyNewData() {
-      this.vars.instance.setGraphName(this.graphName)
-      this.vars.instance.setLatestDate(new Date())
+      this.vars.instance.setGraphName(this.graphName);
+      this.vars.instance.setLatestDate(new Date());
       //this.vars.instance.setProdName(this.prodName)
       //this.vars.instance.setProdQuant(this.prodQuant)
-      this.$parent.$refs.toolbar.updateData(this.vars.instance)
-      this.$parent.$refs.graphHeader.updateData(this.prodName, this.prodQuant)
-      this.deactivateGui()
+      this.$parent.$refs.toolbar.updateData(this.vars.instance);
+      this.$parent.$refs.graphHeader.updateData(this.prodName, this.prodQuant);
+      this.deactivateGui();
     },
     deactivateGui() {
-      this.modifyDataGui = false
+      this.modifyDataGui = false;
     }
   },
   created() {
     this.vars = {
       instance: BasicData
-    }
+    };
   }
-}
+};
 </script>

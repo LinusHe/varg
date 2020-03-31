@@ -1,6 +1,5 @@
 <template>
   <div class="detail-controls">
-
     <!-- Detail-Zustand Controls -->
     <v-slide-x-reverse-transition>
       <v-card class="detail-card" v-show="nodeGui" transition="scroll-y-transition">
@@ -50,7 +49,7 @@
               <label for="nodeColor" class="color-label v-label v-label--active theme--light">Farbe</label>
               <v-radio-group v-model="nodeColor" id="nodeColor" row>
                 <!-- Attention: If you change the color, change also the corresponding color in the color-class
-                                in the src/styles/components/DetailControls.less -->
+                in the src/styles/components/DetailControls.less-->
                 <v-radio class="color-radio-1" color="#2699FB" value="2699FB"></v-radio>
                 <v-radio class="color-radio-2" color="#00CEC9" value="00CEC9"></v-radio>
                 <v-radio class="color-radio-3" color="#6C5CE7" value="6C5CE7"></v-radio>
@@ -242,8 +241,16 @@
 
 <script>
 /* eslint-disable no-console */
+/* eslint-disable no-unused-vars */
+let dialogComponent;
+
 export default {
   name: "DetailControls",
+  mounted: function() {
+    this.getNodeItemsID();
+    this.getNodeItemsName();
+    dialogComponent = this.$parent.$parent.$parent.$parent.$refs["dialogs"];
+  },
   data() {
     return {
       nodeDeleteDialog: false,
@@ -332,7 +339,7 @@ export default {
       this.nodeGui = false;
       this.edgeGui = true;
     },
-    deactivateGui(){
+    deactivateGui() {
       this.nodeGui = false;
       this.edgeGui = false;
     },
@@ -347,6 +354,7 @@ export default {
       );
 
       this.nodeGui = false;
+      dialogComponent.dialogSuccess("Knoten erfolgreich aktualisiert");
     },
     saveEdge() {
       let indexStart = this.itemsName.indexOf(this.startSelect);
@@ -367,12 +375,14 @@ export default {
         this.edgesuTime
       );
       this.edgeGui = false;
+      dialogComponent.dialogSuccess("Kante erfolgreich aktualisiert");
     },
     deleteEdge() {
       this.getGraph().removeEdge(this.getGraph(), this.id);
 
       this.edgeDeleteDialog = false;
       this.edgeGui = false;
+      dialogComponent.dialogWarning("Kante erfolgreich gelöscht");
     },
     openEdgeDeleteMenu() {
       this.edgeDeleteDialog = true;
@@ -397,11 +407,8 @@ export default {
       this.nodeDeleteDialog = false;
       this.nodeGui = false;
       this.deleteInvEdges = false;
+      dialogComponent.dialogWarning("Knoten erfolgreich gelöscht");
     }
-  },
-  mounted: function() {
-    this.getNodeItemsID();
-    this.getNodeItemsName();
   }
 };
 </script>
