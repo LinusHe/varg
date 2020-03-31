@@ -49,89 +49,108 @@
         v-show="nodeCreateGui"
         transition="scroll-y-transition"
       >
+        <div
+          class="white--text align-end"
+          style="height: 150px"
+          v-bind:style="{ background: '#'+nodeCreateColor }"
+        >
+          <v-card-subtitle style="color: #ffffff" class="pb-0">Neuer Zustand:</v-card-subtitle>
+          <v-card-title class="pt-12">{{showTitle}}</v-card-title>
+          <!-- <p class="prodname ml-3 mr-12 mb-0 pt-10">{{nodeCreateName}}</p> -->
+          <!-- Color Selection -->
+          <v-row class="radio-row">
+            <v-col sm="12" class="pb-0 pt-0 pl-5">
+              <div class="radio-container">
+                <v-radio-group v-model="nodeCreateColor" id="nodeCreateColor" row required>
+                  <!-- Attention: If you change the color, change also the corresponding color in the color-class
+                  in the src/styles/components/DetailControls.less-->
+                  <v-radio checked="checked" class="color-radio-1" color="#2699FB" value="2699FB"></v-radio>
+                  <v-radio class="color-radio-2" color="#00CEC9" value="00CEC9"></v-radio>
+                  <v-radio class="color-radio-3" color="#6C5CE7" value="6C5CE7"></v-radio>
+                  <v-radio class="color-radio-4" color="#FD79A8" value="FD79A8"></v-radio>
+                  <v-radio class="color-radio-5" color="#FF7675" value="FF7675"></v-radio>
+                  <v-radio class="color-radio-6" color="#FAB1A0" value="FAB1A0"></v-radio>
+                  <v-radio class="color-radio-7" color="#FDCB6E" value="FDCB6E"></v-radio>
+                  <v-radio class="color-radio-8" color="#FFEAA7" value="FFEAA7"></v-radio>
+                </v-radio-group>
+              </div>
+            </v-col>
+          </v-row>
+        </div>
         <v-btn class="btn-close ma-2" @click="nodeCreateGui= false" text icon color="primary">
-          <v-icon>mdi-close</v-icon>
+          <v-icon color="#ffffff">mdi-close</v-icon>
         </v-btn>
 
         <!-- Headline -->
-        <p class="ml-3 mb-0 font-weight-light font-italic">Neuer Zustand</p>
-        <p class="prodname ml-3 mr-12 mb-0">{{nodeCreateName}}</p>
 
-        <!-- Name Selection -->
-        <v-row>
-          <v-col sm="12">
-            <v-text-field
-              class="mt-2"
-              id="nodeCreateName"
-              label="Bezeichnung"
-              v-model="nodeCreateName"
-              outlined
-              hide-details
-            ></v-text-field>
-          </v-col>
-        </v-row>
+        <!-- <p class="prodname ml-3 mr-12 mb-0">{{nodeCreateName}}</p> -->
 
-        <!-- Shortcut & Icon Upload -->
-        <v-row>
-          <v-col sm="3">
-            <v-text-field
-              id="nodeCreateShort"
-              label="Kürzel"
-              v-model="nodeCreateShort"
-              outlined
-              hide-details
-            ></v-text-field>
-          </v-col>
-          <v-col sm="9">
-            <v-text-field
-              id="nodeCreateImgPath"
-              label="Icon/Bild"
-              v-model="nodeCreateImgPath"
-              outlined
-              hide-details
-              clearable
-            ></v-text-field>
-          </v-col>
-        </v-row>
+        <v-form
+          ref="formNodes"
+          v-model="validNodes"
+          lazy-validation
+          class="d-inline-block mr-5 ml-5 mb-4"
+          @submit="createNode()"
+          onsubmit="return false;"
+        >
+          <!-- Name Selection -->
+          <v-row>
+            <v-col sm="12">
+              <v-text-field
+                class="mt-2"
+                id="nodeCreateName"
+                label="Bezeichnung"
+                v-model="nodeCreateName"
+                :rules="nameRules"
+                @input="generateShort()"
+                @keyup.enter="createNode()"
+              ></v-text-field>
+            </v-col>
+          </v-row>
 
-        <!-- Color Selection -->
-        <v-row>
-          <v-col sm="12">
-            <div class="radio-container">
-              <label
-                for="nodeCreateColor"
-                class="color-label v-label v-label--active theme--light"
-              >Farbe</label>
-              <v-radio-group v-model="nodeCreateColor" id="nodeCreateColor" row>
-                <!-- Attention: If you change the color, change also the corresponding color in the color-class
-                in the src/styles/components/DetailControls.less-->
-                <v-radio checked="checked" class="color-radio-1" color="#2699FB" value="2699FB"></v-radio>
-                <v-radio class="color-radio-2" color="#00CEC9" value="00CEC9"></v-radio>
-                <v-radio class="color-radio-3" color="#6C5CE7" value="6C5CE7"></v-radio>
-                <v-radio class="color-radio-4" color="#FD79A8" value="FD79A8"></v-radio>
-                <v-radio class="color-radio-5" color="#FF7675" value="FF7675"></v-radio>
-                <v-radio class="color-radio-6" color="#FAB1A0" value="FAB1A0"></v-radio>
-                <v-radio class="color-radio-7" color="#FDCB6E" value="FDCB6E"></v-radio>
-                <v-radio class="color-radio-8" color="#FFEAA7" value="FFEAA7"></v-radio>
-              </v-radio-group>
-            </div>
-          </v-col>
-        </v-row>
+          <!-- Shortcut & Icon Upload -->
+          <v-row>
+            <v-col sm="3">
+              <v-text-field
+                id="nodeCreateShort"
+                label="Kürzel"
+                v-model="nodeCreateShort"
+                :rules="shortRules"
+                @keyup.enter="createNode()"
+              ></v-text-field>
+            </v-col>
+            <v-col sm="9">
+              <v-text-field
+                id="nodeCreateImgPath"
+                label="Icon/Bild"
+                v-model="nodeCreateImgPath"
+                clearable
+                @keyup.enter="createNode()"
+              ></v-text-field>
+            </v-col>
+          </v-row>
 
-        <!-- Create Buttons -->
-        <v-row>
-          <v-col sm="6" align="right">
-            <v-btn color="success" id="btn-create-node" outlined @click="createNode()">Hinzufügen</v-btn>
-          </v-col>
-          <v-col sm="6">
-            <v-btn
-              color="error"
-              id="btn-cancel-node"
-              outlined
-              @click="nodeCreateGui = false"
-            >Abbrechen</v-btn>
-          </v-col>
-        </v-row>
+          <!-- Create Buttons -->
+          <v-row>
+            <v-col sm="6" align="right">
+              <v-btn
+                :disabled="!validNodes"
+                color="success"
+                id="btn-create-node"
+                outlined
+                @click="createNode()"
+              >Hinzufügen</v-btn>
+            </v-col>
+            <v-col sm="6">
+              <v-btn
+                color="error"
+                id="btn-cancel-node"
+                outlined
+                @click="cancel()"
+              >Abbrechen</v-btn>
+            </v-col>
+          </v-row>
+        </v-form>
       </v-card>
     </v-slide-x-reverse-transition>
 
@@ -258,7 +277,7 @@
               color="error"
               id="btn-cancel-edge"
               outlined
-              @click="edgeCreateGui = false"
+              @click="cancel()"
             >Abbrechen</v-btn>
           </v-col>
         </v-row>
@@ -295,12 +314,46 @@ export default {
       itemsID: [],
       startSelect: "",
       endSelect: "",
-      fab: false
+      fab: false,
+      showTitle: "",
+      validNodes: false,
+      nameRules: [
+        v => !!v || "Knotenname wird benötigt",
+        v => (v && v.length <= 18) || "Name ist zu lang",
+        v => v != this.itemsName || "Name ist bereits vergeben"
+      ],
+      shortRules: [
+        v => !!v || "Kürzel wird benötigt",
+        v => (v && v.length <= 3) || "Kürzel ist zu lang"
+      ],
+      imgRules: [v => (!v || v.match(/\.(jpeg|jpg|gif|png)$/)) || "Falsches Format"]
     };
   },
   methods: {
     getGraph() {
       return this.$parent.$refs["vargraph"];
+    },
+    checkImg(url) {
+      return url.match(/\.(jpeg|jpg|gif|png)$/) != null;
+    },
+    generateShort() {
+      if (this.nodeCreateName.length > 0 && this.nodeCreateName != " ") {
+        let words = this.nodeCreateName.split(" ");
+        if (words.length >= 2 && words.length <= 3) {
+          this.nodeCreateShort = words
+            .map(words => words[0])
+            .join("")
+            .toUpperCase();
+        } else if (words.length == 1) {
+          this.nodeCreateShort = this.nodeCreateName
+            .substring(0, 3)
+            .toUpperCase();
+        }
+      }
+      if (this.nodeCreateName.length <= 18) {
+        this.showTitle = this.nodeCreateName;
+      }
+      console.log(this.nodeCreateShort);
     },
     deactivateGui() {
       this.nodeCreateGui = false;
@@ -356,12 +409,8 @@ export default {
       this.edgeCreateGui = false;
     },
     createNode() {
-      // Checks if data was input by the user
-      //alert("Hi");
-      if (document.getElementById("nodeCreateName").value === "") {
-        // eslint-disable-next-line no-console
-        console.log("Missing nodeName");
-      } else {
+      if (this.$refs.formNodes.validate()) {
+        this.nodeCreateShort = this.nodeCreateShort.toUpperCase();
         this.getGraph().createNode(
           this.getGraph(),
           this.nodeCreateName,
@@ -371,13 +420,18 @@ export default {
         ),
           this.itemsName.push(this.nodeCreateName);
         this.itemsID = this.getGraph().getNodeID(this.getGraph());
+
+        this.clearFields();
+        this.nodeCreateGui = false;
+        dialogComponent.dialogSuccess("Knoten erfolgreich angelegt");
       }
+    },
+    cancel() {
       this.clearFields();
-      this.nodeCreateGui = false;
-      dialogComponent.dialogSuccess("Knoten erfolgreich angelegt");
+      this.deactivateGui();
     },
     clearFields() {
-      this.nodeCreateName = "";
+      this.nodeCreateName = null;
       this.nodeCreateShort = "";
       this.nodeCreateImgPath = "";
       this.nodeCreateColor = "";
@@ -389,6 +443,8 @@ export default {
       this.edgeCreatesuTime = "";
       this.startSelect = "";
       this.endSelect = "";
+      this.showTitle = "";
+      this.$refs.formNodes.reset();
     }
   }
 };

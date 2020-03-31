@@ -1,8 +1,28 @@
-.detail-controls, .create-controls-container {
+.detail-controls,
+.create-controls-container {
     .deleteDialog {
         white-space: pre-line !important;
         background: black;
     }
+
+    .v-card__title {
+        font-size: 30px;
+    }
+
+    .v-card__subtitle {
+        color: rgb(255, 255, 255);
+        position: absolute;
+        top: -8px;
+    }
+
+    input#nodeCreateShort {
+        text-transform: uppercase;
+    }
+
+    input#edgeCreateShort {
+        text-transform: uppercase;
+    }
+
     .activate-button {
         position: absolute;
         right: 30px;
@@ -19,7 +39,7 @@
         right: 30px;
         top: 100px;
         width: 400px;
-        padding: 10px;
+        // padding: 10px;
 
         .btn-close {
             position: absolute;
@@ -35,14 +55,19 @@
             min-height: 40px;
         }
 
+        .radio-row {
+            position: absolute;
+            top: 85px;
+        }
         .radio-container {
-            border: #C2C2C2 solid 1px;
-            -webkit-transition: border-color 0.25s ease;
-            -moz-transition: border-color 0.25s ease;
-            -o-transition: border-color 0.25s ease;
-            -ms-transition: border-color 0.25s ease;
-            transition: border-color 0.25s ease;
-            border-radius: 5px;
+            // border: #C2C2C2 solid 1px;
+            // border-radius: 5px;
+            // -webkit-transition: border-color 0.25s ease;
+            // -moz-transition: border-color 0.25s ease;
+            // -o-transition: border-color 0.25s ease;
+            // -ms-transition: border-color 0.25s ease;
+            // transition: border-color 0.25s ease;
+
 
             &:hover {
                 border-color: #000000;
@@ -79,6 +104,14 @@
 
             // .mdi-radiobox-blank::before {
             //     // content: "\F12F";
+            // }
+
+            .mdi-radiobox-marked {
+                color: #ffffff !important;
+            }
+
+            // .mdi-radiobox-marked::before {
+            //     content: "\F058";
             // }
 
             .mdi-radiobox-marked::before {
