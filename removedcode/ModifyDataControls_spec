@@ -1,3 +1,5 @@
+/* removed ModifyDataControls.vue tests due to the Vue component being removed
+
 /* eslint-disable no-undef */
 describe('ModifyDataControls', () => {
 
@@ -66,3 +68,5 @@ describe('ModifyDataControls', () => {
   });
 
 });
+
+*/

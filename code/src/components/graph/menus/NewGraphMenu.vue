@@ -24,7 +24,7 @@
   </div>
 
   <!--Popup-Fenster-->
-  <!-- <div id="popup1" class="overlay"> 
+  <!-- <div id="popup1" class="overlay">
   Popupfenster (Solange der Button der Erstellung eines neuen Graphs nicht gedrückt ist, bleibt dieses Fenster versteckt)-->
   <!-- <div class="popup"> -->
   <!--<div class="modal-header"> Header des Popupfenesters -->
@@ -35,9 +35,9 @@
             Dieser Graph Speichern ?   Inhalt des Popup-Fensters
         </div>
         Footer des Popupfenesters, wo die Funktionsbuttons platziert sind
-            <div class="modal-footer"> 
+            <div class="modal-footer">
                 Save wird abgeruft, um den Graph zu speichern
-               <v-btn class="btn" @click="SaveJSon" href="/home/new" >Speichern</v-btn> 
+               <v-btn class="btn" @click="SaveJSon" href="/home/new" >Speichern</v-btn>
                Doesn't work right now because of rerouting (wait for Loginteam to make that possible)
                Graph verwerfen und direkt an die Seite der Erstellung eines neuen Graphs weiterleiten
                <v-btn class="btn" href="/home/new">Verwerfen</v-btn>
@@ -50,10 +50,8 @@
 </template>
 
 <script>
-import ExJSon from "@/vargraph/JSonPersistence.js";
-import BasicData from "@/vargraph/BasicData.js";
 import router from "@/router/index.js";
-
+  
 export default {
   name: "NewGraphMenu.vue",
   data() {
@@ -68,42 +66,6 @@ export default {
     },
     setObject(DataBaseObject) {
       this.database = DataBaseObject;
-    },
-    onSaveConfirm(value) {
-      if (value != "" && value != null) {
-        let content = ExJSon.CreateJSon();
-        //Stringify makes content readable
-        content = JSON.stringify(content, null, 2);
-        let date = new Date();
-        let save = new BasicData(value, date, content);
-        if (this.database.save(save, false)) {
-          //no dupe
-          // eslint-disable-next-line no-console
-          console.log("save");
-          this.$parent.$refs.saveMenu.setdialog(false);
-          router.push({ name: "newGraph" });
-        } else {
-          //dupe case
-          this.$parent.$refs.saveMenu.setmsg(
-            "Es existiert bereits eine Datei unter diesen Namen. Wollen Sie diese überschreiben ?"
-          );
-          this.$parent.$refs.saveMenu.setbtntext("Überschreiben");
-        }
-      } else if (value == "" || value == null) {
-        //do nothing
-      }
-    },
-    onOverwrite(value) {
-      let content = ExJSon.CreateJSon();
-      //Stringify makes content readable
-      content = JSON.stringify(content, null, 2);
-      // eslint-disable-next-line no-console
-      console.log("overwrite");
-      let date = new Date();
-      let save = new BasicData(value, date, content);
-      this.database.save(save, true);
-      this.$parent.$refs.saveMenu.setdialog(false);
-      router.push({ name: "newGraph" });
     },
     showSaveMenu() {
       this.$parent.$refs.saveMenu.setdialog(true);
@@ -131,4 +93,3 @@ export default {
   }
 };
 </script>
-    

@@ -15,3 +15,79 @@ modifyData() {
 }
 
 */
+
+/* old save methods got replaced by more organized methods in SaveMenu.vue
+
+onSaveConfirm(value) {
+  if (value != "" && value != null) {
+    let content = ExJSon.CreateJSon();
+    //Stringify makes content readable
+    content = JSON.stringify(content, null, 2);
+    let date = new Date();
+    let save = new BasicData(value, date, content);
+    if (this.vars.testDatabase.save(save, false)) {
+      //no dupe
+      // eslint-disable-next-line no-console
+      console.log("save");
+      this.$parent.$refs.saveMenu.setdialog(false);
+    } else {
+      //dupe case
+      this.$parent.$refs.saveMenu.setmsg(
+        "Es existiert bereits eine Datei unter diesen Namen. Wollen Sie diese überschreiben ?"
+      );
+      this.$parent.$refs.saveMenu.setbtntext("Überschreiben");
+    }
+  } else if (value == "" || value == null) {
+    //do nothing
+  }
+},
+onOverwrite(value) {
+  let content = ExJSon.CreateJSon();
+  //Stringify makes content readable
+  content = JSON.stringify(content, null, 2);
+  // eslint-disable-next-line no-console
+  console.log("overwrite");
+  let date = new Date();
+  let save = new BasicData(value, date, content);
+  this.vars.testDatabase.save(save, true);
+  this.$parent.$refs.saveMenu.setdialog(false);
+},
+
+*/
+
+/* removed modifyData button and its connected methods due to ModifyDataControls.vue being removed
+
+<v-row align="center">
+  <v-tooltip right>
+    <template v-slot:activator="{ on }">
+      <v-btn
+        id="mdc-btn"
+        @click="modifyData()"
+        v-on="on"
+        fab
+        dark
+        small
+        depressed
+        color="primary"
+      >
+        <v-icon dark>mdi-card-bulleted-settings</v-icon>
+      </v-btn>
+    </template>
+    <span>Daten bearbeiten</span>
+  </v-tooltip>
+</v-row>
+
+//handles saving case and discard case
+modifyData() {
+  this.$parent.$refs.modifyDataControls.openModifyData(this.vars.instance);
+},
+//gets called by MDC.vue when save button was clicked
+updateData(newInstance) {
+  this.vars.testDatabase.forceSave(
+    newInstance,
+    this.vars.instance.getGraphName()
+  );
+  this.vars.instance = newInstance;
+},
+
+*/

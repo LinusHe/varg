@@ -303,13 +303,11 @@ export default {
     },
     openNodeGui() {
       this.$parent.$refs.detailControls.deactivateGui();
-      this.$parent.$refs.modifyDataControls.deactivateGui();
       this.nodeCreateGui = true;
       this.edgeCreateGui = false;
     },
     openEdgeGui() {
       this.$parent.$refs.detailControls.deactivateGui();
-      this.$parent.$refs.modifyDataControls.deactivateGui();
       this.nodeCreateGui = false;
       this.edgeCreateGui = true;
     },

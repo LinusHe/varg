@@ -3,7 +3,7 @@
 
     <!-- Header: -->
     <GraphHeader ref="graphHeader"/>
-    
+
     <div class="graph-container dotted-background">
       <v-container fill-height grid-list-md>
         <v-layout row wrap align-center align="center">
@@ -16,9 +16,8 @@
           <OptimizeControls ref="optimizeControls" />
           <CreateControls ref="createControls" />
           <DetailControls ref="detailControls" />
-          <ModifyDataControls ref="modifyDataControls" />
           <ZoomControls ref="zoomControls" />
-          
+
           <!-- Menus:  -->
           <NewGraphMenu ref="newGraphMenu" />
           <SaveMenu ref="saveMenu" />
@@ -39,7 +38,6 @@ import VarGraph from "@/components/graph/elements/VarGraph";
 import CreateControls from "@/components/graph/controls/CreateControls";
 import DetailControls from "@/components/graph/controls/DetailControls";
 import ZoomControls from "@/components/graph/controls/ZoomControls";
-import ModifyDataControls from "@/components/graph/controls/ModifyDataControls";
 import OptimizeControls from "@/components/graph/controls/OptimizeControls";
 import NewGraphMenu from "@/components/graph/menus/NewGraphMenu";
 import SaveMenu from "@/components/graph/menus/SaveMenu";
@@ -54,7 +52,6 @@ export default {
     VarGraph,
     CreateControls,
     DetailControls,
-    ModifyDataControls,
     OptimizeControls,
     NewGraphMenu,
     SaveMenu,

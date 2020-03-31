@@ -45,26 +45,6 @@
         <v-tooltip right>
           <template v-slot:activator="{ on }">
             <v-btn
-              id="mdc-btn"
-              @click="modifyData()"
-              v-on="on"
-              fab
-              dark
-              small
-              depressed
-              color="primary"
-            >
-              <v-icon dark>mdi-card-bulleted-settings</v-icon>
-            </v-btn>
-          </template>
-          <span>Daten bearbeiten</span>
-        </v-tooltip>
-      </v-row>
-
-      <v-row align="center">
-        <v-tooltip right>
-          <template v-slot:activator="{ on }">
-            <v-btn
               @click="SaveJSon"
               id="save-btn"
               v-on="on"
@@ -140,8 +120,6 @@
 
 <script>
 /* eslint-disable no-console */
-import ExJSon from "@/vargraph/JSonPersistence.js";
-import BasicData from "@/vargraph/BasicData.js";
 import TestDatabase from "@/vargraph/TestDatabase.js";
 import fileManager from "@/vargraph/importExport/FileManager.js";
 import router from "@/router/index.js";
@@ -151,8 +129,7 @@ export default {
   created() {
     this.vars = {
       // initializes new instance of TestDatabase when Toolbar is loaded for the first time
-      testDatabase: new TestDatabase(),
-      instance: BasicData
+      testDatabase: new TestDatabase()
     };
   },
   methods: {
@@ -164,55 +141,10 @@ export default {
       this.$parent.$refs.newGraphMenu.setObject(this.vars.testDatabase);
       this.$parent.$refs.newGraphMenu.setdialog(true);
     },
-    //handles saving case and discard case
-    modifyData() {
-      this.$parent.$refs.modifyDataControls.openModifyData(this.vars.instance);
-    },
-    updateData(newInstance) {
-      this.vars.testDatabase.forceSave(
-        newInstance,
-        this.vars.instance.getGraphName()
-      );
-      this.vars.instance = newInstance;
-    },
     Download: function() {
       //not-best-practice aka coupling of components is not wanted
       //in order to make components reusable
       this.$parent.$refs.downloadMenu.setdialog(true);
-    },
-    onSaveConfirm(value) {
-      if (value != "" && value != null) {
-        let content = ExJSon.CreateJSon();
-        //Stringify makes content readable
-        content = JSON.stringify(content, null, 2);
-        let date = new Date();
-        let save = new BasicData(value, date, content);
-        if (this.vars.testDatabase.save(save, false)) {
-          //no dupe
-          // eslint-disable-next-line no-console
-          console.log("save");
-          this.$parent.$refs.saveMenu.setdialog(false);
-        } else {
-          //dupe case
-          this.$parent.$refs.saveMenu.setmsg(
-            "Es existiert bereits eine Datei unter diesen Namen. Wollen Sie diese überschreiben ?"
-          );
-          this.$parent.$refs.saveMenu.setbtntext("Überschreiben");
-        }
-      } else if (value == "" || value == null) {
-        //do nothing
-      }
-    },
-    onOverwrite(value) {
-      let content = ExJSon.CreateJSon();
-      //Stringify makes content readable
-      content = JSON.stringify(content, null, 2);
-      // eslint-disable-next-line no-console
-      console.log("overwrite");
-      let date = new Date();
-      let save = new BasicData(value, date, content);
-      this.vars.testDatabase.save(save, true);
-      this.$parent.$refs.saveMenu.setdialog(false);
     },
     SaveJSon: function() {
       this.$parent.$refs.saveMenu.setdialog(true);
