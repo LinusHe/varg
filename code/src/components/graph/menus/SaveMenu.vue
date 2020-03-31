@@ -35,7 +35,6 @@
 
 <script>
 import ExJSon from "@/vargraph/JSonPersistence.js"
-import BasicData from "@/vargraph/BasicData.js";
 // eslint-disable-next-line no-unused-vars
 import router from '@/router/index.js'
 
@@ -89,9 +88,7 @@ export default {
             let content=ExJSon.CreateJSon(this.getGraph())
             //Stringify makes content readable
             content = JSON.stringify(content, null, 2);
-            let date = new Date();
-            let save = new BasicData(this.DataBaseName, date, content);
-            if(this.database.save(save, false)){
+            if(this.database.save(content, false)){
               //no dupe
               // eslint-disable-next-line no-console
               console.log('save')
@@ -111,13 +108,11 @@ export default {
 
         case "Überschreiben":
           if (this.DataBaseName != "" && this.DataBaseName != null) {
-            let date =new Date();
             //Creates raw JSon Data that is unreadable 
             let content=ExJSon.CreateJSon(this.getGraph())
             //Stringify makes content readable
             content = JSON.stringify(content, null, 2);
-            let save = new BasicData(this.DataBaseName, date, content);
-            this.database.save(save, true)
+            this.database.save(content, true)
             //  eslint-disable-next-line no-console
             console.log('overwrite')
             // > Little trick: this should only be true if the user has previously opened 

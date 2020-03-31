@@ -14,7 +14,7 @@ export default class TestDatabase {
    * on the save array
    */
   save(basicData, overwrite) {
-    const index = this.searchExisting(basicData.getGraphName());
+    const index = this.searchExisting(basicData["prodName"]);
     if (index >= 0) {
       if (overwrite) {
         this.basicDataArray[index] = basicData;
@@ -40,7 +40,7 @@ export default class TestDatabase {
    */
   searchExisting(graphName) {
     for (var i = 0; i < this.basicDataArray.length; i++) {
-      if (this.basicDataArray[i].getGraphName() === graphName) {
+      if ((this.basicDataArray[i])["prodName"] === graphName) {
         return i;
       }
     }
@@ -59,10 +59,7 @@ export default class TestDatabase {
       // TODO: Remove ToString
       // eslint-disable-next-line no-console
       console.log(
-        "name: " +
-          element.getGraphName() +
-          ", nodes: " +
-          element.getGraph().toString()
+        element
       );
     }
   }
