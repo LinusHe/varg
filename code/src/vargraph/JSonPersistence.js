@@ -1,23 +1,25 @@
-import graph from "@/vargraph/index.js";
 
-export function CreateJSon() {
+
+export function CreateJSon(graphComponent) {
+    let cy = graphComponent.$refs["cyRef"].instance;
     // eslint-disable-next-line no-console
-    console.log(graph.getCytoGraph().json())
-    return graph.getCytoGraph().json()
+    console.log(cy.json())
+    return cy.json()
 }
 
-export function LoadJSon(content) {
+export function LoadJSon(content, graphComponent) {
+    let cy = graphComponent.$refs["cyRef"].instance;
     // eslint-disable-next-line no-console
     console.log("Loading Graph per JSon")
     //Turns stringified JSon back to JSon format
     content = JSON.parse(content)
     //wipes every element of the current graph
-    graph.getCytoGraph().elements('node').remove()
-    graph.getCytoGraph().elements('edge').remove()
+    cy.elements('node').remove()
+    cy.elements('edge').remove()
     //builds graph specified by content
-    graph.getCytoGraph().json(content)
+    cy.json(content)
     //apply node colors
-    graph.getCytoGraph().nodes().forEach(node => {
+    cy.nodes().forEach(node => {
         node.style('background-color', '#' + node.data('color'));
     });
 }

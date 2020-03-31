@@ -54,6 +54,10 @@ export default {
     };
   },
   methods: {
+    getGraph() {
+      return this.$parent.$refs["vargraph"];
+    },
+
     switchbtntext(){
       if (this.btntext == "Überschreiben")  {
         this.setbtntext("Speichern")
@@ -82,7 +86,7 @@ export default {
 
         case "Speichern":
           if (this.DataBaseName != "" && this.DataBaseName != null) {
-            let content=ExJSon.CreateJSon()
+            let content=ExJSon.CreateJSon(this.getGraph())
             //Stringify makes content readable
             content = JSON.stringify(content, null, 2);
             let date = new Date();
@@ -109,7 +113,7 @@ export default {
           if (this.DataBaseName != "" && this.DataBaseName != null) {
             let date =new Date();
             //Creates raw JSon Data that is unreadable 
-            let content=ExJSon.CreateJSon()
+            let content=ExJSon.CreateJSon(this.getGraph())
             //Stringify makes content readable
             content = JSON.stringify(content, null, 2);
             let save = new BasicData(this.DataBaseName, date, content);
