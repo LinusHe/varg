@@ -2,49 +2,101 @@
   <div class="header-graph-container">
     <div id="headertext_out">
       <div id="headertext_in">
-        <p align="left" id="header-prodName">
-          Produkt:
-          <span v-show="!isEditingName" @click="editName()">{{prodName}}</span>
-          <input
-            v-show="isEditingName"
-            v-model="prodName"
-            ref="nameInput"
-            id="nameInput"
-            value="prodName"
-            @keyup.enter="saveNewName()"
-            v-on:blur="saveNewName()"
-          />
-          <v-icon
-            v-if="!isEditingName"
-            @click="editName()"
-            color="lightgrey"
-            class="ml-2 mb-3"
-            small
-          >mdi-pencil</v-icon>
-          <v-icon v-else @click="saveNewName()" dark color="success" class="ml-2">mdi-check-bold</v-icon>
-        </p>
-
-        <p align="left" id="header-prodQuant">
-          Anzahl:
-          <span v-show="!isEditingQuant" @click="editQuant()">{{prodQuant}}</span>
-          <input
-            v-show="isEditingQuant"
-            v-model="prodQuant"
-            ref="quantInput"
-            id="quantInput"
-            value="prodQuant"
-            @keyup.enter="saveNewQuant()"
-            v-on:blur="saveNewQuant()"
-          />
-          <v-icon
-            v-if="!isEditingQuant"
-            @click="editQuant()"
-            color="lightgrey"
-            class="ml-2 mb-3"
-            small
-          >mdi-pencil</v-icon>
-          <v-icon v-else @click="saveNewQuant()" dark color="success" class="ml-2">mdi-check-bold</v-icon>
-        </p>
+        <v-row>
+          <p align="left" id="header-prodName">
+            Produkt:
+            <span v-show="!isEditingName" @click="editName()">{{prodName}}</span>
+            <!-- <input
+              v-show="isEditingName"
+              v-model="prodName"
+              ref="nameInput"
+              id="nameInput"
+              value="prodName"
+              @keyup.enter="saveNewName()"
+              v-on:blur="saveNewName()"
+            />-->
+            <v-form
+              ref="formName"
+              v-model="validName"
+              lazy-validation
+              class="d-inline-block"
+              @submit="saveNewName()"
+              onsubmit="return false;"
+            >
+              <v-text-field
+                id="nameInput"
+                ref="nameInput"
+                v-if="isEditingName"
+                v-model="prodName"
+                class="d-inline-block"
+                dense
+                hide-details
+                counter="25"
+                @submit="saveNewName()"
+                v-on:blur="saveNewName()"
+                :rules="[v => !!v || 'Fehlender Name', v => (v || '').length <= 25  ||'Name ist zu lang']"
+              ></v-text-field>
+            </v-form>
+            <v-icon
+              v-if="!isEditingName"
+              @click="editName()"
+              color="lightgrey"
+              class="ml-2 mb-3"
+              small
+            >mdi-pencil</v-icon>
+            <v-icon
+              v-else
+              @click="saveNewName()"
+              :disabled="!validName"
+              dark
+              color="success"
+              class="ml-2"
+            >mdi-check-bold</v-icon>
+          </p>
+        </v-row>
+        <v-row>
+          <p align="left" id="header-prodQuant">
+            Anzahl:
+            <span v-show="!isEditingQuant" @click="editQuant()">{{prodQuant}}</span>
+            <v-form
+              ref="formQuant"
+              v-model="validQuant"
+              lazy-validation
+              class="d-inline-block"
+              @submit="saveNewQuant()"
+              onsubmit="return false;"
+            >
+              <v-text-field
+                v-if="isEditingQuant"
+                v-model="prodQuant"
+                ref="quantInput"
+                id="quantInput"
+                value="prodQuant"
+                class="d-inline-block"
+                dense
+                hide-details
+                type="number"
+                v-on:blur="saveNewQuant()"
+                :rules="[v => !!v || 'Feld darf nicht leer sein', v => v > 0 ||'mindestens 1', v => v < 9999999999999999 ||'bist du wahnsinnig!?']"
+              ></v-text-field>
+            </v-form>
+            <v-icon
+              v-if="!isEditingQuant"
+              @click="editQuant()"
+              color="lightgrey"
+              class="ml-2 mb-3"
+              small
+            >mdi-pencil</v-icon>
+            <v-icon
+              v-else
+              @click="saveNewQuant()"
+              :disabled="!validQuant"
+              dark
+              color="success"
+              class="ml-2"
+            >mdi-check-bold</v-icon>
+          </p>
+        </v-row>
       </div>
     </div>
   </div>
@@ -58,7 +110,9 @@ export default {
       prodName: null,
       prodQuant: null,
       isEditingName: false,
-      isEditingQuant: false
+      isEditingQuant: false,
+      validQuant: false,
+      validName: false
     };
   },
   methods: {
@@ -66,8 +120,12 @@ export default {
       return this.$parent.$refs["vargraph"];
     },
     refresh() {
-      this.prodName = this.getGraph().getCytoGraph(this.getGraph()).data("prodName");
-      this.prodQuant = this.getGraph().getCytoGraph(this.getGraph()).data("prodQuant");
+      this.prodName = this.getGraph()
+        .getCytoGraph(this.getGraph())
+        .data("prodName");
+      this.prodQuant = this.getGraph()
+        .getCytoGraph(this.getGraph())
+        .data("prodQuant");
     },
     updateData(newProdName, newProdQuant) {
       this.prodName = newProdName;
@@ -80,13 +138,16 @@ export default {
       this.$nextTick(() => this.$refs.nameInput.focus());
     },
     saveNewName() {
-      if (this.prodName != "") {
-        this.isEditingName = false;
-        this.getGraph()
-          .getCytoGraph(this.getGraph())
-          .data("prodName", this.prodName);
-      } else {
-        alert("Bitte Namen eingeben");
+      //Checks if menu formular was filled in correctly
+      if (this.$refs.formName.validate()) {
+        if (this.prodName != "") {
+          this.isEditingName = false;
+          this.getGraph()
+            .getCytoGraph(this.getGraph())
+            .data("prodName", this.prodName);
+        } else {
+          alert("Bitte Namen eingeben");
+        }
       }
     },
     editQuant() {
@@ -94,13 +155,15 @@ export default {
       this.$nextTick(() => this.$refs.quantInput.focus());
     },
     saveNewQuant() {
-      if (this.prodQuant != "" && !isNaN(this.prodQuant)) {
-        this.isEditingQuant = false;
-        this.getGraph()
-          .getCytoGraph(this.getGraph())
-          .data("prodQuant", this.prodQuant);
-      } else {
-        alert("Bitte Zahl eingeben");
+      if (this.$refs.formQuant.validate()) {
+        if (this.prodQuant != "" && !isNaN(this.prodQuant)) {
+          this.isEditingQuant = false;
+          this.getGraph()
+            .getCytoGraph(this.getGraph())
+            .data("prodQuant", this.prodQuant);
+        } else {
+          alert("Bitte Zahl eingeben");
+        }
       }
     }
   } /*,
