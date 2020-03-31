@@ -22,6 +22,19 @@ export default {
     return edgesArray;
   },
 
+  // getEdgesName(): Returns an Array with all edges Names of the Graph
+  getEdgeName(graphComponent) {
+    // get cytoscape instance
+    let cy = graphComponent.$refs["cyRef"].instance;
+
+    var edges = cy.edges();
+    var edgesArray = [];
+    for (let i = 0; i < edges.length; i++) {
+      edgesArray.push(edges[i].data("name"));
+    }
+    return edgesArray;
+  },
+
   // createEdge(..): Adds an edge to the Cytograph with an automatic
   //                 generated (increasing) ID + the properties given
   createEdge(

@@ -32,12 +32,12 @@
             ></v-text-field>
           </v-col>
         </v-row>
-        <v-col sm="5">
+        <v-col class="mt-5" align="center">
           <v-btn
             @click="start"
             :disabled="!valid"
-            block
             large
+            width="200"
             color="primary"
             class="btn-creategraph"
           >Starten</v-btn>
@@ -48,13 +48,20 @@
 </template>
 
 <script>
+/* eslint-disable no-console */
+/* eslint-disable no-unused-vars */
+let dialogComponent;
+
 export default {
   name: "NewGraph",
+  mounted: function() {
+    dialogComponent = this.$parent.$parent.$parent.$parent.$refs["dialogs"];
+  },
   data() {
     return {
       prodname: null,
       prodquant: null,
-      valid: false
+      valid: true
     };
   },
   methods: {

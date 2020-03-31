@@ -27,7 +27,7 @@ export default {
     // refresh header
     this.$parent.$refs["graphHeader"].refresh();
 
-    this.$parent.$parent.$parent.$parent.$refs["dialogs"].dialogSuccess("Neuer Graph erfolgreich angelegt")
+    // this.$parent.$parent.$parent.$parent.$refs["dialogs"].dialogSuccess("Neuer Graph erfolgreich angelegt")
   },
 
   // initialize default data
