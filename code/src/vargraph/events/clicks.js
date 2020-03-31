@@ -6,26 +6,28 @@
 // In this File are methods for the graph clicking events
 
 // give ref[cyRef] Element an v-on:"..." property to set up a new event
-// Event List: https://js.cytoscape.org/#events 
+// Event List: https://js.cytoscape.org/#events
 // more info about handling events: https://rcarcasses.github.io/vue-cytoscape/api.html#cytoscape
 
 export default {
   // handle click on blank area
-  blankClick(event) {
+  leftClick(event) {
     console.log(event.target, this.$refs.cyRef.instance);
     if (event.target === this.$refs.cyRef.instance)
-      console.log("blank area clicked", event.target);
-      this.$parent.$refs.detailControls.closeMenus()
+      console.log("left click -> ", event.target);
+    // this.$parent.$refs.detailControls.closeMenus();
+
+    this.$parent.$refs.detailControls.handleDetails(event.target);
   },
   // handle click on elements
   elementClick(id) {
     console.log("element clicked", id);
-    this.$parent.$refs.detailControls.handleDetails(id.target)
+    this.$parent.$refs.detailControls.handleDetails(id.target);
   },
   // handle right click
   rightClick(event) {
     console.log("right click", event);
     // open component
-    this.$parent.$refs.rightClickMenu.openMenu(window.event, event.target)
+    this.$parent.$refs.rightClickMenu.openMenu(window.event, event.target);
   }
 };

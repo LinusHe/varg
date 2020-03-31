@@ -5,16 +5,16 @@
       :config="config"
       :preConfig="preConfig"
       :afterCreated="afterCreated"
-      v-on:tap="blankClick"
+      v-on:tap="leftClick"
       v-on:cxttapstart="rightClick"
       :sync="true"
     >
-      <cy-element
+      <!-- <cy-element
         v-for="def in elements"
         :key="`${def.data.id}`"
         :definition="def"
         v-on:tap="elementClick($event, def.data.id)"
-      />
+      /> -->
     </cytoscape>
   </div>
 </template>
@@ -35,6 +35,7 @@ import optimizations from "@/vargraph/graph/optimizations";
 import labels from "@/vargraph/graph/labels";
 import saveGraph from "@/vargraph/importExport/saveGraph";
 import loadGraph from "@/vargraph/importExport/loadGraph";
+import zoom from "@/vargraph/graph/zoom";
 
 // activate methods
 const methods = Object.assign(
@@ -47,7 +48,8 @@ const methods = Object.assign(
   optimizations,
   labels,
   saveGraph,
-  loadGraph
+  loadGraph,
+  zoom
 );
 
 export default {

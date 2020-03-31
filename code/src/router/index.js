@@ -124,10 +124,7 @@ router.beforeEach((to, from, next) => {
     if (store.getters.getCyProdName == null) {
       // Main Menu
       next({
-        path: "/home/menu",
-        query: {
-          redirect: to.fullPath
-        }
+        path: "/home/menu"
       });
     } else {
       // Proceed to route

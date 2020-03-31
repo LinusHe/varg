@@ -1,41 +1,60 @@
-import graph from "@/vargraph/index.js";
+/* eslint-disable no-console */
 
-export function getZoom (){
-    return graph.getCytoGraph().zoom()
-}
-  
-export function getMaxZoom (){
-    return graph.getCytoGraph().maxZoom()
-}
-  
-export function getMinZoom (){
-    return graph.getCytoGraph().minZoom()
-}
+// This file is part of the cytoscape graph
+// The holding component is code\src\components\graph\elements\VarGraph.vue
 
-export function setZoom (ZoomLevel){
-    graph.getCytoGraph().zoom(ZoomLevel)
-    graph.getCytoGraph().center()
-}
+// This file contains methods for graph zooming
 
-export function setMinZoom(ZoomLevel){
-    graph.getCytoGraph().minZoom(ZoomLevel)
-}   
+export default {
+  getZoom(graphComponent) {
+    let cy = graphComponent.$refs["cyRef"].instance;
 
-export function ZoomOut() {
+    return cy.zoom();
+  },
+
+  getMaxZoom(graphComponent) {
+    let cy = graphComponent.$refs["cyRef"].instance;
+
+    return cy.maxZoom();
+  },
+
+  getMinZoom(graphComponent) {
+    let cy = graphComponent.$refs["cyRef"].instance;
+
+    return cy.minZoom();
+  },
+
+  setZoom(graphComponent, ZoomLevel) {
+    let cy = graphComponent.$refs["cyRef"].instance;
+
+    cy.zoom(ZoomLevel);
+    cy.center();
+  },
+
+  setMinZoom(graphComponent, ZoomLevel) {
+    let cy = graphComponent.$refs["cyRef"].instance;
+
+    cy.minZoom(ZoomLevel);
+  },
+
+  ZoomOut(graphComponent) {
+    let cy = graphComponent.$refs["cyRef"].instance;
+
     //Zooms and centers the graph, all elements are showing
     //beause of the padding
-    graph.getCytoGraph().fit(0, 150);
+    cy.fit(0, 150);
     //Checks if Zoomout would crack the given limit
-    if (graph.getCytoGraph().zoom() > graph.getCytoGraph().data('minZoom')){
-        //Checks if User can still have free room to zoom out further
-        if (graph.getCytoGraph().zoom() - 0.5 > graph.getCytoGraph().data('minZoom')){
-            //Allows the user to zoom out furthr for example to more elements
-            graph.getCytoGraph().minZoom(graph.getCytoGraph().zoom()-0.5)
-        }
-        //if either ot these conditions fail it just sets the zoom out limit to max
-        else graph.getCytoGraph().minZoom(graph.getCytoGraph().data('minZoom'))
-    }
-    else graph.getCytoGraph().minZoom(graph.getCytoGraph().data('minZoom'))
-}
-
-export default { getZoom, getMaxZoom, getMinZoom, setZoom, ZoomOut, setMinZoom }
+    if (cy.zoom() > cy.data("minZoom")) {
+      //Checks if User can still have free room to zoom out further
+      if (
+        cy.zoom() - 0.5 >
+        cy.data("minZoom")
+      ) {
+        //Allows the user to zoom out furthr for example to more elements
+        cy.minZoom(cy.zoom() - 0.5);
+      }
+      //if either ot these conditions fail it just sets the zoom out limit to max
+      else cy.minZoom(cy.data("minZoom"));
+    } else cy.minZoom(cy.data("minZoom"));
+  }
+};
