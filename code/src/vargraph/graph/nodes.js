@@ -43,7 +43,15 @@ export default {
 
   // createNode(..): Adds a node to the Cytograph with an automatic
   //                 generated (increasing) ID + the properties given
-  createNode(graphComponent, newName, newShort, newImgurl, newColor) {
+  createNode(
+    graphComponent,
+    newName,
+    newShort,
+    newImgurl,
+    newColor,
+    posX,
+    posY
+  ) {
     // get cytoscape instance
     let cy = graphComponent.getCytoGraph();
 
@@ -62,7 +70,7 @@ export default {
       style: {
         "background-color": "#" + newColor
       },
-      position: { x: 500, y: 300 }
+      position: { x: posX, y: posY }
     });
 
     console.log("added node: ", cy.getElementById(count));

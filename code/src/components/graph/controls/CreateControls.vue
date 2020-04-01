@@ -327,6 +327,8 @@ export default {
       showEdgeTitle: "Erstelle eine Verknüpfung",
       validNodes: false,
       validEdges: false,
+      clickX: 500,
+      clickY: 300,
       nameNodeRules: [
         v => !!v || "Zustands-Name wird benötigt",
         v => (v && v.length <= 18) || "Name ist zu lang",
@@ -371,6 +373,16 @@ export default {
     },
     checkImg(url) {
       return url.match(/\.(jpeg|jpg|gif|png)$/) != null;
+    },
+    setNodePos(x, y) {
+      this.clickX = x;
+      this.clickY = y;
+    },
+    setStart(start) {
+      this.startSelect = start;
+    },
+    setEnd(end) {
+      this.endSelect = end;
     },
     generateNodeShort() {
       if (this.nodeCreateName != null) {
@@ -469,6 +481,9 @@ export default {
         this.edgeCreateGui = false;
       }
     },
+    setTarget(id) {
+
+    },
     createNode() {
       if (this.$refs.formNodes.validate()) {
         this.nodeCreateShort = this.nodeCreateShort.toUpperCase();
@@ -477,7 +492,9 @@ export default {
           this.nodeCreateName,
           this.nodeCreateShort,
           this.nodeCreateImgPath,
-          this.nodeCreateColor
+          this.nodeCreateColor,
+          this.clickX,
+          this.clickY
         ),
           this.itemsName.push(this.nodeCreateName);
         this.itemsID = this.getGraph().getNodeID(this.getGraph());

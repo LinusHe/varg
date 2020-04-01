@@ -1,5 +1,5 @@
 <template>
-  <div class="header-graph-container">
+  <div class="header-graph-container" id="graph-header">
     <div id="headertext_out">
       <div id="headertext_in">
         <v-row>
