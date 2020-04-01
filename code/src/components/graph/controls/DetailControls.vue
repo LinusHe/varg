@@ -344,19 +344,19 @@ export default {
       ],
       costRules: [
         v => !!v || "Darf nicht leer sein",
-        v => v > 0 || "nicht negativ"
+        v => v >= 0 || "nicht negativ"
       ],
       timeRules: [
         v => !!v || "Darf nicht leer sein",
-        v => v > 0 || "nicht negativ"
+        v => v >= 0 || "nicht negativ"
       ],
       suCostRules: [
         v => !!v || "Darf nicht leer sein",
-        v => v > 0 || "nicht negativ"
+        v => v >= 0 || "nicht negativ"
       ],
       suTimeRules: [
         v => !!v || "Darf nicht leer sein",
-        v => v > 0 || "nicht negativ"
+        v => v >= 0 || "nicht negativ"
       ],
       startEndRule: [
         v => v != this.startSelect || "Ende muss sich vom Start unterscheiden"
