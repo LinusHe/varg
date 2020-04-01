@@ -4,10 +4,10 @@
 // The holding component is code\src\components\graph\elements\VarGraph.vue
 
 // This File contains methods for the whole graph
-
+import cyStore from "@/vargraph/graph/cyStore";
 export default {
-  getCytoGraph(graphComponent) {
-    return graphComponent.$refs["cyRef"].instance;
+  getCytoGraph() {
+    return cyStore.data.cy;
   },
 
   // toString(): Collects all nodes of the graph and edges in arrays

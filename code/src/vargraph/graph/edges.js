@@ -10,7 +10,7 @@ export default {
   //                     involved (as source or target)
   getEdgesByNode(graphComponent, id) {
     // get cytoscape instance
-    let cy = graphComponent.$refs["cyRef"].instance;
+    let cy = graphComponent.getCytoGraph();
 
     let edgesArray = [];
     let allEdges = cy.edges();
@@ -25,7 +25,7 @@ export default {
   // getEdgesName(): Returns an Array with all edges Names of the Graph
   getEdgeName(graphComponent) {
     // get cytoscape instance
-    let cy = graphComponent.$refs["cyRef"].instance;
+    let cy = graphComponent.getCytoGraph();
 
     var edges = cy.edges();
     var edgesArray = [];
@@ -49,7 +49,7 @@ export default {
     newsutime
   ) {
     // get cytoscape instance
-    let cy = graphComponent.$refs["cyRef"].instance;
+    let cy = graphComponent.getCytoGraph();
 
     // get id counter
     let count = cy.data("IDCount");
@@ -76,6 +76,12 @@ export default {
         label: newlabel
       }
     });
+
+    console.log("added edge: ", cy.getElementById(count));
+
+    // increment id counter
+    count++;
+    cy.data("IDCount", count);
   },
 
   // createEdgeWithID(..): DO NOT USE THIS FUNCTION BY DEFAULT!
@@ -95,7 +101,7 @@ export default {
     edgeLabel
   ) {
     // get cytoscape instance
-    let cy = graphComponent.$refs["cyRef"].instance;
+    let cy = graphComponent.getCytoGraph();
 
     // get id counter
     let originalCount = cy.data("IDCount");
@@ -133,10 +139,13 @@ export default {
     newsutime
   ) {
     // get cytoscape instance
-    let cy = graphComponent.$refs["cyRef"].instance;
+    let cy = graphComponent.getCytoGraph();
 
     // get edge by id
     let edge = cy.getElementById(id);
+
+    console.log("updating edge...");
+    console.log("before update: ", edge);
 
     // generate new label
     let label = this.generateEdgeLabel(
@@ -175,15 +184,19 @@ export default {
     edge.data("sucost", newsucost);
     edge.data("sutime", newsutime);
     edge.data("label", label);
+
+    console.log("after update: ", edge);
   },
 
   // removeEdge(id): Edge with 'id' will be removed from Graph
   removeEdge(graphComponent, id) {
     // get cytoscape instance
-    let cy = graphComponent.$refs["cyRef"].instance;
+    let cy = graphComponent.getCytoGraph();
 
     // get edge element
     let edge = cy.getElementById(id);
+
+    console.log("edge removed: ", edge);
 
     edge.remove();
   }

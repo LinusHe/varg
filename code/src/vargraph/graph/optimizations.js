@@ -10,7 +10,7 @@ export default {
   //                with the Dijkstra Algorithm
   findPath(graphComponent, option, start, end) {
     // get cytoscape instance
-    let cy = graphComponent.$refs["cyRef"].instance;
+    let cy = graphComponent.getCytoGraph();
 
     var minDistance = 0;
 

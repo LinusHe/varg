@@ -1,6 +1,6 @@
 <template>
   <div id="cy">
-    <cytoscape
+    <!-- <cytoscape
       ref="cyRef"
       :config="config"
       :preConfig="preConfig"
@@ -9,26 +9,27 @@
       v-on:cxttapstart="rightClick"
       :sync="true"
     >
-      <!-- <cy-element
+      <cy-element
         v-for="def in elements"
         :key="`${def.data.id}`"
         :definition="def"
         v-on:tap="elementClick($event, def.data.id)"
-      /> -->
-    </cytoscape>
+      />
+    </cytoscape>-->
   </div>
 </template>
 
 <script>
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
-import config from "@/vargraph/init/cytoscapeConfig.js";
-// UN-COMMENT FOLLOWING LINE FOR EXAMPLE ELEMENTS
-// import elements from "@/vargraph/init/exampleElements.js";
+import style from "@/vargraph/init/cytoscapeStyle.js";
+import layout from "@/vargraph/init/cytoscapeLayout.js";
+import elements from "@/vargraph/init/exampleElements.js";
 
 // import methods
 import init from "@/vargraph/init/init";
-import clickEvents from "@/vargraph/events/clicks";
+import eventRegister from "@/vargraph/events/clicks";
+import clickEvents from "@/vargraph/events/registration";
 import graph from "@/vargraph/graph/graph";
 import nodes from "@/vargraph/graph/nodes";
 import edges from "@/vargraph/graph/edges";
@@ -38,10 +39,17 @@ import saveGraph from "@/vargraph/importExport/saveGraph";
 import loadGraph from "@/vargraph/importExport/loadGraph";
 import zoom from "@/vargraph/graph/zoom";
 
+// import cytoscape
+import cytoscape from "cytoscape";
+import cyStore from "@/vargraph/graph/cyStore";
+
+let cy;
+
 // activate methods
 const methods = Object.assign(
   {},
   init,
+  eventRegister,
   clickEvents,
   graph,
   nodes,
@@ -55,11 +63,36 @@ const methods = Object.assign(
 
 export default {
   name: "VarGraph",
-  data() {
-    return {
-      config,
-      // elements
-    };
+  mounted: function() {
+    // cy pre config
+    this.preConfig(cytoscape);
+    // cy config
+    cyStore.data.cy = cytoscape({
+      container: document.getElementById("cy"), // container to render in
+
+      // uncomment following line for example graph
+      // elements,
+
+      style,
+      layout: {
+        name: "grid",
+        // name: 'klay',
+        rows: 1,
+        padding: 150,
+        spacingFactor: 1.2,
+        grid: {
+          spacing: 150,
+          fixedAlignment: "BALANCED"
+        },
+        klay: {
+          spacing: 150,
+          fixedAlignment: "BALANCED"
+        }
+      }
+    });
+
+    // cy after config
+    this.afterCreated();
   },
   methods // see -> code\src\vargraph Files
 };

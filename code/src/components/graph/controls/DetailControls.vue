@@ -55,6 +55,7 @@
                 :rules="nameNodeRules"
                 @input="generateNodeShort()"
                 @keyup.enter="saveNode()"
+                @click="getNodeItemsName()"
               ></v-text-field>
             </v-col>
           </v-row>
@@ -327,13 +328,16 @@ export default {
         v => !!v || "Zustands-Name wird benötigt",
         v => (v && v.length <= 18) || "Name ist zu lang",
         // todo: other given name
-        v => (v == this.nodeName || !this.itemsName.includes(v))  || "Name ist bereits vergeben"
+        v =>
+          v == this.nodeName ||
+          !this.itemsName.includes(v) ||
+          "Name ist bereits vergeben"
       ],
       nameEdgeRules: [
         v => !!v || "Verknüpfung-Name wird benötigt",
         v => (v && v.length <= 18) || "Name ist zu lang",
         // todo: other given name
-        v => v != this.edgeNames || "Name ist bereits vergeben"
+        v => (v == this.edgeNames || !this.edgeNames.includes(v)) ||"Name ist bereits vergeben"
       ],
       shortRules: [
         v => !!v || "Kürzel wird benötigt",
@@ -450,6 +454,8 @@ export default {
     },
     getNodeItemsName() {
       this.itemsName = this.getGraph().getNodeName(this.getGraph());
+      console.log(this.getGraph().getNodeArr(this.getGraph()));
+      console.log(this.itemsName);
     },
     getEdgeItemsName() {
       this.edgeNames = this.getGraph().getEdgeName(this.getGraph());

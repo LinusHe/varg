@@ -1,14 +1,14 @@
 
 
 export function CreateJSon(graphComponent) {
-    let cy = graphComponent.$refs["cyRef"].instance;
+    let cy = graphComponent.getCytoGraph();
     // eslint-disable-next-line no-console
     console.log(cy.json())
     return cy.json()
 }
 
 export function LoadJSon(content, graphComponent) {
-    let cy = graphComponent.$refs["cyRef"].instance;
+    let cy = graphComponent.getCytoGraph();
     // eslint-disable-next-line no-console
     console.log("Loading Graph per JSon")
     //Turns stringified JSon back to JSon format

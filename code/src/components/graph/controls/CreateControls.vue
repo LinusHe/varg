@@ -101,6 +101,7 @@
                 :rules="nameNodeRules"
                 @input="generateNodeShort()"
                 @keyup.enter="createNode()"
+                @focus="getNodeItemsName()"
               ></v-text-field>
             </v-col>
           </v-row>
