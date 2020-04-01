@@ -16,7 +16,7 @@ export default {
   */
   SaveMe(graphComponent) {
     // get cytoscape instance
-    let cy = graphComponent.$refs["cyRef"].instance;
+    let cy = graphComponent.getCytoGraph();
     
     const content = {
       nodes: cy.elements("node"),

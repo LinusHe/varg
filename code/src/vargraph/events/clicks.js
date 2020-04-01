@@ -12,21 +12,17 @@
 export default {
   // handle click on blank area
   leftClick(event) {
-    console.log(event.target, this.$refs.cyRef.instance);
-    if (event.target === this.$refs.cyRef.instance)
-      console.log("left click -> ", event.target);
+    console.log("left click event: ", event);
+    console.log("left click target -> ", event.target);
+    // if (event.target === this.$refs.cyRef.instance)
     // this.$parent.$refs.detailControls.closeMenus();
 
     this.$parent.$refs.detailControls.handleDetails(event.target);
   },
-  // handle click on elements
-  elementClick(id) {
-    console.log("element clicked", id);
-    this.$parent.$refs.detailControls.handleDetails(id.target);
-  },
   // handle right click
   rightClick(event) {
-    console.log("right click", event);
+    console.log("right click event: ", event);
+    console.log("right click target -> ", event.target);
     // open component
     this.$parent.$refs.rightClickMenu.openMenu(window.event, event.target);
   }

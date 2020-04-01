@@ -25,7 +25,7 @@ export default {
 
   updateNodeLabel(graphComponent) {
     // get cytoscape instance
-    let cy = graphComponent.$refs["cyRef"].instance;
+    let cy = graphComponent.getCytoGraph();
 
     cy.nodeHtmlLabel([
       {

@@ -94,7 +94,13 @@ export default {
         .remove();
       this.$parent.$refs.newGraphMenu.setdialog(false);
       //this works!!!
+
+      // this.getGraph().getCytoGraph(this.getGraph()).destroy();
+      
       router.push({ name: "newGraph" });
+     
+      
+      //  this.$parent.$destroy();
     }
   }
 };

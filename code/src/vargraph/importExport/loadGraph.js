@@ -17,7 +17,7 @@ export default {
   //               in the database.
   Load(graphComponent, graph) {
     // get cytoscape instance
-    let cy = graphComponent.$refs["cyRef"].instance;
+    let cy = graphComponent.getCytoGraph();
 
     cy.elements("node").remove();
     cy.elements("edge").remove();

@@ -21,6 +21,9 @@ export default {
     // run init
     this.init(this);
 
+    // register events
+    this.registerEvents(this);
+
     // fit graph
     this.getCytoGraph(this).fit();
 
@@ -33,7 +36,9 @@ export default {
   // initialize default data
   init(graphComponent) {
     // get cytoscape instance
-    let cy = graphComponent.$refs["cyRef"].instance;
+    console.log(graphComponent);
+    console.log(graphComponent.getCytoGraph());
+    let cy = graphComponent.getCytoGraph();
 
     // Sets maximum and minimum of zoom levels. Difference between one and two
     // is rougly one mouse wheel scroll.
@@ -48,7 +53,8 @@ export default {
     // Get Name and Quant from Store.js
     let prodname = this.$store.getters.getCyProdName;
     let prodquant = this.$store.getters.getCyProdQuant;
-    console.log(prodname);
+    console.log("Prodname: ", prodname);
+    console.log("Prodnquant: ", prodquant);
     // Initialising data types
     cy.data("IDCount", 0);
     cy.data("latestSave", null);

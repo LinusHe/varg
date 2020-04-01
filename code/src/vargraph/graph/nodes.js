@@ -9,7 +9,7 @@ export default {
   // getNodeID(): Returns an Array with all Node Objects of the Graph
   getNodeArr(graphComponent) {
     // get cytoscape instance
-    let cy = graphComponent.$refs["cyRef"].instance;
+    let cy = graphComponent.getCytoGraph();
 
     return cy.nodes();
   },
@@ -18,8 +18,7 @@ export default {
   getNodeID(graphComponent) {
     // get cytoscape instance
     // console.log(this)
-    let cy = graphComponent.$refs["cyRef"].instance;
-
+    let cy = graphComponent.getCytoGraph();
 
     var nodes = cy.nodes();
     var nodesArray = [];
@@ -32,7 +31,7 @@ export default {
   // getNodeName(): Returns an Array with all Node Names of the Graph
   getNodeName(graphComponent) {
     // get cytoscape instance
-    let cy = graphComponent.$refs["cyRef"].instance;
+    let cy = graphComponent.getCytoGraph();
 
     var nodes = cy.nodes();
     var nodesArray = [];
@@ -46,7 +45,7 @@ export default {
   //                 generated (increasing) ID + the properties given
   createNode(graphComponent, newName, newShort, newImgurl, newColor) {
     // get cytoscape instance
-    let cy = graphComponent.$refs["cyRef"].instance;
+    let cy = graphComponent.getCytoGraph();
 
     // get current id counter
     let count = cy.data("IDCount");
@@ -66,6 +65,8 @@ export default {
       position: { x: 500, y: 300 }
     });
 
+    console.log("added node: ", cy.getElementById(count));
+
     // increment id counter
     count++;
     cy.data("IDCount", count);
@@ -74,10 +75,13 @@ export default {
   // updateNode(..): Updates a node by ID with the given arguments
   updateNode(graphComponent, id, newName, newShort, newImgurl, newColor) {
     // get cytoscape instance
-    let cy = graphComponent.$refs["cyRef"].instance;
+    let cy = graphComponent.getCytoGraph();
 
     // get node element
     let node = cy.getElementById(id);
+
+    console.log("updating node ...");
+    console.log("before update:", node);
 
     // update node data
     node.data("name", newName);
@@ -85,17 +89,23 @@ export default {
     node.data("imgUrl", newImgurl);
     node.data("color", newColor);
     node.style("background-color", "#" + newColor);
+
+    console.log("after update:", node);
   },
 
   // removeNode(id): Node with 'id' and all involved edges will be removed
   removeNode(graphComponent, id) {
     // get cytoscape instance
-    let cy = graphComponent.$refs["cyRef"].instance;
+    let cy = graphComponent.getCytoGraph();
 
     let node = cy.getElementById(id);
+
+    console.log("node removed: ", node);
+
     let edgesArray = this.getEdgesByNode(graphComponent, id);
     // removes all involved edges
     edgesArray.forEach(edge => edge.remove());
+
     // removes the node
     node.remove();
   }

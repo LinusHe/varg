@@ -7,38 +7,38 @@
 
 export default {
   getZoom(graphComponent) {
-    let cy = graphComponent.$refs["cyRef"].instance;
+    let cy = graphComponent.getCytoGraph();
 
     return cy.zoom();
   },
 
   getMaxZoom(graphComponent) {
-    let cy = graphComponent.$refs["cyRef"].instance;
+    let cy = graphComponent.getCytoGraph();
 
     return cy.maxZoom();
   },
 
   getMinZoom(graphComponent) {
-    let cy = graphComponent.$refs["cyRef"].instance;
+    let cy = graphComponent.getCytoGraph();
 
     return cy.minZoom();
   },
 
   setZoom(graphComponent, ZoomLevel) {
-    let cy = graphComponent.$refs["cyRef"].instance;
+    let cy = graphComponent.getCytoGraph();
 
     cy.zoom(ZoomLevel);
     cy.center();
   },
 
   setMinZoom(graphComponent, ZoomLevel) {
-    let cy = graphComponent.$refs["cyRef"].instance;
+    let cy = graphComponent.getCytoGraph();
 
     cy.minZoom(ZoomLevel);
   },
 
   ZoomOut(graphComponent) {
-    let cy = graphComponent.$refs["cyRef"].instance;
+    let cy = graphComponent.getCytoGraph();
 
     //Zooms and centers the graph, all elements are showing
     //beause of the padding
