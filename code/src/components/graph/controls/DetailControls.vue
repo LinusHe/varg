@@ -327,7 +327,10 @@ export default {
         v => !!v || "Zustands-Name wird benötigt",
         v => (v && v.length <= 18) || "Name ist zu lang",
         // todo: other given name
-        v => (v == this.nodeName || !this.itemsName.includes(v))  || "Name ist bereits vergeben"
+        v =>
+          v == this.nodeName ||
+          !this.itemsName.includes(v) ||
+          "Name ist bereits vergeben"
       ],
       nameEdgeRules: [
         v => !!v || "Verknüpfung-Name wird benötigt",
@@ -344,19 +347,19 @@ export default {
       ],
       costRules: [
         v => !!v || "Darf nicht leer sein",
-        v => v > 0 || "nicht negativ"
+        v => v >= 0 || "nicht negativ"
       ],
       timeRules: [
         v => !!v || "Darf nicht leer sein",
-        v => v > 0 || "nicht negativ"
+        v => v >= 0 || "nicht negativ"
       ],
       suCostRules: [
         v => !!v || "Darf nicht leer sein",
-        v => v > 0 || "nicht negativ"
+        v => v >= 0 || "nicht negativ"
       ],
       suTimeRules: [
         v => !!v || "Darf nicht leer sein",
-        v => v > 0 || "nicht negativ"
+        v => v >= 0 || "nicht negativ"
       ],
       startEndRule: [
         v => v != this.startSelect || "Ende muss sich vom Start unterscheiden"
