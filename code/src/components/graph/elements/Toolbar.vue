@@ -167,7 +167,7 @@ export default {
     },
 
     home() {
-      router.push({ name: "Varg - Login" });
+      router.push({ name: "login" });
     },
     datenbank() {
       router.push({ name: "Varg - Datenbank import" });
