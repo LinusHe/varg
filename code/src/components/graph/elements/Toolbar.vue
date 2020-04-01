@@ -96,7 +96,7 @@
       <v-row align="center">
         <v-tooltip right>
           <template v-slot:activator="{ on }">
-            <v-btn v-on="on" fab dark small depressed color="primary">
+            <v-btn v-on="on" @click="openSettings" fab dark small depressed color="primary">
               <v-icon dark>mdi-cog</v-icon>
             </v-btn>
           </template>
@@ -145,6 +145,9 @@ export default {
       //not-best-practice aka coupling of components is not wanted
       //in order to make components reusable
       this.$parent.$refs.downloadMenu.setdialog(true);
+    },
+    openSettings() {
+      this.$parent.$refs.settingsMenu.setdialog(true);
     },
     SaveJSon: function() {
       this.$parent.$refs.saveMenu.setdialog(true);
