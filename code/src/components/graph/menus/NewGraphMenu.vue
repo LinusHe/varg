@@ -1,24 +1,23 @@
 <template>
   <div>
-    <v-dialog v-model="dialog" max-width="380">
+    <v-dialog v-model="dialog" max-width="440">
       <v-card id="newgraph-menu">
         <v-card-title class="headline">Neuer Graph ?</v-card-title>
-        <v-card-text>Dieser Graph Speichern ?</v-card-text>
-        <v-col>
-          <v-btn color="success" id="newgraph-menu-save" block outlined @click="save">Speichern</v-btn>
-        </v-col>
-        <v-col>
-          <v-btn color="error" id="newgraph-menu-discard" block outlined @click="discard">Verwerfen</v-btn>
-        </v-col>
-        <v-col>
-          <v-btn
-            color="error"
-            id="newgraph-menu-cancel"
-            block
-            outlined
-            @click="dialog=false"
-          >Abbrechen</v-btn>
-        </v-col>
+        <v-card-text>
+          <p>Möchtest du den Graph speichern?</p>
+          <em>Wenn der Graph verworfen wird, besteht keine Möglichkeit, den Graph wiederherzustellen.</em>
+          <v-row sm="10" class="mt-8">
+            <v-col sm="4">
+              <v-btn color="success" id="newgraph-menu-save" block @click="save">Speichern</v-btn>
+            </v-col>
+            <v-col sm="4">
+              <v-btn color="warning" id="newgraph-menu-discard" block @click="discard">Verwerfen</v-btn>
+            </v-col>
+            <v-col sm="4">
+              <v-btn color="error" id="newgraph-menu-cancel" block @click="dialog=false">Abbrechen</v-btn>
+            </v-col>
+          </v-row>
+        </v-card-text>
       </v-card>
     </v-dialog>
   </div>
@@ -96,10 +95,9 @@ export default {
       //this works!!!
 
       // this.getGraph().getCytoGraph(this.getGraph()).destroy();
-      
-      router.push({ name: "newGraph" });
-     
-      
+
+      router.push({ name: "menu" });
+
       //  this.$parent.$destroy();
     }
   }

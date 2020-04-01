@@ -28,20 +28,6 @@
             </v-col>
             <v-col sm="1" class="mt-5">
               <v-icon @click="openHelpDialog()">mdi-help-circle-outline</v-icon>
-              <!-- <v-icon @click="helpDialog = true">mdi-help-circle-outline</v-icon> -->
-              <!-- <v-snackbar color="#ffffff" :timeout="helpTimeout" multi-line v-model="helpDialog">
-                <p style="color: #000000">
-                  <br />Wähle das Format
-                  <b>.json</b> oder
-                  <b>.xml</b> aus, um den Graphen in einem Format herunterzuladen, welches du später wieder importieren kannst.
-                </p>
-                <p style="color: #000000">
-                  <br />Wähle
-                  <b>.png</b> oder
-                  <b>.svg</b> aus, um den Graphen in einem Bildvormat herunterzuladen.
-                </p>
-                <v-btn color="primary" text @click="helpDialog = false">Schließen</v-btn>
-              </v-snackbar>-->
             </v-col>
           </v-row>
           <v-row class="mt-8">
@@ -50,7 +36,6 @@
                 color="success"
                 block
                 :disabled="!valid"
-                outlined
                 id="download-menu-save"
                 @click="download"
               >Download</v-btn>
@@ -59,7 +44,6 @@
               <v-btn
                 color="error"
                 block
-                outlined
                 id="download-menu-cancel"
                 @click="clearFields"
               >Abbrechen</v-btn>

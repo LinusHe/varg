@@ -25,5 +25,11 @@ export default {
     console.log("right click target -> ", event.target);
     // open component
     this.$parent.$refs.rightClickMenu.openMenu(window.event, event.target);
+    // get click position
+    var offset = document.getElementById("graph-header").offsetHeight;
+    var posX = event.originalEvent.x;
+    var posY = event.originalEvent.y - offset;
+    this.$parent.$refs.rightClickMenu.setClickPos(posX, posY);
+    console.log("clicked at", posX, posY);
   }
 };

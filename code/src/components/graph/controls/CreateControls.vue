@@ -87,7 +87,6 @@
           lazy-validation
           class="d-inline-block mr-5 ml-5 mb-4"
           @submit="createNode()"
-          @focus="getNodeItemsName()"
           onsubmit="return false;"
         >
           <!-- Name Selection -->
@@ -139,7 +138,7 @@
               >Hinzufügen</v-btn>
             </v-col>
             <v-col sm="6">
-              <v-btn color="error" id="btn-cancel-node"  @click="cancel()">Abbrechen</v-btn>
+              <v-btn color="error" id="btn-cancel-node" @click="cancel()">Abbrechen</v-btn>
             </v-col>
           </v-row>
         </v-form>
@@ -328,15 +327,17 @@ export default {
       showEdgeTitle: "Erstelle eine Verknüpfung",
       validNodes: false,
       validEdges: false,
+      clickX: 500,
+      clickY: 300,
       nameNodeRules: [
         v => !!v || "Zustands-Name wird benötigt",
         v => (v && v.length <= 18) || "Name ist zu lang",
-        v => (!this.itemsName.includes(v))  || "Name ist bereits vergeben"
+        v => !this.itemsName.includes(v) || "Name ist bereits vergeben"
       ],
       nameEdgeRules: [
         v => !!v || "Verknüpfung-Name wird benötigt",
         v => (v && v.length <= 18) || "Name ist zu lang",
-        v => (!this.edgeNames.includes(v))|| "Name ist bereits vergeben"
+        v => !this.edgeNames.includes(v) || "Name ist bereits vergeben"
       ],
       shortRules: [
         v => !!v || "Kürzel wird benötigt",
@@ -372,6 +373,16 @@ export default {
     },
     checkImg(url) {
       return url.match(/\.(jpeg|jpg|gif|png)$/) != null;
+    },
+    setNodePos(x, y) {
+      this.clickX = x;
+      this.clickY = y;
+    },
+    setStart(start) {
+      this.startSelect = start;
+    },
+    setEnd(end) {
+      this.endSelect = end;
     },
     generateNodeShort() {
       if (this.nodeCreateName != null) {
@@ -409,7 +420,7 @@ export default {
           }
         }
         if (this.edgeCreateName.length <= 18) {
-          this.showEdgeTitle = this.nodeEdgeName;
+          this.showEdgeTitle = this.edgeCreateName;
         }
       }
     },
@@ -432,6 +443,7 @@ export default {
     },
     getNodeItemsName() {
       this.itemsName = this.getGraph().getNodeName(this.getGraph());
+      console.log(this.itemsName);
     },
     getEdgeItemsName() {
       this.edgeNames = this.getGraph().getEdgeName(this.getGraph());
@@ -469,6 +481,9 @@ export default {
         this.edgeCreateGui = false;
       }
     },
+    setTarget(id) {
+
+    },
     createNode() {
       if (this.$refs.formNodes.validate()) {
         this.nodeCreateShort = this.nodeCreateShort.toUpperCase();
@@ -477,7 +492,9 @@ export default {
           this.nodeCreateName,
           this.nodeCreateShort,
           this.nodeCreateImgPath,
-          this.nodeCreateColor
+          this.nodeCreateColor,
+          this.clickX,
+          this.clickY
         ),
           this.itemsName.push(this.nodeCreateName);
         this.itemsID = this.getGraph().getNodeID(this.getGraph());

@@ -126,8 +126,8 @@
     <!-- Detail-Verbindung Controls -->
     <v-slide-x-reverse-transition>
       <v-card class="detail-card" v-show="edgeGui" transition="scroll-y-transition">
-        <v-btn class="btn-close ma-2" @click="edgeGui= false" text icon color="primary">
-          <v-icon>mdi-close</v-icon>
+        <v-btn class="btn-close ma-2" @click="edgeGui= false" text icon color="#ffffff">
+          <v-icon color="#ffffff">mdi-close</v-icon>
         </v-btn>
 
         <!-- Colored Div -->
@@ -432,6 +432,8 @@ export default {
       }
     },
     generateEdgeShort() {
+      console.log(this.showEdgeTitle);
+
       if (this.edgeName != null) {
         if (this.edgeName.length > 0 && this.edgeName != " ") {
           let words = this.edgeName.split(" ");
@@ -445,7 +447,7 @@ export default {
           }
         }
         if (this.edgeName.length <= 18) {
-          this.showEdgeTitle = this.nodeEdgeName;
+          this.showEdgeTitle = this.edgeName;
         }
       }
     },

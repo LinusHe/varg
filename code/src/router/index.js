@@ -19,7 +19,7 @@ const routes = [
   },
   {
     path: "/home",
-    name: "Varg - Login",
+    name: "login",
     component: Home,
     children: [
       {
@@ -32,6 +32,7 @@ const routes = [
       {
         path: "menu",
         component: Menu,
+        name: "menu",
         meta: {
           requiresAuth: true,
           title: "Varg - Hauptmenü"
