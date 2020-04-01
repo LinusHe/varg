@@ -57,7 +57,6 @@
         >
           <v-card-subtitle style="color: #ffffff" class="pb-0">Neuer Zustand:</v-card-subtitle>
           <v-card-title class="pt-12">{{showNodeTitle}}</v-card-title>
-          <!-- <p class="prodname ml-3 mr-12 mb-0 pt-10">{{nodeCreateName}}</p> -->
           <!-- Color Selection -->
           <v-row class="radio-row">
             <v-col sm="12" class="pb-0 pt-0 pl-5">
@@ -78,7 +77,7 @@
             </v-col>
           </v-row>
         </div>
-        <v-btn class="btn-close ma-2" @click="nodeCreateGui= false" text icon color="primary">
+        <v-btn class="btn-close ma-2" @click="nodeCreateGui= false" text icon color="#ffffff">
           <v-icon color="#ffffff">mdi-close</v-icon>
         </v-btn>
 
@@ -88,6 +87,7 @@
           lazy-validation
           class="d-inline-block mr-5 ml-5 mb-4"
           @submit="createNode()"
+          @focus="getNodeItemsName()"
           onsubmit="return false;"
         >
           <!-- Name Selection -->
@@ -134,12 +134,11 @@
                 :disabled="!validNodes"
                 color="success"
                 id="btn-create-node"
-                outlined
                 @click="createNode()"
               >Hinzufügen</v-btn>
             </v-col>
             <v-col sm="6">
-              <v-btn color="error" id="btn-cancel-node" outlined @click="cancel()">Abbrechen</v-btn>
+              <v-btn color="error" id="btn-cancel-node"  @click="cancel()">Abbrechen</v-btn>
             </v-col>
           </v-row>
         </v-form>
@@ -280,12 +279,11 @@
                   :disabled="!validEdges"
                   color="success"
                   id="btn-create-edge"
-                  outlined
                   @click="createEdge()"
                 >Hinzufügen</v-btn>
               </v-col>
               <v-col sm="6">
-                <v-btn color="error" id="btn-cancel-edge" outlined @click="cancel()">Abbrechen</v-btn>
+                <v-btn color="error" id="btn-cancel-edge" @click="cancel()">Abbrechen</v-btn>
               </v-col>
             </v-row>
           </v-form>
@@ -332,12 +330,12 @@ export default {
       nameNodeRules: [
         v => !!v || "Zustands-Name wird benötigt",
         v => (v && v.length <= 18) || "Name ist zu lang",
-        v => v != this.itemsName || "Name ist bereits vergeben"
+        v => (!this.itemsName.includes(v))  || "Name ist bereits vergeben"
       ],
       nameEdgeRules: [
         v => !!v || "Verknüpfung-Name wird benötigt",
         v => (v && v.length <= 18) || "Name ist zu lang",
-        v => v != this.edgeNames || "Name ist bereits vergeben"
+        v => (!this.edgeNames.includes(v))|| "Name ist bereits vergeben"
       ],
       shortRules: [
         v => !!v || "Kürzel wird benötigt",
