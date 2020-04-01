@@ -54,6 +54,7 @@
           class="white--text align-end"
           style="height: 150px"
           v-bind:style="{ background: '#'+nodeCreateColor }"
+          v-ripple
         >
           <v-card-subtitle style="color: #ffffff" class="pb-0">Neuer Zustand:</v-card-subtitle>
           <v-card-title class="pt-12">{{showNodeTitle}}</v-card-title>
@@ -481,9 +482,7 @@ export default {
         this.edgeCreateGui = false;
       }
     },
-    setTarget(id) {
-
-    },
+    setTarget(id) {},
     createNode() {
       if (this.$refs.formNodes.validate()) {
         this.nodeCreateShort = this.nodeCreateShort.toUpperCase();
