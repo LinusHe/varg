@@ -50,10 +50,16 @@
 </template>
 
 <script>
+/* eslint-disable no-console */
+/* eslint-disable no-unused-vars */
 import router from "@/router/index.js";
-  
+let dialogComponent;
+
 export default {
   name: "NewGraphMenu.vue",
+  mounted: function() {
+    dialogComponent = this.$parent.$parent.$parent.$parent.$refs["dialogs"];
+  },
   data() {
     return {
       dialog: false,

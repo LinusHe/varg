@@ -15,8 +15,15 @@
 </template>
 
 <script>
+/* eslint-disable no-console */
+/* eslint-disable no-unused-vars */
+let dialogComponent;
+
 export default {
   name: "RightClickControls",
+  mounted: function() {
+    dialogComponent = this.$parent.$parent.$parent.$parent.$refs["dialogs"];
+  },
   data() {
     return {
       showMenu: false,
@@ -77,28 +84,40 @@ export default {
       if (clickId == "n1") {
         // Edit Node
         this.$parent.$refs.detailControls.openNodeDetails(
-          this.getGraph().getCytoGraph(this.getGraph()).getElementById(this.targetID)
+          this.getGraph()
+            .getCytoGraph(this.getGraph())
+            .getElementById(this.targetID)
         );
       } else if (clickId == "n2") {
         // Delete Node
         this.$parent.$refs.detailControls.loadNodeData(
-          this.getGraph().getCytoGraph(this.getGraph()).getElementById(this.targetID)
+          this.getGraph()
+            .getCytoGraph(this.getGraph())
+            .getElementById(this.targetID)
         );
         this.$parent.$refs.detailControls.openNodeDeleteMenu(
-          this.getGraph().getCytoGraph(this.getGraph()).getElementById(this.targetID)
+          this.getGraph()
+            .getCytoGraph(this.getGraph())
+            .getElementById(this.targetID)
         );
       } else if (clickId == "e1") {
         // Edit Edge
         this.$parent.$refs.detailControls.openEdgeDetails(
-          this.getGraph().getCytoGraph(this.getGraph()).getElementById(this.targetID)
+          this.getGraph()
+            .getCytoGraph(this.getGraph())
+            .getElementById(this.targetID)
         );
       } else if (clickId == "e2") {
         // Delete Edge
         this.$parent.$refs.detailControls.loadEdgeData(
-          this.getGraph().getCytoGraph(this.getGraph()).getElementById(this.targetID)
+          this.getGraph()
+            .getCytoGraph(this.getGraph())
+            .getElementById(this.targetID)
         );
         this.$parent.$refs.detailControls.openEdgeDeleteMenu(
-          this.getGraph().getCytoGraph(this.getGraph()).getElementById(this.targetID)
+          this.getGraph()
+            .getCytoGraph(this.getGraph())
+            .getElementById(this.targetID)
         );
       } else if (clickId == "b1") {
         // Create Node

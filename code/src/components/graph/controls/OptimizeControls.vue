@@ -66,9 +66,13 @@
 <script>
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
+let dialogComponent;
 
 export default {
   name: "OptimizeControls",
+  mounted: function() {
+    dialogComponent = this.$parent.$parent.$parent.$parent.$refs["dialogs"];
+  },
   data() {
     return {
       optimizingOption: false, // True means option costs and false is option time
