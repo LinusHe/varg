@@ -346,19 +346,19 @@ export default {
         v => !v || v.match(/\.(jpeg|jpg|gif|png)$/) || "Falsches Format"
       ],
       costRules: [
-        v => !!v || "Darf nicht leer sein",
+        v => !!v || v !=0 || "Darf nicht leer sein",
         v => v >= 0 || "nicht negativ"
       ],
       timeRules: [
-        v => !!v || "Darf nicht leer sein",
+        v => !!v || v!=0 || "Darf nicht leer sein",
         v => v >= 0 || "nicht negativ"
       ],
       suCostRules: [
-        v => !!v || "Darf nicht leer sein",
+        v =>  !!v || v!=0 || "Darf nicht leer sein",
         v => v >= 0 || "nicht negativ"
       ],
       suTimeRules: [
-        v => !!v || "Darf nicht leer sein",
+        v =>  !!v || v!=0 || "Darf nicht leer sein",
         v => v >= 0 || "nicht negativ"
       ],
       startEndRule: [
