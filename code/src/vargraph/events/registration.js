@@ -5,7 +5,6 @@
 
 // In this File are methods for the graph event registration
 
-// give ref[cyRef] Element an v-on:"..." property to set up a new event
 // Event List: https://js.cytoscape.org/#events
 // more info about handling events: https://rcarcasses.github.io/vue-cytoscape/api.html#cytoscape
 
@@ -16,5 +15,9 @@ export default {
     graphComponent.getCytoGraph().on("tap", event => this.leftClick(event));
     // right click
     graphComponent.getCytoGraph().on("cxttap", event => this.rightClick(event));
+
+    graphComponent
+      .getCytoGraph()
+      .on("free", event => this.positionEvent(event));
   }
 };

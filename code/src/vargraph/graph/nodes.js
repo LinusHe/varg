@@ -41,6 +41,20 @@ export default {
     return nodesArray;
   },
 
+  // getNodePositions(): returns Array with all Node Positions
+  // is used in position.js Event
+  getNodePositions(graphComponent) {
+    // get cytoscape instance
+    let cy = graphComponent.getCytoGraph();
+
+    let nodes = cy.nodes();
+    let posArray = [];
+    for (let i = 0; i < nodes.length; i++) {
+      posArray.push(nodes[i].position());
+    }
+    return posArray;
+  },
+
   // createNode(..): Adds a node to the Cytograph with an automatic
   //                 generated (increasing) ID + the properties given
   createNode(
@@ -73,7 +87,11 @@ export default {
       position: { x: posX, y: posY }
     });
 
-    console.log("added node: ", cy.getElementById(count));
+    let node = cy.getElementById(count);
+    console.log("added node: ", node);
+
+    // update position if conflict occurs
+    this.moveNodesInConflict(graphComponent, node)
 
     // increment id counter
     count++;

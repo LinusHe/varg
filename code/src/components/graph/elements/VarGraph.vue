@@ -28,8 +28,9 @@ import elements from "@/vargraph/init/exampleElements.js";
 
 // import methods
 import init from "@/vargraph/init/init";
-import eventRegister from "@/vargraph/events/clicks";
-import clickEvents from "@/vargraph/events/registration";
+import eventRegister from "@/vargraph/events/registration";
+import clickEvents from "@/vargraph/events/clicks";
+import positionEvents from "@/vargraph/events/position";
 import graph from "@/vargraph/graph/graph";
 import nodes from "@/vargraph/graph/nodes";
 import edges from "@/vargraph/graph/edges";
@@ -51,6 +52,7 @@ const methods = Object.assign(
   init,
   eventRegister,
   clickEvents,
+  positionEvents,
   graph,
   nodes,
   edges,
