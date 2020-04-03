@@ -79,7 +79,7 @@
               </v-col>
             </v-row>
           </div>
-          <v-btn class="btn-close ma-2" @click="nodeCreateGui= false" text icon color="#ffffff">
+          <v-btn class="btn-close ma-2" @click="cancel()" text icon color="#ffffff">
             <v-icon color="#ffffff">mdi-close</v-icon>
           </v-btn>
 
@@ -153,7 +153,7 @@
       <!-- Create-Edge Controls -->
       <v-slide-x-reverse-transition>
         <v-card class="detail-card" v-show="edgeCreateGui" transition="scroll-y-transition">
-          <v-btn class="btn-close ma-2" @click="edgeCreateGui= false" text icon color="primary">
+          <v-btn class="btn-close ma-2" @click="cancel()" text icon color="primary">
             <v-icon color="#ffffff">mdi-close</v-icon>
           </v-btn>
 
@@ -166,7 +166,7 @@
             <v-card-title class="pt-12">{{showEdgeTitle}}</v-card-title>
           </div>
 
-          <div class="scrolling-container">
+          <div class="scrolling-container" ref="scrollingContainer">
             <v-form
               ref="formEdges"
               v-model="validEdges"
@@ -534,6 +534,7 @@
         this.showEdgeTitle = "Erstelle eine Verknüpfung";
         this.$refs.formNodes.reset();
         this.$refs.formEdges.reset();
+        this.$refs.scrollingContainer.scrollTop = 0;
       }
     }
   };

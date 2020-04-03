@@ -38,7 +38,7 @@
               </v-col>
             </v-row>
           </div>
-          <v-btn class="btn-close ma-2" @click="nodeGui= false" text icon color="#ffffff">
+          <v-btn class="btn-close ma-2" @click="cancel()" text icon color="#ffffff">
             <v-icon color="#ffffff">mdi-close</v-icon>
           </v-btn>
 
@@ -139,7 +139,7 @@
     >
       <v-slide-x-reverse-transition>
         <v-card class="detail-card" v-show="edgeGui" transition="scroll-y-transition">
-          <v-btn class="btn-close ma-2" @click="edgeGui= false" text icon color="#ffffff">
+          <v-btn class="btn-close ma-2" @click="cancel()" text icon color="#ffffff">
             <v-icon color="#ffffff">mdi-close</v-icon>
           </v-btn>
 
@@ -152,7 +152,7 @@
             <v-card-title class="pt-12">{{showEdgeTitle}}</v-card-title>
           </div>
 
-          <div class="scrolling-container">
+          <div class="scrolling-container" ref="scrollingContainer">
             <v-form
               ref="formEdges"
               v-model="validEdges"
@@ -571,6 +571,7 @@ export default {
     cancel() {
       // this.clearFields();
       this.deactivateGui();
+      this.$refs.scrollingContainer.scrollTop = 0;
     }
   }
 };
