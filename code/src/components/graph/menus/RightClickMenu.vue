@@ -88,7 +88,7 @@ export default {
       ];
     },
     openMenu(e, target) {
-      if (target.constructor.name == "Core") {
+      if (target === this.getGraph().getCytoGraph(this.getGraph())) {
         this.backgroundMenu();
       } else if (target.group() == "nodes") {
         this.targetID = target.data("id");
