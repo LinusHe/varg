@@ -35,6 +35,22 @@ export default {
     return edgesArray;
   },
 
+  // edgeBetweenNodes(node1, node2): returns whether an edge exists between two nodes
+  edgeBetweenNodes(node1, node2) {
+    for (let i = 0; i < node1.connectedEdges().length; i++) {
+      let edgeSid = node1.connectedEdges()[i].source().id();
+      let edgeTid = node1.connectedEdges()[i].target().id();
+      let node2id = node2.id();
+
+      // check if edge has node2 as source or target
+      if (edgeSid === node2id || edgeTid === node2id) {
+        console.log("Edge between nodes");
+        return true;
+      }
+    }
+    return false;
+  },
+
   // createEdge(..): Adds an edge to the Cytograph with an automatic
   //                 generated (increasing) ID + the properties given
   createEdge(
@@ -79,7 +95,6 @@ export default {
 
     console.log("added edge: ", cy.getElementById(count));
 
-    
 
     // move end-node position if conflict occurs
     let endNode = cy.getElementById(end);

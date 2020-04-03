@@ -1,21 +1,5 @@
 <template>
   <div id="cy">
-    <!-- <cytoscape
-      ref="cyRef"
-      :config="config"
-      :preConfig="preConfig"
-      :afterCreated="afterCreated"
-      v-on:tap="leftClick"
-      v-on:cxttapstart="rightClick"
-      :sync="true"
-    >
-      <cy-element
-        v-for="def in elements"
-        :key="`${def.data.id}`"
-        :definition="def"
-        v-on:tap="elementClick($event, def.data.id)"
-      />
-    </cytoscape>-->
   </div>
 </template>
 

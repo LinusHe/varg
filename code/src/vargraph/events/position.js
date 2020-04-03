@@ -18,38 +18,45 @@ export default {
     }
   },
 
-  // moveNodesInConflict(node): checks wether a node has conflicts with
+  // moveNodesInConflict(node): checks whether a node has conflicts with
   // the other nodes in the graph. If needed, the node will be moved
   moveNodesInConflict(graphComponent, node) {
     // get node positions
     let eventX = node.position().x;
     let eventY = node.position().y;
+    // get all nodes
+    let nodes = graphComponent.getCytoGraph(graphComponent).nodes();
+    // nodes that are different to moved node
+    let otherNodes = nodes.filter(n => n !== node);
+
     // get radius from node with + some extra space
     let radius = parseInt(node.style().width.replace("px", "")) + 10;
-    // increase radius if node has connected edges
-    // if (this.getEdgesByNode(graphComponent, node.id()).length != 0) {
-    //   radius = radius + 200;
-    // }
-    // Array: all other node positions
-    let pos = this.getNodePositions(graphComponent);
-    let otherPos = pos.filter(coord => coord != node.position());
 
-    if (otherPos.length > 0) {
-      for (let i = 0; i < otherPos.length; i++) {
+
+    if (otherNodes.length > 0) {
+      for (let i = 0; i < otherNodes.length; i++) {
+        let otherX = otherNodes[i].position().x;
+        let otherY = otherNodes[i].position().y;
+
+        // increase radius if moving node and conflict node have a common edge
+        if (this.edgeBetweenNodes(node, otherNodes[i])) {
+          radius = radius + 250;
+        }
+
         // conflict-node is on the right
         if (
-          Math.abs(eventX - otherPos[i].x) < radius &&
-          Math.abs(eventY - otherPos[i].y) < radius &&
-          otherPos[i].x > eventX
+          Math.abs(eventX - otherX) < radius &&
+          Math.abs(eventY - otherY) < radius &&
+          otherX > eventX
         ) {
           console.log(
             "conflict with right node",
-            Math.abs(eventX - otherPos[i].x)
+            Math.abs(eventX - otherX)
           );
-          // move draged single node to the left
+          // move dragged single node to the left
           node.animate(
             {
-              position: { x: eventX - radius, y: eventY },
+              position: {x: otherX - radius, y: eventY},
               easing: "ease"
             },
             {
@@ -57,17 +64,16 @@ export default {
             }
           );
         }
-
         // conflict node is on the left
-        if (
-          Math.abs(otherPos[i].x - eventX) < radius &&
-          Math.abs(otherPos[i].y - eventY) < radius &&
-          otherPos[i].x <= eventX
+        else if (
+          Math.abs(otherX - eventX) < radius &&
+          Math.abs(otherY - eventY) < radius &&
+          otherX <= eventX
         ) {
-          // move draged single node to the right
+          // move dragged single node to the right
           node.animate(
             {
-              position: { x: eventX + radius, y: eventY },
+              position: {x: otherX + radius, y: eventY},
               easing: "ease"
             },
             {
