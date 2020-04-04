@@ -4,17 +4,20 @@
 // The holding component is code\src\components\graph\elements\VarGraph.vue
 
 // This file contains methods for graph optimization
+import cyStore from "./cyStore";
+
 
 export default {
   // findPath(.. ): The method finds the shortest Path between 2 nodes
   //                with the Dijkstra Algorithm
   findPath(graphComponent, option, start, end) {
     // get cytoscape instance
-    let cy = graphComponent.getCytoGraph();
+    //let cy = graphComponent.getCytoGraph();
 
     var minDistance = 0;
 
-    cy.elements().removeClass("highlighted");
+    cyStore.data.cy.elements().removeClass("highlighted");
+    let cy = cyStore.data.cy
 
     var endNode = "#" + end;
 
