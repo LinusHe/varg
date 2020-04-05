@@ -1,13 +1,11 @@
 <template>
-  <div id="cy">
-  </div>
+  <div id="cy"></div>
 </template>
 
 <script>
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
 import style from "@/vargraph/init/cytoscapeStyle.js";
-import layout from "@/vargraph/init/cytoscapeLayout.js";
 import elements from "@/vargraph/init/exampleElements.js";
 
 // import methods
@@ -18,6 +16,7 @@ import positionEvents from "@/vargraph/events/position";
 import graph from "@/vargraph/graph/graph";
 import nodes from "@/vargraph/graph/nodes";
 import edges from "@/vargraph/graph/edges";
+import settings from "@/vargraph/graph/settings";
 import optimizations from "@/vargraph/graph/optimizations";
 import labels from "@/vargraph/graph/labels";
 import saveGraph from "@/vargraph/importExport/saveGraph";
@@ -41,6 +40,7 @@ const methods = Object.assign(
   nodes,
   edges,
   optimizations,
+  settings,
   labels,
   saveGraph,
   loadGraph,
@@ -52,6 +52,7 @@ export default {
   mounted: function() {
     // cy pre config
     this.preConfig(cytoscape);
+
     // cy config
     cyStore.data.cy = cytoscape({
       container: document.getElementById("cy"), // container to render in
@@ -59,26 +60,11 @@ export default {
       // uncomment following line for example graph
       // elements,
 
-      style,
-      layout: {
-        name: "grid",
-        // name: 'klay',
-        rows: 1,
-        padding: 150,
-        spacingFactor: 1.2,
-        grid: {
-          spacing: 150,
-          fixedAlignment: "BALANCED"
-        },
-        klay: {
-          spacing: 150,
-          fixedAlignment: "BALANCED"
-        }
-      }
+      style
     });
 
     // cy after config
-    this.afterCreated();
+    this.afterCreated(cyStore.data.cy);
   },
   methods // see -> code\src\vargraph Files
 };

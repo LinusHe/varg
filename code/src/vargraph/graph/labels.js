@@ -7,20 +7,69 @@
 
 export default {
   // generateEdgeLabel(..): Creates and Returns the Edge-Label based on the Weights
-  generateEdgeLabel(newName, newcost, newtime, newsucost, newsutime) {
-    return (
-      newName +
-      "\nKosten: " +
-      newcost +
-      "€ | Zeit: " +
-      newtime +
-      "s" +
-      "\nRüstkosten: " +
-      newsucost +
-      "€ | Rüstzeit: " +
-      newsutime +
-      "s"
-    );
+  generateEdgeLabel(graphComponent, newName, newShort, newcost, newtime, newsucost, newsutime) {
+    // get cytoscape instance
+    let cy = graphComponent.getCytoGraph();
+    let label = "";
+
+    // Show only Short Label
+    if (cy.data("settingsEdgeShowShortOnly")) {
+      label = newShort;
+    } else {
+      // Title
+      if (cy.data("settingsEdgeTitleSelection") === "Name") label = newName;
+      else label = newShort;
+
+      // Cost / Time Data
+      if (cy.data("settingsEdgeShowCost") || cy.data("settingsEdgeShowTime")) label += "\n";
+      if (cy.data("settingsEdgeShowCost")) label += "Kosten: " + newcost + " " + cy.data("settingsUnitCostSelection");
+      if (cy.data("settingsEdgeShowCost") && cy.data("settingsEdgeShowTime")) label += " | ";
+      if (cy.data("settingsEdgeShowTime")) label += "Zeit: " + newtime + " " + cy.data("settingsUnitTimeSelection");
+
+      // SuCost / SuTime Data
+      if (cy.data("settingsEdgeShowSuCost") || cy.data("settingsEdgeShowSuTime")) label += "\n";
+      if (cy.data("settingsEdgeShowSuCost")) label += "Rüstkosten: " + newsucost + " " + cy.data("settingsUnitCostSelection");
+      if (cy.data("settingsEdgeShowSuCost") && cy.data("settingsEdgeShowSuTime")) label += " | ";
+      if (cy.data("settingsEdgeShowSuTime")) label += "Rüstzeit: " + newsutime + " " + cy.data("settingsUnitTimeSelection");
+    }
+
+
+    return label;
+
+    //old function:
+    // return (
+    //   newName +
+    //   "\nKosten: " +
+    //   newcost +
+    //   "€ | Zeit: " +
+    //   newtime +
+    //   "s" +
+    //   "\nRüstkosten: " +
+    //   newsucost +
+    //   "€ | Rüstzeit: " +
+    //   newsutime +
+    //   "s"
+    // );
+  },
+
+  updateEdgeLabel(graphComponent) {
+    // get cytoscape instance
+    let cy = graphComponent.getCytoGraph();
+
+    let allEdges = cy.edges();
+    allEdges.forEach(edge => {
+      let newlabel = this.generateEdgeLabel(
+        graphComponent,
+        edge.data("name"),
+        edge.data("short"),
+        edge.data("cost"),
+        edge.data("time"),
+        edge.data("sucost"),
+        edge.data("sutime")
+      );
+      edge.data("label", newlabel);
+    });
+
   },
 
   updateNodeLabel(graphComponent) {
@@ -35,7 +84,7 @@ export default {
         halignBox: "center", // title vertical position. Can be 'left',''center, 'right'
         valignBox: "center", // title relative box vertical position. Can be 'top',''center, 'bottom'
         cssClass: "findme", // any classes will be as attribute of <div> container for every title
-        tpl: function(data) {
+        tpl: function (data) {
           if (data.imgUrl != null && data.imgUrl != "") {
             // Template for Image-Node
             return (

@@ -147,7 +147,7 @@ export default {
       this.$parent.$refs.downloadMenu.setdialog(true);
     },
     openSettings() {
-      this.$parent.$refs.settingsMenu.setdialog(true);
+      this.$parent.$refs.settingsMenu.openDialog();
     },
     SaveJSon: function() {
       this.$parent.$refs.saveMenu.setdialog(true);

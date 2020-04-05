@@ -72,7 +72,9 @@ export default {
 
     // create label
     let newlabel = this.generateEdgeLabel(
+      graphComponent,
       newName,
+      edgeshort,
       newcost,
       newtime,
       newsucost,
@@ -170,7 +172,9 @@ export default {
 
     // generate new label
     let label = this.generateEdgeLabel(
+      graphComponent,
       newName,
+      newShort,
       newCost,
       newTime,
       newsucost,

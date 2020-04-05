@@ -1,12 +1,8 @@
 <template>
   <div class="detail-controls">
     <!-- Detail-Zustand Controls -->
-    <div
-      ref="nodeDetails"
-      @keyup.esc="closeMenus()"
-      @keyup.delete="openNodeDeleteMenu"
-      tabindex="0"
-    >
+    <!-- TODO: @keyup.delete="openNodeDeleteMenu"    -->
+    <div ref="nodeDetails" @keyup.esc="closeMenus()" tabindex="0">
       <v-slide-x-reverse-transition>
         <v-card class="detail-card" v-show="nodeGui" transition="scroll-y-transition">
           <!-- Colored Div  -->
@@ -131,12 +127,8 @@
     </div>
 
     <!-- Detail-Verbindung Controls -->
-    <div
-      ref="edgeDetails"
-      @keyup.esc="closeMenus()"
-      @keyup.delete="openEdgeDeleteMenu"
-      tabindex="0"
-    >
+    <!-- TODO: @keyup.delete="openEdgeDeleteMenu"    -->
+    <div ref="edgeDetails" @keyup.esc="closeMenus()" tabindex="0">
       <v-slide-x-reverse-transition>
         <v-card class="detail-card" v-show="edgeGui" transition="scroll-y-transition">
           <v-btn class="btn-close ma-2" @click="cancel()" text icon color="#ffffff">
@@ -432,6 +424,8 @@ export default {
     closeMenus() {
       this.deactivateGui();
       this.$parent.$refs.createControls.deactivateGui();
+      this.$parent.$refs.createControls.$refs.scrollingContainer.scrollTop = 0;
+      this.$refs.scrollingContainer.scrollTop = 0;
     },
     generateNodeShort() {
       if (this.nodeName != null) {

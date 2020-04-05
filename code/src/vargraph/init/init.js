@@ -5,6 +5,7 @@
 
 import nodeHtmlLabel from "cytoscape-node-html-label";
 import klay from "cytoscape-klay";
+import defaultData from "@/vargraph/init/cytoscapeDefaultData.js";
 
 export default {
   // this method will run before cytoscape is configured
@@ -17,6 +18,8 @@ export default {
   afterCreated(cy) {
     // cy: this is the cytoscape instance
     console.log("after created", cy);
+
+    console.log(cy.data("test"));
 
     // run init
     this.init(this);
@@ -55,11 +58,10 @@ export default {
     let prodquant = this.$store.getters.getCyProdQuant;
     console.log("Prodname: ", prodname);
     console.log("Prodnquant: ", prodquant);
-    // Initialising data types
-    cy.data("IDCount", 0);
-    cy.data("latestSave", null);
-    cy.data("prodName", prodname);
-    cy.data("prodQuant", prodquant);
+
+    // load default Settings
+    cy.data(defaultData);
+    console.log("Initial Graph Data: ",cy.data());
 
     // Apply Color for nodes
     cy.nodes().forEach(n => {
@@ -76,7 +78,9 @@ export default {
       e.data(
         "label",
         this.generateEdgeLabel(
+          graphComponent,
           e.data("name"),
+          e.data("short"),
           e.data("cost"),
           e.data("time"),
           e.data("sucost"),
