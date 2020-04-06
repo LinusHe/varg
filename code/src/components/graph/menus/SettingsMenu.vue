@@ -380,6 +380,7 @@ export default {
       );
       this.getGraph().applySettings(this.getGraph());
       this.dialog = false;
+      dialogComponent.dialogSuccess("Einstellungen erfolgreich gespeichert");
     }
   }
 };
