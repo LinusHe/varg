@@ -48,7 +48,9 @@ export default {
     cy.minZoom(0.5);
     cy.maxZoom(2);
 
-    // Setting up a new datafield with the given values
+    // load default Settings
+    cy.data(defaultData);
+    console.log("Initial Graph Data: ", cy.data());
 
     // This is to prevent that usage of cy.minZoom(value) locks up other zoom functionality
     cy.data("minZoom", 0.5);
@@ -58,23 +60,21 @@ export default {
     let prodquant = this.$store.getters.getCyProdQuant;
     console.log("Prodname: ", prodname);
     console.log("Prodnquant: ", prodquant);
-
-    // load default Settings
-    cy.data(defaultData);
-    console.log("Initial Graph Data: ",cy.data());
+    cy.data("prodName", prodname);
+    cy.data("prodQuant", prodquant);
 
     // Apply Color for nodes
-    cy.nodes().forEach(n => {
+    cy.nodes().forEach((n) => {
       n.style("background-color", "#" + n.data("color"));
     });
 
     // Generate Edge Labels
     var options = {
       edgeDimensionsIncludeLabels: true,
-      "text-event": "yes"
+      "text-event": "yes",
     };
 
-    cy.edges().forEach(e => {
+    cy.edges().forEach((e) => {
       e.data(
         "label",
         this.generateEdgeLabel(
@@ -92,5 +92,5 @@ export default {
 
     // Generates Node HTML Label
     this.updateNodeLabel(graphComponent, cy);
-  }
+  },
 };
