@@ -211,7 +211,7 @@
                   <v-text-field
                     id="edgeCosts"
                     label="Kosten / Stück"
-                    suffix="€"
+                    :suffix="unitCost"
                     type="number"
                     v-model="edgeCosts"
                     :rules="costRules"
@@ -222,7 +222,7 @@
                   <v-text-field
                     id="edgeTime"
                     label="Zeit / Stück"
-                    suffix="Sek."
+                    :suffix="unitTime"
                     v-model="edgeTime"
                     type="number"
                     :rules="timeRules"
@@ -235,7 +235,7 @@
                   <v-text-field
                     id="edgesuCosts"
                     label="Kosten / Rüst"
-                    suffix="€"
+                    :suffix="unitCost"
                     type="number"
                     v-model="edgesuCosts"
                     :rules="suCostRules"
@@ -246,7 +246,7 @@
                   <v-text-field
                     id="edgesuTime"
                     label="Zeit / Rüst"
-                    suffix="Sek."
+                    :suffix="unitTime"
                     v-model="edgesuTime"
                     type="number"
                     :rules="suTimeRules"
@@ -319,6 +319,8 @@ export default {
       edgeTime: "",
       edgesuCosts: "",
       edgesuTime: "",
+      unitCost: "€",
+      unitTime: "Sek",
       itemsName: [],
       itemsID: [],
       edgeNames: [],
@@ -487,6 +489,11 @@ export default {
       this.nodeGui = false;
       this.edgeGui = true;
       this.$refs.edgeDetails.focus();
+      this.getUnits();
+    },
+    getUnits() {
+      this.unitCost = this.getGraph().getCytoGraph().data("settingsUnitCostSelection");
+      this.unitTime = this.getGraph().getCytoGraph().data("settingsUnitTimeSelection");
     },
     deactivateGui() {
       this.nodeGui = false;

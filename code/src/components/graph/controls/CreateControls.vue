@@ -233,7 +233,7 @@
                   <v-text-field
                     id="edgeCreateCosts"
                     label="Kosten / Stück"
-                    suffix="€"
+                    :suffix="unitCost"
                     type="number"
                     v-model="edgeCreateCosts"
                     :rules="costRules"
@@ -244,7 +244,7 @@
                   <v-text-field
                     id="edgeCreateTime"
                     label="Zeit / Stück"
-                    suffix="Sek."
+                    :suffix="unitTime"
                     type="number"
                     v-model="edgeCreateTime"
                     :rules="timeRules"
@@ -257,7 +257,7 @@
                   <v-text-field
                     id="edgeCreatesuCosts"
                     label="Kosten / Rüst"
-                    suffix="€"
+                    :suffix="unitCost"
                     type="number"
                     v-model="edgeCreatesuCosts"
                     :rules="suCostRules"
@@ -268,7 +268,7 @@
                   <v-text-field
                     id="edgeCreatesuTime"
                     label="Zeit / Rüst"
-                    suffix="Sek."
+                    :suffix="unitTime"
                     type="number"
                     v-model="edgeCreatesuTime"
                     :rules="suTimeRules"
@@ -325,6 +325,8 @@
         edgeCreateTime: "",
         edgeCreatesuCosts: "",
         edgeCreatesuTime: "",
+        unitCost: "€",
+        unitTime: "Sek",
         itemsName: [],
         itemsID: [],
         edgeNames: [],
@@ -435,6 +437,7 @@
       deactivateGui() {
         this.nodeCreateGui = false;
         this.edgeCreateGui = false;
+        this.fab = false;
       },
       openNodeGui() {
         this.$parent.$refs.detailControls.deactivateGui();
@@ -447,6 +450,11 @@
         this.nodeCreateGui = false;
         this.edgeCreateGui = true;
         this.$refs.createEdges.focus();
+        this.getUnits();
+      },
+      getUnits() {
+        this.unitCost = this.getGraph().getCytoGraph().data("settingsUnitCostSelection");
+        this.unitTime = this.getGraph().getCytoGraph().data("settingsUnitTimeSelection");
       },
       getNodeItemsID() {
         this.itemsID = this.getGraph().getNodeID(this.getGraph());
