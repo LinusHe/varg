@@ -7,13 +7,13 @@ export function saveGraphAsJson(graph, name) {
     saveAs(jsonfile, filename)
 }
 
-export function loadGraphFromJson(event) {
+export function loadGraphFromJson(event, graphComponent) {
     var reader = new FileReader();
     reader.onload = onReaderLoad;
     reader.readAsText(event.target.files[0]);
 
     function onReaderLoad(event) {
-        ExJSon.LoadJSon(event.target.result);
+        ExJSon.LoadJSon(event.target.result, graphComponent);
     }
     // TODO: Catch Wrong Format and other Errors!
 }
