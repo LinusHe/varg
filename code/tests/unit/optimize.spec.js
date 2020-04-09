@@ -83,6 +83,7 @@ describe('Optimizing tests', () => {
 
         }
         expect(array).toMatchObject(['A','C','E','V','Y'])
+        //nur zum test
         
 
         
