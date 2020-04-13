@@ -1,0 +1,20 @@
+/* changed if/else cases due to different save method
+
+save (basicData) {
+
+  if (index >= 0) {
+    const input = prompt("Dateiname existiert bereits. 'überschreiben' oder 'kopie' erstellen?")
+    if (input === "überschreiben") {
+      this.basicDataArray[index] = basicData
+    }
+    else if (input === "kopie") {
+      this.basicDataArray.push(basicData)
+    }
+    else {
+      alert ("Nicht gespeichert")
+    }
+  }
+  
+}
+
+*/

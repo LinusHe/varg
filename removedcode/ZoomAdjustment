@@ -1,0 +1,105 @@
+//removed from index.js because of getCytoGraph(); no longer 
+//needs additional capsuling
+
+export function getZoom (){
+  return cy.zoom()
+}
+
+export function MaxZoom (){
+  return cy.maxZoom()
+}
+
+export function setMaxZoom(ZoomLevel){
+  cy.maxZoom(ZoomLevel)
+}
+
+export function MinZoom (){
+  return cy.minZoom()
+}
+
+/**
+ * setMinZoom(ZoomLevel):
+ * 
+ * It takes the given ZoomLevel
+ * and checks wether or not is smaller then the 
+ * limit that is defined in cy.data. If it is greather
+ * than the limit, it will set the MinZoom as the ZoomLevel.
+ * It will be impossible for the user to ever zoom
+ * past the given limit, which, if implemented well, would
+ * make it so, that the zoom range makes it easy to see
+ * the graph at all times.
+ * 
+ * @param {*} ZoomLevel 
+*/
+
+export function setMinZoom(ZoomLevel){
+  // eslint-disable-next-line no-empty
+  if (ZoomLevel < cy.data('minZoom')) {}
+  else cy.minZoom(ZoomLevel)
+}
+
+// Was removed from Zoom.js because cy.fit() already excists and works better
+
+export function setZoom (ZoomLevel) {
+  cy.zoom(ZoomLevel)
+}
+
+   let MaxVektor = 0;
+   let nodeArr=graph.getNodeArr()
+   let posx=graph.getNodePosSum('x')
+   let posy=graph.getNodePosSum('y')
+   posx= posx / nodeArr.length
+   posy= posy / nodeArr.length
+   for(let i=0;i<nodeArr.length;i++){
+       let vector = graph.NodeToPointVector(posx, posy, nodeArr[i])
+       if (vector > MaxVektor){
+           MaxVektor=vector
+       }
+   }
+   let ZoomLevel = 2 - (MaxVektor/400)
+   this.setMinZoom(ZoomLevel)
+   this.setZoom({
+       level : ZoomLevel,
+       position : {x: posx, y: posy},
+       renderedposition : {x: posx, y: posy}
+   })
+
+   export function getNodePosSum(input){
+  let nodeArr = cy.nodes()
+  if (input === 'x'){
+    let posx = 0;
+    for (let i=0; i< nodeArr.length; i++){
+      posx += nodeArr[i].position('x')
+    }
+    return posx
+  }
+  else if (input === 'y'){
+    let posy = 0;
+    for (let i=0; i< nodeArr.length; i++){
+      posy += nodeArr[i].position('y')
+    }
+    return posy
+  }
+  else return null
+}
+
+//removed from index.js because of rework of zoom.js; no longer requires vector or points
+//to be computed
+
+/*
+  NodeToPointVector(pointx, pointy, node):
+
+  Computes the distance of a node to a point by
+  generating a vector out of the given point and
+  the nodes position values and then computes it's 
+  length with the formula l = sqrt(a^2 + b^2) which
+  it then returns.
+
+*/
+
+export function NodeToPointVector(pointx, pointy, node){
+  let one= node.position('x') - pointx
+  let two= node.position('y') - pointy
+  let sum= Math.pow(one,2) + Math.pow(two,2)
+  return Math.sqrt(sum)
+}

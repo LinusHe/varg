@@ -8,7 +8,7 @@
 
 <script>
 // @ is an alias to /src
-import LoginForm from "@/components/LoginForm";
+import LoginForm from "@/components/login/LoginForm";
 
 export default {
   name: "login",

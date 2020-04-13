@@ -1,0 +1,50 @@
+/* removed because meta data is now stored in cytograph.json
+
+export default class BasicData {
+  /* graphName: file/save name
+   * latestDate: date + time of latest save
+   * prodName: product name
+   * prodQuant: production quantity
+   * graph: cy.json
+   */
+  constructor (graphName, latestDate, /*prodName, prodQuant,*/ graph)
+  {
+    this.graphName = graphName
+    this.latestDate = latestDate
+    /*this.prodName = prodName
+    this.prodQuant = prodQuant*/
+    this.graph = graph
+  }
+  getGraphName () {
+    return this.graphName
+  }
+  setGraphName (newGraphName) {
+    this.graphName = newGraphName
+  }
+  getLatestDate () {
+    return this.latestDate
+  }
+  setLatestDate (newDate) {
+    this.latestDate = newDate
+  }
+  /*getProdName () {
+    return this.getProdName
+  }
+  setProdName (newProdName) {
+    this.prodName = newProdName
+  }
+  getProdQuant () {
+    return this.prodQuant
+  }
+  setProdQuant (newProdQuant) {
+    this.prodQuant = newProdQuant
+  }*/
+  getGraph () {
+    return this.graph
+  }
+  setGraph (newGraph) {
+    this.graph = newGraph
+  }
+}
+
+*/

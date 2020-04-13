@@ -1,0 +1,72 @@
+/* removed ModifyDataControls.vue tests due to the Vue component being removed
+
+/* eslint-disable no-undef */
+describe('ModifyDataControls', () => {
+
+  // before or beforeEach ?
+  before(() => {
+    cy.login();
+    cy.get('#newGraph').click();
+    cy.get('#prodname').type('Testprodukt');
+    cy.get('#prodquantity').type('1000');
+    cy.get('.btn-creategraph').click();
+  });
+
+  it("should not be visible at startup", () => {
+    cy.get("#mdc-gui").should("not.be.visible");
+  });
+
+  it('should find the mdc-button', () => {
+    cy.get('#mdc-btn').should('be.visible');
+  });
+
+  it('should show the mdc-gui on mdc-button click', () => {
+    cy.get('#mdc-gui').should('not.be.visible');
+    cy.get('#mdc-btn').click();
+    cy.get('#mdc-gui').should('be.visible');
+  });
+
+  it('should close the mdc-gui on cancel-button click', () => {
+    cy.get('#mdc-btn').click();
+    cy.get('#mdc-gui-cancel').click();
+    cy.get('#mdc-gui').should('not.be.visible');
+  });
+
+  it('should close the mdc-gui on click outside the menu', () => {
+    cy.get('#mdc-btn').click();
+    cy.get('#cy').click(100,100);
+    cy.get('#mdc-gui').should('not.be.visible');
+  });
+
+  // If any data was changed in one of the 3 right-aligned controls-guis without saving
+  // and the user clicks outside the menu or on another controls-gui
+  // there should be a warning prompt that data will be lost if they wish not to save.
+  it('should close the mdc-gui on CreateControls click', () => {
+    // on add node
+    cy.get('#mdc-btn').click();
+    cy.get('#cy').rightclick(100, 100);
+    cy.get('.rcmenu')
+      .contains('Neuer Zustand')
+      .click();
+    cy.get('#mdc-gui').should('not.be.visible');
+    // on add edge
+    cy.get('#mdc-btn').click();
+    cy.get('#cy').rightclick(100, 100);
+    cy.get('.rcmenu')
+      .contains('Neue Verknüpfung')
+      .click();
+    cy.get('#mdc-gui').should('not.be.visible');
+  });
+
+  // Currently works by estimating where the node is and left-clicking
+  // at the hard coded coordinates, because I don't know how to make 
+  // the test engine find the node by itself (very ugly).
+  it('should close the mdc-gui on DetailControls click', () => {
+    cy.get('#mdc-btn').click();
+    cy.get("#cy").click(235, 235);
+    cy.get('#mdc-gui').should('not.be.visible');
+  });
+
+});
+
+*/

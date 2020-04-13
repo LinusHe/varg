@@ -1,0 +1,6 @@
+/* replaced event bus with parent/child references due to Jest errors
+
+  // global event bus to communicate between unrelated components (no parent/child relation)
+  export const eventBus = new Vue()
+
+*/

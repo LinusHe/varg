@@ -1,0 +1,21 @@
+   
+   //Was removed because of major restructure that changed the nesting 
+   //between the components
+
+   //this function was used when a child component fired the 
+   //newGraph event per $emit. It would handle which button was pressed.
+   //This is now done in the component itself.
+    onNewGraphConfirm(value){
+      if (value){
+        //save Case
+        this.$parent.$refs.newGraphMenu.showSaveMenu();
+      }
+      else{
+        //discard case
+        graph.getCytoGraph().nodes().remove()
+        graph.getCytoGraph().edges().remove()
+        this.$parent.$refs.newGraphMenu.setdialog(false)
+        //this works!!!
+        router.push({name: 'newGraph'});
+      }
+    },
