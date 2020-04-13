@@ -1,0 +1,142 @@
+
+\subsection{Ziel des Sprints}
+{\small Autor: Linus Herterich}
+
+Nachdem im ersten Sprint hauptsächlich die Grundstruktur sowie erste Datenstrukturen entworfen wurden,
+war es nun wichtig, dass sich das gesamte Team im Sprint 2 mit der Projektstruktur (besonders mit dem Framework Vue)
+auseinandersetzt und erste UserStories direkt am Code umsetzt. Zudem blieben einige Tickets noch vom letzten Sprint offen,
+welche nun auch bearbeitet werden sollten.
+
+\subsection{User-Stories des Sprint-Backlogs}
+{\small Autor: Linus Herterich}
+
+\begin{itemize}
+  \item \textbf{Designumsetzung nach Adobe Preview}
+        \\\textit{
+          Als Benutzer der WebApplikation möchte ich ein ansehnliche und intuitive
+          Oberflächengesstaltung haben, damit ich die Applikation gerne verwende.}
+  \item \textbf{Authentifizierung eines Nutzers}
+        \\\textit{
+          Als Nutzer möchte ich mich in die Web Applikation einloggen können,
+          damit nicht jeder meine erzeugten Graphen einsehen kann.}
+  \item \textbf{Logische verknüpfung zwischen Knoten erstellen}
+        \\ (wurde in Sprint 1 nicht abgeschlossen)
+        \\\textit{
+          Ein Nutzer muss eine Abfolge der Knoten definieren können,
+          damit ersichtlich wird welcher Produktionsschritt auf den nächsten folgt}
+  \item \textbf{Berechnung der Eingenschaften des Gesamtgraphs}
+        \\ (wurde in Sprint 1 nicht abgeschlossen)
+        \\\textit{
+          Ein Nutzer der Webanwendung VarG muss die berechneten gesamt Eigenschaften
+          jedes Zusammenhängendes Pfades ausgeben lassen können um eine Auswahl
+          eines Pfades zu treffen.}
+  \item \textbf{Datenstruktur Ausarbeiten \& Knoten zu einer vorhandenen Datenstruktur hinzufügen}
+        \\ (wurde in Sprint 1 nicht abgeschlossen)
+        \\\textit{
+          Als Nutzer möchte ich Knoten zu der Datenstruktur hinzufügen können
+          um die möglichen Produktionsschritte des Werkstücks überblicken zu können}
+
+\end{itemize}
+
+\subsection{Liste der durchgeführten Meetings}
+{\small Autor: Linus Herterich}
+
+\begin{itemize}
+  \item 19.12.2019: Planning Meeting
+  \item 23.12.2019: Daily Meeting (in Discord)
+  \item 28.12.2019: Daily Meeting (in Discord)
+  \item 05.01.2020: Review Meeting
+  \item 06.01.2020: Retrospektive
+\end{itemize}
+
+\subsection{Ergebnisse des Planning-Meetings}
+{\small Autor: Linus Herterich}
+
+Neben der Aufgabenverteilung wurde im Planning darüber gesprochen, dass die Arbeitsaufteilung im letzten
+Sprint nicht gut geklappt hat. Es wurde anschließend beschlossen im nächsten Sprint die User-Stories direkt
+an Studenten zuzuweisen, damit jeder einen Teilbereich hat, den er bearbeiten muss.
+\\ Desweiteren wurde eine Änderung im Git angekündigt. In Zukunft müsse der "Master"\--Branch während eines Sprints
+immer gleich bleiben und Funktionalitäten werden auf einen "Developer"\--Branch gemerged. Am Ende des Sprints
+wird dann der "Developer"\--Branch auf den "Master"\--Branch gemerged. wichtig ist, dass der "Master"\--Branch zu jedem
+Zeitpunkt lauffähig ist.
+\\ Für den folgenden Sprint wurde beschlossen, die Daily Meetings online (auf einem Discord Server) abzuhalten,
+da viele Studenten über die Weihnachtsferien in der Heimat sind und somit ein persönliches wöchentliches treffen
+nicht möglich wäre.
+
+\subsection{Aufgewendete Arbeitszeit pro Person$+$Arbeitspaket}
+{\small Autor: Linus Herterich}
+
+\begin{longtable}{|p{4cm}|p{2cm}|p{1.2cm}|p{1.2cm}|p{0.7cm}|p{3.8cm}|}
+  \hline
+  Arbeitspaket                                                          & Person                & Start    & Ende     & h     & Artefakt                                                    \\
+  \hline
+  UI: Login                                                             & Berger, Matthias      & 22.12.19 & 22.12.19 & 3,5   & Login Funktionalität \& Design                              \\ \hline
+  UI: Login                                                             & Buchmann, Lennart     & 22.12.19 & 22.12.19 & 6     & Login Funktionalität \& Design                              \\ \hline
+  UI: Grapheneditor                                                     & Gwozdz, Jonas         & 23.12.19 & 04.01.20 & 9     & GraphHeader.vue, Toolbar.vue                                \\ \hline
+  Task: Einbindung in Vue-Dateistruktur                                 & Heldt, Erik           & 19.12.19 & 19.12.19 & 0,25  & BasicData.js                                                \\ \hline
+  Abrufbaren Knoten in Graph einfügen                                   & Heldt, Erik           & 23.12.19 & 26.12.19 & 3,5   & BasicData.js, TestDatabase.js                               \\ \hline
+  Testdatenbank mit Speichern und Laden                                 & Heldt, Erik           & 27.12.19 & 27.12.19 & 3,5   & TestDatabase.js                                             \\ \hline
+  Highlighting eines kürzesten Pfades nach Anwendung des A* Algorithmus & Henning, Tim          & 24.12.19 & 03.01.20 & 9     & OptimizeControls.vue, index.js -> Graph Highlighting        \\ \hline
+  Protokoll: Meeting 19.12.19                                           & Herterich, Linus      & 19.12.19 & 19.12.19 & 1     & meeting\_19\_12\_19.pdf                                     \\ \hline
+  UI: Login                                                             & Herterich, Linus      & 20.12.19 & 20.12.19 & 5     & LoginForm.vue, Login.vue                                    \\ \hline
+  UI: Home                                                              & Herterich, Linus      & 23.12.19 & 23.12.19 & 7     & HomeMenu.vue (component), Home.vue (view), Menu.vue (view)  \\ \hline
+  UI: Neuer Graph                                                       & Herterich, Linus      & 28.12.19 & 28.12.19 & 1,5   & NewGraph.vue (view), NewGraph.vue (component)               \\ \hline
+  UI: Grapheneditor                                                     & Herterich, Linus      & 02.01.20 & 04.01.20 & 11,75 & Graph.vue (view), zahlreiche components                     \\ \hline
+  Graph zu Datenstruktur hinzufügen                                     & Hohlfeld, Julius      & 21.12.19 & 23.12.19 & 4     & BasicData.js, TestDatabase.js                               \\ \hline
+  Testdatenbank mit Speichern und Laden                                 & Hohlfeld, Julius      & 27.12.19 & 03.01.20 & 8     & BasicData.js, TestDatabase.js, index.js, JSonPersistence.js \\ \hline
+  Mergen und Anpassen                                                   & Hohlfeld, Julius      & 04.01.20 & 04.01.20 & 2     & Bugs entfernt \& Mergekonflikte behoben                     \\ \hline
+  UI: Datenbank-Import Fenster                                          & Karkoutli, Alaa Aldin & 31.01.20 & 04.01.20 & 12,5  & Database.vue (view), DatabaseForm.vue (component)           \\ \hline
+  Kanten zu Graph hinzufügen                                            & Koch, David           & 23.12.20 & 04.01.20 & 10    & Änderungen an index.js, CreateControls.vue (component)      \\ \hline
+\end{longtable}
+
+\subsection{Konkrete Code-Qualität im Sprint}
+{\small Autor: Linus Herterich}
+
+Es wurde sich größtenteils an die Coding-Guidelines gehalten. An wichtigen Stellen sowie vor jeder Funktion wurden Kommentare
+geschrieben. Die Trennung zwischen Views und Components sowie die Auslagerung der Style-Dateien wurde ebenfalls eingehalten.
+
+\subsection{Konkrete Test-Überdeckung im Sprint}
+{\small Autor: Linus Herterich}
+
+Ein Student wurde beauftragt bis zum Ende des Sprints ein geeignetes Test-Framework zu finden.
+Somit wurden während des Sprints noch keine Tests geschrieben.
+
+\subsection{Ergebnisse des Reviews}
+{\small Autor: Linus Herterich}
+
+Es wurden fast alle UserStories umgesetzt. Somit war der zweite Sprint erfolgreich.
+Alle Studenten konnten sich in das Projekt einarbeiten und haben die Strukturierung
+größtenteils verstanden und eingehalten.
+\\ Das User-Interface wurde nach der Designvorlage umgesetzt und die ersten Graphen-Funktionen
+(Hinzufügen von Knoten und Kanten \& Optimieren) funktionieren bereits.
+\\ Da noch nicht feststeht, wo die Software gehostet werden soll und wie die Datenbank-Funktionalität
+umgesetzt werden soll, wurde zunächst eine lokale Speicherlösung als "Datenbank" verwendet. Somit konnten
+die Speichern- und Laden-Funktionen erfolgreich implementiert werden.
+\\ Die Login-Funktionalität ist derzeit nur sporadisch eingerichtet und wird finalisiert,
+sobald feststeht, wie die Authentifizierung der Nutzer erfolgen soll (Anbindung an HTWK Login?).
+\\ Leider ist immernoch kein geeignetes Testframework gefunden worden, mit dem sich sowohl Vue.js
+als auch cytoscape (Graphen-Funktionalitäten) testen lassen.
+
+\subsection{Ergebnisse der Retrospektive}
+{\small Autor: Linus Herterich}
+
+Das Happiness-Barometer für diesen Sprint ist sehr gut ausgefallen. Das liegt hauptsächlich an der guten Aufgabenverteilung
+sowie an den großen Erfolgen, die diesen Sprint erzielt wurden.
+\\ Kritisiert wurde die die Kommunikation gegen Ende des Sprints. Das finale Mergen aller Branches war zu hektisch und unsicher.
+\\ Es wurde sich darauf geeinigt in Zukunft zwei Dailies pro Woche abzuhalten und das letzte Meeting eines Sprints zum gemeinsamen Mergen zu verwenden.
+
+\subsection{Abschließende Einschätzung des Product-Owners}
+{\small Autor: xxx}
+
+XXX
+
+\subsection{Abschließende Einschätzung des Software-Architekten}
+{\small Autor: xxx}
+
+XXX
+
+\subsection{Abschließende Einschätzung des Team-Managers}
+{\small Autor: xxx}
+
+XXX
+
