@@ -1,0 +1,190 @@
+\subsection{Ziel des Sprints}
+{\small Autor: Jonas Gwozdz}
+
+Während der Semesterferien haben wir an Sprint 4 weitergearbeitet. Dieser dauerte vom 23.01.2020 bis zum  09.04.2020. Der Ablauf war dabei weitestgehend planmäßig, bis auf dass die Meetings zum Review und der Retrospektive wegen Corona ohne persönliches Treffen stattfinden mussten.
+In der Vorlesungsfreien Zeit besprachen wir uns gelegentlich über den aktuellen Zwischenstand. Der größte Fortschritt am Projekt wurde während der letzten beiden Wochen erzielt.
+
+\subsection{User-Stories des Sprint-Backlogs}
+{\small Autor: Jonas Gwozdz}
+
+\begin{itemize}
+  \item \textbf{Tests für bereits geschriebenen Code}
+        \\\textit{Als Benutzer möchte ich eine Software benutzen, die getestet ist, damit keine unerwarteten Probleme auftauchen.}
+  \item \textbf{ Validierung der möglichen Eingaben }
+        \\\textit{
+          Als Nutzer möchte ich bei versehentlicher falscher Eingabe wenn möglich gewarnt werden, damit ich nichts falsches abspeichere.}
+  \item \textbf{Bug: Validation bei gleichem Knoten-Namen}
+  \item \textbf{Darstellung von Kanten/Attributen }
+        \\\textit{
+          Als Benutzer will ich alle Kanten/Knoten gleichzeitig sehen können(nicht übereinander), damit ich einen schnelleren Überblick über das gesamte Konstrukt bekomme.}
+  \item \textbf{Bug: Mehrere Edges zwischen Knoten nicht möglich}
+        \\\textit{
+          Wenn man mehrere Kanten zwischen zwei Knoten anlegt, sind diese nicht sichtbar. Löscht man dann einen Knoten, an dem diese "unsichtbaren" knoten hängen, so stürzt cytoscape ab.}
+  \item \textbf{Remodel von Component NewGraph}
+\end{itemize}
+
+\subsection{Liste der durchgeführten Meetings}
+{\small Autor: Jonas Gwozdz}
+
+\begin{itemize}
+\item 23.01.2020: Planning
+\item 05.03.2020: Weekly
+\item 12.03.2020: Weekly
+\item 06.04.2020: Review
+\item 09.04.2020: Retro
+\end{itemize}
+
+\subsection{Ergebnisse des Planning-Meetings}
+{\small Autor: Jonas Gwozdz}
+
+Anwesend: Alex, Julius J., Julius H., Linus, Jonas, Erik, Lennart, Nils, Tim, David, Matthias, Manuel\\
+\\
+Innerhalb dieses Meetings haben wir die Schwerpunkte des Sprints festgelegt und über den Workload über die Vorlesungsfreie Zeit diskutiert und den Zeitaufwand der User-Stories abgeschätzt.\\
+
+
+\textbf{oberste Priorität: Tests}\\
+Da wird bis zum bisherigen Zeitpunkt keine Testumgebung gefunden haben, die sich auf unseren Cytoscape-Graphen anwenden lässt, und wir dadurch viel Nachholbedarf in Sachen Testen hatten, musste dieses Ticket am dringendsten abgearbeitet werden.\\
+
+\textbf{Sprint über Semesterferien}\\
+Wir haben uns im Planning darauf geeinigt, den Sprint über die Semesterferien mit weniger User-Stories als üblich auszulegen, da nicht alle Teammitglieder in dieser Zeit voll verfügbar waren, Grund dafür waren vor Allem die noch andauernden Prüfungen und die Anschließenden Ferien, die evtl. schon anderweitig verplant waren. Zudem haben wir uns darauf geeinigt, regelmäßig Absprache über den Fortschritt unserer Arbeit zu halten.\\
+
+\textbf{Datenbanken}\\
+Die Datenbankrecherche hat ergeben, dass für unsere Zwecke mySQL oder NodeJS am optimalsten wäre. Die Definition der Datenbankschnittstelle zwischen DB und Frontend muss ebenfalls noch erledigt werden. Zudem haben wir festgestellt, dass die Bisher entworfene Datenbankoberfläche optisch nicht zum Rest der Anwendung passt, und deshalb überarbeitet werden muss.\\
+
+\textbf{Weitere Sprintziele:}
+\begin{itemize}
+\item Optimierung der Kostendarstellung
+\item negative Zahleingaben abfangen
+\item automatische Zoomfunktion bei Knoten- oder Kantenwahl
+\item allgemeine Bugfixes
+\end{itemize}
+
+
+\subsection{Aufgewendete Arbeitszeit pro Person$+$Arbeitspaket}
+{\small Autor: Jonas Gwozdz}
+
+\begin{longtable}{|p{4cm}|p{2cm}|p{1.2cm}|p{1.2cm}|p{0.7cm}|p{3.8cm}|}
+  \hline
+  Arbeitspaket                                                          & Person                & Start    & Ende     & h     & Artefakt                                                    \\
+  \hline
+  Tests für bereits geschriebenen Code                                  & Heldt, Erik           & 04.03.20 & 04.03.20 & 2     & Tests für ModifyDataControls.vue                            \\ \hline
+  Neue Strukturierung                                                   & Heldt, Erik           & 26.01.20 & 26.01.20 & 1     & Umstrukturierung des Projekts                               \\ \hline
+  Header Buttons und Metadaten-Speicherung                              & Heldt, Erik           & 05.03.20 & 12.03.20 & 6,75  & GraphHeader.vue                                             \\ \hline
+  Aufräumen der Branches im GitLab                                      & Heldt, Erik           & 29.03.20 & 29.03.20 & 1     & Organisatorische Aufgabe                               \\ \hline
+  Entfernen veralteter Komponenten und Methoden                         & Heldt, Erik           & 31.03.20 & 31.03.20 & 2     & Organisatorische Aufgabe                                             \\ \hline
+  Tests für Graphoptimierung                                            & Henning, Tim          & 04.04.20 & 40.40.20 & 12    & vargraph.spec.js        \\ \hline
+  Tests für bereits geschriebenen Code                                  & Herterich, Linus      & 30.01.20 & 12.02.20 & 7,5   & /code/cypress/integration/...                                     \\ \hline
+  Header Buttons und Metadaten-Speicherung                              & Herterich, Linus      & 28.03.20 & 31.03.20 & 2,25  & /vargraph/graph/... \& GraphHeader.vue                  \\ \hline
+  Aufräumen der Branches im GitLab                                      & Herterich, Linus      & 30.03.20 & 30.03.20 & 1     & Organisatorische Aufgabe  \\ \hline
+  Darstellung von Kanten/Attributen                                     & Herterich, Linus      & 03.04.20 & 03.04.20 & 2     & VarGraph.vue               \\ \hline
+  Remodel von Component NewGraph                                        & Herterich, Linus      & 30.03.20 & 30.03.20 & 3     & /vargraph/graph/...                   \\ \hline
+  Refactoring                                                           & Herterich, Linus      & 29.03.20 & 30.03.20 & 9     & /vargraph/graph/...                                 \\ \hline
+  Validierung: Login                                                    & Herterich, Linus      & 31.03.20 & 30.03.20 & 1,5   & /components/login/LoginForm                                  \\ \hline
+  Einheitliche Alerts                                                   & Herterich, Linus      & 31.03.20 & 31.03.20 & 3     & Dialogs.vue \\ \hline
+  Validierung CreateControls \& DetailControls                          & Herterich, Linus      & 31.03.20 & 01.04.20 & 5,5   & CreateControls.vue \& DetailControls.vue               \\ \hline
+  Bug: Mehrere Edges zwischen Knoten nicht möglich                      & Herterich, Linus      & 01.04.20 & 01.04.20 & 2     & /vargraph/graph/...                   \\ \hline
+  Knoten dort erstellen, wo rechtsklick passiert                        & Herterich, Linus      & 01.04.20 & 01.04.20 & 1,5   & /vargraph/graph/...                               \\ \hline
+  keybinds für Menüs                                                    & Herterich, Linus      & 02.04.20 & 02.04.20 & 1     &                                   \\ \hline
+  Keine Knoten aufeinander schieben                                     & Herterich, Linus      & 02.04.20 & 02.04.20 & 3     & /vargraph/graph/...  \\ \hline
+  Einstellungsmenü erstellen                                            & Herterich, Linus      & 03.40.20 & 05.04.20 & 5,5   &              \\ \hline
+  Tests für bereits geschriebenen Code                                  & Hohlfeld, Julius      & 05.02.20 & 04.03.20 & 10    & ZoomControls.spec \& SaveMenu.spec \& NewGraphMenu.spec \& DownloadMenu.spec \\ \hline
+  Dialogfenster für Speichern, Laden und Export                         & Hohlfeld, Julius      & 24.01.20 & 24.01.20 & 2     & Toolbar.vue \\ \hline
+  Validierung der möglichen Eingaben                                    & Hohlfeld, Julius      & 06.04.20 & 06.04.20 & 2     & divers                             \\ \hline
+  Refactoring                                                           & Hohlfeld, Julius      & 31.03.20 & 31.03.20 & 2     & /vargraph/graph/...                     \\ \hline
+  Testing für Kanten hinzufügen                                         & Koch, David           & 22.03.20 & 02.04.20 & 5     & addEdges.spec      \\ \hline
+\end{longtable}
+
+\subsection{Konkrete Code-Qualität im Sprint}
+{\small Autor: Jonas Gwozdz}
+
+Die Codequatlität im allgemeinen wurde während des Sprints erheblich durch das Refactoring verbessert. Zudem wurden in nahezu  allen Dateien einleitende Kommentare geschrieben, um die zukünftige Identifizierung der gebrauchten Dateien schneller und übersichtlicher zu gestalten.
+
+\subsection{Konkrete Test-Überdeckung im Sprint}
+{\small Autor: Jonas Gwozdz}
+
+Die geschriebenen Cypress-Tests decken bereits eine Vielzahl an Funktionalitäten des Programms ab. Dazu zählen die Buttons für die Database, den Download, das Ausloggen. Zudem wurde getestet: der Speicherdialog, die Zoomeinstellungen, der Header des Graphen, das Hinzufügen von Knoten und das Erstellen eines neuen Graphen.
+
+\subsection{Ergebnisse des Reviews}
+{\small Autor: Jonas Gwozdz}
+
+Anwesend: David, Erik, Julius J., Julius H., Jonas, Linus, Manuel, Matthias, Tim\\
+
+Im Rahmen des Reviews haben wir wie gewohnt die Ergebnisse des Sprint bewertet und Schwierigkeiten besprochen.\\
+
+\textbf{generelle Schwierigkeit: Testen}\\
+Um unsere Programm zu testen, entschieden wir uns für das Framework "Cypress" entschieden. dieses bietet End-to-End Testing an, welches allerdings nur Ausgaben des Programms auswerten kann, und deshalb sozusagen keinen Blick unter die Haube zulässt, und somit eventuell Fehler unentdeckt bleiben. \\
+
+\textbf{David:}
+\begin{itemize}
+\item Tests für Knotenfunktionalität geschrieben
+\item mit Kantentests begonnen
+\end{itemize}
+
+\textbf{Erik:}
+\begin{itemize}
+\item Data Controls durch Header Buttons ersetzt
+\item Editierungsfenster entfernt
+\item Header Buttons getestet
+\end{itemize}
+
+\textbf{Jonas:}
+\begin{itemize}
+\item Testübersicht erstellt
+\item Möglichkeit zum Informationsaustausch über Lücken und Bugs in Tests bereitgestellt
+\end{itemize}
+
+\textbf{Julius H.:}
+\begin{itemize}
+\item Tests für Toolbar, Zoom-Controls, Buttons und Eingabereihenfolgen geschrieben
+\end{itemize}
+
+\textbf{Julius H, Erik, Linus:}
+\begin{itemize}
+\item Refactoring des Graphen, Bugfixing und Validierung von Eingaben
+\end{itemize}
+
+\textbf{Linus:}
+\begin{itemize}
+\item Dialogue-Popups erstellt
+\item Kürzelgenerierung implementiert
+\item Knotenüberlagerung unterbunden, Mindestabstand implementiert
+\item Einstellungsmenü erstellt und Implementation begonnen
+\item Recherche zu Datenbankfenster
+\end{itemize}
+
+\subsection{Ergebnisse der Retrospektive}
+{\small Autor: Jonas Gwozdz}
+
+Anwesend: Alex, Erik, Julius J., Julius H., Jonas, Linus, Matthias, Tim\\
+
+Zu Beginn des Sprints gab es keine Fortschritte zu vermelden, da vorerst die Prüfungen zu überstehen waren. In den beiden Wochen vor Sprintende wurden allerdings die wichtigsten User-Stories und sogar etwas mehr abgearbeitet.\\
+
+\begin{center}
+\begin{tabular}{ |c|c| }
+\hline
+ Positiv & Negativ \\
+\hline 
+ -produktive Endphase & -anfangs keine Kommunikation \\
+ -viel Motivation bei Einigen & - wenig Motivation bei Einigen\\
+ & -vereinzelt Tests ohne Sinn\\
+ & -ausgefallene Meetings\\
+\hline     
+\end{tabular}
+\end{center}
+ 
+
+\subsection{Abschließende Einschätzung des Product-Owners}
+{\small Autor: xxx}
+
+XXX
+
+\subsection{Abschließende Einschätzung des Software-Architekten}
+{\small Autor: xxx}
+
+XXX
+
+\subsection{Abschließende Einschätzung des Team-Managers}
+{\small Autor: xxx}
+
+XXX
+
