@@ -1,5 +1,9 @@
 /* eslint-disable no-console */
 //Node.js setup for interface between front and backend
+//to test:
+//cd to code
+//node src/api.js
+//open localhost:8080 (works with serve code:  App running at: - Local:   http://localhost:8080/)
 
 //uses express module 
 const express = require('express');
@@ -18,5 +22,5 @@ api.listen(8080, () => {
 //req gives you a lot of information about the request
 api.get('/home/login', (req, res) => {
     console.log(req);
-    res.redirect('https://www.youtube.com/watch?v=dQw4w9WgXcQ')
+    res.redirect('https://www.youtube.com/watch?v=dQw4w9WgXcQ');
 });
