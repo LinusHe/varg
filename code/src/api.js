@@ -8,7 +8,7 @@ const express = require('express');
 const api = express();
 
 //3000 is the port number -> probably needs to change
-api.listen(3000, () => {
+api.listen(8080, () => {
     console.log('API success');
 });
 
@@ -16,7 +16,7 @@ api.listen(3000, () => {
 //a get request is send. The api will intercept and and do
 //the stuff defined here (req is the request, res is the response)
 //req gives you a lot of information about the request
-api.get('/', (req, res) => {
+api.get('/home/login', (req, res) => {
     console.log(req);
-    res.send('API says hi');
+    res.redirect('https://www.youtube.com/watch?v=dQw4w9WgXcQ')
 });
