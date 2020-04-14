@@ -11,17 +11,19 @@ cache:
 install_dependencies:
   stage: .pre
   script:
-    - ls
     - cd code
-    - ls
     - npm install
-    - npm install -g @vue/cli
-    - npm install -g @vue/cli-service-global
 
 build_code:
   stage: build
-  script: 
-  - ls
-  - cd code
-  - npm install
-  - npm run build
+  script:
+    - ls
+    - cd code
+    - npm install
+    - npm run build
+
+run_cypress:
+  stage: test
+  script:
+    - npm run serve
+    - npm run cypress:run
