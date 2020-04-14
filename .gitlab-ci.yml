@@ -1,8 +1,8 @@
 image: node:12.14.1
 
 stages:
-  - build
   - test
+  - build
 
 cache:
   paths:
@@ -14,6 +14,13 @@ install_dependencies:
     - cd code
     - npm install
 
+run_cypress:
+  stage: test
+  script:
+    - cd code
+    - npm run serve
+    - npm run cypress:run
+
 build_code:
   stage: build
   script:
@@ -21,9 +28,3 @@ build_code:
     - cd code
     - npm install
     - npm run build
-
-run_cypress:
-  stage: test
-  script:
-    - npm run serve
-    - npm run cypress:run
