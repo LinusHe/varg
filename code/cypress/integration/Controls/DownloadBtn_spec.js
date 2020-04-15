@@ -37,13 +37,12 @@ describe('Download-Button', () =>{
 
     it('should allow download with correct input', () => {
         cy.get('#fileName').type('Hexagon')
-        cy.get('#formatselect').click({force:true}) //this is necessary because v-select is masking the element
-        cy.get('[aria-labelledby=".json-list-item-281"]').click()
-        //doesn't work right now as I don't know how to access the object that has the method
-        //would be extremely useful
-       // cy.stub(downloadMenu, 'download') 
-       // cy.get('#download-menu-save').click()
-       // expect('download').to.be.called
+        cy.get('[data-cy=formatselect]').type('.json{enter}', {force: true})  
+        //data-cy=formatselect wählt die selectcomponent aus
+        // .json{enter}, force:true wählt als format .json aus
+        //cy.stub(downloadMenu, 'download') 
+        //cy.get('#download-menu-save').click()
+        //expect('download').to.be.called
        
     })
 })
