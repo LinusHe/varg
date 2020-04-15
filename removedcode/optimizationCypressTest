@@ -1,0 +1,86 @@
+/*/* eslint-disable no-console */
+
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
+
+
+describe('optimization', () => {
+
+   Cypress.on('uncaught:exception', (err, runnable) => {
+        // returning false here prevents Cypress from
+        // failing the test
+        return false
+      })
+      //
+   
+    before(() =>{
+    
+        cy.visit('/home/login')
+        cy.get('#email').type('VarG')
+        cy.get('#password').type('2020{enter}')
+        cy.get('#newGraph').click()
+        cy.get('#prodname').type('Testprodukt')
+        cy.get('#prodquantity').type('1000')
+        cy.get('.btn-creategraph').click()
+        
+     
+        
+    });
+     it('mounted cytoscpae component', () => {
+      const materials = ['A','B','C'] 
+        const process = ['Fräsen', 'Veredeln', 'Härten']
+        
+      for(let j = 0; j< materials.length;j++){
+        cy.get('#dial-open').click()
+        cy.get('#dial-add-node').click()
+        cy.get('#nodeCreateName').type(materials[j])
+        cy.get('#btn-create-node').click()
+        
+     }
+
+      cy.log(cyStore['data'])
+/*
+        cy.get('#dial-open').click()
+        cy.get('#dial-add-edge').click()
+        cy.get('#edgeCreateName').type(process[0])
+        cy.get('[data-cy=Start]').type(materials[0]+'{enter}', {force: true})
+        cy.get('[data-cy=End]').type(materials[1]+'{enter}', {force: true})
+        cy.get('#edgeCreateCosts').type("1")
+        cy.get('#edgeCreateTime').type("1")
+        cy.get('#edgeCreatesuCosts').type("1")
+        cy.get('#edgeCreatesuTime').type("1")
+        cy.get("#btn-create-edge").click()   
+        
+        cy.get('#dial-open').click()
+        cy.get('#dial-add-edge').click()
+        cy.get('#edgeCreateName').type(process[1])
+        cy.get('[data-cy=Start]').type(materials[1]+'{enter}', {force: true})
+        cy.get('[data-cy=End]').type(materials[2]+'{enter}', {force: true})
+        cy.get('#edgeCreateCosts').type("0.1")
+        cy.get('#edgeCreateTime').type("0.3")
+        cy.get('#edgeCreatesuCosts').type("2.4")
+        cy.get('#edgeCreatesuTime').type("3.5")
+        cy.get("#btn-create-edge").click() 
+        
+        cy.get('#dial-open').click()
+        cy.get('#dial-add-edge').click()
+        cy.get('#edgeCreateName').type(process[2])
+        cy.get('[data-cy=Start]').type(materials[0]+'{enter}', {force: true})
+        cy.get('[data-cy=End]').type(materials[3]+'{enter}', {force: true})
+        cy.get('#edgeCreateCosts').type("0.4")
+        cy.get('#edgeCreateTime').type("0.1")
+        cy.get('#edgeCreatesuCosts').type("4")
+        cy.get('#edgeCreatesuTime').type("7")
+        cy.get("#btn-create-edge").click() 
+    
+      cy.get('.btn-settings').click()
+      cy.get('[data-cy=startNodes]').type(materials[0]+'{enter}', {force: true})
+      cy.get('[data-cy=endNode]').type(materials[2]+'{enter}', {force: true})
+      cy.get('#startOptimizing').click()
+
+      
+    */
+       
+    });
+});
+*/
