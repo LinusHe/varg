@@ -52,6 +52,7 @@ describe('Optimizing tests', () => {
                 data: { id: 9, name: 'Z', source: 1, target: 2, cost: 0.1, time: 4, sucost: 0.3, sutime: 1, label: '' }
             });
         cyStore.data.cy = cyto
+        cyto.data("prodQuant", 1);
     });
     
     it('should show right Path after time optimizing', () => {
