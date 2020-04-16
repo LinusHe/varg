@@ -30,6 +30,18 @@ run_cypress:
     # - pip install pyscreenshot | tee log.txt
     - npm install
     - npm run cytest
+    artifacts:
+      expire_in: 1 week
+      when: always
+      paths:
+      - /builds/weicker/varg/code/cypress/screenshots
+      - /builds/weicker/varg/code/cypress/videos
+      - /builds/weicker/varg/code/servelog.txt
+      - /builds/weicker/varg/code/log.txt
+      reports:
+        junit:
+          - results/TEST-*.xml
+
   artifacts:
     paths:
       - code/servelog.txt
