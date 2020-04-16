@@ -1,4 +1,5 @@
-image: node:12.14.1
+# image: node:12.14.1
+image: cypress/base:10
 
 stages:
   - test
@@ -19,19 +20,20 @@ run_cypress:
   script:
     - cd code
     # - apt-get -y install xvfb
-    - apt update
-    # - apt upgrade
-    - apt-get install python-pip -qq
-    - apt-get install xvfb xserver-xephyr vnc4server -qq
-    - pip install pyvirtualdisplay
-    # optional
-    - apt-get install python-pil scrot -qq
-    - pip install pyscreenshot
+    # - apt update
+    # # - apt upgrade
+    # - apt-get install python-pip -qq | tee log.txt
+    # - apt-get install xvfb xserver-xephyr vnc4server -qq | tee log.txt
+    # - pip install pyvirtualdisplay | tee log.txt
+    # # optional
+    # - apt-get install python-pil scrot -qq | tee log.txt
+    # - pip install pyscreenshot | tee log.txt
     - npm install
     - npm run cytest
   artifacts:
     paths:
       - code/servelog.txt
+      - code/log.txt
     expire_in: 1 week
 
 build_code:
