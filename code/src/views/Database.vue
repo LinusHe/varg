@@ -2,7 +2,7 @@
 
 <template>
   <div class="database-page">
-    <v-card class="settings-dialog" max-width="750"> 
+    <v-card class="settings-dialog" max-width="1000"> 
       <v-card-title class="text-center justify-center mb-3 pt-8" color="primary">
         <h1>Datenbank</h1>
       </v-card-title>
