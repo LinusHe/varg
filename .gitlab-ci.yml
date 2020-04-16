@@ -20,7 +20,7 @@ run_cypress:
     - cd code
     # - apt-get -y install xvfb
     - apt update
-    - apt upgrade
+    # - apt upgrade 
     - apt-get install python-pip
     - apt-get install xvfb xserver-xephyr vnc4server
     - pip install pyvirtualdisplay
