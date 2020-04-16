@@ -19,14 +19,14 @@ run_cypress:
   script:
     - cd code
     # - apt-get -y install xvfb
-    - apt update
-    # - apt upgrade 
-    - apt-get install python-pip
-    - apt-get install xvfb xserver-xephyr vnc4server
-    - pip install pyvirtualdisplay
+    - apt update -f
+    # - apt upgrade
+    - apt-get install python-pip -f
+    - apt-get install xvfb xserver-xephyr vnc4server -f
+    - pip install pyvirtualdisplay -f
     # optional
-    - apt-get install python-pil scrot
-    - pip install pyscreenshot
+    - apt-get install python-pil scrot -f
+    - pip install pyscreenshot -f
     - npm install
     - npm run cytest
   artifacts:
