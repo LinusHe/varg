@@ -46,9 +46,10 @@
             <v-col v-for="item in props.items" :key="item.name" cols="12" sm="12" md="6" lg="6">
               <v-card>
                 <v-card-title class="subheading font-weight-bold">{{ item.name }}</v-card-title>
-
+                  <v-img
+                    src="https://d2slcw3kip6qmk.cloudfront.net/marketing/pages/chart/UML-state-diagram-tutorial/FeaturedImage.png"
+                  ></v-img>
                 <v-divider></v-divider>
-
                 <v-list dense>
                   <v-list-item v-for="(key, index) in filteredKeys" :key="index">
                     <v-list-item-content :class="{ 'blue--text': sortBy === key }">{{ key }}:</v-list-item-content>
