@@ -8,17 +8,17 @@ cache:
   paths:
     - node_modules/
 
-install_dependencies:
-  stage: .pre
-  script:
-    - cd code
-    - npm install
+# install_dependencies:
+#   stage: .pre
+#   script:
+#     - cd code
+#     - npm install
 
 run_cypress:
   stage: test
   script:
     - cd code
-    - apt-get -y install xvfb
+    # - apt-get -y install xvfb
     - npm install
     - npm run cytest
   artifacts:
