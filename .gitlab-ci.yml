@@ -19,10 +19,7 @@ run_cypress:
   script:
     - cd code
     - npm install
-    - npm install wait-on
-    - wait-on http://localhost:8080 && npm run cypress:run
-    - npm run --silent serve
-    - ls
+    - npm run cytest
 
 build_code:
   stage: build
