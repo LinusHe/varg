@@ -20,7 +20,7 @@ run_cypress:
     - cd code
     - npm install
     - npm run serve
-    - npm run cypress:run
+    - wait-on http://localhost:8080 && npm run cypress:run
 
 build_code:
   stage: build
