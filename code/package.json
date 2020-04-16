@@ -12,6 +12,7 @@
     "cypress:run": "cypress run"
   },
   "dependencies": {
+    "axios": "^0.19.2",
     "core-js": "^3.4.3",
     "cytoscape": "^3.12.1",
     "cytoscape-klay": "^3.1.3",
