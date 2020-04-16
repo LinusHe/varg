@@ -10,9 +10,9 @@
     "test": "jest",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
-    "start": "vue-cli-service serve --port 8080",
+    "silentstart": "vue-cli-service serve --port 8080 > servelog.txt 2>&1",
     "cy:run": "cypress run",
-    "cytest": "start-server-and-test start http://localhost:8080 cy:run"
+    "cytest": "start-server-and-test silentstart http://localhost:8080 cy:run"
   },
   "dependencies": {
     "core-js": "^3.4.3",

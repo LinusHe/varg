@@ -18,8 +18,13 @@ run_cypress:
   stage: test
   script:
     - cd code
+    - apt-get -y install xvfb
     - npm install
     - npm run cytest
+  artifacts:
+    paths:
+      - code/servelog.txt
+    expire_in: 1 week
 
 build_code:
   stage: build
