@@ -21,11 +21,11 @@ run_cypress:
     # - apt-get -y install xvfb
     - apt update
     # - apt upgrade
-    - apt-get install python-pip -y -qq
-    - apt-get install xvfb xserver-xephyr vnc4server -y -qq
-    - pip install pyvirtualdisplay -y -qq
+    - apt-get install python-pip -qq
+    - apt-get install xvfb xserver-xephyr vnc4server -qq
+    - pip install pyvirtualdisplay
     # optional
-    - apt-get install python-pil scrot -y -qq
+    - apt-get install python-pil scrot -qq
     - pip install pyscreenshot
     - npm install
     - npm run cytest
