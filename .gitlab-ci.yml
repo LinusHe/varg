@@ -19,7 +19,7 @@ run_cypress:
   script:
     - cd code
     # - apt-get -y install xvfb
-    - apt update -f
+    - apt update
     # - apt upgrade
     - apt-get install python-pip -f
     - apt-get install xvfb xserver-xephyr vnc4server -f
