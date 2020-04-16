@@ -41,13 +41,7 @@ run_cypress:
       reports:
         junit:
           - results/TEST-*.xml
-
-  artifacts:
-    paths:
-      - code/servelog.txt
-      - code/log.txt
-    expire_in: 1 week
-
+          
 build_code:
   stage: build
   script:
