@@ -19,8 +19,8 @@ run_cypress:
   script:
     - cd code
     - npm install
-    - npm run serve
     - wait-on http://localhost:8080 && npm run cypress:run
+    - npm run serve
     - ls
 
 build_code:
