@@ -24,6 +24,7 @@
                 :items="formatname"
                 :rules="[v => !!v || 'Dateiformat muss gewählt werden']"
                 label="Format"
+                data-cy=formatselect
               ></v-select>
             </v-col>
             <v-col sm="1" class="mt-5">
