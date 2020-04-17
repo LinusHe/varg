@@ -61,5 +61,15 @@ export default {
       }
       pathToEndTime.addClass("highlighted");
     }
+  },
+
+  getNextNodes(start) {
+    cyStore.data.cy.elements().removeClass("highlighted");
+    let cy = cyStore.data.cy
+
+    //return???
+    
+    return cy.getElementById(start[0]).outgoers('edge')
   }
+
 };

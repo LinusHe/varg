@@ -100,6 +100,72 @@ export default {
         option = "optionTime";
       } else {
         option = "optionCosts";
+      }  
+
+
+        
+
+    let sortNodes = [];
+      for (let i = 0; i < this.startSelect.length; i++) {
+
+        let Edges = [];
+
+        let optimizeNode = [3]
+        optimizeNode [0] = this.startSelect[i]  //NodeID
+        optimizeNode [1] = Edges                //usedEdges
+        optimizeNode [2] = 0                    //cost
+        
+        sortNodes.push(optimizeNode);
+      }
+
+      for (let i = 0; i < sortNodes.length; i++) {
+
+        let Edges = [];
+
+        let optimizeNode = [3]
+
+        let nextEdge = this.getGraph().getNextNodes(sortNodes[i])   //???
+      
+        for (let j = 0; i < nextEdge.length; j++) {
+
+          optimizeNode [0] = nextEdge[j].target  //NodeID
+          optimizeNode [1] = sortNodes[i][1].push(nextEdge[j])                //usedEdges
+          optimizeNode [2] = sortNodes[i][2] + nextEdge[j].cost                   //cost
+        
+          sortNodes.push(optimizeNode);
+
+          console.log(0)
+        }
+      }    
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+/*      
+      let option;
+      if (this.optimizingOption === false) {
+        // True means option costs and false is option time
+        option = "optionTime";
+      } else {
+        option = "optionCosts";
       }
 
       let startIDs = [];
@@ -112,6 +178,7 @@ export default {
       let endID = this.itemsID[indexEnd];
 
       this.getGraph().findPath(this.getGraph(), option, startIDs, endID);
+      */
     }
   }
 };
