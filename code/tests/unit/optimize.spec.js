@@ -15,19 +15,19 @@ describe('Optimizing tests', () => {
     
     beforeEach(() => {
 
-        cyto.add({ // node Edelstahl
+        cyto.add({ 
             data: { id: 0, name: 'A' },
         })
-        cyto.add({ // node Edelstahl
+        cyto.add({ 
             data: { id: 1, name: 'B' },
         })
-        cyto.add({ // node Edelstahl
+        cyto.add({ 
             data: { id: 2, name: 'C' },
         })
-        cyto.add({ // node Edelstahl
+        cyto.add({ 
             data: { id: 3, name: 'D' },
         })
-        cyto.add({ // node Edelstahl
+        cyto.add({ 
             data: { id: 4, name: 'E' },
         })
         
@@ -52,7 +52,7 @@ describe('Optimizing tests', () => {
                 data: { id: 9, name: 'Z', source: 1, target: 2, cost: 0.1, time: 4, sucost: 0.3, sutime: 1, label: '' }
             });
         cyStore.data.cy = cyto
-        cyto.data("prodQuant", 1);
+        cyStore.data.cy.data("prodQuant", 1);
     });
     
     it('should show right Path after time optimizing', () => {
@@ -84,9 +84,26 @@ describe('Optimizing tests', () => {
 
         }
         expect(array).toMatchObject(['A','C','E','V','Y'])
-        //nur zum test
-        
+
 
         
     });
+
+    it('should not change the route after changing prodQuant', () => {
+        cyStore.data.cy.data("prodQuant", 2134)
+
+        let array = []
+        optimizations.findPath(null, 'optionTime' , ["0","1"], "4")
+        let collection = cyStore.data.cy.elements()
+        for(let i = 0; i < collection.length; i++){
+            if(collection[i].hasClass('highlighted') == true){
+                array.push(collection[i].data('name'))
+            }
+
+        }
+        expect(array).toMatchObject(['A','C','E','V','Y'])
+
+        
+    });
+
 });
