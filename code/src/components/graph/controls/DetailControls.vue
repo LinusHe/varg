@@ -85,16 +85,15 @@
             </v-row>
 
             <!-- Save & Delete Buttons -->
-            <v-row>
-              <v-spacer sm="4" />
-              <v-col sm="4" align="right">
-                <v-btn color="success" :disabled="!validNodes" @click="saveNode()">Speichern</v-btn>
+            <v-row justify="end">
+              <v-col sm="4">
+                <v-btn color="green darken-1" text :disabled="!validNodes" @click="saveNode()">Speichern</v-btn>
               </v-col>
-              <v-col sm="4" align="right">
-                <v-btn color="warning" @click="openNodeDeleteMenu()">Löschen</v-btn>
+              <v-col sm="4">
+                <v-btn color="error" text @click="openNodeDeleteMenu()">Löschen</v-btn>
               </v-col>
-              <v-col sm="4" align="right">
-                <v-btn color="error" @click="cancel()">Abbrechen</v-btn>
+              <v-col sm="4">
+                <v-btn color="grey" text @click="cancel()">Abbrechen</v-btn>
               </v-col>
               <v-dialog v-model="nodeDeleteDialog" persistent max-width="400">
                 <v-card>
@@ -256,16 +255,15 @@
               </v-row>
 
               <!-- Save & Delete Buttons -->
-              <v-row>
-                <v-spacer sm="4" />
-                <v-col sm="4" align="right">
-                  <v-btn color="success" :disabled="!validEdges" @click="saveEdge()">Speichern</v-btn>
+              <v-row justify="end">
+                <v-col sm="4">
+                  <v-btn color="green darken-1" text :disabled="!validEdges" @click="saveEdge()">Speichern</v-btn>
                 </v-col>
-                <v-col sm="4" align="right">
-                  <v-btn color="warning" @click="openEdgeDeleteMenu">Löschen</v-btn>
+                <v-col sm="4">
+                  <v-btn color="error" text @click="openEdgeDeleteMenu">Löschen</v-btn>
                 </v-col>
-                <v-col sm="4" align="right">
-                  <v-btn color="error" @click="cancel">Abbrechen</v-btn>
+                <v-col sm="4">
+                  <v-btn color="grey" text @click="cancel">Abbrechen</v-btn>
                 </v-col>
                 <v-dialog v-model="edgeDeleteDialog" persistent max-width="400">
                   <v-card>

@@ -31,20 +31,20 @@
               <v-icon @click="openHelpDialog()">mdi-help-circle-outline</v-icon>
             </v-col>
           </v-row>
-          <v-row class="mt-8">
-            <v-col sm="6">
+          <v-row justify="end">
+            <v-col sm="3">
               <v-btn
-                color="success"
-                block
+                color="green darken-1"
+                text
                 :disabled="!valid"
                 id="download-menu-save"
                 @click="download"
               >Download</v-btn>
             </v-col>
-            <v-col sm="6">
+            <v-col sm="4">
               <v-btn
-                color="error"
-                block
+                color="grey"
+                text
                 id="download-menu-cancel"
                 @click="clearFields"
               >Abbrechen</v-btn>

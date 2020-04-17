@@ -130,18 +130,25 @@
             </v-row>
 
             <!-- Create Buttons -->
-            <v-row>
-              <v-col sm="6" align="right">
+            <v-row justify="end">
+              <v-col sm="4">
                 <v-btn
                   :disabled="!validNodes"
-                  color="success"
+                  color="green darken-1"
+                  text
                   id="btn-create-node"
                   @click="createNode()"
                 >Hinzufügen
                 </v-btn>
               </v-col>
-              <v-col sm="6">
-                <v-btn color="error" id="btn-cancel-node" @click="cancel()">Abbrechen</v-btn>
+              <v-col sm="4">
+                <v-btn
+                  color="grey"
+                  text
+                  id="btn-cancel-node"
+                  @click="cancel()"
+                >Abbrechen
+                </v-btn>
               </v-col>
             </v-row>
           </v-form>
@@ -278,18 +285,24 @@
               </v-row>
 
               <!-- Create Buttons -->
-              <v-row class="mb-5">
-                <v-col sm="6" align="right">
+              <v-row class="mb-5" justify="end">
+                <v-col sm="4">
                   <v-btn
                     :disabled="!validEdges"
-                    color="success"
+                    color="green darken-1"
+                    text
                     id="btn-create-edge"
                     @click="createEdge()"
                   >Hinzufügen
                   </v-btn>
                 </v-col>
-                <v-col sm="6">
-                  <v-btn color="error" id="btn-cancel-edge" @click="cancel()">Abbrechen</v-btn>
+                <v-col sm="4">
+                  <v-btn
+                    color="grey"
+                    text
+                    id="btn-cancel-edge"
+                    @click="cancel()"
+                  >Abbrechen</v-btn>
                 </v-col>
               </v-row>
             </v-form>

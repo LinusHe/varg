@@ -6,15 +6,15 @@
         <v-card-text>
           <p>Möchtest du den Graph speichern?</p>
           <em>Wenn der Graph verworfen wird, besteht keine Möglichkeit, den Graph wiederherzustellen.</em>
-          <v-row sm="10" class="mt-8">
+          <v-row justify="end">
             <v-col sm="4">
-              <v-btn color="success" id="newgraph-menu-save" block @click="save">Speichern</v-btn>
+              <v-btn color="green darken-1" text id="newgraph-menu-save" block @click="save">Speichern</v-btn>
             </v-col>
             <v-col sm="4">
-              <v-btn color="warning" id="newgraph-menu-discard" block @click="discard">Verwerfen</v-btn>
+              <v-btn color="error" text id="newgraph-menu-discard" block @click="discard">Verwerfen</v-btn>
             </v-col>
             <v-col sm="4">
-              <v-btn color="error" id="newgraph-menu-cancel" block @click="dialog=false">Abbrechen</v-btn>
+              <v-btn color="grey" text id="newgraph-menu-cancel" block @click="dialog=false">Abbrechen</v-btn>
             </v-col>
           </v-row>
         </v-card-text>

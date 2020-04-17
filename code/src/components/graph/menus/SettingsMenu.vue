@@ -230,8 +230,8 @@
       </v-tabs>
       <v-card-actions class="pr-5 pb-5 mt-3">
         <v-spacer></v-spacer>
-        <v-btn color="grey" text @click="dialog = false">Schließen</v-btn>
         <v-btn color="green darken-1" text @click="saveSettings()">Anwenden</v-btn>
+        <v-btn color="grey" text @click="dialog = false">Schließen</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
