@@ -6,7 +6,7 @@
         class="newgraph-headline mb-1 font-weight-black"
       >Neues Produkt</v-list-item-title>
       <p class="mt-4 mb-8 font-weight-light" align="center">
-        um einen neuen VARG-Variantengraph zu erstellen,
+        um einen neuen VarGraph zu erstellen,<br>
         musst du zunächst die Produkt-Ausgangsdaten eingeben:
       </p>
       <v-form ref="form" v-model="valid" lazy-validation>
@@ -32,16 +32,25 @@
             ></v-text-field>
           </v-col>
         </v-row>
-        <v-col class="mt-5" align="center">
-          <v-btn
-            @click="start"
-            :disabled="!valid"
-            large
-            width="200"
-            color="primary"
-            class="btn-creategraph"
-          >Starten</v-btn>
-        </v-col>
+        <v-row justify="end">
+          <v-col sm="3" class="mt-3">
+            <v-btn
+              @click="start()"
+              :disabled="!valid"
+              color="primary"
+              text
+              class="btn-creategraph"
+            >Starten</v-btn>
+          </v-col>
+          <v-col sm="3" class="mt-3">
+            <v-btn
+              @click="back()"
+              color="grey"
+              text
+              class="btn-creategraph"
+            >Zurück</v-btn>
+          </v-col>
+        </v-row>
       </v-form>
     </v-list-item-content>
   </v-list-item>
@@ -76,6 +85,10 @@ export default {
         // go to graph page
         this.$router.push({ name: "graph" });
       }
+    },
+    back() {
+      // go to home page
+      this.$router.push({ name: "menu" });
     }
   }
 };
