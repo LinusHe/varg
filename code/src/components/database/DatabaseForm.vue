@@ -11,10 +11,6 @@
     >
       <template v-slot:header>
         <v-toolbar dark color="blue darken-3" class="mb-1">
-          <v-btn large depressed color="blue" :value="true" @click="backBtn">
-                <v-icon>mdi-arrow-left</v-icon>
-          </v-btn>
-          <v-spacer></v-spacer>
           <v-text-field v-model="search" clearable flat solo-inverted hide-details label="Search"></v-text-field>
           <template v-if="$vuetify.breakpoint.mdAndUp">
             <v-spacer></v-spacer>

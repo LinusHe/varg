@@ -1,11 +1,15 @@
 <style lang="less"></style>
-
+<!-- Datenbankansicht von Home-->
 <template>
   <div class="database-page">
     <v-card class="settings-dialog" max-width="1000">
-      <v-card-title class="text-center justify-center mb-3 pt-8" color="primary">
-        <!-- Hier müsste der Zurück Button rein -->
+      <v-card-title class="text-center justify-center mb-3 pt-8" color="primary" >
+        <v-btn large depressed color="blue" :value="true" @click="backBtn">
+                <v-icon color="white">mdi-arrow-left</v-icon>
+          </v-btn>
+          <v-spacer></v-spacer>
         <h1>Datenbank</h1>
+        <v-spacer></v-spacer>
       </v-card-title>
       <datenbank />
     </v-card>
@@ -21,6 +25,11 @@ export default {
   name: "database",
   components: {
     datenbank
+  },
+  methods: {
+    backBtn() {
+      this.$router.replace("/home/menu");
+    }
   }
 };
 </script>
