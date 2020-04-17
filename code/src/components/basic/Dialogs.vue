@@ -1,5 +1,5 @@
 <template>
-  <div class="varg-alert">
+  <div class="varg-alert" id="varg-dialog">
     <v-snackbar :color="color" :timeout="dialogTimeout" v-model="dialogVisible">
       <v-icon v-show="info" color="#ffffff" class="ml-2 mr-8">mdi-information</v-icon>
       <v-icon v-show="warning" color="#ffffff" class="ml-2 mr-8">mdi-exclamation</v-icon>
