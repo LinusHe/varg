@@ -19,11 +19,12 @@ const routes = [
   },
   {
     path: "/home",
-    name: "login",
+    name: "home",
     component: Home,
     children: [
       {
         path: "login",
+        name: "login",
         component: Login,
         meta: {
           title: "Varg - Login"
