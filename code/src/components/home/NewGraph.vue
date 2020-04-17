@@ -47,7 +47,7 @@
               @click="back()"
               color="grey"
               text
-              class="btn-creategraph"
+              class="newgraph-btn-back"
             >Zurück</v-btn>
           </v-col>
         </v-row>
