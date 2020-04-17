@@ -217,6 +217,7 @@
                     v-model="startSelect"
                     id="Startzustand"
                     :items="itemsName"
+                    :rules="startRules"
                     label="Startzustand"
                   ></v-select>
                 </v-col>
@@ -228,7 +229,7 @@
                     v-model="endSelect"
                     id="Endzustand"
                     :items="itemsName"
-                    :rules="startEndRule"
+                    :rules="endRules"
                     label="Endzustand"
                   ></v-select>
                 </v-col>
@@ -385,8 +386,12 @@
           v => !!v || v != 0 || "Darf nicht leer sein",
           v => v >= 0 || "nicht negativ"
         ],
-        startEndRule: [
-          v => v != this.startSelect || "Ende muss sich vom Start unterscheiden"
+        startRules: [
+          v => !!v || "Startzustand ist benötigt",
+        ],
+        endRules: [
+          v => !!v || "Endzustand ist benötigt",
+          v => v != this.startSelect || "Endzustand muss sich vom Startzustand unterscheiden"
         ]
       };
     },
