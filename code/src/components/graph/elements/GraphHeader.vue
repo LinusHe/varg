@@ -91,26 +91,26 @@
       </div>
     </div>-->
     <v-row>
-      <v-col align="left" sm="1"><h1 class="headline mb-1 ml-12">varg</h1></v-col>
+      <v-col align="left" xs="12" sm="1"><h1 class="headline mb-1 ml-12">varg</h1></v-col>
 
       <v-col align="center">
-        <v-btn outlined tile color="#b9c5ff">
+        <v-btn outlined tile color="#b9c5ff" class="bora-l-10 bo-r-0">
           <v-icon dark>mdi-plus</v-icon>
           Neuer Graph
         </v-btn>
-        <v-btn outlined tile color="#b9c5ff">
+        <v-btn outlined tile color="#b9c5ff" class="bo-r-0">
           <v-icon class="mr-1">mdi-database</v-icon>
           Datenbank
         </v-btn>
-        <v-btn outlined tile color="#b9c5ff">
+        <v-btn outlined tile color="#b9c5ff" class="bo-r-0">
           <v-icon class="mr-1">mdi-import</v-icon>
           Import
         </v-btn>
-        <v-btn outlined tile color="#b9c5ff">
+        <v-btn outlined tile color="#b9c5ff" class="bo-r-0">
           <v-icon class="mr-1">mdi-export</v-icon>
           Export
         </v-btn>
-        <v-btn outlined tile color="#b9c5ff">
+        <v-btn outlined tile color="#b9c5ff" class="bora-r-10">
           <v-icon class="mr-1">mdi-cog</v-icon>
           Einstellungen
         </v-btn>
