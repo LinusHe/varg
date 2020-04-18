@@ -67,9 +67,23 @@ export default {
     cyStore.data.cy.elements().removeClass("highlighted");
     let cy = cyStore.data.cy
 
-    //return???
+
+    let nextEdge = [3];
+    let nextEdgesArray = [];
+    let nextEdges = cy.getElementById(start[0]).outgoers('edge');
+
+
+    nextEdges.forEach(element => {
+      console.log(1000)
+      console.log(element.data("id"))
+      nextEdge [0] = element.data("target")                           //NodeID
+      nextEdge [1] = start[1].push(element.data("id"))                //usedEdges
+      nextEdge [2] = start[2] + element.data("cost")                   //cost
+      nextEdgesArray.push(nextEdge)
+      });
+
     
-    return cy.getElementById(start[0]).outgoers('edge')
+    return nextEdgesArray
   }
 
 };

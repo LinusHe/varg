@@ -102,16 +102,20 @@ export default {
         option = "optionCosts";
       }  
 
+      let startIDs = []
+      for (let i = 0; i < this.startSelect.length; i++) {
+        let indexStart = this.itemsName.indexOf(this.startSelect[i]);
+        startIDs.push(this.itemsID[indexStart]);
+      }
 
         
 
-    let sortNodes = [];
-      for (let i = 0; i < this.startSelect.length; i++) {
-
+      let sortNodes = [];
+      for (let i = 0; i < startIDs.length; i++) {
         let Edges = [];
 
         let optimizeNode = [3]
-        optimizeNode [0] = this.startSelect[i]  //NodeID
+        optimizeNode [0] = startIDs[i]  //NodeID
         optimizeNode [1] = Edges                //usedEdges
         optimizeNode [2] = 0                    //cost
         
@@ -119,22 +123,29 @@ export default {
       }
 
       for (let i = 0; i < sortNodes.length; i++) {
-
+        console.log(sortNodes.length)
         let Edges = [];
 
         let optimizeNode = [3]
 
-        let nextEdge = this.getGraph().getNextNodes(sortNodes[i])   //???
+        let nextEdges = this.getGraph().getNextNodes(sortNodes[i])   
       
-        for (let j = 0; i < nextEdge.length; j++) {
+        for (let j = 0; j < nextEdges.length; j++) {
 
-          optimizeNode [0] = nextEdge[j].target  //NodeID
-          optimizeNode [1] = sortNodes[i][1].push(nextEdge[j])                //usedEdges
-          optimizeNode [2] = sortNodes[i][2] + nextEdge[j].cost                   //cost
-        
-          sortNodes.push(optimizeNode);
+          console.log(nextEdges.length)
 
-          console.log(0)
+          for (let k = 0; k < sortNodes.length; k++) {
+            if (sortNodes[k][0] == nextEdges [j][0]) {
+              if (sortNodes[k][2] > nextEdges [j][2]) {
+                sortNodes.push(nextEdges[j])
+              }
+            }
+            else {
+              sortNodes.push(nextEdges[j])
+            }
+            
+          }
+
         }
       }    
     
