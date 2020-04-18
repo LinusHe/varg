@@ -100,6 +100,10 @@ export default {
         switch (this.btntext) {
           case "Speichern":
             if (this.DataBaseName != "" && this.DataBaseName != null) {
+              //Overwrites default name
+               this.getGraph()
+                .getCytoGraph(this.getGraph())
+                .data("filename", this.DataBaseName);
               let content = ExJSon.CreateJSon(this.getGraph());
               //Stringify makes content readable
               content = JSON.stringify(content, null, 2);
@@ -125,6 +129,9 @@ export default {
           case "Überschreiben":
             if (this.DataBaseName != "" && this.DataBaseName != null) {
               //Creates raw JSon Data that is unreadable
+              this.getGraph()
+                .getCytoGraph(this.getGraph())
+                .data("filename", this.DataBaseName);
               let content = ExJSon.CreateJSon(this.getGraph());
               //Stringify makes content readable
               content = JSON.stringify(content, null, 2);

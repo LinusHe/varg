@@ -14,7 +14,7 @@ export default class TestDatabase {
    * on the save array
    */
   save(cytograph, overwrite) {
-    const index = this.searchExisting(cytograph["prodName"]);
+    const index = this.searchExisting(cytograph["filename"]);
     if (index >= 0) {
       if (overwrite) {
         this.cytographArray[index] = cytograph;
@@ -40,7 +40,7 @@ export default class TestDatabase {
    */
   searchExisting(graphName) {
     for (var i = 0; i < this.cytographArray.length; i++) {
-      if ((this.cytographArray[i])["prodName"] === graphName) {
+      if ((this.cytographArray[i])["filename"] === graphName) {
         return i;
       }
     }

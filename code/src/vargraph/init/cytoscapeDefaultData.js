@@ -3,6 +3,7 @@ const data = {
   latestSave: null,
 
   // Graph name and quantity
+  filename: "DefaultFileName",
   prodName: "DefaultProductName",
   prodQuant: 1,
 
