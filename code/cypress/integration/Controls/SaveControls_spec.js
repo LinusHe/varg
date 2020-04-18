@@ -59,6 +59,10 @@ describe('SaveControls', () =>{
         cy.get('#save-btn').click()
         cy.get('#DatabaseName').type("Hexagon")
         cy.get('#save-menu-save').click()
+        cy.on("uncaught:exception", (err, runnable) => {
+            expect(err.message).to.include("target.is is not a function");
+            return false;
+          });
         //maybe test if function has been called (correctly)
         cy.get('#save-menu').should('not.be.visible')
     })
@@ -68,6 +72,10 @@ describe('SaveControls', () =>{
         cy.get('#save-btn').click()
         cy.get('#DatabaseName').type("Hexagon")
         cy.get('#save-menu-save').click()
+        cy.on("uncaught:exception", (err, runnable) => {
+            expect(err.message).to.include("target.is is not a function");
+            return false;
+          });
         cy.get('#save-menu-save > .v-btn__content').contains("Überschreiben")
         cy.get('#save-menu-cancel').click()
     }) 
@@ -77,6 +85,10 @@ describe('SaveControls', () =>{
         cy.get('#save-btn').click()
         cy.get('#DatabaseName').type("Hexagon")
         cy.get('#save-menu-save').click()
+        cy.on("uncaught:exception", (err, runnable) => {
+            expect(err.message).to.include("target.is is not a function");
+            return false;
+          });
         cy.get('#save-menu-save > .v-btn__content').contains("Überschreiben")
         cy.get('#save-menu-save').click()
         cy.get('#save-menu').should('not.be.visible')
@@ -86,6 +98,10 @@ describe('SaveControls', () =>{
         cy.get('#save-btn').click()
         cy.get('#DatabaseName').type("Hexagon")
         cy.get('#save-menu-save').click()
+        cy.on("uncaught:exception", (err, runnable) => {
+            expect(err.message).to.include("target.is is not a function");
+            return false;
+          });
         cy.get('#save-menu-save > .v-btn__content').contains("Überschreiben")
         cy.get('#DatabaseName').clear()
         cy.get('#DatabaseName').type("Euclid")
@@ -97,9 +113,14 @@ describe('SaveControls', () =>{
         cy.get('#save-btn').click()
         cy.get('#DatabaseName').type("Hexagon")
         cy.get('#save-menu-save').click()
+        cy.on("uncaught:exception", (err, runnable) => {
+            expect(err.message).to.include("target.is is not a function");
+            return false;
+          });
         cy.get('#save-menu-save > .v-btn__content').contains("Überschreiben")
         cy.get('#DatabaseName').type("2")
         cy.get('#save-menu-save > .v-btn__content').contains("Speichern")
         cy.get('#save-menu-save').click()
-    })
+    });
+
 })

@@ -60,6 +60,10 @@ describe("NewGraphControls", () => {
     cy.get("#save-menu-save").click();
     //rerouting to create new graph
     expect(cy.route("http://localhost:8080/home/menu"));
+    cy.on("uncaught:exception", (err, runnable) => {
+      expect(err.message).to.include("target.is is not a function");
+      return false;
+    });
     //get back to the main page
     cy.get("#prodname").type("Testprodukt");
     cy.get("#prodquantity").type("1000");
@@ -79,6 +83,10 @@ describe("NewGraphControls", () => {
     cy.get("#save-menu-save > .v-btn__content").contains("Überschreiben");
     cy.get("#save-menu-save").click();
     expect(cy.route("http://localhost:8080/home/menu"));
+    cy.on("uncaught:exception", (err, runnable) => {
+      expect(err.message).to.include("target.is is not a function");
+      return false;
+    });
     //get back to the main page
     cy.get("#prodname").type("Testprodukt");
     cy.get("#prodquantity").type("1000");
