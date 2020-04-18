@@ -91,7 +91,7 @@
       </div>
     </div>-->
     <v-row>
-      <v-col align="left" sm="1"><h1 class="headline mb-1">varg</h1></v-col>
+      <v-col align="left" sm="1"><h1 class="headline mb-1 ml-12">varg</h1></v-col>
 
       <v-col align="center">
         <v-btn outlined tile color="#b9c5ff">
@@ -116,7 +116,7 @@
         </v-btn>
       </v-col>
 
-      <v-col align="right" sm="1">
+      <v-col align="right" sm="1" class="mr-12">
         <v-avatar color="red">
           <span class="white--text headline">CJ</span>
         </v-avatar>
