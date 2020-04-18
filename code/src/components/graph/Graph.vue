@@ -24,6 +24,7 @@
           <DownloadMenu ref="downloadMenu" />
           <RightClickMenu ref="rightClickMenu" />
           <SettingsMenu ref="settingsMenu" />
+          <DatabaseMenu ref="databaseMenu" />
 
         </v-layout>
       </v-container>
@@ -45,6 +46,7 @@ import SaveMenu from "@/components/graph/menus/SaveMenu";
 import DownloadMenu from "@/components/graph/menus/DownloadMenu";
 import RightClickMenu from "@/components/graph/menus/RightClickMenu";
 import SettingsMenu from "@/components/graph/menus/SettingsMenu";
+import DatabaseMenu from "@/components/graph/menus/DatabaseMenu";
 
 export default {
   name: "NodeControls",
@@ -60,7 +62,8 @@ export default {
     DownloadMenu,
     RightClickMenu,
     ZoomControls,
-    SettingsMenu
+    SettingsMenu,
+    DatabaseMenu
   }
 };
 </script>

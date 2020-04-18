@@ -21,6 +21,7 @@ const routes = [
     path: "/home",
     name: "home",
     component: Home,
+    redirect: "/home/menu",
     children: [
       {
         path: "login",
@@ -47,6 +48,14 @@ const routes = [
           requiresAuth: true,
           title: "Varg - Neuer Graph"
         }
+      },
+      {
+        path: "database",
+        name: "Varg - Datenbank import",
+        component: Database,
+        meta: {
+          requiresAuth: true
+        }
       }
     ]
   },
@@ -58,14 +67,6 @@ const routes = [
       requiresAuth: true,
       requiresGraph: true,
       title: "Varg - Graph Editor"
-    }
-  },
-  {
-    path: "/database",
-    name: "Varg - Datenbank import",
-    component: Database,
-    meta: {
-      requiresAuth: true
     }
   }
 ];

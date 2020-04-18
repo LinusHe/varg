@@ -27,7 +27,7 @@
 
         <v-col sm="4">
           <v-card outlined align="center">
-            <router-link to="/database" tag="button" id="database">
+            <router-link to="database" tag="button" id="database">
               <v-btn depressed fab color="primary" class="mt-4">
                 <v-icon>mdi-database-export</v-icon>
               </v-btn>
