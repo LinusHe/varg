@@ -1,6 +1,6 @@
 <template>
   <div class="header-graph-container" id="graph-header">
-    <div id="headertext_out">
+    <!-- <div id="headertext_out">
       <div id="headertext_in">
         <v-row>
           <p align="left" id="header-prodName">
@@ -89,91 +89,123 @@
           </p>
         </v-row>
       </div>
-    </div>
+    </div>-->
+    <v-row>
+      <v-col align="left" sm="1"><h1 class="headline mb-1">varg</h1></v-col>
+
+      <v-col align="center">
+        <v-btn outlined tile color="#b9c5ff">
+          <v-icon dark>mdi-plus</v-icon>
+          Neuer Graph
+        </v-btn>
+        <v-btn outlined tile color="#b9c5ff">
+          <v-icon class="mr-1">mdi-database</v-icon>
+          Datenbank
+        </v-btn>
+        <v-btn outlined tile color="#b9c5ff">
+          <v-icon class="mr-1">mdi-import</v-icon>
+          Import
+        </v-btn>
+        <v-btn outlined tile color="#b9c5ff">
+          <v-icon class="mr-1">mdi-export</v-icon>
+          Export
+        </v-btn>
+        <v-btn outlined tile color="#b9c5ff">
+          <v-icon class="mr-1">mdi-cog</v-icon>
+          Einstellungen
+        </v-btn>
+      </v-col>
+
+      <v-col align="right" sm="1">
+        <v-avatar color="red">
+          <span class="white--text headline">CJ</span>
+        </v-avatar>
+      </v-col>
+    </v-row>
   </div>
 </template>
 
 <script>
-/* eslint-disable no-console */
-/* eslint-disable no-unused-vars */
-let dialogComponent;
+  /* eslint-disable no-console */
+  /* eslint-disable no-unused-vars */
+  let dialogComponent;
 
-export default {
-  mounted: function() {
-    dialogComponent = this.$parent.$parent.$parent.$parent.$refs["dialogs"];
-  },
-  name: "GraphHeader",
-  data() {
-    return {
-      prodName: null,
-      prodQuant: null,
-      isEditingName: false,
-      isEditingQuant: false,
-      validQuant: false,
-      validName: false
-    };
-  },
-  methods: {
-    getGraph() {
-      return this.$parent.$refs["vargraph"];
+  export default {
+    mounted: function () {
+      dialogComponent = this.$parent.$parent.$parent.$parent.$refs["dialogs"];
     },
-    refresh() {
-      this.prodName = this.getGraph()
-        .getCytoGraph(this.getGraph())
-        .data("prodName");
-      this.prodQuant = this.getGraph()
-        .getCytoGraph(this.getGraph())
-        .data("prodQuant");
+    name: "GraphHeader",
+    data() {
+      return {
+        prodName: null,
+        prodQuant: null,
+        isEditingName: false,
+        isEditingQuant: false,
+        validQuant: false,
+        validName: false
+      };
     },
-    updateData(newProdName, newProdQuant) {
-      this.prodName = newProdName;
-      this.prodQuant = newProdQuant;
-      this.saveNewName();
-      this.saveNewQuant();
-    },
-    editName() {
-      this.isEditingName = true;
-      this.$nextTick(() => this.$refs.nameInput.focus());
-    },
-    saveNewName() {
-      //Checks if menu formular was filled in correctly
-      if (this.$refs.formName.validate()) {
-        this.isEditingName = false;
-        this.getGraph()
+    methods: {
+      getGraph() {
+        return this.$parent.$refs["vargraph"];
+      },
+      refresh() {
+        this.prodName = this.getGraph()
           .getCytoGraph(this.getGraph())
-          .data("prodName", this.prodName);
-        dialogComponent.dialogSuccess("Produktname erfolgreich geändert");
-      } else if (this.prodName.length > 25) {
-        dialogComponent.dialogError(
-          "Produktname nicht geändert: <b>Bitte Namen mit maximal 25 Zeichen eingeben</b>"
-        );
-      } else if (this.prodName.length == 0) {
-        dialogComponent.dialogError(
-          "Produktname nicht geändert: <b>Bitte Namen eingeben</b>"
-        );
-      }
-    },
-    editQuant() {
-      this.isEditingQuant = true;
-      this.$nextTick(() => this.$refs.quantInput.focus());
-    },
-    saveNewQuant() {
-      if (this.$refs.formQuant.validate()) {
-        this.isEditingQuant = false;
-        this.getGraph()
+          .data("prodName");
+        this.prodQuant = this.getGraph()
           .getCytoGraph(this.getGraph())
-          .data("prodQuant", this.prodQuant);
-        dialogComponent.dialogSuccess("Stückzahl erfolgreich geändert");
-      } else if (this.prodQuant.length == 0) {
-        dialogComponent.dialogError(
-          "Stückzahl nicht geändert: <b>Bitte Stückzahl eingeben</b>"
-        );
-      } else if (this.prodQuant < 1) {
-        dialogComponent.dialogError(
-          "Stückzahl nicht geändert: <b>Es sind nur positive Stückzahlen erlaubt</b>"
-        );
+          .data("prodQuant");
+      },
+      updateData(newProdName, newProdQuant) {
+        this.prodName = newProdName;
+        this.prodQuant = newProdQuant;
+        this.saveNewName();
+        this.saveNewQuant();
+      },
+      editName() {
+        this.isEditingName = true;
+        this.$nextTick(() => this.$refs.nameInput.focus());
+      },
+      saveNewName() {
+        //Checks if menu formular was filled in correctly
+        if (this.$refs.formName.validate()) {
+          this.isEditingName = false;
+          this.getGraph()
+            .getCytoGraph(this.getGraph())
+            .data("prodName", this.prodName);
+          dialogComponent.dialogSuccess("Produktname erfolgreich geändert");
+        } else if (this.prodName.length > 25) {
+          dialogComponent.dialogError(
+            "Produktname nicht geändert: <b>Bitte Namen mit maximal 25 Zeichen eingeben</b>"
+          );
+        } else if (this.prodName.length == 0) {
+          dialogComponent.dialogError(
+            "Produktname nicht geändert: <b>Bitte Namen eingeben</b>"
+          );
+        }
+      },
+      editQuant() {
+        this.isEditingQuant = true;
+        this.$nextTick(() => this.$refs.quantInput.focus());
+      },
+      saveNewQuant() {
+        if (this.$refs.formQuant.validate()) {
+          this.isEditingQuant = false;
+          this.getGraph()
+            .getCytoGraph(this.getGraph())
+            .data("prodQuant", this.prodQuant);
+          dialogComponent.dialogSuccess("Stückzahl erfolgreich geändert");
+        } else if (this.prodQuant.length == 0) {
+          dialogComponent.dialogError(
+            "Stückzahl nicht geändert: <b>Bitte Stückzahl eingeben</b>"
+          );
+        } else if (this.prodQuant < 1) {
+          dialogComponent.dialogError(
+            "Stückzahl nicht geändert: <b>Es sind nur positive Stückzahlen erlaubt</b>"
+          );
+        }
       }
     }
-  }
-};
+  };
 </script>
