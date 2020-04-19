@@ -32,7 +32,7 @@ export default {
     this.getCytoGraph(this).fit();
 
     // refresh header
-    this.$parent.$refs["graphHeader"].refresh();
+    this.$parent.$parent.$refs["graphHeader"].refresh();
 
     // this.$parent.$parent.$parent.$parent.$refs["dialogs"].dialogSuccess("Neuer Graph erfolgreich angelegt")
   },

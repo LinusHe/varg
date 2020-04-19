@@ -55,7 +55,7 @@ let dialogComponent;
 export default {
   name: "NewGraph",
   mounted: function() {
-    dialogComponent = this.$parent.$parent.$parent.$parent.$refs["dialogs"];
+    dialogComponent = this.$parent.$parent.$parent.$parent.$parent.$refs["dialogs"];
   },
   data() {
     return {

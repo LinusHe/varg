@@ -143,23 +143,23 @@ export default {
   },
   methods: {
     getGraph() {
-      return this.$parent.$refs["vargraph"];
+      return this.$parent.$parent.$refs["vargraph"];
     },
     //Shows Menu to open up a new Graph with options
     NewGraph() {
-      this.$parent.$refs.newGraphMenu.setObject(this.vars.testDatabase);
-      this.$parent.$refs.newGraphMenu.setdialog(true);
+      this.$parent.$parent.$refs.newGraphMenu.setObject(this.vars.testDatabase);
+      this.$parent.$parent.$refs.newGraphMenu.setdialog(true);
     },
     Download: function() {
       //not-best-practice aka coupling of components is not wanted
       //in order to make components reusable
-      this.$parent.$refs.downloadMenu.setdialog(true);
+      this.$parent.$parent.$refs.downloadMenu.setdialog(true);
     },
     openSettings() {
-      this.$parent.$refs.settingsMenu.openDialog();
+      this.$parent.$parent.$refs.settingsMenu.openDialog();
     },
     SaveJSon: function() {
-      this.$parent.$refs.saveMenu.setdialog(true);
+      this.$parent.$parent.$refs.saveMenu.setdialog(true);
     },
     LoadJSon() {
       this.$refs.file;

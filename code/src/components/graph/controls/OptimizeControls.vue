@@ -71,7 +71,7 @@ let dialogComponent;
 export default {
   name: "OptimizeControls",
   mounted: function() {
-    dialogComponent = this.$parent.$parent.$parent.$parent.$refs["dialogs"];
+    dialogComponent = this.$parent.$parent.$parent.$parent.$parent.$refs["dialogs"];
   },
   data() {
     return {
@@ -85,7 +85,7 @@ export default {
   },
   methods: {
     getGraph() {
-      return this.$parent.$refs["vargraph"];
+      return this.$parent.$parent.$refs["vargraph"];
     },
     getNodeItemsID() {
       this.itemsID = this.getGraph().getNodeID(this.getGraph());

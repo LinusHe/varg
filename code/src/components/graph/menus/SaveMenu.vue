@@ -4,9 +4,7 @@
       <v-card-title class="headline">Graph in Datenbank speichern</v-card-title>
       <v-card-text>
         <v-form ref="form" v-model="valid" lazy-validation>
-          <v-row class="ml-2">
-             {{message}}
-          </v-row>
+          <v-row class="ml-2">{{message}}</v-row>
           <v-row>
             <v-col sm="12">
               <v-text-field
@@ -21,7 +19,7 @@
             </v-col>
             <!-- <v-col sm="1">
               <v-icon @click="openHelpDialog()">mdi-help-circle-outline</v-icon>
-            </v-col> -->
+            </v-col>-->
           </v-row>
           <v-row>
             <v-col sm="6">
@@ -53,7 +51,7 @@ let dialogComponent;
 export default {
   name: "SaveMenu",
   mounted: function() {
-    dialogComponent = this.$parent.$parent.$parent.$parent.$refs["dialogs"];
+    dialogComponent = this.$parent.$parent.$parent.$parent.$parent.$refs["dialogs"];
   },
   data() {
     return {
@@ -63,12 +61,12 @@ export default {
       label: "Datenbankname",
       message: "Legen Sie einen Namen für den Graphen in der Datenbank fest.",
       btntext: "Speichern",
-      database: this.$parent.$refs.toolbar.vars.testDatabase
+      database: this.$parent.$parent.$refs.toolbar.vars.testDatabase
     };
   },
   methods: {
     getGraph() {
-      return this.$parent.$refs["vargraph"];
+      return this.$parent.$parent.$refs["vargraph"];
     },
 
     switchbtntext() {
@@ -109,15 +107,15 @@ export default {
                 console.log("save");
                 this.setdialog(false);
                 this.clearFields();
-                if (this.$parent.$refs.newGraphMenu.dialog) {
+                if (this.$parent.$parent.$refs.newGraphMenu.dialog) {
                   router.push({ name: "newGraph" });
                 }
               } else {
                 //dupe case
-                this.$parent.$refs.saveMenu.setmsg(
+                this.$parent.$parent.$refs.saveMenu.setmsg(
                   "Es existiert bereits eine Datei unter diesen Namen. Wollen Sie diese überschreiben ?"
                 );
-                this.$parent.$refs.saveMenu.setbtntext("Überschreiben");
+                this.$parent.$parent.$refs.saveMenu.setbtntext("Überschreiben");
               }
             }
             break;
@@ -135,7 +133,7 @@ export default {
               //   the newGraph menu - which creates the intended UX.
               this.setdialog(false);
               this.clearFields();
-              if (this.$parent.$refs.newGraphMenu.dialog) {
+              if (this.$parent.$parent.$refs.newGraphMenu.dialog) {
                 router.push({ name: "newGraph" });
               }
             }

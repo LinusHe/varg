@@ -309,7 +309,7 @@
   export default {
     name: "CreateControls",
     mounted: function () {
-      dialogComponent = this.$parent.$parent.$parent.$parent.$refs["dialogs"];
+      dialogComponent = this.$parent.$parent.$parent.$parent.$parent.$refs["dialogs"];
     },
     data() {
       return {
@@ -379,7 +379,7 @@
     },
     methods: {
       getGraph() {
-        return this.$parent.$refs["vargraph"];
+        return this.$parent.$parent.$refs["vargraph"];
       },
       checkImg(url) {
         return url.match(/\.(jpeg|jpg|gif|png)$/) != null;
@@ -440,13 +440,13 @@
         this.fab = false;
       },
       openNodeGui() {
-        this.$parent.$refs.detailControls.deactivateGui();
+        this.$parent.$parent.$refs.detailControls.deactivateGui();
         this.nodeCreateGui = true;
         this.edgeCreateGui = false;
         this.$refs.createNodes.focus();
       },
       openEdgeGui() {
-        this.$parent.$refs.detailControls.deactivateGui();
+        this.$parent.$parent.$refs.detailControls.deactivateGui();
         this.nodeCreateGui = false;
         this.edgeCreateGui = true;
         this.$refs.createEdges.focus();

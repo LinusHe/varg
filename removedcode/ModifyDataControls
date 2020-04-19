@@ -120,8 +120,8 @@ export default {
     openModifyData(newInstance) {
       this.vars.instance = newInstance
       this.loadGraphData()
-      this.$parent.$refs.createControls.deactivateGui();
-      this.$parent.$refs.detailControls.deactivateGui();
+      this.$parent.$parent.$refs.createControls.deactivateGui();
+      this.$parent.$parent.$refs.detailControls.deactivateGui();
       this.modifyDataGui = true
     },
     loadGraphData() {
@@ -146,8 +146,8 @@ export default {
       this.vars.instance.setLatestDate(new Date())
       //this.vars.instance.setProdName(this.prodName)
       //this.vars.instance.setProdQuant(this.prodQuant)
-      this.$parent.$refs.toolbar.updateData(this.vars.instance)
-      this.$parent.$refs.graphHeader.updateData(this.prodName, this.prodQuant)
+      this.$parent.$parent.$refs.toolbar.updateData(this.vars.instance)
+      this.$parent.$parent.$refs.graphHeader.updateData(this.prodName, this.prodQuant)
       this.deactivateGui()
     },
     deactivateGui() {

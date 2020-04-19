@@ -69,7 +69,7 @@ let dialogComponent;
 export default {
   name: "LoginForm",
   mounted: function() {
-    dialogComponent = this.$parent.$parent.$parent.$parent.$parent.$refs["dialogs"];
+    dialogComponent = this.$parent.$parent.$parent.$parent.$parent.$parent.$refs["dialogs"];
   },
   data() {
     return {

@@ -24,7 +24,7 @@
                 :items="formatname"
                 :rules="[v => !!v || 'Dateiformat muss gewählt werden']"
                 label="Format"
-                data-cy=formatselect
+                data-cy="formatselect"
               ></v-select>
             </v-col>
             <v-col sm="1" class="mt-5">
@@ -42,12 +42,7 @@
               >Download</v-btn>
             </v-col>
             <v-col sm="6">
-              <v-btn
-                color="error"
-                block
-                id="download-menu-cancel"
-                @click="clearFields"
-              >Abbrechen</v-btn>
+              <v-btn color="error" block id="download-menu-cancel" @click="clearFields">Abbrechen</v-btn>
             </v-col>
           </v-row>
         </v-form>
@@ -64,7 +59,7 @@ let dialogComponent;
 
 export default {
   mounted: function() {
-    dialogComponent = this.$parent.$parent.$parent.$parent.$refs["dialogs"];
+    dialogComponent = this.$parent.$parent.$parent.$parent.$parent.$refs["dialogs"];
   },
   data: () => ({
     dialog: false,
@@ -85,7 +80,7 @@ export default {
   }),
   methods: {
     getGraph() {
-      return this.$parent.$refs["vargraph"];
+      return this.$parent.$parent.$refs["vargraph"];
     },
     setdialog: function(boolean) {
       this.dialog = boolean;
@@ -120,7 +115,7 @@ export default {
             alert("Sorry, hier fehlt noch was!");
             break;
         }
-        dialogComponent.dialogInfo("Datei wird heruntergeladen...")
+        dialogComponent.dialogInfo("Datei wird heruntergeladen...");
         this.clearFields();
       }
     },
