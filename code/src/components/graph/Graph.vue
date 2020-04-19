@@ -1,18 +1,17 @@
 <template>
   <div class="graph">
     <!-- Header: -->
-    
-      <div class="header-bg">
-        <v-row>
-          <v-btn icon class="toggleHeader" @click="header = !header">
-            <v-icon color="white">mdi-menu</v-icon>
-          </v-btn>
-          <v-expand-transition>
-            <GraphHeader v-show="header" ref="graphHeader" />
-          </v-expand-transition>
-        </v-row>
-      </div>
-    
+
+    <div class="header-bg">
+      <v-row>
+        <v-btn icon class="toggleHeader" @click="header = !header">
+          <v-icon color="white">mdi-menu</v-icon>
+        </v-btn>
+        <v-expand-transition>
+          <GraphHeader v-show="header" ref="graphHeader" />
+        </v-expand-transition>
+      </v-row>
+    </div>
 
     <v-card class="content-card">
       <v-row class="card-top pt-2 ma-0">
