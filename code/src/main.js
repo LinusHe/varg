@@ -29,7 +29,10 @@ new Vue({
   store,
   router,
   vuetify,
-  render: h => h(App)
+  render: h => h(App),
+  //Try to retrieve store first
+  beforeCreate() {
+    //alert("Retrieving Store");
+    this.$store.commit("retrieveStore");
+	}
 }).$mount("#app");
-
-

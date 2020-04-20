@@ -86,9 +86,13 @@ router.beforeEach((to, from, next) => {
   if (nearestWithTitle) document.title = nearestWithTitle.meta.title;
 
   // Check for requiresAuth guard
-  if (to.matched.some(record => record.meta.requiresAuth)) {
+  if (to.matched.some(record => record.meta.requiresAuth) && store.state.count === 0) {
     // Check if NO logged user
-    if (store.state.count == 0) {
+    //Redirect is performed before old state is loaded
+    //but old state is restored before new page is loaded
+    //if (store.state.count == 0) {
+      //alert("Authenticated: " + store.state.user.autehticated);
+      if(store.state.user.autehticated == false) {
       // Go to login
       next({
         path: "/home/login",
