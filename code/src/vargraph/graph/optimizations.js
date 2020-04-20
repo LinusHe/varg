@@ -22,9 +22,9 @@ function toHHMMSS (num) {
   return hours + ':' + minutes + ':' + seconds;
 }
 
-function isConnectedToEndNode(start, end , path){
+function allPossiblePaths(start, end , path){
   let arrayOfOutgoers = []
-  let  pathOfPath = []
+  let  allPaths = []
   
   
  for(let i = 0; i< start.outgoers().length; i++){
@@ -42,7 +42,7 @@ function isConnectedToEndNode(start, end , path){
         if(start.outgoers().nodes()[i].data("name") === end.data("name")){
           stack.push(start.edgesTo(start.outgoers().nodes()[i])[j].data("name"))
           stack.push(start.outgoers().nodes()[i].data("name"))
-          pathOfPath.push(stack)
+          allPaths.push(stack)
         }
        
         else{
@@ -50,7 +50,7 @@ function isConnectedToEndNode(start, end , path){
         stack.push(start.outgoers().nodes()[i].data("name"))
         
        
-        pathOfPath = pathOfPath.concat(isConnectedToEndNode(start.outgoers().nodes()[i], end, stack))
+        allPaths = allPaths.concat(allPossiblePaths(start.outgoers().nodes()[i], end, stack))
         }
       }
     }
@@ -67,13 +67,13 @@ function isConnectedToEndNode(start, end , path){
       stack.push(start.outgoers().edges()[i].data("name"))
       stack.push(end.data("name"))
      
-      pathOfPath.push(stack)
+      allPaths.push(stack)
       
       
       
     }
   }
-  return pathOfPath
+  return allPaths
   
   
 }
@@ -88,123 +88,62 @@ export default {
     graphComponent = graph
 
     let cy = graphComponent.getCytoGraph();
-
-    let minDistanceTime = 0;
-    let minDistanceCosts = 0;
-
     cy.elements().removeClass("highlighted"); //removes the old optimization
     
     let endNode = "#" + end;
 
     let quantity = cy.data("prodQuant")
-    let pathToEndCosts;
-    let pathToEndTime;
-    let costs = 0
-    let time = 0
 
-    let arrayOfPaths = []
-    let emptyArray = []
-    
-   
+    let startArray = []
+    let allPathsfromStartNodes = []
+    let arrayOfEdges = []
 
-    
-      for(let j = 0; j<start.length ; j++){
-        let startNode = "#" + start[j];
-        
-        
-        arrayOfPaths.push(cy.$(startNode).data("name"))
-
-        console.log(isConnectedToEndNode(cy.$(startNode), cy.$(endNode), arrayOfPaths, emptyArray ))
+    let map = new Map()
 
 
-      }
-    
-
-   /* path.addClass("hightlighted")
-    let collection = cy.elements()
-
-    //highlight the bfs path
-    for(let i = 0; i< path.length; i++){
-      collection[collection.indexOf(path[i])].addClass("highlighted")
+    for(let l = 0 ; l< cy.edges().length; l++){
+     arrayOfEdges.push(cy.edges()[l].data("name"))
     }
   
-    
-    
-
-
-
-
-
-
-
-    
-/*
-      for (let i = 0; i < start.length; i++) {
-        let startNode = "#" + start[i];
+    for(let j = 0; j<start.length ; j++){
+      let startNode = "#" + start[j];
         
-        let dijkstraCosts = cy.elements().dijkstra(startNode, function(edge) {
-          return (edge.data("cost") * quantity) + edge.data("sucost");
+      startArray.push(cy.$(startNode).data("name"))
         
-        });
-
-        let dijkstraTime = cy.elements().dijkstra(startNode, function(edge) {
-          return (edge.data("time") * quantity) + edge.data("sutime");
-        });
-      
-        //this if and else is to find the shortest path of the array of starting nodes
-        if(option === "optionCosts"){
-  
-            minDistanceCosts = dijkstraCosts.distanceTo(cy.$(endNode));
-            pathToEndCosts = dijkstraCosts.pathTo(cy.$(endNode));
+      allPathsfromStartNodes =  allPathsfromStartNodes.concat(allPossiblePaths(cy.$(startNode), cy.$(endNode), startArray, [] ))
         
-          if (minDistanceCosts > dijkstraCosts.distanceTo(cy.$(endNode))) {
-            minDistanceCosts = dijkstraCosts.distanceTo(cy.$(endNode));
-            pathToEndCosts = dijkstraCosts.pathTo(cy.$(endNode));
-          }
-        }
-        else{
+      for(let i = 0; i< allPathsfromStartNodes.length; i++){
+        let costs = 0
+        let time = 0
+        for(let k = 0; k< allPathsfromStartNodes[i].length; k ++){
+          if(arrayOfEdges.includes(allPathsfromStartNodes[i][k])){
+              
+          let string = allPathsfromStartNodes[i][k]
           
-          if (i === 0) {
-            minDistanceTime = dijkstraTime.distanceTo(cy.$(endNode));
-            pathToEndTime = dijkstraTime.pathTo(cy.$(endNode));
-           
-          } 
-          else if (minDistanceTime > dijkstraTime.distanceTo(cy.$(endNode))) {
-            minDistanceTime = dijkstraTime.distanceTo(cy.$(endNode));
-            pathToEndTime = dijkstraTime.pathTo(cy.$(endNode));
-           
-          }
-        }
-      }
-      
-      
-      if(option === "optionTime"){
-        pathToEndTime.addClass("highlighted");  //optimized way for the option time will be shown
+          costs += ((cy.edges(`[name = '${string}']`).data("cost") * quantity) + cy.edges(`[name = '${string}']`).data("sucost"))
+          time += ((cy.edges(`[name = '${string}']`).data("time") * quantity) + cy.edges(`[name = '${string}']`).data("sutime"))
+          costs = Math.round(costs * 100) / 100
+          time = Math.round(time * 100) / 100
 
-        //this calculates the costs for the optimized time route
-        for(let i = 0; i < pathToEndTime.length; i++){
-          if(pathToEndTime[i].group() === "edges"){
-          costs += ((pathToEndTime[i].data("cost") * quantity) + (pathToEndTime[i].data("sucost"))) 
+          map.set(allPathsfromStartNodes[i], [costs, time])
           }
         }
-        console.log("Gesamtkosten: "+ (Math.round(costs * 100) / 100) + cy.data("settingsUnitCostSelection"))
-        console.log("Gesamtzeit: "+ toHHMMSS(minDistanceTime) )
       }
-      else{
-        pathToEndCosts.addClass("highlighted"); //vice versa for the option costs
+
+    }
+    if(option == "optionTime"){
         
-        //this calculates the route for the optimized cost route
-        for(let i = 0; i < pathToEndCosts.length; i++){
-          if(pathToEndCosts[i].group() === "edges"){
-          time += ((pathToEndCosts[i].data("time") * quantity) + (pathToEndCosts[i].data("sutime"))) 
-          }
-        }
-        console.log("Gesamtkosten: "+ (Math.round(minDistanceCosts * 100) / 100) + cy.data("settingsUnitCostSelection"))
-        console.log("Gesamtzeit: "+ toHHMMSS(time))
-      }
-
-
-      */
+      const sortedTimeMap = new Map([...map.entries()].sort((a, b) => a[1][1] - b[1][1])); //sorts the time values
+      console.log(sortedTimeMap);
+      return sortedTimeMap
+       
+    }
+    else{
+      const sortedCostMap = new Map([...map.entries()].sort((a, b) => a[1][0] - b[1][0])); 
+      console.log(sortedCostMap);
+      return sortedCostMap
+    }
+    
   }
 
 };
