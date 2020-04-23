@@ -105,10 +105,10 @@ export default {
     getState() {
       alert("Authenticated: " + this.$store.state.user.autehticated +
       "\nName: " + this.$store.state.user.name +
-      "\n Role: " + this.$store.state.user.role);
+      "\nRole: " + this.$store.state.user.role +
+      "\nReady: " + this.$store.state.ready);
     },
     delLocal() {
-      //alert("deleting localstorage");
       localStorage.removeItem("store");
     },
     /**
@@ -118,14 +118,13 @@ export default {
     login() {
       if (this.$refs.form.validate()) {
         if (this.input.email == "VarG" && this.input.password == "2020") {
-          
-          //old
-          this.$store.commit("increment");
-
           //new
           this.$store.commit("login");
           this.$store.commit("setName", "student");
           this.$store.commit("setRole", "student");
+
+          //old
+          this.$store.commit("increment");
 
           this.$router.replace("/home/menu");
         } else {

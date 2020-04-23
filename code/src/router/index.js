@@ -86,41 +86,21 @@ router.beforeEach((to, from, next) => {
   if (nearestWithTitle) document.title = nearestWithTitle.meta.title;
 
   // Check for requiresAuth guard
-  if (to.matched.some(record => record.meta.requiresAuth) && store.state.count === 0) {
-    // Check if NO logged user
-    //Redirect is performed before old state is loaded
-    //but old state is restored before new page is loaded
-    //if (store.state.count == 0) {
-      //alert("Authenticated: " + store.state.user.autehticated);
-      if(store.state.user.autehticated == false) {
-      // Go to login
-      next({
-        path: "/home/login",
-        query: {
-          redirect: to.fullPath
-        }
-      });
-    } else {
-      // Proceed to route
-      next();
-    }
-    // Guest proceed optional, maybe later?
-  } else if (to.matched.some(record => record.meta.requiresGuest)) {
-    // Check if NO logged user
-    if (this.$main.auth) {
-      // Go to login
-      next({
-        path: "/",
-        query: {
-          redirect: to.fullPath
-        }
-      });
-    } else {
-      // Proceed to route
-      next();
-    }
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+      if(store.state.user.autehticated == true) {
+        //proceed to rout
+        //Role management could take place here
+        next();
+      } else {
+        //Go to Login
+        next({
+          path: "/home/login",
+          query: {
+            redirect: to.fullPath
+          }
+        });
+      }
   } else {
-    // Proceed to route
     next();
   }
 

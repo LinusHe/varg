@@ -181,6 +181,7 @@ export default {
       this.getGraph().findPath(this.getGraph(), "optionTime");
     },
     logout() {
+      this.$store.commit("logout");
       router.push({ name: "login" });
     },
     datenbank() {

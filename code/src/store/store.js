@@ -6,13 +6,18 @@ Vue.use(Vuex);
 export const store = new Vuex.Store({
   state: {
     //new
+    //Placeholder for encrpted JWT or other alternative (Shiboleth)
     user: {
       name: "Gast",
       autehticated: false,
       role: "guest"
     },
+    //shows wheather an atempt to load from localStorage was made
+    //Probably useless
+    ready: false,
     
     //old
+    //kept for now to prevent everything from breaking
     count: 0,
     
     cyProdName: null,
@@ -26,6 +31,7 @@ export const store = new Vuex.Store({
 				this.replaceState((state, JSON.parse(localStorage.getItem("store"))));
         alert("Old state has been retrieved.");
       }
+      state.ready = true;
     },
     login(state) {
       state.user.autehticated = true;

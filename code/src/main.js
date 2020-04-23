@@ -30,9 +30,9 @@ new Vue({
   router,
   vuetify,
   render: h => h(App),
-  //Try to retrieve store first
+  //Try to retrieve store before creating new instance
+  //Works, but doesn't due to asynchronity
   beforeCreate() {
-    //alert("Retrieving Store");
     this.$store.commit("retrieveStore");
 	}
 }).$mount("#app");
