@@ -1,6 +1,7 @@
+
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
-
+/*
 import cytoscape from 'cytoscape';
 
   describe('Optimitated path for graph', function(){
@@ -207,3 +208,4 @@ import cytoscape from 'cytoscape';
   });
 
 
+*/

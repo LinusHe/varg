@@ -1,0 +1,76 @@
+   /* path.addClass("hightlighted")
+    let collection = cy.elements()
+
+    //highlight the bfs path
+    for(let i = 0; i< path.length; i++){
+      collection[collection.indexOf(path[i])].addClass("highlighted")
+    }
+  
+      
+/*
+      for (let i = 0; i < start.length; i++) {
+        let startNode = "#" + start[i];
+        
+        let dijkstraCosts = cy.elements().dijkstra(startNode, function(edge) {
+          return (edge.data("cost") * quantity) + edge.data("sucost");
+        
+        });
+
+        let dijkstraTime = cy.elements().dijkstra(startNode, function(edge) {
+          return (edge.data("time") * quantity) + edge.data("sutime");
+        });
+      
+        //this if and else is to find the shortest path of the array of starting nodes
+        if(option === "optionCosts"){
+  
+            minDistanceCosts = dijkstraCosts.distanceTo(cy.$(endNode));
+            pathToEndCosts = dijkstraCosts.pathTo(cy.$(endNode));
+        
+          if (minDistanceCosts > dijkstraCosts.distanceTo(cy.$(endNode))) {
+            minDistanceCosts = dijkstraCosts.distanceTo(cy.$(endNode));
+            pathToEndCosts = dijkstraCosts.pathTo(cy.$(endNode));
+          }
+        }
+        else{
+          
+          if (i === 0) {
+            minDistanceTime = dijkstraTime.distanceTo(cy.$(endNode));
+            pathToEndTime = dijkstraTime.pathTo(cy.$(endNode));
+           
+          } 
+          else if (minDistanceTime > dijkstraTime.distanceTo(cy.$(endNode))) {
+            minDistanceTime = dijkstraTime.distanceTo(cy.$(endNode));
+            pathToEndTime = dijkstraTime.pathTo(cy.$(endNode));
+           
+          }
+        }
+      }
+      
+      
+      if(option === "optionTime"){
+        pathToEndTime.addClass("highlighted");  //optimized way for the option time will be shown
+
+        //this calculates the costs for the optimized time route
+        for(let i = 0; i < pathToEndTime.length; i++){
+          if(pathToEndTime[i].group() === "edges"){
+          costs += ((pathToEndTime[i].data("cost") * quantity) + (pathToEndTime[i].data("sucost"))) 
+          }
+        }
+        console.log("Gesamtkosten: "+ (Math.round(costs * 100) / 100) + cy.data("settingsUnitCostSelection"))
+        console.log("Gesamtzeit: "+ toHHMMSS(minDistanceTime) )
+      }
+      else{
+        pathToEndCosts.addClass("highlighted"); //vice versa for the option costs
+        
+        //this calculates the route for the optimized cost route
+        for(let i = 0; i < pathToEndCosts.length; i++){
+          if(pathToEndCosts[i].group() === "edges"){
+          time += ((pathToEndCosts[i].data("time") * quantity) + (pathToEndCosts[i].data("sutime"))) 
+          }
+        }
+        console.log("Gesamtkosten: "+ (Math.round(minDistanceCosts * 100) / 100) + cy.data("settingsUnitCostSelection"))
+        console.log("Gesamtzeit: "+ toHHMMSS(time))
+      }
+
+
+      */

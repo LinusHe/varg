@@ -1,65 +1,174 @@
 /* eslint-disable no-console */
+/* eslint-disable no-unused-vars */
 
 // This file is part of the cytoscape graph
 // The holding component is code\src\components\graph\elements\VarGraph.vue
 
 // This file contains methods for graph optimization
+
+import graph from "./graph"
 import cyStore from "./cyStore";
+
+//function to format the seconds in HHMMSS
+function toHHMMSS (num) {
+  var sec_num = parseInt(num, 10); 
+  var hours   = Math.floor(sec_num / 3600);
+  var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
+  var seconds = sec_num - (hours * 3600) - (minutes * 60);
+
+  if (hours   < 10) {hours   = "0"+hours;}
+  if (minutes < 10) {minutes = "0"+minutes;}
+  if (seconds < 10) {seconds = "0"+seconds;}
+  return hours + ':' + minutes + ':' + seconds;
+}
+
+function allPossiblePaths(start, end , path){
+  let arrayOfOutgoers = []
+  let  allPaths = []
+  
+  
+ for(let i = 0; i< start.outgoers().length; i++){
+    arrayOfOutgoers.push(start.outgoers()[i].data("name"))
+  }
+ 
+
+  if(!arrayOfOutgoers.includes(end.data("name")) || (start.outgoers().nodes().length !=1 && arrayOfOutgoers.includes(end.data("name")) )){
+    for(let i = 0; i < start.outgoers().nodes().length; i++){
+      for(let j = 0; j < start.edgesTo(start.outgoers().nodes()[i]).length ; j++){
+        let stack = []
+        for(let k = 0; k< path.length; k++){
+          stack.push(path[k])
+        }
+        if(start.outgoers().nodes()[i].data("name") === end.data("name")){
+          stack.push(start.edgesTo(start.outgoers().nodes()[i])[j].data("name"))
+          stack.push(start.outgoers().nodes()[i].data("name"))
+          allPaths.push(stack)
+        }
+       
+        else{
+        stack.push(start.edgesTo(start.outgoers().nodes()[i])[j].data("name"))
+        stack.push(start.outgoers().nodes()[i].data("name"))
+        
+       
+        allPaths = allPaths.concat(allPossiblePaths(start.outgoers().nodes()[i], end, stack))
+        }
+      }
+    }
+  }
+
+  else{
+    
+    for(let i = 0; i < start.outgoers().edges().length; i++){
+      let stack = []
+        for(let k = 0; k< path.length; k++){
+          stack.push(path[k])
+        }
+      
+      stack.push(start.outgoers().edges()[i].data("name"))
+      stack.push(end.data("name"))
+     
+      allPaths.push(stack)
+      
+      
+      
+    }
+  }
+return allPaths
+}
+  
 
 
 export default {
   // findPath(.. ): The method finds the shortest Path between 2 nodes
   //                with the Dijkstra Algorithm
   findPath(graphComponent, option, start, end) {
-    // get cytoscape instance
-    //let cy = graphComponent.getCytoGraph();
 
-    var minDistance = 0;
+    graphComponent = graph
 
-    cyStore.data.cy.elements().removeClass("highlighted");
-    let cy = cyStore.data.cy
+    let cy = graphComponent.getCytoGraph();
+    cy.elements().removeClass("highlighted"); //removes the old optimization
+    
+    let endNode = "#" + end;
 
-    var endNode = "#" + end;
+    let quantity = cy.data("prodQuant")
 
-    if (option === "optionCosts") {
-      console.log("costs");
-      var pathToEndCosts;
-      for (let i = 0; i < start.length; i++) {
-        let startNode = "#" + start[i];
-        var dijkstraCosts = cy.elements().dijkstra(startNode, function(edge) {
-          return edge.data("cost") + edge.data("sucost");
-        });
-        if (i === 0) {
-          //saves the shortest distance to a sspecific node(in this case endNode)
-          minDistance = dijkstraCosts.distanceTo(cy.$(endNode));
-          //saves the shortes path to a specific node
-          pathToEndCosts = dijkstraCosts.pathTo(cy.$(endNode));
-        } else if (minDistance > dijkstraCosts.distanceTo(cy.$(endNode))) {
-          minDistance = dijkstraCosts.distanceTo(cy.$(endNode));
-          pathToEndCosts = dijkstraCosts.pathTo(cy.$(endNode));
+   
+    let allPathsfromStartNodes = []
+    let arrayOfEdges = []
+    let arrayOfGraphElements = []
+
+    let map = new Map()
+
+
+    for(let l = 0 ; l< cy.edges().length; l++){
+     arrayOfEdges.push(cy.edges()[l].data("name"))
+    }
+    for(let h = 0; h<cy.elements().length; h++){
+      arrayOfGraphElements.push(cy.elements()[h].data("name"))
+      
+    }
+  
+  
+  
+    for(let j = 0; j<start.length ; j++){
+      let startNode = "#" + start[j];
+      
+      let startArray = []
+      startArray.push(cy.$(startNode).data("name"))
+        
+      allPathsfromStartNodes =  allPathsfromStartNodes.concat(allPossiblePaths(cy.$(startNode), cy.$(endNode), startArray, [] ))
+  
+        
+      for(let i = 0; i< allPathsfromStartNodes.length; i++){
+        let costs = 0
+        let time = 0
+        for(let k = 0; k< allPathsfromStartNodes[i].length; k ++){
+          if(arrayOfEdges.includes(allPathsfromStartNodes[i][k])){
+              
+          let string = allPathsfromStartNodes[i][k]
+          
+          costs += ((cy.edges(`[name = '${string}']`).data("cost") * quantity) + cy.edges(`[name = '${string}']`).data("sucost"))
+          time += ((cy.edges(`[name = '${string}']`).data("time") * quantity) + cy.edges(`[name = '${string}']`).data("sutime"))
+          costs = Math.round(costs * 100) / 100
+          time = Math.round(time * 100) / 100
+
+          map.set(allPathsfromStartNodes[i], [costs, time])
+          }
         }
       }
-      pathToEndCosts.addClass("highlighted");
+
     }
-
-    if (option === "optionTime") {
-      console.log("time");
-
-      var pathToEndTime;
-      for (let i = 0; i < start.length; i++) {
-        let startNode = "#" + start[i];
-        var dijkstraTime = cy.elements().dijkstra(startNode, function(edge) {
-          return edge.data("time") + edge.data("sutime");
-        });
-        if (i === 0) {
-          minDistance = dijkstraTime.distanceTo(cy.$(endNode));
-          pathToEndTime = dijkstraTime.pathTo(cy.$(endNode));
-        } else if (minDistance > dijkstraTime.distanceTo(cy.$(endNode))) {
-          minDistance = dijkstraTime.distanceTo(cy.$(endNode));
-          pathToEndTime = dijkstraTime.pathTo(cy.$(endNode));
-        }
+    if(option == "optionTime"){
+        
+      const sortedTimeMap = new Map([...map.entries()].sort((a, b) => a[1][1] - b[1][1])); //sorts the time values
+      console.log(sortedTimeMap);
+     
+    
+     for(let n = 0; n < sortedTimeMap.keys().next().value.length; n++){
+          if(arrayOfGraphElements.includes(sortedTimeMap.keys().next().value[n])){
+            let string = sortedTimeMap.keys().next().value[n]
+            cy.elements(`[name = '${string}']`).addClass("highlighted")
+          }
+      
       }
-      pathToEndTime.addClass("highlighted");
+      return sortedTimeMap
+       
     }
+    else{
+      const sortedCostMap = new Map([...map.entries()].sort((a, b) => a[1][0] - b[1][0])); 
+      console.log(sortedCostMap);
+
+      for(let n = 0; n < sortedCostMap.keys().next().value.length; n++){
+        if(arrayOfGraphElements.includes(sortedCostMap.keys().next().value[n])){
+          let string = sortedCostMap.keys().next().value[n]
+          cy.elements(`[name = '${string}']`).addClass("highlighted")
+        }
+    
+      }
+      return sortedCostMap
+    }
+   
+    
   }
+
 };
