@@ -73,9 +73,7 @@ function allPossiblePaths(start, end , path){
       
     }
   }
-  return allPaths
-  
-  
+return allPaths
 }
   
 
@@ -94,9 +92,10 @@ export default {
 
     let quantity = cy.data("prodQuant")
 
-    let startArray = []
+   
     let allPathsfromStartNodes = []
     let arrayOfEdges = []
+    let arrayOfGraphElements = []
 
     let map = new Map()
 
@@ -104,13 +103,21 @@ export default {
     for(let l = 0 ; l< cy.edges().length; l++){
      arrayOfEdges.push(cy.edges()[l].data("name"))
     }
+    for(let h = 0; h<cy.elements().length; h++){
+      arrayOfGraphElements.push(cy.elements()[h].data("name"))
+      
+    }
+  
+  
   
     for(let j = 0; j<start.length ; j++){
       let startNode = "#" + start[j];
-        
+      
+      let startArray = []
       startArray.push(cy.$(startNode).data("name"))
         
       allPathsfromStartNodes =  allPathsfromStartNodes.concat(allPossiblePaths(cy.$(startNode), cy.$(endNode), startArray, [] ))
+  
         
       for(let i = 0; i< allPathsfromStartNodes.length; i++){
         let costs = 0
@@ -135,14 +142,32 @@ export default {
         
       const sortedTimeMap = new Map([...map.entries()].sort((a, b) => a[1][1] - b[1][1])); //sorts the time values
       console.log(sortedTimeMap);
+     
+    
+     for(let n = 0; n < sortedTimeMap.keys().next().value.length; n++){
+          if(arrayOfGraphElements.includes(sortedTimeMap.keys().next().value[n])){
+            let string = sortedTimeMap.keys().next().value[n]
+            cy.elements(`[name = '${string}']`).addClass("highlighted")
+          }
+      
+      }
       return sortedTimeMap
        
     }
     else{
       const sortedCostMap = new Map([...map.entries()].sort((a, b) => a[1][0] - b[1][0])); 
       console.log(sortedCostMap);
+
+      for(let n = 0; n < sortedCostMap.keys().next().value.length; n++){
+        if(arrayOfGraphElements.includes(sortedCostMap.keys().next().value[n])){
+          let string = sortedCostMap.keys().next().value[n]
+          cy.elements(`[name = '${string}']`).addClass("highlighted")
+        }
+    
+      }
       return sortedCostMap
     }
+   
     
   }
 
