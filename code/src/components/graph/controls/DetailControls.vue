@@ -361,19 +361,19 @@ export default {
         v => !v || v.match(/\.(jpeg|jpg|gif|png)$/) || "Falsches Format"
       ],
       costRules: [
-        v => !!v || "Kosten werden benötigt",
+        v => !!v || v == 0 || "Kosten werden benötigt",
         v => v >= 0 || "Darf nicht negativ sein"
       ],
       timeRules: [
-        v => !!v || "Kosten werden benötigt",
+        v => !!v || v == 0 || "Kosten werden benötigt",
         v => v >= 0 || "Darf nicht negativ sein"
       ],
       suCostRules: [
-        v => !!v || "Kosten werden benötigt",
+        v => !!v || v == 0 || "Kosten werden benötigt",
         v => v >= 0 || "Darf nicht negativ sein"
       ],
       suTimeRules: [
-        v => !!v || "Kosten werden benötigt",
+        v => !!v || v == 0 || "Kosten werden benötigt",
         v => v >= 0 || "Darf nicht negativ sein"
       ],
       startRules: [
