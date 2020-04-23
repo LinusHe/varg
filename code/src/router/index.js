@@ -88,36 +88,20 @@ router.beforeEach((to, from, next) => {
 
   // Check for requiresAuth guard
   if (to.matched.some(record => record.meta.requiresAuth)) {
-    // Check if NO logged user
-    if (store.state.count == 0) {
-      // Go to login
-      next({
-        path: "/home/login",
-        query: {
-          redirect: to.fullPath
-        }
-      });
-    } else {
-      // Proceed to route
-      next();
-    }
-    // Guest proceed optional, maybe later?
-  } else if (to.matched.some(record => record.meta.requiresGuest)) {
-    // Check if NO logged user
-    if (this.$main.auth) {
-      // Go to login
-      next({
-        path: "/",
-        query: {
-          redirect: to.fullPath
-        }
-      });
-    } else {
-      // Proceed to route
-      next();
-    }
+      if(store.state.user.autehticated == true) {
+        //proceed to rout
+        //Role management could take place here
+        next();
+      } else {
+        //Go to Login
+        next({
+          path: "/home/login",
+          query: {
+            redirect: to.fullPath
+          }
+        });
+      }
   } else {
-    // Proceed to route
     next();
   }
 
