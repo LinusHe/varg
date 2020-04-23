@@ -63,7 +63,7 @@ export default {
     }
   },
 
-  getNextNodes(start) {
+  getNextNodes(start, option) {
     cyStore.data.cy.elements().removeClass("highlighted");
     let cy = cyStore.data.cy
 
@@ -91,12 +91,38 @@ export default {
       newPath.push(element.data("id"))
       newFoundNode [1] = newPath               //usedEdges
 
-      newFoundNode [2] = start[2] + element.data("cost")                  //cost
+      if(option) {
+        newFoundNode [2] = start[2] + element.data("time")                  //cost
+      }
+      else {
+        newFoundNode [2] = start[2] + element.data("cost")                  //cost
+      }
+      
       newFoundNodeArray.push(newFoundNode)
       });
 
     
     return newFoundNodeArray
+  },
+
+  /*
+  markBestEdges(bestEdgesID) {
+    cyStore.data.cy.elements().removeClass("highlighted");
+    let cy = cyStore.data.cy
+
+    for(let i=1; i<=bestEdgesID.length(); i++) {
+      cy.getElementById(bestEdgesID[i]).addClass("highlighted")
+    }
+  }
+  */
+
+  markBestEdges(bestEdgesID) {
+    cyStore.data.cy.elements().removeClass("highlighted");
+    let cy = cyStore.data.cy
+
+    bestEdgesID.forEach(element => {
+      cy.getElementById(element).addClass("highlighted")
+    })
   }
 
 };
