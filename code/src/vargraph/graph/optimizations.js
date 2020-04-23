@@ -68,22 +68,35 @@ export default {
     let cy = cyStore.data.cy
 
 
-    let nextEdge = [3];
-    let nextEdgesArray = [];
+    let newFoundNode = [3];
+    let newFoundNodeArray = [];
+    // all outgoing edges from node 'start'
     let nextEdges = cy.getElementById(start[0]).outgoers('edge');
 
 
     nextEdges.forEach(element => {
+      //testline x2
       console.log(1000)
-      console.log(element.data("id"))
-      nextEdge [0] = element.data("target")                           //NodeID
-      nextEdge [1] = start[1].push(element.data("id"))                //usedEdges
-      nextEdge [2] = start[2] + element.data("cost")                   //cost
-      nextEdgesArray.push(nextEdge)
+      console.log(element.data("target"))
+
+      //converts all outgoing edges into sort-node form
+      newFoundNode [0] = element.data("target")                           //NodeID
+
+      let newPath = []
+        // copy all edges of the current path
+      for(let i = 0; i < start[1].length; i++) {
+        // add new egde
+        newPath.push(start[1][i])
+      }
+      newPath.push(element.data("id"))
+      newFoundNode [1] = newPath               //usedEdges
+
+      newFoundNode [2] = start[2] + element.data("cost")                  //cost
+      newFoundNodeArray.push(newFoundNode)
       });
 
     
-    return nextEdgesArray
+    return newFoundNodeArray
   }
 
 };

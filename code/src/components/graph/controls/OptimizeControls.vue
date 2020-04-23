@@ -93,15 +93,27 @@ export default {
     getNodeItemsName() {
       this.itemsName = this.getGraph().getNodeName(this.getGraph());
     },
+
+    allreadyfondnode() {
+
+    },
+
+
+
+
+
+
     optimizing: function() {
       let option;
       if (this.optimizingOption === false) {
         // True means option costs and false is option time
+        // not implemented yet
         option = "optionTime";
       } else {
         option = "optionCosts";
       }  
 
+        // gets ID's of start-nodes
       let startIDs = []
       for (let i = 0; i < this.startSelect.length; i++) {
         let indexStart = this.itemsName.indexOf(this.startSelect[i]);
@@ -109,41 +121,63 @@ export default {
       }
 
         
-
+        // "converts" start-nodes into sort-nodes
+        // sort-nodes save NodeID, usedEdges (from start-node) and "needed" costs (from start)
       let sortNodes = [];
       for (let i = 0; i < startIDs.length; i++) {
-        let Edges = [];
+        let Edges = ["0"];
 
         let optimizeNode = [3]
-        optimizeNode [0] = startIDs[i]  //NodeID
+        optimizeNode [0] = startIDs[i]          //NodeID
         optimizeNode [1] = Edges                //usedEdges
         optimizeNode [2] = 0                    //cost
         
         sortNodes.push(optimizeNode);
       }
 
+        // for each node...
       for (let i = 0; i < sortNodes.length; i++) {
+          //testline
         console.log(sortNodes.length)
+
+
         let Edges = [];
 
         let optimizeNode = [3]
-
+          // ...get next gettable nodes in sort-node form
         let nextEdges = this.getGraph().getNextNodes(sortNodes[i])   
       
+          // for each "new found" node...
         for (let j = 0; j < nextEdges.length; j++) {
-
+          //testline
           console.log(nextEdges.length)
 
+          let allreadyFound = false;
+            // ...check if node is allready part of sort-node (checking ID)
           for (let k = 0; k < sortNodes.length; k++) {
+              // allready found node
             if (sortNodes[k][0] == nextEdges [j][0]) {
+              allreadyFound = true
+
+                // if new found way has lower cost
               if (sortNodes[k][2] > nextEdges [j][2]) {
-                sortNodes.push(nextEdges[j])
+                  // override it                                                      hier einsetzern
+                sortNodes[k][2] = nextEdges [j][2]
               }
-            }
-            else {
-              sortNodes.push(nextEdges[j])
-            }
-            
+
+              //allreadyfondnode function? ()
+
+            }       
+          }
+          
+            // new found node
+          if(allreadyFound == false) {
+            sortNodes.push(nextEdges[j])
+          }
+
+          //testline
+          for (let l = 0; l < sortNodes.length; l++) {
+            console.log(sortNodes[l])
           }
 
         }
