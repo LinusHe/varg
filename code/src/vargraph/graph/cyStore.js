@@ -2,7 +2,8 @@
 
 export default {
   data: {
-    cy: null
+    cy: null,
+    importedJson: null
   },
 
   // Methods that you need, for e.g fetching data from server etc.

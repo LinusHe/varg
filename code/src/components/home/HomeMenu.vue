@@ -17,9 +17,10 @@
 
         <v-col sm="4">
           <v-card outlined align="center">
-            <v-btn depressed fab color="primary" class="mt-4">
+            <v-btn :loading="loading" depressed fab :color="importBtnColor" @click="openFromFile()" class="mt-4">
               <v-icon>mdi-import</v-icon>
             </v-btn>
+            <input type="file" ref="file" accept=".json" style="display: none" />
           </v-card>
           <a>Graphen importieren</a>
         </v-col>
@@ -46,7 +47,40 @@
 </template>
 
 <script>
+/* eslint-disable no-console */
+import fileManager from "../../vargraph/importExport/FileManager.js";
+let dialogComponent;
+
 export default {
-  name: "Menu"
+  name: "Menu",
+  data() {
+    return {
+      loading: false,
+      importBtnColor: "primary",
+    };
+  },
+  mounted: function() {
+    dialogComponent = this.$parent.$parent.$parent.$parent.$parent.$refs["dialogs"];
+  },
+  methods: {
+    openFromFile() {
+      this.$refs.file.click();
+      this.loading = true;
+      this.importBtnColor = "warning";
+
+      this.$refs.file.addEventListener("change", onChange);
+      this.$store.commit(
+        "setCyProdName",
+        "Importiertes Produkt wird geladen..."
+      );
+      // waitUntilNext;
+      function onChange(event) {
+        
+        fileManager.loadGraphFromJson(event, null);
+        dialogComponent.dialogSuccess("Graph erfolgreich geladen");
+      }
+      
+    }
+  }
 };
 </script>

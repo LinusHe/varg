@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 // class to test save functions in a virtual test database
 export default class TestDatabase {
   constructor() {
@@ -14,7 +15,7 @@ export default class TestDatabase {
    * on the save array
    */
   save(cytograph, overwrite) {
-    const index = this.searchExisting(cytograph["prodName"]);
+    const index = this.searchExisting(cytograph.data.filename);
     if (index >= 0) {
       if (overwrite) {
         this.cytographArray[index] = cytograph;
@@ -22,7 +23,8 @@ export default class TestDatabase {
       } else {
         return false;
       }
-    } else {
+    } 
+    else {
       this.cytographArray.push(cytograph);
       return true;
     }
@@ -40,7 +42,7 @@ export default class TestDatabase {
    */
   searchExisting(graphName) {
     for (var i = 0; i < this.cytographArray.length; i++) {
-      if ((this.cytographArray[i])["prodName"] === graphName) {
+      if ((this.cytographArray[i]).data.filename === graphName) {
         return i;
       }
     }

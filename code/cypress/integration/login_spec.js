@@ -17,11 +17,8 @@ describe("Login Page", () => {
   });
 
   it("Input is clearable", () => {
-    cy.get("#email")
-    .type("cleartest123")
-    cy.get(".email-input")
-      .get(".v-icon")
-      .click();
+    cy.get("#email").type("cleartest123");
+    cy.get(".email-input .v-icon").click();
     cy.get("#email").should("have.value", "");
   });
 
@@ -34,7 +31,7 @@ describe("Login Page", () => {
 
   it("Dont Show Error Message on Startup", () => {
     // Error Message Container should be empty
-    cy.get(".v-alert__content").should("be.empty");
+    cy.get("#varg-dialog").should("be.empty");
   });
 
   it("Show Error Message on failed Login", () => {
@@ -42,7 +39,7 @@ describe("Login Page", () => {
     cy.get("#password").type("passwort");
     cy.get(".login-button").click();
     // Error Message Container shouldnt be emptry
-    cy.get(".v-alert__content").should("not.be.empty");
+    cy.get("#varg-dialog").should("not.be.empty");
   });
 
   it("Redirect on correct Login", () => {

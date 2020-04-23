@@ -107,7 +107,16 @@
       <v-row align="center">
         <v-tooltip right>
           <template v-slot:activator="{ on }">
-            <v-btn @click="home" id="logout-btn" v-on="on" fab dark small depressed color="primary">
+            <v-btn
+              @click="logout()"
+              id="logout-btn"
+              v-on="on"
+              fab
+              dark
+              small
+              depressed
+              color="primary"
+            >
               <v-icon dark>mdi-logout</v-icon>
             </v-btn>
           </template>
@@ -171,8 +180,7 @@ export default {
     findPathForTime() {
       this.getGraph().findPath(this.getGraph(), "optionTime");
     },
-
-    home() {
+    logout() {
       router.push({ name: "login" });
     },
     datenbank() {

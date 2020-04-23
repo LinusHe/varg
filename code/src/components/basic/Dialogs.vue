@@ -1,5 +1,5 @@
 <template>
-  <div class="varg-alert">
+  <div class="varg-alert" id="varg-dialog">
     <v-snackbar :color="color" :timeout="dialogTimeout" v-model="dialogVisible">
       <v-icon v-show="info" color="#ffffff" class="ml-2 mr-8">mdi-information</v-icon>
       <v-icon v-show="warning" color="#ffffff" class="ml-2 mr-8">mdi-exclamation</v-icon>
@@ -23,17 +23,23 @@ export default {
       info: false,
       warning: false,
       success: false,
-      error: false
+      error: false,
+      wait: false
     };
   },
   methods: {
+    waitUntilNext() {
+      this.wait = true;
+      this.dialogTimeout = 3000000;
+    },
     dialogReset() {
       this.dialogVisible = false;
       this.info = false;
       this.warning = false;
       this.success = false;
       this.error = false;
-      this.dialogTimeout = 3000;
+      if (this.wait == false) this.dialogTimeout = 3000;
+      this.wait = false;
       this.dialogText = "";
     },
     dialogInfo(text, newtimeout) {
