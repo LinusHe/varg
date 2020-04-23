@@ -39,7 +39,7 @@
         <div class="scrolling-container">
           <!-- <div> -->
           <v-row class="ma-0">
-            <v-col v-for="item in props.items" :key="item.name" cols="12" sm="12" md="6" lg="6">
+            <v-col v-for="item in props.items" :key="item.name" cols="12" sm="6" md="6" lg="6">
               <v-card>
                 <v-card-title class="subheading font-weight-bold">{{ item.name }}</v-card-title>
                   <v-img

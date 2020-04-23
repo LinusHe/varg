@@ -2,7 +2,7 @@
 <!-- Datenbankansicht von Home-->
 <template>
   <div class="database-page">
-    <v-card class="settings-dialog" max-width="1000">
+    <v-card class="settings-dialog" width="1000">
       <v-card-title class="text-center justify-center mb-3 pt-8" color="primary" >
         <v-btn large depressed color="blue" :value="true" @click="backBtn">
                 <v-icon color="white">mdi-arrow-left</v-icon>
