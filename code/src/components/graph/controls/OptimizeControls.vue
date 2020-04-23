@@ -40,6 +40,11 @@
                   @click="dialog = false"
                   @focus="optimizing()"
                 >Anwenden</v-btn>
+                <v-btn
+                  color="grey"
+                  text
+                  @click="dialog = false"
+                >Abbrechen</v-btn>
               </v-card-actions>
             </v-card>
           </v-dialog>

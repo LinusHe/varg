@@ -130,18 +130,25 @@
             </v-row>
 
             <!-- Create Buttons -->
-            <v-row>
-              <v-col sm="6" align="right">
+            <v-row justify="end">
+              <v-col sm="4">
                 <v-btn
                   :disabled="!validNodes"
-                  color="success"
+                  color="green darken-1"
+                  text
                   id="btn-create-node"
                   @click="createNode()"
                 >Hinzufügen
                 </v-btn>
               </v-col>
-              <v-col sm="6">
-                <v-btn color="error" id="btn-cancel-node" @click="cancel()">Abbrechen</v-btn>
+              <v-col sm="4">
+                <v-btn
+                  color="grey"
+                  text
+                  id="btn-cancel-node"
+                  @click="cancel()"
+                >Abbrechen
+                </v-btn>
               </v-col>
             </v-row>
           </v-form>
@@ -152,7 +159,7 @@
     <div ref="createEdges" @keyup.esc="deactivateGui()" tabindex="0">
       <!-- Create-Edge Controls -->
       <v-slide-x-reverse-transition>
-        <v-card class="detail-card" v-show="edgeCreateGui" transition="scroll-y-transition">
+        <v-card id="edge-create" class="detail-card" v-show="edgeCreateGui" transition="scroll-y-transition">
           <v-btn class="btn-close ma-2" @click="cancel()" text icon color="primary">
             <v-icon color="#ffffff">mdi-close</v-icon>
           </v-btn>
@@ -207,9 +214,12 @@
                 <v-col sm="12">
                   <v-select
                     @focus="getNodeItemsID(); getNodeItemsName()"
+                    @change="validateStartEnd()"
                     v-model="startSelect"
                     id="Startzustand"
+                    ref="startzustand"
                     :items="itemsName"
+                    :rules="startRules"
                     label="Startzustand"
                   ></v-select>
                 </v-col>
@@ -218,10 +228,12 @@
                 <v-col sm="12">
                   <v-select
                     @focus="getNodeItemsID(); getNodeItemsName()"
+                    @change="validateStartEnd()"
                     v-model="endSelect"
                     id="Endzustand"
+                    ref="endzustand"
                     :items="itemsName"
-                    :rules="startEndRule"
+                    :rules="endRules"
                     label="Endzustand"
                   ></v-select>
                 </v-col>
@@ -278,18 +290,24 @@
               </v-row>
 
               <!-- Create Buttons -->
-              <v-row class="mb-5">
-                <v-col sm="6" align="right">
+              <v-row class="mb-5" justify="end">
+                <v-col sm="4">
                   <v-btn
                     :disabled="!validEdges"
-                    color="success"
+                    color="green darken-1"
+                    text
                     id="btn-create-edge"
                     @click="createEdge()"
                   >Hinzufügen
                   </v-btn>
                 </v-col>
-                <v-col sm="6">
-                  <v-btn color="error" id="btn-cancel-edge" @click="cancel()">Abbrechen</v-btn>
+                <v-col sm="4">
+                  <v-btn
+                    color="grey"
+                    text
+                    id="btn-cancel-edge"
+                    @click="cancel()"
+                  >Abbrechen</v-btn>
                 </v-col>
               </v-row>
             </v-form>
@@ -340,12 +358,12 @@
         clickX: 500,
         clickY: 300,
         nameNodeRules: [
-          v => !!v || "Zustands-Name wird benötigt",
+          v => !!v || "Zustandsname wird benötigt",
           v => (v && v.length <= 18) || "Name ist zu lang",
           v => !this.itemsName.includes(v) || "Name ist bereits vergeben"
         ],
         nameEdgeRules: [
-          v => !!v || "Verknüpfung-Name wird benötigt",
+          v => !!v || "Verknüpfungsname wird benötigt",
           v => (v && v.length <= 18) || "Name ist zu lang",
           v => !this.edgeNames.includes(v) || "Name ist bereits vergeben"
         ],
@@ -357,23 +375,27 @@
           v => !v || v.match(/\.(jpeg|jpg|gif|png)$/) || "Falsches Format"
         ],
         costRules: [
-          v => !!v || v != 0 || "Darf nicht leer sein",
-          v => v >= 0 || "nicht negativ"
+          v => !!v || "Kosten werden benötigt",
+          v => v >= 0 || "Darf nicht negativ sein"
         ],
         timeRules: [
-          v => !!v || v != 0 || "Darf nicht leer sein",
-          v => v >= 0 || "nicht negativ"
+          v => !!v || "Kosten werden benötigt",
+          v => v >= 0 || "Darf nicht negativ sein"
         ],
         suCostRules: [
-          v => !!v || v != 0 || "Darf nicht leer sein",
-          v => v >= 0 || "nicht negativ"
+          v => !!v || "Kosten werden benötigt",
+          v => v >= 0 || "Darf nicht negativ sein"
         ],
         suTimeRules: [
-          v => !!v || v != 0 || "Darf nicht leer sein",
-          v => v >= 0 || "nicht negativ"
+          v => !!v || "Kosten werden benötigt",
+          v => v >= 0 || "Darf nicht negativ sein"
         ],
-        startEndRule: [
-          v => v != this.startSelect || "Ende muss sich vom Start unterscheiden"
+        startRules: [
+          v => !!v || "Startzustand wird benötigt"
+        ],
+        endRules: [
+          v => !!v || "Endzustand wird benötigt",
+          v => v != this.startSelect || "Endzustand muss sich vom Startzustand unterscheiden"
         ]
       };
     },
@@ -543,6 +565,10 @@
         this.$refs.formNodes.reset();
         this.$refs.formEdges.reset();
         this.$refs.scrollingContainer.scrollTop = 0;
+      },
+      validateStartEnd() {
+        this.$refs.startzustand.validate();
+        this.$refs.endzustand.validate();
       }
     }
   };

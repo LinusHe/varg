@@ -23,18 +23,18 @@
               <v-icon @click="openHelpDialog()">mdi-help-circle-outline</v-icon>
             </v-col> -->
           </v-row>
-          <v-row>
-            <v-col sm="6">
+          <v-row justify="end">
+            <v-col :sm="btnsm">
               <v-btn
-                color="success"
+                :color="btncolor"
                 :disabled="!valid"
-                block
+                text
                 id="save-menu-save"
                 @click="save"
               >{{btntext}}</v-btn>
             </v-col>
-            <v-col sm="6">
-              <v-btn color="error" block id="save-menu-cancel" @click="clearFields">Abbrechen</v-btn>
+            <v-col sm="4">
+              <v-btn color="grey" text id="save-menu-cancel" @click="clearFields">Abbrechen</v-btn>
             </v-col>
           </v-row>
         </v-form>
@@ -63,6 +63,8 @@ export default {
       label: "Datenbankname",
       message: "Legen Sie einen Namen für den Graphen in der Datenbank fest.",
       btntext: "Speichern",
+      btncolor: "green darken-1",
+      btnsm: "4",
       database: this.$parent.$refs.toolbar.vars.testDatabase
     };
   },
@@ -81,6 +83,14 @@ export default {
     },
     setbtntext(value) {
       this.btntext = value;
+      if(value === "Speichern") {
+        this.btncolor = "green darken-1";
+        this.btnsm = "4";
+      }
+      else {
+        this.btncolor = "warning";
+        this.btnsm = "5";
+      }
     },
     setmsg(value) {
       this.message = value;
@@ -118,10 +128,10 @@ export default {
                 }
               } else {
                 //dupe case
-                this.$parent.$refs.saveMenu.setmsg(
+                this.setmsg(
                   "Es existiert bereits eine Datei unter diesen Namen. Wollen Sie diese überschreiben ?"
                 );
-                this.$parent.$refs.saveMenu.setbtntext("Überschreiben");
+                this.setbtntext("Überschreiben");
               }
             }
             break;

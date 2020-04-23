@@ -1,8 +1,8 @@
 <template>
   <v-list-item three-line class="homemenu-container" align="center">
     <v-list-item-content>
-      <v-list-item-title align="center" class="login-pre-headline mt-5">Variantengraph-Editor</v-list-item-title>
-      <v-list-item-title align="center" class="login-headline mb-1">varg</v-list-item-title>
+      <v-list-item-title align="center" class="login-pre-headline mt-5 mb-3">Variantengraph-Editor</v-list-item-title>
+      <v-list-item-title align="center" class="login-headline mb-1">VarG</v-list-item-title>
       <v-row class="button-container">
         <v-col sm="4">
           <v-card outlined align="center">
