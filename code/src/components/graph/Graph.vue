@@ -125,19 +125,19 @@
 
 <script>
 /* eslint-disable vue/no-unused-components */
-import GraphHeader from "@/components/graph/elements/GraphHeader";
-import Toolbar from "@/components/graph/elements/Toolbar";
-import VarGraph from "@/components/graph/elements/VarGraph";
-import CreateControls from "@/components/graph/controls/CreateControls";
-import DetailControls from "@/components/graph/controls/DetailControls";
-import ZoomControls from "@/components/graph/controls/ZoomControls";
-import OptimizeControls from "@/components/graph/controls/OptimizeControls";
-import NewGraphMenu from "@/components/graph/menus/NewGraphMenu";
-import SaveMenu from "@/components/graph/menus/SaveMenu";
-import DownloadMenu from "@/components/graph/menus/DownloadMenu";
-import RightClickMenu from "@/components/graph/menus/RightClickMenu";
-import SettingsMenu from "@/components/graph/menus/SettingsMenu";
-import DatabaseMenu from "@/components/graph/menus/DatabaseMenu";
+import GraphHeader from "./elements/GraphHeader";
+import Toolbar from "./elements/Toolbar";
+import VarGraph from "./elements/VarGraph";
+import CreateControls from "./controls/CreateControls";
+import DetailControls from "./controls/DetailControls";
+import ZoomControls from "./controls/ZoomControls";
+import OptimizeControls from "./controls/OptimizeControls";
+import NewGraphMenu from "./menus/NewGraphMenu";
+import SaveMenu from "./menus/SaveMenu";
+import DownloadMenu from "./menus/DownloadMenu";
+import RightClickMenu from "./menus/RightClickMenu";
+import SettingsMenu from "./menus/SettingsMenu";
+import DatabaseMenu from "./menus/DatabaseMenu";
 
 export default {
   /* eslint-disable no-console */
