@@ -164,9 +164,10 @@ export default {
             }       
           }
           
-            // new found node
+            // new found node, 3 in case of Top 3 search
           if(allreadyFound < 3) {
             sortNodes.push(nextEdges[j])
+            console.log('test1')
           }
 
           //testline
@@ -184,8 +185,100 @@ export default {
       while(sortNodes[search][0] != endID) {
         search ++
       }
+      let bestPath = sortNodes[search][1]
+      let bestCost = sortNodes[search][2]
+
       console.log(sortNodes[search])
-      this.getGraph().markBestEdges(sortNodes[search][1])
+      this.getGraph().markBestEdges(bestPath)
+
+      
+      let distance = 0
+      let distanceID, pointInPath
+      let sndSearch = 0
+
+        // chack all nodes on best path for the "best better way"
+        // for all nodes...
+      
+      let point
+      bestPath.forEach(element => {
+
+        let checkNode = this.getGraph().getTarget(element)
+        point ++
+
+        
+          // ...old cost...
+        while(sortNodes[sndSearch][0] != checkNode) {
+          sndSearch ++
+        }
+        let oldCost = sortNodes[sndSearch][2]
+
+        sndSearch++
+
+          // ...new cost
+        while(sortNodes[sndSearch][0] != checkNode) {
+          sndSearch ++
+        }
+
+        let newCost = sortNodes[sndSearch][2]
+
+          // check if distance is new best(low) and save id
+        if(distance < oldCost-newCost || point==1) {
+          distance = oldCost - newCost
+          distanceID = checkNode
+          pointInPath = point
+        }
+
+      })
+      
+      
+      
+      /*
+      for(let i=0; i < bestPath.length(); i++) {
+        let checkNode = getTarget(bestPath[i])
+        
+          // ...old cost....
+        while(sortNodes[sndSearch][0] != checkNode) {
+          sndSearch ++
+        }
+        let oldcost = sortNodes[sndSearch][2]
+
+        sndSearch++
+
+          // ...new cost
+        while(sortNodes[sndSearch][0] != checkNode) {
+          sndSearch ++
+        }
+
+        let newcost = sortNodes[sndSearch][2]
+
+          // check if distance is new best(low) and save id
+        if(distance < oldCost-newCost || i==0) {
+          distance = oldCost - newCost
+          distanceID = checkNode
+          pointInPath = i + 1
+        }
+
+      }
+      */
+
+      let sndBestCost = bestCost - distance
+      let sndBestPath = sortNodes[sndSearch][1]
+
+      
+      bestPath.forEach(element => {
+        if(pointInPath==0) {
+          sndBestPath.push(element)
+        }
+        else {
+          pointInPath--
+        }
+      })
+        
+
+
+      console.log(bestPath)
+      console.log(bestCost)
+      //this.getGraph().markBestEdges(bestPath)
 
       
       

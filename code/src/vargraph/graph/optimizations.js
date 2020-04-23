@@ -64,7 +64,6 @@ export default {
   },
 
   getNextNodes(start, option) {
-    cyStore.data.cy.elements().removeClass("highlighted");
     let cy = cyStore.data.cy
 
 
@@ -89,13 +88,13 @@ export default {
         newPath.push(start[1][i])
       }
       newPath.push(element.data("id"))
-      newFoundNode [1] = newPath               //usedEdges
+      newFoundNode [1] = newPath                                          //usedEdges
 
       if(option) {
-        newFoundNode [2] = start[2] + element.data("time")                  //cost
+        newFoundNode [2] = start[2] + element.data("time")                  
       }
       else {
-        newFoundNode [2] = start[2] + element.data("cost")                  //cost
+        newFoundNode [2] = start[2] + element.data("cost")                  
       }
       
       newFoundNodeArray.push(newFoundNode)
@@ -105,17 +104,6 @@ export default {
     return newFoundNodeArray
   },
 
-  /*
-  markBestEdges(bestEdgesID) {
-    cyStore.data.cy.elements().removeClass("highlighted");
-    let cy = cyStore.data.cy
-
-    for(let i=1; i<=bestEdgesID.length(); i++) {
-      cy.getElementById(bestEdgesID[i]).addClass("highlighted")
-    }
-  }
-  */
-
   markBestEdges(bestEdgesID) {
     cyStore.data.cy.elements().removeClass("highlighted");
     let cy = cyStore.data.cy
@@ -123,6 +111,14 @@ export default {
     bestEdgesID.forEach(element => {
       cy.getElementById(element).addClass("highlighted")
     })
+  },
+
+  getTarget(edge){
+    let cy = cyStore.data.cy
+
+    let node = cy.getElementById(edge).data("target")
+
+    return node
   }
 
 };
