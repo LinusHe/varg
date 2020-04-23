@@ -184,10 +184,13 @@
                 <v-col sm="12">
                   <v-select
                     @focus="getNodeItemsName(); getNodeItemsID();"
+                    @change="validateStartEnd()"
                     v-model="startSelect"
                     :items="itemsName"
                     id="detailStartzustand"
+                    ref="detailStartzustand"
                     label="Startzustand"
+                    :rules="startRules"
                   ></v-select>
                 </v-col>
               </v-row>
@@ -195,11 +198,13 @@
                 <v-col sm="12">
                   <v-select
                     @focus="getNodeItemsName(); getNodeItemsID()"
+                    @change="validateStartEnd()"
                     v-model="endSelect"
                     :items="itemsName"
                     id="detailEndzustand"
+                    ref="detailEndzustand"
                     label="Endzustand"
-                    :rules="startEndRule"
+                    :rules="endRules"
                   ></v-select>
                 </v-col>
               </v-row>
@@ -331,7 +336,7 @@ export default {
       validNodes: false,
       validEdges: false,
       nameNodeRules: [
-        v => !!v || "Zustands-Name wird benötigt",
+        v => !!v || "Zustandsname wird benötigt",
         v => (v && v.length <= 18) || "Name ist zu lang",
         // todo: other given name
         v =>
@@ -340,7 +345,7 @@ export default {
           "Name ist bereits vergeben"
       ],
       nameEdgeRules: [
-        v => !!v || "Verknüpfung-Name wird benötigt",
+        v => !!v || "Verknüpfungsame wird benötigt",
         v => (v && v.length <= 18) || "Name ist zu lang",
         // todo: other given name
         v =>
@@ -356,23 +361,27 @@ export default {
         v => !v || v.match(/\.(jpeg|jpg|gif|png)$/) || "Falsches Format"
       ],
       costRules: [
-        v => !!v || v != 0 || "Darf nicht leer sein",
-        v => v >= 0 || "nicht negativ"
+        v => !!v || "Kosten werden benötigt",
+        v => v >= 0 || "Darf nicht negativ sein"
       ],
       timeRules: [
-        v => !!v || v != 0 || "Darf nicht leer sein",
-        v => v >= 0 || "nicht negativ"
+        v => !!v || "Kosten werden benötigt",
+        v => v >= 0 || "Darf nicht negativ sein"
       ],
       suCostRules: [
-        v => !!v || v != 0 || "Darf nicht leer sein",
-        v => v >= 0 || "nicht negativ"
+        v => !!v || "Kosten werden benötigt",
+        v => v >= 0 || "Darf nicht negativ sein"
       ],
       suTimeRules: [
-        v => !!v || v != 0 || "Darf nicht leer sein",
-        v => v >= 0 || "nicht negativ"
+        v => !!v || "Kosten werden benötigt",
+        v => v >= 0 || "Darf nicht negativ sein"
       ],
-      startEndRule: [
-        v => v != this.startSelect || "Ende muss sich vom Start unterscheiden"
+      startRules: [
+        v => !!v || "Startzustand ist benötigt"
+      ],
+      endRules: [
+        v => !!v || "Endzustand ist benötigt",
+        v => v != this.startSelect || "Endzustand muss sich vom Startzustand unterscheiden"
       ]
     };
   },
@@ -571,6 +580,10 @@ export default {
       // this.clearFields();
       this.deactivateGui();
       this.$refs.scrollingContainer.scrollTop = 0;
+    },
+    validateStartEnd() {
+      this.$refs.detailStartzustand.validate();
+      this.$refs.detailEndzustand.validate();
     }
   }
 };
