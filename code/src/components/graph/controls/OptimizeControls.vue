@@ -133,41 +133,52 @@ export default {
           //testline
         console.log(sortNodes.length)
 
-
         let Edges = [];
 
         let optimizeNode = [3]
+
           // ...get next gettable nodes in sort-node form
-        let nextEdges = this.getGraph().getNextNodes(sortNodes[i], option)   
+
+        let nextEdgeCounter = this.getGraph().countNewEdges(sortNodes[i])
+
+        console.log(nextEdgeCounter)
+
+        
+        let nextNode   
       
           // for each "new found" node...
-        for (let j = 0; j < nextEdges.length; j++) {
-          //testline
-          console.log(nextEdges.length)
+          // getting nexNodes individually from grahp, otherwise problems (somehow)
+        for (let j = 0; j < nextEdgeCounter; j++) {
+
+          nextNode = this.getGraph().getNextNode(sortNodes[i], option, j)
 
           let allreadyFound = 0;
             // ...check if node is allready part of sort-node (checking ID)
           for (let k = 0; k < sortNodes.length; k++) {
               // node was allready found
               //'allreadyfound' ensures, only top 3 costs of every note gets saved
-            if (sortNodes[k][0] == nextEdges [j][0]) {
+            
+            if (sortNodes[k][0] == nextNode [0]) {
               allreadyFound ++
 
                 // if new found way has lower cost
-              if (sortNodes[k][2] > nextEdges [j][2]) {
+              if (sortNodes[k][2] > nextNode [2]) {
                   // override it
-                let temp = sortNodes[k][2]
-                sortNodes[k][2] = nextEdges [j][2]
-                nextEdges [j][2] = temp
-              }
+                let tempCost = sortNodes[k][2]
+                sortNodes[k][2] = nextNode[2]
+                nextNode[2] = tempCost
 
+                let tempPath = sortNodes[k][1]
+                sortNodes[k][1] = nextNode[1]
+                nextNode[1] = tempPath
+              }
             }       
           }
           
             // new found node, 3 in case of Top 3 search
           if(allreadyFound < 3) {
-            sortNodes.push(nextEdges[j])
-            console.log('test1')
+            sortNodes.push(nextNode)
+            
           }
 
           //testline
@@ -177,6 +188,7 @@ export default {
 
         }
       }
+      
       
       //searches for the end-node
       let indexEnd = this.itemsName.indexOf(this.endSelect);
@@ -194,62 +206,29 @@ export default {
       
       let distance = 0
       let distanceID, pointInPath
-      let sndSearch = 0
+      let nextSearch = 0
 
         // chack all nodes on best path for the "best better way"
         // for all nodes...
       
-      let point
-      bestPath.forEach(element => {
-
-        let checkNode = this.getGraph().getTarget(element)
-        point ++
-
-        
-          // ...old cost...
-        while(sortNodes[sndSearch][0] != checkNode) {
-          sndSearch ++
-        }
-        let oldCost = sortNodes[sndSearch][2]
-
-        sndSearch++
-
-          // ...new cost
-        while(sortNodes[sndSearch][0] != checkNode) {
-          sndSearch ++
-        }
-
-        let newCost = sortNodes[sndSearch][2]
-
-          // check if distance is new best(low) and save id
-        if(distance < oldCost-newCost || point==1) {
-          distance = oldCost - newCost
-          distanceID = checkNode
-          pointInPath = point
-        }
-
-      })
-      
-      
-      
-      /*
-      for(let i=0; i < bestPath.length(); i++) {
-        let checkNode = getTarget(bestPath[i])
+     
+      for(let i=0; i < bestPath.length; i++) {
+        let checkNode = this.getGraph().getTarget(bestPath[i])
         
           // ...old cost....
-        while(sortNodes[sndSearch][0] != checkNode) {
-          sndSearch ++
+        while(sortNodes[nextSearch][0] != checkNode) {
+          nextSearch ++
         }
-        let oldcost = sortNodes[sndSearch][2]
+        let oldCost = sortNodes[nextSearch][2]
 
-        sndSearch++
+        nextSearch++
 
           // ...new cost
-        while(sortNodes[sndSearch][0] != checkNode) {
-          sndSearch ++
+        while(sortNodes[nextSearch][0] != checkNode) {
+          nextSearch ++
         }
 
-        let newcost = sortNodes[sndSearch][2]
+        let newCost = sortNodes[nextSearch][2]
 
           // check if distance is new best(low) and save id
         if(distance < oldCost-newCost || i==0) {
@@ -257,70 +236,29 @@ export default {
           distanceID = checkNode
           pointInPath = i + 1
         }
+        
 
       }
-      */
+      
 
-      let sndBestCost = bestCost - distance
-      let sndBestPath = sortNodes[sndSearch][1]
+      let nextBestCost = bestCost - distance
+      let nextBestPath = sortNodes[nextSearch][1]
 
       
-      bestPath.forEach(element => {
-        if(pointInPath==0) {
-          sndBestPath.push(element)
-        }
-        else {
-          pointInPath--
-        }
-      })
+      for(let i=pointInPath.length; i<bestPath.lenght; i++) {
+        nextBestPath.push(bestPath[i])
+      }
+      
         
 
 
       console.log(bestPath)
       console.log(bestCost)
+
+      console.log(nextBestPath)
+      console.log(nextBestCost)
       //this.getGraph().markBestEdges(bestPath)
 
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-/*      
-      let option;
-      if (this.optimizingOption === false) {
-        // True means option costs and false is option time
-        option = "optionTime";
-      } else {
-        option = "optionCosts";
-      }
-
-      let startIDs = [];
-      for (let i = 0; i < this.startSelect.length; i++) {
-        let indexStart = this.itemsName.indexOf(this.startSelect[i]);
-        startIDs.push(this.itemsID[indexStart]);
-      }
-
-      let indexEnd = this.itemsName.indexOf(this.endSelect);
-      let endID = this.itemsID[indexEnd];
-
-      this.getGraph().findPath(this.getGraph(), option, startIDs, endID);
-      */
     }
   }
 };

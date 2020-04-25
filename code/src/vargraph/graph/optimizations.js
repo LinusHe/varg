@@ -63,45 +63,57 @@ export default {
     }
   },
 
-  getNextNodes(start, option) {
+  
+  countNewEdges(start) {
     let cy = cyStore.data.cy
+    
+    let EdgeCount = 0
 
+      // all outgoing edges from node 'start'
+    cy.getElementById(start[0]).outgoers('edge').forEach(element => {
+      EdgeCount ++
+    })
 
-    let newFoundNode = [3];
-    let newFoundNodeArray = [];
-    // all outgoing edges from node 'start'
+    return EdgeCount
+  },  
+  
+  
+  
+  getNextNode(start, option, count) {
+    let cy = cyStore.data.cy
+    
+      // all outgoing edges from node 'start'
     let nextEdges = cy.getElementById(start[0]).outgoers('edge');
+    let newFoundNode = [3];
 
 
-    nextEdges.forEach(element => {
-      //testline x2
-      console.log(1000)
-      console.log(element.data("target"))
+    console.log(1000)
 
       //converts all outgoing edges into sort-node form
-      newFoundNode [0] = element.data("target")                           //NodeID
+    newFoundNode [0] = nextEdges[count].data("target")
 
-      let newPath = []
-        // copy all edges of the current path
-      for(let i = 0; i < start[1].length; i++) {
+    let newPath = []
+      // copy all edges of the current path
+    for(let i = 0; i < start[1].length; i++) {
         // add new egde
-        newPath.push(start[1][i])
-      }
-      newPath.push(element.data("id"))
-      newFoundNode [1] = newPath                                          //usedEdges
+      newPath.push(start[1][i])
+    }
+    newPath.push(nextEdges[count].data("id"))
+    newFoundNode [1] = newPath                                          //usedEdges
 
-      if(option) {
-        newFoundNode [2] = start[2] + element.data("time")                  
-      }
-      else {
-        newFoundNode [2] = start[2] + element.data("cost")                  
-      }
-      
-      newFoundNodeArray.push(newFoundNode)
-      });
+    if(option) {
+      newFoundNode [2] = start[2] + nextEdges[count].data("time")                  
+    }
+    else {
+      newFoundNode [2] = start[2] + nextEdges[count].data("cost")                  
+    }
 
+      //testline
+    console.log(newFoundNode[2])
+    console.log(nextEdges.length)
     
-    return newFoundNodeArray
+
+    return newFoundNode
   },
 
   markBestEdges(bestEdgesID) {
