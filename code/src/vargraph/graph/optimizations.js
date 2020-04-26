@@ -81,6 +81,7 @@ export default {
   
   getNextNode(start, option, count) {
     let cy = cyStore.data.cy
+    let quantity = cy.data("prodQuant")
     
       // all outgoing edges from node 'start'
     let nextEdges = cy.getElementById(start[0]).outgoers('edge');
@@ -102,10 +103,16 @@ export default {
     newFoundNode [1] = newPath                                          //usedEdges
 
     if(option) {
-      newFoundNode [2] = start[2] + nextEdges[count].data("time")                  
+      let newtime = start[2] + nextEdges[count].data("time") * quantity + nextEdges[count].data("sutime")
+      newtime = Math.round(newtime * 100) / 100
+
+      newFoundNode [2] = newtime              
     }
     else {
-      newFoundNode [2] = start[2] + nextEdges[count].data("cost")                  
+      let newcost = start[2] + nextEdges[count].data("cost") * quantity + nextEdges[count].data("sucost")
+      newcost = Math.round(newcost * 100) / 100
+
+      newFoundNode [2] = newcost            
     }
 
       //testline
