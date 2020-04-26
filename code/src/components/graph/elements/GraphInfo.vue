@@ -1,16 +1,19 @@
 <template>
-  <div class="header-graph-container" id="graph-header">
-    <div id="headertext_out">
-      <div id="headertext_in">
-        <v-row>
-          <p align="left" id="header-prodName">
-            Produkt:
+  <v-row class="card-top pt-2 ma-0">
+    <v-col sm="3" class="graph-info">
+      <v-row>
+        <v-card align="center" class="mt-2 ml-8 mb-2" width="60px" height="60px">
+          <v-icon size="40px" class="mt-2" color="#6c7dff">mdi-rocket</v-icon>
+        </v-card>
+        <p class="mb-0">
+          <v-card-subtitle class="pb-0">Produktname:</v-card-subtitle>
+          <v-card-title class="pt-0 pb-0">
             <span v-show="!isEditingName" @click="editName()">{{prodName}}</span>
             <v-form
               ref="formName"
               v-model="validName"
               lazy-validation
-              class="d-inline-block"
+              class="d-inline-block graphDataForm"
               @submit="saveNewName()"
               onsubmit="return false;"
             >
@@ -32,7 +35,7 @@
               v-if="!isEditingName"
               @click="editName()"
               color="lightgrey"
-              class="ml-2 mb-3"
+              class="ml-2 mb-1"
               small
             >mdi-pencil
             </v-icon>
@@ -45,18 +48,26 @@
               class="ml-2"
             >mdi-check-bold
             </v-icon>
-          </p>
-        </v-row>
+          </v-card-title>
+        </p>
+      </v-row>
+    </v-col>
 
-        <v-row>
-          <p align="left" id="header-prodQuant">
-            Anzahl:
+    <v-col sm="3">
+      <v-row>
+        <v-divider class="mx-4" vertical></v-divider>
+        <v-card align="center" class="mt-2 ml-4" width="60px" height="60px">
+          <v-icon size="40px" class="mt-2" color="#6c7dff">mdi-counter</v-icon>
+        </v-card>
+        <p class="mb-0">
+          <v-card-subtitle class="pb-0">Stückzahl:</v-card-subtitle>
+          <v-card-title class="pt-0 pb-0">
             <span v-show="!isEditingQuant" @click="editQuant()">{{prodQuant}}</span>
             <v-form
               ref="formQuant"
               v-model="validQuant"
               lazy-validation
-              class="d-inline-block"
+              class="d-inline-block graphDataForm"
               @submit="saveNewQuant()"
               onsubmit="return false;"
             >
@@ -70,6 +81,7 @@
                 dense
                 hide-details
                 type="number"
+                width="100px"
                 v-on:blur="saveNewQuant()"
                 :rules="[v => !!v || 'Feld darf nicht leer sein', v => v > 0 ||'mindestens 1', v => v < 9999999999999999 ||'bist du wahnsinnig!?']"
               ></v-text-field>
@@ -78,7 +90,7 @@
               v-if="!isEditingQuant"
               @click="editQuant()"
               color="lightgrey"
-              class="ml-2 mb-3"
+              class="ml-2 mb-1"
               small
             >mdi-pencil
             </v-icon>
@@ -91,11 +103,43 @@
               class="ml-2"
             >mdi-check-bold
             </v-icon>
-          </p>
-        </v-row>
-      </div>
-    </div>
-  </div>
+          </v-card-title>
+        </p>
+      </v-row>
+    </v-col>
+
+    <v-col sm="3">
+      <v-row>
+        <v-divider class="mx-4" vertical></v-divider>
+        <v-card align="center" class="mt-2 ml-4" width="60px" height="60px">
+          <v-icon size="40px" class="mt-2" color="#6c7dff">mdi-cash</v-icon>
+        </v-card>
+        <p class="mb-0">
+          <v-card-subtitle class="pb-0">
+            Gesamtkosten:
+            <v-icon @click="openOptimize" color="#636364" class="ml-2 mb-1" small>mdi-cog</v-icon>
+          </v-card-subtitle>
+          <v-card-title class="pt-0 pb-0">1546,5€</v-card-title>
+        </p>
+      </v-row>
+    </v-col>
+
+    <v-col sm="3">
+      <v-row>
+        <v-divider class="mx-4" vertical></v-divider>
+        <v-card align="center" class="mt-2 ml-4" width="60px" height="60px">
+          <v-icon size="40px" class="mt-2" color="#6c7dff">mdi-clock-outline</v-icon>
+        </v-card>
+        <p class="mb-0">
+          <v-card-subtitle class="pb-0">
+            Gesamtzeit:
+            <v-icon @click="openOptimize" color="#636364" class="ml-2 mb-1" small>mdi-cog</v-icon>
+          </v-card-subtitle>
+          <v-btn @click="startOptimizing" class="ml-4 pa-0" text color="#6c7dff">Graph optimieren</v-btn>
+        </p>
+      </v-row>
+    </v-col>
+  </v-row>
 </template>
 
 <script>
@@ -104,10 +148,10 @@
   let dialogComponent;
 
   export default {
+    name: "GraphInfo",
     mounted: function () {
       dialogComponent = this.$parent.$parent.$parent.$parent.$parent.$refs["dialogs"];
     },
-    name: "GraphHeader",
     data() {
       return {
         prodName: null,
@@ -178,7 +222,13 @@
             "Stückzahl nicht geändert: <b>Es sind nur positive Stückzahlen erlaubt</b>"
           );
         }
+      },
+      openOptimize() {
+        this.$parent.$parent.$refs["optimizeControls"].setDialog(true);
+      },
+      startOptimizing() {
+        this.$parent.$parent.$refs["optimizeControls"].optimizing();
       }
     }
-  };
+  }
 </script>

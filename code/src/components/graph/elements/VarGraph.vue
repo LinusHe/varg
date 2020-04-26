@@ -5,6 +5,8 @@
 <script>
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
+import TestDatabase from "@/vargraph/TestDatabase.js";
+
 import style from "@/vargraph/init/cytoscapeStyle.js";
 import elements from "@/vargraph/init/exampleElements.js";
 
@@ -49,6 +51,12 @@ const methods = Object.assign(
 
 export default {
   name: "VarGraph",
+  created() {
+    this.vars = {
+      // initializes new instance of TestDatabase when Toolbar is loaded for the first time
+      testDatabase: new TestDatabase()
+    };
+  },
   mounted: function() {
     // cy pre config
     this.preConfig(cytoscape);

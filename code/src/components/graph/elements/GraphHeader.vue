@@ -15,20 +15,21 @@
           Datenbank
         </v-btn>
         <v-btn outlined tile color="#b9c5ff" class="bo-r-0" @click="LoadJSon" id="ImportGraph">
-          <input type="file" ref="file" accept=".json" style="display: none" />
+          <input type="file" ref="file" accept=".json" style="display: none"/>
           <v-icon class="mr-1">mdi-import</v-icon>
           Import
         </v-btn>
-        <v-btn outlined tile color="#b9c5ff" class="bo-r-0" @click="Download"  id="download-btn">
+        <v-btn outlined tile color="#b9c5ff" class="bo-r-0" @click="Download" id="download-btn">
           <v-icon class="mr-1">mdi-export</v-icon>
           Export
         </v-btn>
-        <v-btn outlined tile color="#b9c5ff" class="bora-r-10"  @click="openSettings" id="SettingsBtn">
+        <v-btn outlined tile color="#b9c5ff" class="bora-r-10" @click="openSettings" id="SettingsBtn">
           <v-icon class="mr-1">mdi-cog</v-icon>
           Einstellungen
         </v-btn>
       </v-col>
 
+      <!-- User Icon-->
       <v-col align="right" sm="1" class="mr-12">
         <v-avatar color="red">
           <span class="white--text headline">CJ</span>
@@ -47,8 +48,15 @@
   let dialogComponent;
 
   export default {
+    created() {
+      this.vars = {
+        // initializes new instance of TestDatabase when Toolbar is loaded for the first time
+        testDatabase: new TestDatabase()
+      };
+    },
     mounted: function () {
       dialogComponent = this.$parent.$parent.$parent.$parent.$parent.$refs["dialogs"];
+      console.log("Graph Component", this.getGraph())
     },
     name: "GraphHeader",
     data() {
@@ -61,29 +69,23 @@
         validName: false
       };
     },
-    created() {
-      this.vars = {
-        // initializes new instance of TestDatabase when Toolbar is loaded for the first time
-        testDatabase: new TestDatabase()
-      };
-    },
     methods: {
       getGraph() {
-        return this.$parent.$parent.$refs["vargraph"];
+        return this.$parent.$refs["vargraph"];
       },
       NewGraph() {
         this.$parent.$refs.newGraphMenu.setObject(this.testDatabase);
         this.$parent.$refs.newGraphMenu.setdialog(true);
       },
-      Download: function() {
+      Download: function () {
         //not-best-practice aka coupling of components is not wanted
         //in order to make components reusable
-        this.$parent.$refs.downloadMenu.setdialog(true);
+        this.$parent.$refs.exportMenu.setdialog(true);
       },
       openSettings() {
         this.$parent.$refs.settingsMenu.openDialog();
       },
-      SaveJSon: function() {
+      SaveJSon: function () {
         this.$parent.$refs.saveMenu.setdialog(true);
       },
       LoadJSon() {
@@ -93,16 +95,17 @@
         this.$refs.file.addEventListener("change", onChange);
 
         let graphComponent = this.getGraph();
+
         function onChange(event) {
           console.log("Graph Component to load:", graphComponent);
           fileManager.loadGraphFromJson(event, graphComponent);
         }
       },
       logout() {
-        this.$router.push({ name: "login" });
+        this.$router.push({name: "login"});
       },
       datenbank() {
-        this.$router.push({ name: "Varg - Datenbank import" });
+        this.$router.push({name: "Varg - Datenbank import"});
       }
     }
   };
