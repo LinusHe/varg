@@ -29,7 +29,7 @@ export const store = new Vuex.Store({
     retrieveStore(state) {
 			if(localStorage.getItem("store")) {
 				this.replaceState((state, JSON.parse(localStorage.getItem("store"))));
-        alert("Old state has been retrieved.");
+        // alert("Old state has been retrieved.");
       }
       state.ready = true;
     },

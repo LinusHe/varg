@@ -40,9 +40,30 @@
 
       <!-- User Icon-->
       <v-col align="right" sm="1" class="mr-12">
-        <v-avatar color="red">
-          <span class="white--text headline">CJ</span>
-        </v-avatar>
+        <v-menu bottom left offset-y>
+          <template v-slot:activator="{ on }">
+            <v-btn id="avatar-btn" height="48px" color="primary" icon v-on="on">
+              <v-avatar color="red">
+                <span class="white--text headline">CJ</span>
+              </v-avatar>
+            </v-btn>
+          </template>
+
+          <v-list>
+            <v-list-item key="account" @click="account()">
+              <v-list-item-icon>
+                <v-icon>mdi-account</v-icon>
+              </v-list-item-icon>
+              <v-list-item-title>Account</v-list-item-title>
+            </v-list-item>
+            <v-list-item key="logout" id="logout-btn" @click="logout()">
+              <v-list-item-icon>
+                <v-icon>mdi-logout</v-icon>
+              </v-list-item-icon>
+              <v-list-item-title>Logout</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
       </v-col>
     </v-row>
   </div>
@@ -65,7 +86,9 @@ export default {
     };
   },
   mounted: function() {
-    dialogComponent = this.$parent.$parent.$parent.$parent.$parent.$refs["dialogs"];
+    dialogComponent = this.$parent.$parent.$parent.$parent.$parent.$refs[
+      "dialogs"
+    ];
     console.log("Graph Component", this.getGraph());
   },
   name: "GraphHeader",

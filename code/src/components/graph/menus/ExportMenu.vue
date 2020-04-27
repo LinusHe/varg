@@ -1,6 +1,6 @@
 <template>
   <v-dialog v-model="dialog" max-width="500">
-    <v-card class="export-dialog">
+    <v-card class="export-dialog" id="export-menu">
       <v-card-title class="text-center justify-center mb-3 pt-8" color="primary">
         <h1>Exportieren</h1>
       </v-card-title>
@@ -13,7 +13,7 @@
         </v-tab>
 
         <v-tab-item>
-          <v-card flat>
+          <v-card flat id="download-menu">
             <v-card-text>
               <v-form ref="formLocal" v-model="validLocal" lazy-validation>
                 <v-row class="ml-2 mt-4 mr-2">
@@ -73,7 +73,7 @@
           </v-card>
         </v-tab-item>
         <v-tab-item>
-          <v-card flat>
+          <v-card flat id="save-menu">
             <v-card-text>
               <v-form ref="formDB" v-model="validDB" lazy-validation>
                 <v-row class="ml-2 mt-4 mr-2">
@@ -201,11 +201,17 @@ export default {
       }
     },
     clearFields() {
-      this.$refs.formDB.reset();
-      this.$refs.formDB.resetValidation();
       this.DataBaseName = "";
-      this.$refs.formLocal.reset();
-      this.$refs.formLocal.resetValidation();
+      // catch undefined form:
+      // if one of the tabs arent selected yet -> the form is undefined
+      if (typeof this.$refs.formLocal !== "undefined") {
+        this.$refs.formLocal.reset();
+        this.$refs.formLocal.resetValidation();
+      }
+      if (typeof this.$refs.formDB !== "undefined") {
+        this.$refs.formDB.reset();
+        this.$refs.formDB.resetValidation();
+      }
       this.dialog = false;
     },
     openHelpDialog() {

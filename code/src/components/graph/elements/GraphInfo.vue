@@ -7,7 +7,7 @@
         </v-card>
         <p class="mb-0">
           <v-card-subtitle class="pb-0">Produktname:</v-card-subtitle>
-          <v-card-title class="pt-0 pb-0">
+          <v-card-title class="pt-0 pb-0" id="header-prodName">
             <span v-show="!isEditingName" @click="editName()">{{prodName}}</span>
             <v-form
               ref="formName"
@@ -37,8 +37,7 @@
               color="lightgrey"
               class="ml-2 mb-1"
               small
-            >mdi-pencil
-            </v-icon>
+            >mdi-pencil</v-icon>
             <v-icon
               v-else
               @click="saveNewName()"
@@ -46,8 +45,7 @@
               dark
               color="success"
               class="ml-2"
-            >mdi-check-bold
-            </v-icon>
+            >mdi-check-bold</v-icon>
           </v-card-title>
         </p>
       </v-row>
@@ -61,7 +59,7 @@
         </v-card>
         <p class="mb-0">
           <v-card-subtitle class="pb-0">Stückzahl:</v-card-subtitle>
-          <v-card-title class="pt-0 pb-0">
+          <v-card-title class="pt-0 pb-0" id="header-prodQuant">
             <span v-show="!isEditingQuant" @click="editQuant()">{{prodQuant}}</span>
             <v-form
               ref="formQuant"
@@ -92,8 +90,7 @@
               color="lightgrey"
               class="ml-2 mb-1"
               small
-            >mdi-pencil
-            </v-icon>
+            >mdi-pencil</v-icon>
             <v-icon
               v-else
               @click="saveNewQuant()"
@@ -101,8 +98,7 @@
               dark
               color="success"
               class="ml-2"
-            >mdi-check-bold
-            </v-icon>
+            >mdi-check-bold</v-icon>
           </v-card-title>
         </p>
       </v-row>
@@ -143,93 +139,95 @@
 </template>
 
 <script>
-  /* eslint-disable no-console */
-  /* eslint-disable standard/computed-property-even-spacing */
-  /* eslint-disable no-unused-vars */
-  let dialogComponent;
+/* eslint-disable no-console */
+/* eslint-disable standard/computed-property-even-spacing */
+/* eslint-disable no-unused-vars */
+let dialogComponent;
 
-  export default {
-    name: "GraphInfo",
-    mounted: function () {
-      dialogComponent = this.$parent.$parent.$parent.$parent.$parent.$refs["dialogs"];
+export default {
+  name: "GraphInfo",
+  mounted: function() {
+    dialogComponent = this.$parent.$parent.$parent.$parent.$parent.$refs[
+      "dialogs"
+    ];
+  },
+  data() {
+    return {
+      prodName: null,
+      prodQuant: null,
+      isEditingName: false,
+      isEditingQuant: false,
+      validQuant: false,
+      validName: false
+    };
+  },
+  methods: {
+    getGraph() {
+      return this.$parent.$parent.$refs["vargraph"];
     },
-    data() {
-      return {
-        prodName: null,
-        prodQuant: null,
-        isEditingName: false,
-        isEditingQuant: false,
-        validQuant: false,
-        validName: false
-      };
+    refresh() {
+      this.prodName = this.getGraph()
+        .getCytoGraph(this.getGraph())
+        .data("prodName");
+      this.prodQuant = this.getGraph()
+        .getCytoGraph(this.getGraph())
+        .data("prodQuant");
     },
-    methods: {
-      getGraph() {
-        return this.$parent.$parent.$refs["vargraph"];
-      },
-      refresh() {
-        this.prodName = this.getGraph()
+    updateData(newProdName, newProdQuant) {
+      this.prodName = newProdName;
+      this.prodQuant = newProdQuant;
+      this.saveNewName();
+      this.saveNewQuant();
+    },
+    editName() {
+      this.isEditingName = true;
+      this.$nextTick(() => this.$refs.nameInput.focus());
+    },
+    saveNewName() {
+      //Checks if menu formular was filled in correctly
+      if (this.$refs.formName.validate()) {
+        this.isEditingName = false;
+        this.getGraph()
           .getCytoGraph(this.getGraph())
-          .data("prodName");
-        this.prodQuant = this.getGraph()
-          .getCytoGraph(this.getGraph())
-          .data("prodQuant");
-      },
-      updateData(newProdName, newProdQuant) {
-        this.prodName = newProdName;
-        this.prodQuant = newProdQuant;
-        this.saveNewName();
-        this.saveNewQuant();
-      },
-      editName() {
-        this.isEditingName = true;
-        this.$nextTick(() => this.$refs.nameInput.focus());
-      },
-      saveNewName() {
-        //Checks if menu formular was filled in correctly
-        if (this.$refs.formName.validate()) {
-          this.isEditingName = false;
-          this.getGraph()
-            .getCytoGraph(this.getGraph())
-            .data("prodName", this.prodName);
-          dialogComponent.dialogSuccess("Produktname erfolgreich geändert");
-        } else if (this.prodName.length > 25) {
-          dialogComponent.dialogError(
-            "Produktname nicht geändert: <b>Bitte Namen mit maximal 25 Zeichen eingeben</b>"
-          );
-        } else if (this.prodName.length == 0) {
-          dialogComponent.dialogError(
-            "Produktname nicht geändert: <b>Bitte Namen eingeben</b>"
-          );
-        }
-      },
-      editQuant() {
-        this.isEditingQuant = true;
-        this.$nextTick(() => this.$refs.quantInput.focus());
-      },
-      saveNewQuant() {
-        if (this.$refs.formQuant.validate()) {
-          this.isEditingQuant = false;
-          this.getGraph()
-            .getCytoGraph(this.getGraph())
-            .data("prodQuant", this.prodQuant);
-          dialogComponent.dialogSuccess("Stückzahl erfolgreich geändert");
-        } else if (this.prodQuant.length == 0) {
-          dialogComponent.dialogError(
-            "Stückzahl nicht geändert: <b>Bitte Stückzahl eingeben</b>"
-          );
-        } else if (this.prodQuant < 1) {
-          dialogComponent.dialogError(
-            "Stückzahl nicht geändert: <b>Es sind nur positive Stückzahlen erlaubt</b>"
-          );
-        }
-      },
-      openOptimize() {
-        this.$parent.$parent.$refs["optimizeControls"].setDialog(true);
-      },
-      startOptimizing() {
-        this.$parent.$parent.$refs["optimizeControls"].optimizing();
+          .data("prodName", this.prodName);
+        dialogComponent.dialogSuccess("Produktname erfolgreich geändert");
+      } else if (this.prodName.length > 25) {
+        dialogComponent.dialogError(
+          "Produktname nicht geändert: <b>Bitte Namen mit maximal 25 Zeichen eingeben</b>"
+        );
+      } else if (this.prodName.length == 0) {
+        dialogComponent.dialogError(
+          "Produktname nicht geändert: <b>Bitte Namen eingeben</b>"
+        );
       }
+    },
+    editQuant() {
+      this.isEditingQuant = true;
+      this.$nextTick(() => this.$refs.quantInput.focus());
+    },
+    saveNewQuant() {
+      if (this.$refs.formQuant.validate()) {
+        this.isEditingQuant = false;
+        this.getGraph()
+          .getCytoGraph(this.getGraph())
+          .data("prodQuant", this.prodQuant);
+        dialogComponent.dialogSuccess("Stückzahl erfolgreich geändert");
+      } else if (this.prodQuant.length == 0) {
+        dialogComponent.dialogError(
+          "Stückzahl nicht geändert: <b>Bitte Stückzahl eingeben</b>"
+        );
+      } else if (this.prodQuant < 1) {
+        dialogComponent.dialogError(
+          "Stückzahl nicht geändert: <b>Es sind nur positive Stückzahlen erlaubt</b>"
+        );
+      }
+    },
+    openOptimize() {
+      this.$parent.$parent.$refs["optimizeControls"].setDialog(true);
+    },
+    startOptimizing() {
+      this.$parent.$parent.$refs["optimizeControls"].optimizing();
     }
   }
+};
 </script>

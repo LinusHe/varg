@@ -74,14 +74,14 @@ export default {
       this.database = DataBaseObject;
     },
     showSaveMenu() {
-      this.$parent.$parent.$refs.saveMenu.setdialog(true);
+      this.$parent.$parent.$refs.exportMenu.setdialog(true);
       this.dialog = false;
     },
     setdialog(value) {
       this.dialog = value;
     },
     save() {
-      this.$parent.$parent.$refs.saveMenu.setdialog(true);
+      this.$parent.$parent.$refs.exportMenu.setdialog(true);
     },
     discard() {
       this.getGraph()

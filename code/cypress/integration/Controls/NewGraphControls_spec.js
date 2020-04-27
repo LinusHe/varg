@@ -9,7 +9,6 @@ describe("NewGraphControls", () => {
   });
 
   it("should find the newGraph button", () => {
-    cy.get(".button-card").should("be.visible");
     cy.get("#newgraph-btn").should("be.visible");
   });
 
@@ -42,14 +41,14 @@ describe("NewGraphControls", () => {
   });
 
   //test case for save-btn
-  it("should show the save menu on save-btn", () => {
+  it("should show the export menu on save-btn", () => {
     cy.get("#newgraph-btn").click(); //this causes a bug with the toolbar
     cy.get("#newgraph-menu").should("be.visible");
     cy.get("#newgraph-menu-save").should("be.visible");
     cy.get("#newgraph-menu-save").click();
-    cy.get("#save-menu").should("be.visible");
-    cy.get("#save-menu-cancel").click();
-    cy.get("#save-menu").should("not.be.visible");
+    cy.get("#export-menu").should("be.visible");
+    cy.get("#download-menu-cancel").click();
+    cy.get("#export-menu").should("not.be.visible");
   });
   //testing of the save menu doesn't need be in this test suite
   //tests save-btn for rerouting

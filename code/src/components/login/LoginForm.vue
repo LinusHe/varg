@@ -38,7 +38,6 @@
             @focus="clearError()"
             @keyup.enter="login()"
           ></v-text-field>
-          <!--<router-link to="menu" tag="button">-->
           <v-btn
             align="center"
             class="login-button"
@@ -47,26 +46,6 @@
             color="primary"
             :disabled="!valid"
           >Login</v-btn>
-
-<!-- DEBUGGING -->
-          <v-btn
-            align="center"
-            class="login-button"
-            @click="getState()"
-            large
-            color="primary"
-          >get State</v-btn>
-
-          <v-btn
-            align="center"
-            class="login-button"
-            @click="delLocal()"
-            large
-            color="primary"
-          >Remove localStorage</v-btn>
-<!-- /DEBUGGING -->
-
-          <!--</router-link>-->
         </v-form>
 
         <a align="center" class="font-italic mt-6" color="error">Passwort vergessen?</a>
@@ -77,6 +56,18 @@
         </p>
       </v-list-item-content>
     </v-list-item>
+
+    <!-- DEBUGGING -->
+    <!-- <v-btn align="center" class="login-button" @click="getState()" large color="primary">get State</v-btn>
+
+    <v-btn
+      align="center"
+      class="login-button"
+      @click="delLocal()"
+      large
+      color="primary"
+    >Remove localStorage</v-btn>-->
+    <!-- /DEBUGGING -->
   </div>
 </template>
 
@@ -89,7 +80,9 @@ let dialogComponent;
 export default {
   name: "LoginForm",
   mounted: function() {
-    dialogComponent = this.$parent.$parent.$parent.$parent.$parent.$parent.$refs["dialogs"];
+    dialogComponent = this.$parent.$parent.$parent.$parent.$parent.$refs[
+      "dialogs"
+    ];
   },
   data() {
     return {
@@ -104,10 +97,10 @@ export default {
   methods: {
     //For Debuging
     getState() {
-      alert("Authenticated: " + this.$store.state.user.autehticated +
-      "\nName: " + this.$store.state.user.name +
-      "\nRole: " + this.$store.state.user.role +
-      "\nReady: " + this.$store.state.ready);
+      // alert("Authenticated: " + this.$store.state.user.autehticated +
+      // "\nName: " + this.$store.state.user.name +
+      // "\nRole: " + this.$store.state.user.role +
+      // "\nReady: " + this.$store.state.ready);
     },
     delLocal() {
       localStorage.removeItem("store");
