@@ -83,12 +83,13 @@
 <script>
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
+/* eslint-disable standard/computed-property-even-spacing */
 let dialogComponent;
 
 export default {
   name: "LoginForm",
   mounted: function() {
-    dialogComponent = this.$parent.$parent.$parent.$parent.$parent.$refs["dialogs"];
+    dialogComponent = this.$parent.$parent.$parent.$parent.$parent.$parent.$refs["dialogs"];
   },
   data() {
     return {

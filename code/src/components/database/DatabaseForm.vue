@@ -98,6 +98,8 @@
 </template>
 
 <script>
+/* eslint-disable standard/computed-property-even-spacing */
+
 export default {
   data() {
     return {

@@ -1,5 +1,5 @@
 import saveAs from 'file-saver';
-import ExJSon from '@/vargraph/JSonPersistence.js'
+import ExJSon from '../JSonPersistence'
 
 export function saveGraphAsJson(graph, name) {
     var filename = "varggraph_" + graph.data("name") + "-" + name + ".json";

@@ -30,12 +30,13 @@
 <script>
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
+/* eslint-disable standard/computed-property-even-spacing */
 let dialogComponent;
 
 export default {
   name: "RightClickControls",
   mounted: function() {
-    dialogComponent = this.$parent.$parent.$parent.$parent.$refs["dialogs"];
+    dialogComponent = this.$parent.$parent.$parent.$parent.$parent.$refs["dialogs"];
   },
   data() {
     return {
@@ -54,7 +55,7 @@ export default {
   },
   methods: {
     getGraph() {
-      return this.$parent.$refs["vargraph"];
+      return this.$parent.$parent.$refs["vargraph"];
     },
     setClickPos(x, y) {
       this.clickX = x;
@@ -108,55 +109,58 @@ export default {
     clickedItem(clickId) {
       if (clickId == "n1") {
         // Edit Node
-        this.$parent.$refs.detailControls.openNodeDetails(
+        this.$parent.$parent.$refs.detailControls.openNodeDetails(
           this.getGraph()
             .getCytoGraph(this.getGraph())
             .getElementById(this.targetID)
         );
       } else if (clickId == "n2") {
         // Delete Node
-        this.$parent.$refs.detailControls.loadNodeData(
+        this.$parent.$parent.$refs.detailControls.loadNodeData(
           this.getGraph()
             .getCytoGraph(this.getGraph())
             .getElementById(this.targetID)
         );
-        this.$parent.$refs.detailControls.openNodeDeleteMenu(
+        this.$parent.$parent.$refs.detailControls.openNodeDeleteMenu(
           this.getGraph()
             .getCytoGraph(this.getGraph())
             .getElementById(this.targetID)
         );
       } else if (clickId == "n10") {
-        this.$parent.$refs.createControls.setStart(this.nodeName);
-        this.$parent.$refs.createControls.openEdgeGui();
+        this.$parent.$parent.$refs.createControls.setStart(this.nodeName);
+        this.$parent.$parent.$refs.createControls.openEdgeGui();
       } else if (clickId == "n11") {
-        this.$parent.$refs.createControls.setEnd(this.nodeName);
-        this.$parent.$refs.createControls.openEdgeGui();
+        this.$parent.$parent.$refs.createControls.setEnd(this.nodeName);
+        this.$parent.$parent.$refs.createControls.openEdgeGui();
       } else if (clickId == "e1") {
         // Edit Edge
-        this.$parent.$refs.detailControls.openEdgeDetails(
+        this.$parent.$parent.$refs.detailControls.openEdgeDetails(
           this.getGraph()
             .getCytoGraph(this.getGraph())
             .getElementById(this.targetID)
         );
       } else if (clickId == "e2") {
         // Delete Edge
-        this.$parent.$refs.detailControls.loadEdgeData(
+        this.$parent.$parent.$refs.detailControls.loadEdgeData(
           this.getGraph()
             .getCytoGraph(this.getGraph())
             .getElementById(this.targetID)
         );
-        this.$parent.$refs.detailControls.openEdgeDeleteMenu(
+        this.$parent.$parent.$refs.detailControls.openEdgeDeleteMenu(
           this.getGraph()
             .getCytoGraph(this.getGraph())
             .getElementById(this.targetID)
         );
       } else if (clickId == "b1") {
         // Create Node
-        this.$parent.$refs.createControls.openNodeGui();
-        this.$parent.$refs.createControls.setNodePos(this.clickX, this.clickY);
+        this.$parent.$parent.$refs.createControls.openNodeGui();
+        this.$parent.$parent.$refs.createControls.setNodePos(
+          this.clickX,
+          this.clickY
+        );
       } else if (clickId == "b2") {
         // Create Edge
-        this.$parent.$refs.createControls.openEdgeGui();
+        this.$parent.$parent.$refs.createControls.openEdgeGui();
       }
     }
   }

@@ -13,6 +13,7 @@
 
 <script>
 /* eslint-disable no-console */
+/* eslint-disable standard/computed-property-even-spacing */
 export default {
   data() {
     return {

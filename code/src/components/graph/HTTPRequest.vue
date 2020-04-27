@@ -4,6 +4,7 @@
 
 <script>
 /* eslint-disable */
+/* eslint-disable standard/computed-property-even-spacing */
 window.axios = require('axios')
 export default {
   name: 'HTTPRequest',

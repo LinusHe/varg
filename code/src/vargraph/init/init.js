@@ -18,8 +18,6 @@ export default {
   // this config will run after cytoscape is configured
   afterCreated(cy) {
     // cy: this is the cytoscape instance
-    console.log("after created", cy);
-
     console.log(cy.data("test"));
 
     // run init
@@ -32,7 +30,7 @@ export default {
     this.getCytoGraph(this).fit();
 
     // refresh header
-    this.$parent.$refs["graphHeader"].refresh();
+    this.$parent.$parent.$refs["graphInfo"].refresh();
 
     // this.$parent.$parent.$parent.$parent.$refs["dialogs"].dialogSuccess("Neuer Graph erfolgreich angelegt")
   },

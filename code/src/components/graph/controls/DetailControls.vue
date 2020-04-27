@@ -296,6 +296,7 @@
 <script>
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
+/* eslint-disable standard/computed-property-even-spacing */
 let dialogComponent;
 
 export default {
@@ -303,7 +304,7 @@ export default {
   mounted: function() {
     this.getNodeItemsID();
     this.getNodeItemsName();
-    dialogComponent = this.$parent.$parent.$parent.$parent.$refs["dialogs"];
+    dialogComponent = this.$parent.$parent.$parent.$parent.$parent.$refs["dialogs"];
   },
   data() {
     return {
@@ -387,7 +388,7 @@ export default {
   },
   methods: {
     getGraph() {
-      return this.$parent.$refs["vargraph"];
+      return this.$parent.$parent.$refs["vargraph"];
     },
     log() {
       console.log("hi");
@@ -432,8 +433,8 @@ export default {
     },
     closeMenus() {
       this.deactivateGui();
-      this.$parent.$refs.createControls.deactivateGui();
-      this.$parent.$refs.createControls.$refs.scrollingContainer.scrollTop = 0;
+      this.$parent.$parent.$refs.createControls.deactivateGui();
+      this.$parent.$parent.$refs.createControls.$refs.scrollingContainer.scrollTop = 0;
       this.$refs.scrollingContainer.scrollTop = 0;
     },
     generateNodeShort() {
@@ -485,22 +486,26 @@ export default {
     },
     openNodeDetails(node) {
       this.loadNodeData(node);
-      this.$parent.$refs.createControls.deactivateGui();
+      this.$parent.$parent.$refs.createControls.deactivateGui();
       this.edgeGui = false;
       this.nodeGui = true;
       this.$refs.nodeDetails.focus();
     },
     openEdgeDetails(edge) {
       this.loadEdgeData(edge);
-      this.$parent.$refs.createControls.deactivateGui();
+      this.$parent.$parent.$refs.createControls.deactivateGui();
       this.nodeGui = false;
       this.edgeGui = true;
       this.$refs.edgeDetails.focus();
       this.getUnits();
     },
     getUnits() {
-      this.unitCost = this.getGraph().getCytoGraph().data("settingsUnitCostSelection");
-      this.unitTime = this.getGraph().getCytoGraph().data("settingsUnitTimeSelection");
+      this.unitCost = this.getGraph()
+        .getCytoGraph()
+        .data("settingsUnitCostSelection");
+      this.unitTime = this.getGraph()
+        .getCytoGraph()
+        .data("settingsUnitTimeSelection");
     },
     deactivateGui() {
       this.nodeGui = false;

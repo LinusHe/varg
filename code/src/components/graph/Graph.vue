@@ -1,73 +1,92 @@
 <template>
   <div class="graph">
+    <!-- Header -->
+    <div class="header-bg">
+      <v-row>
+        <!-- Hamburger Btn to toggle Header -->
+        <v-btn icon class="toggleHeader" @click="header = !header">
+          <v-icon color="white">mdi-menu</v-icon>
+        </v-btn>
 
-    <!-- Header: -->
-    <GraphHeader ref="graphHeader"/>
-
-    <div class="graph-container dotted-background">
-      <v-container fill-height grid-list-md>
-        <v-layout row wrap align-center align="center">
-
-          <!-- Elements:  -->
-          <VarGraph ref="vargraph"/>
-          <Toolbar ref="toolbar"/>
-
-          <!-- Controls:  -->
-          <OptimizeControls ref="optimizeControls" />
-          <CreateControls ref="createControls" />
-          <DetailControls ref="detailControls" />
-          <ZoomControls ref="zoomControls" />
-
-          <!-- Menus:  -->
-          <NewGraphMenu ref="newGraphMenu" />
-          <SaveMenu ref="saveMenu" />
-          <DownloadMenu ref="downloadMenu" />
-          <RightClickMenu ref="rightClickMenu" />
-          <SettingsMenu ref="settingsMenu" />
-          <DatabaseMenu ref="databaseMenu" />
-
-
-          <HTTPRequest ref="httpRequest" />
-        </v-layout>
-      </v-container>
+        <v-expand-transition>
+          <!-- Header with Btns -->
+          <GraphHeader v-show="header" ref="graphHeader" />
+        </v-expand-transition>
+      </v-row>
     </div>
+
+    <!-- Body Card -->
+    <v-card class="content-card">
+      <!-- Graph Name, Quant, Optimization Bar -->
+      <GraphInfo ref="graphInfo" />
+
+      <!-- Graph Component + Controls + Menus -->
+      <v-row class="card-bottom ma-0">
+        <!-- CytoGraph Component -->
+        <VarGraph class ref="vargraph" />
+        <!-- Controls: -->
+        <CreateControls ref="createControls" />
+        <DetailControls ref="detailControls" />
+        <ZoomControls ref="zoomControls" />
+        <OptimizeControls ref="optimizeControls" />
+        <!-- Menus:  -->
+        <NewGraphMenu ref="newGraphMenu" />
+        <ExportMenu ref="exportMenu" />
+        <RightClickMenu ref="rightClickMenu" />
+        <SettingsMenu ref="settingsMenu" />
+        <DatabaseMenu ref="databaseMenu" />
+
+        <!-- Test -->
+        <HTTPRequest ref="httpRequest" />
+      </v-row>
+    </v-card>
   </div>
 </template>
 
 <script>
-/* eslint-disable no-console */
-import GraphHeader from "@/components/graph/elements/GraphHeader";
-import Toolbar from "@/components/graph/elements/Toolbar";
-import VarGraph from "@/components/graph/elements/VarGraph";
-import CreateControls from "@/components/graph/controls/CreateControls";
-import DetailControls from "@/components/graph/controls/DetailControls";
-import ZoomControls from "@/components/graph/controls/ZoomControls";
-import OptimizeControls from "@/components/graph/controls/OptimizeControls";
-import NewGraphMenu from "@/components/graph/menus/NewGraphMenu";
-import SaveMenu from "@/components/graph/menus/SaveMenu";
-import DownloadMenu from "@/components/graph/menus/DownloadMenu";
-import RightClickMenu from "@/components/graph/menus/RightClickMenu";
-import SettingsMenu from "@/components/graph/menus/SettingsMenu";
-import DatabaseMenu from "@/components/graph/menus/DatabaseMenu";
+/* eslint-disable vue/no-unused-components */
+/* eslint-disable standard/computed-property-even-spacing */
+import GraphHeader from "./elements/GraphHeader";
+import GraphInfo from "./elements/GraphInfo";
+import VarGraph from "./elements/VarGraph";
+import CreateControls from "./controls/CreateControls";
+import DetailControls from "./controls/DetailControls";
+import ZoomControls from "./controls/ZoomControls";
+import OptimizeControls from "./controls/OptimizeControls";
+import NewGraphMenu from "./menus/NewGraphMenu";
+import ExportMenu from "./menus/ExportMenu";
+import RightClickMenu from "./menus/RightClickMenu";
+import SettingsMenu from "./menus/SettingsMenu";
+import DatabaseMenu from "./menus/DatabaseMenu";
 import HTTPRequest from "./HTTPRequest";
 
 export default {
-  name: "NodeControls",
+  /* eslint-disable no-console */
+  name: "Graph",
   components: {
     GraphHeader,
-    Toolbar,
     VarGraph,
+    GraphInfo,
     CreateControls,
     DetailControls,
     OptimizeControls,
     NewGraphMenu,
-    SaveMenu,
-    DownloadMenu,
+    ExportMenu,
     RightClickMenu,
     ZoomControls,
     SettingsMenu,
     DatabaseMenu,
     HTTPRequest
+  },
+  data() {
+    return {
+      header: true
+    };
+  },
+  methods: {
+    toggleHeader() {
+      this.header = !this.header;
+    }
   }
 };
 </script>

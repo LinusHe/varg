@@ -12,6 +12,7 @@
 
 <script>
 // @ is an alias to /src
+/* eslint-disable standard/computed-property-even-spacing */
 
 import datenbank from "@/components/database/DatabaseForm.vue";
 

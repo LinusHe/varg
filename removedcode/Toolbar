@@ -29,13 +29,13 @@ onSaveConfirm(value) {
       //no dupe
       // eslint-disable-next-line no-console
       console.log("save");
-      this.$parent.$refs.saveMenu.setdialog(false);
+      this.$parent.$parent.$refs.saveMenu.setdialog(false);
     } else {
       //dupe case
-      this.$parent.$refs.saveMenu.setmsg(
+      this.$parent.$parent.$refs.saveMenu.setmsg(
         "Es existiert bereits eine Datei unter diesen Namen. Wollen Sie diese überschreiben ?"
       );
-      this.$parent.$refs.saveMenu.setbtntext("Überschreiben");
+      this.$parent.$parent.$refs.saveMenu.setbtntext("Überschreiben");
     }
   } else if (value == "" || value == null) {
     //do nothing
@@ -50,7 +50,7 @@ onOverwrite(value) {
   let date = new Date();
   let save = new BasicData(value, date, content);
   this.vars.testDatabase.save(save, true);
-  this.$parent.$refs.saveMenu.setdialog(false);
+  this.$parent.$parent.$refs.saveMenu.setdialog(false);
 },
 
 */
@@ -79,7 +79,7 @@ onOverwrite(value) {
 
 //handles saving case and discard case
 modifyData() {
-  this.$parent.$refs.modifyDataControls.openModifyData(this.vars.instance);
+  this.$parent.$parent.$refs.modifyDataControls.openModifyData(this.vars.instance);
 },
 //gets called by MDC.vue when save button was clicked
 updateData(newInstance) {

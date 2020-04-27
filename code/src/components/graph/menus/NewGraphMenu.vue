@@ -51,13 +51,14 @@
 <script>
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
+/* eslint-disable standard/computed-property-even-spacing */
 import router from "@/router/index.js";
 let dialogComponent;
 
 export default {
   name: "NewGraphMenu.vue",
   mounted: function() {
-    dialogComponent = this.$parent.$parent.$parent.$parent.$refs["dialogs"];
+    dialogComponent = this.$parent.$parent.$parent.$parent.$parent.$refs["dialogs"];
   },
   data() {
     return {
@@ -67,20 +68,20 @@ export default {
   },
   methods: {
     getGraph() {
-      return this.$parent.$refs["vargraph"];
+      return this.$parent.$parent.$refs["vargraph"];
     },
     setObject(DataBaseObject) {
       this.database = DataBaseObject;
     },
     showSaveMenu() {
-      this.$parent.$refs.saveMenu.setdialog(true);
+      this.$parent.$parent.$refs.saveMenu.setdialog(true);
       this.dialog = false;
     },
     setdialog(value) {
       this.dialog = value;
     },
     save() {
-      this.$parent.$refs.saveMenu.setdialog(true);
+      this.$parent.$parent.$refs.saveMenu.setdialog(true);
     },
     discard() {
       this.getGraph()
@@ -91,7 +92,7 @@ export default {
         .getCytoGraph(this.getGraph())
         .edges()
         .remove();
-      this.$parent.$refs.newGraphMenu.setdialog(false);
+      this.$parent.$parent.$refs.newGraphMenu.setdialog(false);
       //this works!!!
 
       // this.getGraph().getCytoGraph(this.getGraph()).destroy();

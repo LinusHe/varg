@@ -48,7 +48,10 @@
 
 <script>
 /* eslint-disable no-console */
-import fileManager from "../../vargraph/importExport/FileManager.js";
+/* eslint-disable no-unused-vars */
+/* eslint-disable standard/computed-property-even-spacing */
+import fileManager from "../../vargraph/importExport/FileManager";
+
 let dialogComponent;
 
 export default {
@@ -67,6 +70,8 @@ export default {
       this.$refs.file.click();
       this.loading = true;
       this.importBtnColor = "warning";
+
+      this.loading = true;
 
       this.$refs.file.addEventListener("change", onChange);
       this.$store.commit(
