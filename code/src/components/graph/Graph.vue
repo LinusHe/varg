@@ -26,6 +26,8 @@
           <SettingsMenu ref="settingsMenu" />
           <DatabaseMenu ref="databaseMenu" />
 
+
+          <HTTPRequest ref="httpRequest" />
         </v-layout>
       </v-container>
     </div>
@@ -47,6 +49,7 @@ import DownloadMenu from "@/components/graph/menus/DownloadMenu";
 import RightClickMenu from "@/components/graph/menus/RightClickMenu";
 import SettingsMenu from "@/components/graph/menus/SettingsMenu";
 import DatabaseMenu from "@/components/graph/menus/DatabaseMenu";
+import HTTPRequest from "./HTTPRequest";
 
 export default {
   name: "NodeControls",
@@ -63,7 +66,8 @@ export default {
     RightClickMenu,
     ZoomControls,
     SettingsMenu,
-    DatabaseMenu
+    DatabaseMenu,
+    HTTPRequest
   }
 };
 </script>
