@@ -14,13 +14,13 @@
           <v-list-item-icon>
             <v-icon>mdi-arrow-expand-right</v-icon>
           </v-list-item-icon>
-          <v-list-item-title>Neue Verknüpfung von hier</v-list-item-title>
+          <v-list-item-title>Neuer Bearbeitungsschritt von hier</v-list-item-title>
         </v-list-item>
         <v-list-item v-if="node" @click="clickedItem('n11')">
           <v-list-item-icon>
             <v-icon>mdi-arrow-collapse-right</v-icon>
           </v-list-item-icon>
-          <v-list-item-title>Neue Verknüpfung nach hier</v-list-item-title>
+          <v-list-item-title>Neuer Bearbeitungsschritt nach hier</v-list-item-title>
         </v-list-item>
       </v-list>
     </v-menu>
@@ -65,15 +65,15 @@ export default {
       this.visibleTitle = false;
       this.node = false;
       this.items = [
-        { id: "b1", title: "Neuer Zustand", icon: "mdi-plus-circle-outline" },
-        { id: "b2", title: "Neue Verknüpfung", icon: "mdi-link-variant-plus" }
+        { id: "b1", title: "Neues Teil", icon: "mdi-plus-circle-outline" },
+        { id: "b2", title: "Neuer Bearbeitungsschritt", icon: "mdi-link-variant-plus" }
       ];
     },
     nodeMenu(node) {
       this.visibleTitle = true;
       this.node = true;
       this.nodeName = node.data("name");
-      this.menuTitle = "Zustand: " + node.data("name");
+      this.menuTitle = "Teil: " + node.data("name");
       this.items = [
         { id: "n1", title: "Bearbeiten", icon: "mdi-pencil" },
         { id: "n2", title: "Löschen", icon: "mdi-delete" }
@@ -82,7 +82,7 @@ export default {
     edgeMenu(edge) {
       this.visibleTitle = true;
       this.node = false;
-      this.menuTitle = "Verbindung: " + edge.data("name");
+      this.menuTitle = "Bearbeitungsschritt: " + edge.data("name");
       this.items = [
         { id: "e1", title: "Bearbeiten", icon: "mdi-pencil" },
         { id: "e2", title: "Löschen", icon: "mdi-delete" }

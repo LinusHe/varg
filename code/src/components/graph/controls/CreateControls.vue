@@ -28,7 +28,7 @@
               <v-icon>mdi-plus-circle-outline</v-icon>
             </v-btn>
           </template>
-          <span>Neuer Zustand</span>
+          <span>Neues Teil</span>
         </v-tooltip>
         <v-tooltip left>
           <template v-slot:activator="{ on }">
@@ -36,7 +36,7 @@
               <v-icon>mdi-link-variant-plus</v-icon>
             </v-btn>
           </template>
-          <span>Neue Verknüpfung</span>
+          <span>Neuer Bearbeitungsschritt</span>
         </v-tooltip>
       </v-speed-dial>
     </div>
@@ -57,7 +57,7 @@
             v-bind:style="{ background: '#'+nodeCreateColor }"
             v-ripple
           >
-            <v-card-subtitle style="color: #ffffff" class="pb-0">Neuer Zustand:</v-card-subtitle>
+            <v-card-subtitle style="color: #ffffff" class="pb-0">Neues Teil:</v-card-subtitle>
             <v-card-title class="pt-12">{{showNodeTitle}}</v-card-title>
             <!-- Color Selection -->
             <v-row class="radio-row">
@@ -169,7 +169,7 @@
             class="white--text align-end"
             style="height: 100px; background: #2699FB; background-color: #2699FB"
           >
-            <v-card-subtitle style="color: #ffffff" class="pb-0">Neue Verknüpfung:</v-card-subtitle>
+            <v-card-subtitle style="color: #ffffff" class="pb-0">Neuer Bearbeitungsschritt:</v-card-subtitle>
             <v-card-title class="pt-12">{{showEdgeTitle}}</v-card-title>
           </div>
 

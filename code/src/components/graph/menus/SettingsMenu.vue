@@ -25,7 +25,7 @@
               <v-card class="ml-6 mr-6">
                 <v-row>
                   <v-col sm="9">
-                    <v-card-text>Kosteneinheit für Verknüpfungen</v-card-text>
+                    <v-card-text>Kosteneinheit für Bearbeitungsschritt</v-card-text>
                   </v-col>
                   <v-col sm="3">
                     <v-select
@@ -39,7 +39,7 @@
                 <v-divider></v-divider>
                 <v-row>
                   <v-col sm="9">
-                    <v-card-text>Zeiteinheit für Verknüpfungen</v-card-text>
+                    <v-card-text>Zeiteinheit für Bearbeitungsschritt</v-card-text>
                   </v-col>
                   <v-col sm="3">
                     <v-select
@@ -52,13 +52,13 @@
                 </v-row>
               </v-card>
 
-              <v-card-subtitle class="mt-10">Verknüpfungsdarstellung</v-card-subtitle>
+              <v-card-subtitle class="mt-10">Teildarstellung</v-card-subtitle>
               <v-card class="ml-6 mr-6">
                 <v-row>
                   <v-col sm="9">
                     <v-card-text
                       v-bind:style="{ color: '#'+disabledColor }"
-                    >Titel der Verknüpfungen:</v-card-text>
+                    >Titel der Bearbeitungsschritte:</v-card-text>
                   </v-col>
                   <v-col sm="3">
                     <v-select
@@ -74,7 +74,7 @@
                 <v-divider></v-divider>
                 <v-row>
                   <v-col sm="10">
-                    <v-card-text>Nur Kürzel in Verknüpfungen anzeigen</v-card-text>
+                    <v-card-text>Nur Kürzel in Bearbeitungsschritt anzeigen</v-card-text>
                   </v-col>
                   <v-col sm="2">
                     <v-switch
@@ -90,7 +90,7 @@
                   <v-col sm="10">
                     <v-card-text
                       v-bind:style="{ color: '#'+disabledColor }"
-                    >Kosten / Stück in Verknüpfungen anzeigen</v-card-text>
+                    >Kosten / Stück in Bearbeitungsschritt anzeigen</v-card-text>
                   </v-col>
                   <v-col sm="2">
                     <v-switch
@@ -107,7 +107,7 @@
                   <v-col sm="10">
                     <v-card-text
                       v-bind:style="{ color: '#'+disabledColor }"
-                    >Zeit / Stück in Verknüpfungen anzeigen</v-card-text>
+                    >Zeit / Stück in Bearbeitungsschritt anzeigen</v-card-text>
                   </v-col>
                   <v-col sm="2">
                     <v-switch
@@ -124,7 +124,7 @@
                   <v-col sm="10">
                     <v-card-text
                       v-bind:style="{ color: '#'+disabledColor }"
-                    >Rüstkosten in Verknüpfungen anzeigen</v-card-text>
+                    >Rüstkosten in Bearbeitungsschritt anzeigen</v-card-text>
                   </v-col>
                   <v-col sm="2">
                     <v-switch
@@ -141,7 +141,7 @@
                   <v-col sm="10">
                     <v-card-text
                       v-bind:style="{ color: '#'+disabledColor }"
-                    >Rüstzeit in Verknüpfungen anzeigen</v-card-text>
+                    >Rüstzeit in Bearbeitungsschritt anzeigen</v-card-text>
                   </v-col>
                   <v-col sm="2">
                     <v-switch

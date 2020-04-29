@@ -11,7 +11,7 @@
             style="height: 150px"
             v-bind:style="{ background: '#'+nodeColor }"
           >
-            <v-card-subtitle style="color: #ffffff" class="pb-0">Zustand bearbeiten:</v-card-subtitle>
+            <v-card-subtitle style="color: #ffffff" class="pb-0">Teil bearbeiten:</v-card-subtitle>
             <v-card-title class="pt-12">{{showNodeTitle}}</v-card-title>
             <!-- <p class="prodname ml-3 mr-12 mb-0 pt-10">{{nodeCreateName}}</p> -->
             <!-- Color Selection -->
@@ -97,9 +97,9 @@
               </v-col>
               <v-dialog v-model="nodeDeleteDialog" persistent max-width="400">
                 <v-card>
-                  <v-card-title class="headline">Zustand löschen</v-card-title>
+                  <v-card-title class="headline">Teil löschen</v-card-title>
                   <v-card-text>
-                    Soll der Zustand
+                    Soll das Teil
                     <b>{{nodeName}}</b> endgültig gelöscht werden? Diese Aktion kann nicht rückgängig gemacht werden.
                     <span
                       v-show="deleteInvEdges"
@@ -107,7 +107,7 @@
                       <br />
                       <br />
                       <b>ACHTUNG!</b>
-                      <br />Die folgenden Verbindungen werden ebenfalls gelöscht:
+                      <br />Die folgenden Bearbeitungsschritte werden ebenfalls gelöscht:
                       <br />
                       <b style="white-space: pre-line">{{ involvedEdges }}</b>
                     </span>
@@ -139,7 +139,7 @@
             class="white--text align-end"
             style="height: 100px; background: #2699FB; background-color: #2699FB"
           >
-            <v-card-subtitle style="color: #ffffff" class="pb-0">Verknüpfung bearbeiten:</v-card-subtitle>
+            <v-card-subtitle style="color: #ffffff" class="pb-0">Bearbeitungsschritt bearbeiten:</v-card-subtitle>
             <v-card-title class="pt-12">{{showEdgeTitle}}</v-card-title>
           </div>
 
@@ -272,9 +272,9 @@
                 </v-col>
                 <v-dialog v-model="edgeDeleteDialog" persistent max-width="400">
                   <v-card>
-                    <v-card-title class="headline">Verbindung löschen</v-card-title>
+                    <v-card-title class="headline">Bearbeitungsschritt löschen</v-card-title>
                     <v-card-text>
-                      Soll die Verbindung
+                      Soll der Bearbeitungsschritt
                       <b>{{edgeName}}</b> endgültig gelöscht werden? Diese Aktion kann nicht rückgängig gemacht werden.
                     </v-card-text>
                     <v-card-actions>
@@ -332,12 +332,12 @@ export default {
       endSelect: "",
       deleteInvEdges: false,
       involvedEdges: "",
-      showNodeTitle: "Erstelle einen Zustand",
-      showEdgeTitle: "Erstelle eine Verknüpfung",
+      showNodeTitle: "Erstelle ein Teil",
+      showEdgeTitle: "Erstelle einen Bearbeitungsschritt",
       validNodes: false,
       validEdges: false,
       nameNodeRules: [
-        v => !!v || "Zustandsname wird benötigt",
+        v => !!v || "Name für Teil wird benötigt",
         v => (v && v.length <= 18) || "Name ist zu lang",
         // todo: other given name
         v =>
@@ -346,7 +346,7 @@ export default {
           "Name ist bereits vergeben"
       ],
       nameEdgeRules: [
-        v => !!v || "Verknüpfungsame wird benötigt",
+        v => !!v || "Name für Bearbeitungsschritt wird benötigt",
         v => (v && v.length <= 18) || "Name ist zu lang",
         // todo: other given name
         v =>
@@ -381,8 +381,8 @@ export default {
         v => !!v || "Startzustand ist benötigt"
       ],
       endRules: [
-        v => !!v || "Endzustand ist benötigt",
-        v => v != this.startSelect || "Endzustand muss sich vom Startzustand unterscheiden"
+        v => !!v || "Endprodukt ist benötigt",
+        v => v != this.startSelect || "Endprodukt muss sich vom Startzustand unterscheiden"
       ]
     };
   },
@@ -523,7 +523,7 @@ export default {
         );
 
         this.nodeGui = false;
-        dialogComponent.dialogSuccess("Knoten erfolgreich aktualisiert");
+        dialogComponent.dialogSuccess("Teil erfolgreich aktualisiert");
       }
     },
     saveEdge() {
@@ -546,7 +546,7 @@ export default {
           this.edgesuTime
         );
         this.edgeGui = false;
-        dialogComponent.dialogSuccess("Kante erfolgreich aktualisiert");
+        dialogComponent.dialogSuccess("Bearbeitungsschritt erfolgreich aktualisiert");
       }
     },
     deleteEdge() {
@@ -554,7 +554,7 @@ export default {
 
       this.edgeDeleteDialog = false;
       this.edgeGui = false;
-      dialogComponent.dialogWarning("Kante erfolgreich gelöscht");
+      dialogComponent.dialogWarning("Bearbeitungsschritt erfolgreich gelöscht");
     },
     openEdgeDeleteMenu() {
       this.edgeDeleteDialog = true;
@@ -579,7 +579,7 @@ export default {
       this.nodeDeleteDialog = false;
       this.nodeGui = false;
       this.deleteInvEdges = false;
-      dialogComponent.dialogWarning("Knoten erfolgreich gelöscht");
+      dialogComponent.dialogWarning("Teil erfolgreich gelöscht");
     },
     cancel() {
       // this.clearFields();

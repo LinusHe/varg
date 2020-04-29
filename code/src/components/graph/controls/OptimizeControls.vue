@@ -8,7 +8,7 @@
           <v-card-text>
             <v-row>
               <p>
-                Um den bestmöglichen Produktions-Weg zu finden, müssen Start und Endzustände ausgewählt werden,
+                Um den bestmöglichen Produktions-Weg zu finden, müssen Startzustand und Endprodukt ausgewählt werden,
                 zwischen denen die Optimierungsfunktion angewendet werden soll:
               </p>
             </v-row>
@@ -24,7 +24,7 @@
                 @focus="getNodeItemsID(); getNodeItemsName()"
                 v-model="endSelect"
                 :items="itemsName"
-                label="Endzustand"
+                label="Endprodukt"
               ></v-select>
             </v-row>
             <v-row>
@@ -117,7 +117,7 @@ export default {
         );
       } else if (indexEnd === -1) {
         dialogComponent.dialogError(
-          "Graph Optimierung fehlgeschlagen!<br /> Es wurde kein Endzustand angegeben. Lege einen Startknoten in den Optimierungs-Einstellungen fest.",
+          "Graph Optimierung fehlgeschlagen!<br /> Es wurde kein Endprodukt angegeben. Lege einen Endknoten in den Optimierungs-Einstellungen fest.",
           7000
         );
       } else {
