@@ -63,7 +63,7 @@
 
       <template v-slot:footer>
         <v-row class="mt-4 mb-2  mr-8  ml-5" align="center" justify="center">
-          <span class="grey--text">Items per page</span>
+          <span class="grey--text">Graphen pro Seite</span>
           <v-menu offset-y>
             <template v-slot:activator="{ on }">
               <v-btn dark text color="primary" class="ml-2" v-on="on">
@@ -113,9 +113,9 @@ export default {
       keys: [
         "Stückzahl",
         "Startzustand",
-        "Endzustand",
-        "Kantenanzahl",
-        "Knotenanzahl",
+        "Endprodukt",
+        "Bearbeitungsschritte",
+        "Teile",
         "Autor"
       ],
       items: [
@@ -123,72 +123,72 @@ export default {
           name: "Beispiel1",
           stückzahl: "45",
           startzustand: "Roheisen",
-          endzustand: "Stahlbolzen",
-          kantenanzahl: "16",
-          knotenanzahl: "12",
+          endprodukt: "Stahlbolzen",
+          bearbeitungsschritte: "16",
+          teile: "12",
           autor: "Prof. Mustermann"
         },
         {
           name: "Beispiel2",
           stückzahl: "24",
           startzustand: "Roheisen",
-          endzustand: "Stahlbolzen",
-          kantenanzahl: "5",
-          knotenanzahl: "6",
+          endprodukt: "Stahlbolzen",
+          bearbeitungsschritte: "5",
+          teile: "6",
           autor: "Prof. Mustermann"
         },
         {
           name: "Beispiel3",
           stückzahl: "9",
           startzustand: "Roheisen",
-          endzustand: "Stahlbolzen",
-          kantenanzahl: "1",
-          knotenanzahl: "2",
+          endprodukt: "Stahlbolzen",
+          bearbeitungsschritte: "1",
+          teile: "2",
           autor: "Prof. Mustermann"
         },
         {
           name: "Beispiel4",
           stückzahl: "574",
           startzustand: "Roheisen",
-          endzustand: "Stahlbolzen",
-          kantenanzahl: "75",
-          knotenanzahl: "56",
+          endprodukt: "Stahlbolzen",
+          bearbeitungsschritte: "75",
+          teile: "56",
           autor: "Prof. Mustermann"
         },
         {
           name: "Beispiel5",
           stückzahl: "1000",
           startzustand: "Roheisen",
-          endzustand: "Stahlbolzen",
-          kantenanzahl: "7",
-          knotenanzahl: "5",
+          endprodukt: "Stahlbolzen",
+          bearbeitungsschritte: "7",
+          teile: "5",
           autor: "Prof. Mustermann"
         },
         {
           name: "Beispiel6",
           stückzahl: "7527",
           startzustand: "Roheisen",
-          endzustand: "Stahlbolzen",
-          kantenanzahl: "757",
-          knotenanzahl: "254",
+          endprodukt: "Stahlbolzen",
+          bearbeitungsschritte: "757",
+          teile: "254",
           autor: "Prof. Mustermann"
         },
         {
           name: "Beispiel7",
           stückzahl: "2772",
           startzustand: "Roheisen",
-          endzustand: "Stahlbolzen",
-          kantenanzahl: "8",
-          knotenanzahl: "6",
+          endprodukt: "Stahlbolzen",
+          bearbeitungsschritte: "8",
+          teile: "6",
           autor: "Prof. Mustermann"
         },
         {
           name: "Beispiel8",
           stückzahl: "75",
           startzustand: "Roheisen",
-          endzustand: "Stahlbolzen",
-          kantenanzahl: "3",
-          knotenanzahl: "4",
+          endprodukt: "Stahlbolzen",
+          bearbeitungsschritte: "3",
+          teile: "4",
           autor: "Prof. Mustermann"
         }
       ]
