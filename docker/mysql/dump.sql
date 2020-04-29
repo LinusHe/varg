@@ -10,8 +10,7 @@ Insert Into userreg Values ("eheldt", "admin");
 Create Table Graph (
     graphname VARCHAR(25) Not Null,
     prodname VARCHAR(25) Not Null,
-    id Number(9),
-    PRIMARY KEY (id)
+    PRIMARY KEY (graphname)
 );
 
-INSERT INTO userreg Values ("test", "Schrauben", 1);
+INSERT INTO userreg Values ("test", "Schrauben");

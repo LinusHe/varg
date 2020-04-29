@@ -24,8 +24,3 @@ api.get('/master', (req, res) => {
     console.log('I was here' + " " + req);
     res.redirect('http://varg.nfl-server.de');
 });
-
-api.get('/home/login', (req, res) => {
-    console.log('I was here' + " " + req);
-    res.redirect('http://varg.nfl-server.de');
-});

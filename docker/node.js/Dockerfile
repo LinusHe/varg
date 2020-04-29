@@ -1,6 +1,5 @@
-FROM Node:8
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
-COPY package*.json ./
+FROM node:8
+RUN npm install mysql
+RUN npm install express
 RUN npm install
-COPY . .
+CMD ["npm", "start"]
