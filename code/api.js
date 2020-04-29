@@ -2,23 +2,14 @@
 //Node.js setup for interface between front and backend
 //to test:
 //cd to code
-//node src/api.js
+//node api.js
 //open localhost:8080 (works with serve code:  App running at: - Local:   http://localhost:8080/)
 
 //uses express module 
-const http = require('http')
-const https = require('https')
 const express = require('express');
 
 //api is the object variable to access the express functionality
 const api = express();
-
-http.createServer(api).listen(80, () => {
-    console.log('API listens to http');
-});
-https.createServer(api).listen(443, () => {
-     console.log('API listens to https');
-});
 
 //8080 is the port number -> probably needs to change
 api.listen(8080, () => {
