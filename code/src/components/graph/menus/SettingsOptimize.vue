@@ -152,11 +152,11 @@ export default {
           .getCytoGraph(this.getGraph())
           .data("settingsOptimizationOption") == "optionTime"
       ) {
-        this.optimizingOption = "Zeit";
+        this.optimizationOption = "Zeit";
       } else {
-        this.optimizingOption = "Kosten";
+        this.optimizationOption = "Kosten";
       }
-      this.optimizingOptionItems = this.getGraph()
+      this.optimizationOptionItems = this.getGraph()
         .getCytoGraph(this.getGraph())
         .data("settingsOptimizationOptionItems");
       // get start & end (default is -1 -> no selection)

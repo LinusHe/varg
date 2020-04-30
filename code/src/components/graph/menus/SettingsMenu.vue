@@ -91,8 +91,15 @@ export default {
       this.dialog = true;
     },
     saveSettings() {
-      this.$refs.settingsGraph.setGraphSettings();
-      this.$refs.settingsOptimize.setOptimizeSettings();
+      // if user clicks on save, but tab wasnt activated before -> type is undefined
+      if (typeof this.$refs.settingsGraph !== "undefined") {
+        this.$refs.settingsGraph.setGraphSettings();
+        console.log("updated graph Settings:", this.getGraph())
+      }
+      if (typeof this.$refs.settingsOptimize !== "undefined") {
+        this.$refs.settingsOptimize.setOptimizeSettings();
+        console.log("updated optimize Settings:", this.getGraph())
+      }
       // run update-settings function
       this.getGraph().applySettings(this.getGraph());
       this.dialog = false;
