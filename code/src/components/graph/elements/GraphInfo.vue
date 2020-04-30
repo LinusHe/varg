@@ -223,7 +223,9 @@ export default {
       }
     },
     openOptimize() {
-      this.$parent.$parent.$refs["optimizeControls"].setDialog(true);
+      this.$parent.$parent.$refs.settingsMenu.setActiveTab(2);
+      this.$parent.$parent.$refs.settingsMenu.openDialog();
+      // this.$parent.$parent.$refs["optimizeControls"].setDialog(true);
     },
     startOptimizing() {
       this.$parent.$parent.$refs["optimizeControls"].optimizing();
