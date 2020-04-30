@@ -25,16 +25,16 @@
           <SettingsGraph ref="settingsGraph"></SettingsGraph>
         </v-tab-item>
         <v-tab-item>
-         <SettingsGeneral ref="settingsGeneral"></SettingsGeneral>
+          <SettingsGeneral ref="settingsGeneral"></SettingsGeneral>
         </v-tab-item>
         <v-tab-item>
-         <SettingsOptimize ref="settingsOptimize"></SettingsOptimize>
+          <SettingsOptimize ref="settingsOptimize"></SettingsOptimize>
         </v-tab-item>
         <v-tab-item>
-         <SettingsAccount ref="settingsGeneral"></SettingsAccount>
+          <SettingsAccount ref="settingsGeneral"></SettingsAccount>
         </v-tab-item>
         <v-tab-item>
-         <SettingsHelp ref="settingsHelp"></SettingsHelp>
+          <SettingsHelp ref="settingsHelp"></SettingsHelp>
         </v-tab-item>
       </v-tabs>
       <v-card-actions class="pr-5 pb-5 mt-3">
@@ -72,8 +72,8 @@ export default {
     ];
   },
   data: () => ({
-    activeTab: 0,
-    dialog: false,
+    activeTab: -1,
+    dialog: false
   }),
   methods: {
     getGraph() {
@@ -89,12 +89,10 @@ export default {
     },
     openDialog() {
       this.dialog = true;
-      this.$nextTick(() => {
-        this.$refs.settingsGraph.getGraphSettings();
-      });
     },
     saveSettings() {
       this.$refs.settingsGraph.setGraphSettings();
+      this.$refs.settingsOptimize.setOptimizeSettings();
       // run update-settings function
       this.getGraph().applySettings(this.getGraph());
       this.dialog = false;

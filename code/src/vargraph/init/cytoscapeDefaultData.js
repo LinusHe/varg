@@ -11,7 +11,13 @@ const data = {
   // - Unit Settings
   settingsUnitCostItems: ["cent", "€", "$", "£"],
   settingsUnitCostSelection: "€",
-  settingsUnitTimeItems: ["Millisekunden", "Sekunden", "Minuten", "Stunden", "Tage"],
+  settingsUnitTimeItems: [
+    "Millisekunden",
+    "Sekunden",
+    "Minuten",
+    "Stunden",
+    "Tage"
+  ],
   settingsUnitTimeSelection: "Sekunden",
   // - Edge Settings
   settingsEdgeShowShortOnly: false,
@@ -21,8 +27,16 @@ const data = {
   settingsEdgeShowSuTime: true,
   settingsEdgeTitleItems: ["Name", "Kürzel"],
   settingsEdgeTitleSelection: "Name",
-
-
+  // - Optimization Settings
+  settingsOptimizationOption: "optionTime",
+  settingsOptimizationOptionItems: ["Zeit", "Kosten"],
+  settingsOptimizationStartID: -1,
+  settingsOptimizationStartEndID: -1,
+  settingsOptimizationNumber: 7,
+  settingsOptimizationSelection: 0,
+  // Optimizations
+  settingsOptimizations: [{}],
+  
 };
 
 export default data;

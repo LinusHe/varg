@@ -137,6 +137,7 @@ export default {
   mounted: function() {
     dialogComponent = this.$parent.$parent.$parent.$parent.$parent.$parent
       .$parent.$parent.$parent.$parent.$parent.$parent.$refs["dialogs"];
+    this.getGraphSettings();
   },
   data: () => ({
     disabledColor: "000000de",

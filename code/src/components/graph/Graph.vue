@@ -28,7 +28,6 @@
         <CreateControls ref="createControls" />
         <DetailControls ref="detailControls" />
         <ZoomControls ref="zoomControls" />
-        <OptimizeControls ref="optimizeControls" />
         <!-- Menus:  -->
         <NewGraphMenu ref="newGraphMenu" />
         <ExportMenu ref="exportMenu" />
@@ -52,7 +51,6 @@ import VarGraph from "./elements/VarGraph";
 import CreateControls from "./controls/CreateControls";
 import DetailControls from "./controls/DetailControls";
 import ZoomControls from "./controls/ZoomControls";
-import OptimizeControls from "./controls/OptimizeControls";
 import NewGraphMenu from "./menus/NewGraphMenu";
 import ExportMenu from "./menus/ExportMenu";
 import RightClickMenu from "./menus/RightClickMenu";
@@ -69,7 +67,6 @@ export default {
     GraphInfo,
     CreateControls,
     DetailControls,
-    OptimizeControls,
     NewGraphMenu,
     ExportMenu,
     RightClickMenu,
