@@ -57,13 +57,13 @@ export default {
     },
 
     // get Settings 
-    getAccountSettings() {
+    getHelpSettings() {
       // ...
       
     },
 
     // apply settings to cytoscape element
-    setAccounthSettings() {
+    setHelpSettings() {
       // ...
 
     }

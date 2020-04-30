@@ -63,7 +63,7 @@ export default {
     },
 
     // apply settings to cytoscape element
-    setAccounthSettings() {
+    setAccountSettings() {
       // ...
 
     }
