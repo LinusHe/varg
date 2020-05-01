@@ -21,7 +21,7 @@ api.listen(8080, () => {
 //a get request is send. The api will intercept and and do
 //the stuff defined here (req is the request, res is the response)
 //req gives you a lot of information about the request
-api.get('/master', (req, res) => {
-    console.log('I was here' + " " + req);
+api.get('/master', (res) => {
+    console.log('I was here');
     res.redirect('http://varg.nfl-server.de');
 });

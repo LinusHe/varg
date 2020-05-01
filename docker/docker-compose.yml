@@ -18,4 +18,14 @@ services:
         - db
     restart: always
     ports:
-          - 8080:8080
+      - "1010:8080"
+
+  webserver:
+    build:
+      context: ./node.js
+      dockerfile: Dockerfile
+    ports: 
+      - "1110:8080"
+    depends_on: 
+      - db
+    restart: always
