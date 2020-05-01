@@ -1,0 +1,14 @@
+{
+    "name": "docker_web_server",
+    "version": "0.1.0",
+    "description": "Node.js for API",
+    "author": "Julius Hohlfeld",
+    "main": "api.js",
+    "scripts": {
+        "start": "node api.js"
+    },
+    "dependencies": {
+        "express": "^4.17.1",
+        "mysql": "^2.18.1"
+    }
+}
