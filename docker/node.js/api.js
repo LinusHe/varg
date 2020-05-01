@@ -7,6 +7,7 @@
 
 //uses express module 
 const express = require('express');
+const mysql_driver = require('mysql');
 
 //api is the object variable to access the express functionality
 const api = express();
