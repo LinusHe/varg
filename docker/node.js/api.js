@@ -3,7 +3,6 @@
 //to test:
 //cd to code
 //node api.js
-//open localhost:8080 (works with serve code:  App running at: - Local:   http://localhost:8080/)
 
 //uses express module 
 const express = require('express');
@@ -11,9 +10,10 @@ const mysql_driver = require('mysql');
 
 //MySQL Driver configuration
 const con=mysql_driver.createConnection({
-    host: "localhost",
+    host: "192.168.99.101",
     user: "varg",
-    password: "VarG2020"
+    password: "VarG2020",
+    database: "vargdb"
 });
 
 //Node connects to DB
@@ -37,7 +37,7 @@ api.listen(8080, () => {
 //a get request is send. The api will intercept and and do
 //the stuff defined here (req is the request, res is the response)
 //req gives you a lot of information about the request
-api.get('/master', (res) => {
-    console.log('I was here');
+api.get('/master', (req,res) => {
+    console.log('I was here '+ req);
     res.redirect('http://varg.nfl-server.de');
 });
