@@ -9,6 +9,22 @@
 const express = require('express');
 const mysql_driver = require('mysql');
 
+//MySQL Driver configuration
+const con=mysql_driver.createConnection({
+    host: "localhost",
+    user: "varg",
+    password: "VarG2020"
+});
+
+//Node connects to DB
+con.connect(function(err) {
+    if (err){
+        console.log("Connection failed!");
+        throw err;
+    }
+    console.log("Connected!");
+});
+
 //api is the object variable to access the express functionality
 const api = express();
 
