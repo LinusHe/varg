@@ -1,3 +1,6 @@
+ALTER USER 'varg' IDENTIFIED WITH mysql_native_password BY 'VarG2020';
+FLUSH PRIVILEGES;
+
 CREATE TABLE userreg (
     userid VARCHAR(20),
     auth VARCHAR(20),
