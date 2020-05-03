@@ -16,13 +16,13 @@ const con=mysql_driver.createConnection({
     database: "vargdb"
 });
 
-//Node connects to DB
+//Node connects to DB, test
 con.connect(function(err) {
     if (err){
-        console.log("Connection failed!");
+        console.log("Test: Connection failed!");
         throw err;
     }
-    console.log("Connected!");
+    console.log("Test: Connected!");
 });
 
 //api is the object variable to access the express functionality
@@ -41,3 +41,12 @@ api.get('/master', (req,res) => {
     console.log('I was here '+ req);
     res.redirect('http://varg.nfl-server.de');
 });
+
+api.get('/Graph/ID_1', (req, res) => {
+    console.log('I was here '+ req);
+    con.query("SELECT graphObject FROM cytographs WHERE fileId=1", function(err, result) {
+        if (err) throw err;
+        console.log("Query was successful ! " + result);
+        res.send(result);
+    });
+})
