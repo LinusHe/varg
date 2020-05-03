@@ -247,8 +247,8 @@ export default {
           case "Speichern":
             if (this.DataBaseName != "" && this.DataBaseName != null) {
               let content = ExJSon.CreateJSon(this.getGraph());
+              content.data.filename=this.DataBaseName;
               //Stringify makes content readable
-              content = JSON.stringify(content, null, 2);
               if (this.database.save(content, false)) {
                 //no dupe
                 // eslint-disable-next-line no-console
@@ -272,8 +272,8 @@ export default {
             if (this.DataBaseName != "" && this.DataBaseName != null) {
               //Creates raw JSon Data that is unreadable
               let content = ExJSon.CreateJSon(this.getGraph());
+              content.data.filename=this.DataBaseName;
               //Stringify makes content readable
-              content = JSON.stringify(content, null, 2);
               this.database.save(content, true);
               //  eslint-disable-next-line no-console
               console.log("overwrite");
