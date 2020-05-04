@@ -91,8 +91,6 @@ export default {
         .$parent.$parent.$refs["vargraph"];
     },
     download() {
-      console.log(this.getGraph());
-      dialogComponent.dialogInfo("test");
       // Check form inputs
       if (this.$refs.formLocal.validate()) {
         // generate filename

@@ -38,7 +38,7 @@
     </v-card-text>
 
     <v-dialog v-model="overwriteDialog" persistent max-width="400">
-      <v-card>
+      <v-card id="overwriteDialog">
         <v-card-title class="headline">{{DataBaseName}} überschreiben?</v-card-title>
         <v-card-text>
           Der Graph
@@ -48,8 +48,8 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="error" text @click="confirmOverwrite()">Überschreiben</v-btn>
-          <v-btn color="grey" text @click="clearFields()">Abbrechen</v-btn>
+          <v-btn color="error" id="overwriteOK" text @click="confirmOverwrite()">Überschreiben</v-btn>
+          <v-btn color="grey" id="overwriteCancel" text @click="clearFields()">Abbrechen</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
