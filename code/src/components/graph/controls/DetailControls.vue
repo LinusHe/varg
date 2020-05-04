@@ -87,7 +87,12 @@
             <!-- Save & Delete Buttons -->
             <v-row justify="end">
               <v-col sm="4">
-                <v-btn color="green darken-1" text :disabled="!validNodes" @click="saveNode()">Speichern</v-btn>
+                <v-btn
+                  color="green darken-1"
+                  text
+                  :disabled="!validNodes"
+                  @click="saveNode()"
+                >Speichern</v-btn>
               </v-col>
               <v-col sm="4">
                 <v-btn color="error" text @click="openNodeDeleteMenu()">Löschen</v-btn>
@@ -258,35 +263,39 @@
                   ></v-text-field>
                 </v-col>
               </v-row>
-
-              <!-- Save & Delete Buttons -->
-              <v-row justify="end">
-                <v-col sm="4">
-                  <v-btn color="green darken-1" text :disabled="!validEdges" @click="saveEdge()">Speichern</v-btn>
-                </v-col>
-                <v-col sm="4">
-                  <v-btn color="error" text @click="openEdgeDeleteMenu">Löschen</v-btn>
-                </v-col>
-                <v-col sm="4">
-                  <v-btn color="grey" text @click="cancel">Abbrechen</v-btn>
-                </v-col>
-                <v-dialog v-model="edgeDeleteDialog" persistent max-width="400">
-                  <v-card>
-                    <v-card-title class="headline">Verbindung löschen</v-card-title>
-                    <v-card-text>
-                      Soll die Verbindung
-                      <b>{{edgeName}}</b> endgültig gelöscht werden? Diese Aktion kann nicht rückgängig gemacht werden.
-                    </v-card-text>
-                    <v-card-actions>
-                      <v-spacer></v-spacer>
-                      <v-btn color="error" text @click="deleteEdge()">Löschen</v-btn>
-                      <v-btn color="grey" text @click="edgeDeleteDialog = false">Abbrechen</v-btn>
-                    </v-card-actions>
-                  </v-card>
-                </v-dialog>
-              </v-row>
             </v-form>
           </div>
+          <!-- Save & Delete Buttons -->
+          <v-row justify="end">
+            <v-col sm="4">
+              <v-btn
+                color="green darken-1"
+                text
+                :disabled="!validEdges"
+                @click="saveEdge()"
+              >Speichern</v-btn>
+            </v-col>
+            <v-col sm="4">
+              <v-btn color="error" text @click="openEdgeDeleteMenu">Löschen</v-btn>
+            </v-col>
+            <v-col sm="4">
+              <v-btn color="grey" text @click="cancel">Abbrechen</v-btn>
+            </v-col>
+            <v-dialog v-model="edgeDeleteDialog" persistent max-width="400">
+              <v-card>
+                <v-card-title class="headline">Verbindung löschen</v-card-title>
+                <v-card-text>
+                  Soll die Verbindung
+                  <b>{{edgeName}}</b> endgültig gelöscht werden? Diese Aktion kann nicht rückgängig gemacht werden.
+                </v-card-text>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn color="error" text @click="deleteEdge()">Löschen</v-btn>
+                  <v-btn color="grey" text @click="edgeDeleteDialog = false">Abbrechen</v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+          </v-row>
         </v-card>
       </v-slide-x-reverse-transition>
     </div>
@@ -304,7 +313,9 @@ export default {
   mounted: function() {
     this.getNodeItemsID();
     this.getNodeItemsName();
-    dialogComponent = this.$parent.$parent.$parent.$parent.$parent.$refs["dialogs"];
+    dialogComponent = this.$parent.$parent.$parent.$parent.$parent.$refs[
+      "dialogs"
+    ];
   },
   data() {
     return {
@@ -377,12 +388,12 @@ export default {
         v => !!v || v == 0 || "Kosten werden benötigt",
         v => v >= 0 || "Darf nicht negativ sein"
       ],
-      startRules: [
-        v => !!v || "Startzustand ist benötigt"
-      ],
+      startRules: [v => !!v || "Startzustand ist benötigt"],
       endRules: [
         v => !!v || "Endzustand ist benötigt",
-        v => v != this.startSelect || "Endzustand muss sich vom Startzustand unterscheiden"
+        v =>
+          v != this.startSelect ||
+          "Endzustand muss sich vom Startzustand unterscheiden"
       ]
     };
   },

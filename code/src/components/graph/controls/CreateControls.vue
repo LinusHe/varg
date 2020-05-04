@@ -138,17 +138,10 @@
                   text
                   id="btn-create-node"
                   @click="createNode()"
-                >Hinzufügen
-                </v-btn>
+                >Hinzufügen</v-btn>
               </v-col>
               <v-col sm="4">
-                <v-btn
-                  color="grey"
-                  text
-                  id="btn-cancel-node"
-                  @click="cancel()"
-                >Abbrechen
-                </v-btn>
+                <v-btn color="grey" text id="btn-cancel-node" @click="cancel()">Abbrechen</v-btn>
               </v-col>
             </v-row>
           </v-form>
@@ -159,7 +152,12 @@
     <div ref="createEdges" @keyup.esc="deactivateGui()" tabindex="0">
       <!-- Create-Edge Controls -->
       <v-slide-x-reverse-transition>
-        <v-card id="edge-create" class="detail-card" v-show="edgeCreateGui" transition="scroll-y-transition">
+        <v-card
+          id="edge-create"
+          class="detail-card"
+          v-show="edgeCreateGui"
+          transition="scroll-y-transition"
+        >
           <v-btn class="btn-close ma-2" @click="cancel()" text icon color="primary">
             <v-icon color="#ffffff">mdi-close</v-icon>
           </v-btn>
@@ -288,289 +286,286 @@
                   ></v-text-field>
                 </v-col>
               </v-row>
-
-              <!-- Create Buttons -->
-              <v-row class="mb-5" justify="end">
-                <v-col sm="4">
-                  <v-btn
-                    :disabled="!validEdges"
-                    color="green darken-1"
-                    text
-                    id="btn-create-edge"
-                    @click="createEdge()"
-                  >Hinzufügen
-                  </v-btn>
-                </v-col>
-                <v-col sm="4">
-                  <v-btn
-                    color="grey"
-                    text
-                    id="btn-cancel-edge"
-                    @click="cancel()"
-                  >Abbrechen</v-btn>
-                </v-col>
-              </v-row>
             </v-form>
           </div>
+          <!-- Create Buttons -->
+          <v-row class="mb-5" justify="end">
+            <v-col sm="4">
+              <v-btn
+                :disabled="!validEdges"
+                color="green darken-1"
+                text
+                id="btn-create-edge"
+                @click="createEdge()"
+              >Hinzufügen</v-btn>
+            </v-col>
+            <v-col sm="4">
+              <v-btn color="grey" text id="btn-cancel-edge" @click="cancel()">Abbrechen</v-btn>
+            </v-col>
+          </v-row>
         </v-card>
       </v-slide-x-reverse-transition>
     </div>
-
   </div>
 </template>
 
 <script>
-  /* eslint-disable no-console */
-  /* eslint-disable no-unused-vars */
-  /* eslint-disable standard/computed-property-even-spacing */
-  let dialogComponent;
+/* eslint-disable no-console */
+/* eslint-disable no-unused-vars */
+/* eslint-disable standard/computed-property-even-spacing */
+let dialogComponent;
 
-  export default {
-    name: "CreateControls",
-    mounted: function () {
-      dialogComponent = this.$parent.$parent.$parent.$parent.$parent.$refs["dialogs"];
+export default {
+  name: "CreateControls",
+  mounted: function() {
+    dialogComponent = this.$parent.$parent.$parent.$parent.$parent.$refs[
+      "dialogs"
+    ];
+  },
+  data() {
+    return {
+      nodeCreateGui: false,
+      nodeCreateName: "",
+      nodeCreateShort: "",
+      nodeCreateImgPath: "",
+      nodeCreateColor: "2699FB",
+      edgeCreateGui: false,
+      edgeCreateName: "",
+      edgeCreateShort: "",
+      edgeCreateCosts: "",
+      edgeCreateTime: "",
+      edgeCreatesuCosts: "",
+      edgeCreatesuTime: "",
+      unitCost: "€",
+      unitTime: "Sek",
+      itemsName: [],
+      itemsID: [],
+      edgeNames: [],
+      startSelect: "",
+      endSelect: "",
+      fab: false,
+      showNodeTitle: "Erstelle einen Zustand",
+      showEdgeTitle: "Erstelle eine Verknüpfung",
+      validNodes: false,
+      validEdges: false,
+      clickX: 500,
+      clickY: 300,
+      nameNodeRules: [
+        v => !!v || "Zustandsname wird benötigt",
+        v => (v && v.length <= 18) || "Name ist zu lang",
+        v => !this.itemsName.includes(v) || "Name ist bereits vergeben"
+      ],
+      nameEdgeRules: [
+        v => !!v || "Verknüpfungsname wird benötigt",
+        v => (v && v.length <= 18) || "Name ist zu lang",
+        v => !this.edgeNames.includes(v) || "Name ist bereits vergeben"
+      ],
+      shortRules: [
+        v => !!v || "Kürzel wird benötigt",
+        v => (v && v.length <= 3) || "Kürzel ist zu lang"
+      ],
+      imgRules: [
+        v => !v || v.match(/\.(jpeg|jpg|gif|png)$/) || "Falsches Format"
+      ],
+      costRules: [
+        v => !!v || "Kosten werden benötigt",
+        v => v >= 0 || "Darf nicht negativ sein"
+      ],
+      timeRules: [
+        v => !!v || "Kosten werden benötigt",
+        v => v >= 0 || "Darf nicht negativ sein"
+      ],
+      suCostRules: [
+        v => !!v || "Kosten werden benötigt",
+        v => v >= 0 || "Darf nicht negativ sein"
+      ],
+      suTimeRules: [
+        v => !!v || "Kosten werden benötigt",
+        v => v >= 0 || "Darf nicht negativ sein"
+      ],
+      startRules: [v => !!v || "Startzustand wird benötigt"],
+      endRules: [
+        v => !!v || "Endzustand wird benötigt",
+        v =>
+          v != this.startSelect ||
+          "Endzustand muss sich vom Startzustand unterscheiden"
+      ]
+    };
+  },
+  methods: {
+    getGraph() {
+      return this.$parent.$parent.$refs["vargraph"];
     },
-    data() {
-      return {
-        nodeCreateGui: false,
-        nodeCreateName: "",
-        nodeCreateShort: "",
-        nodeCreateImgPath: "",
-        nodeCreateColor: "2699FB",
-        edgeCreateGui: false,
-        edgeCreateName: "",
-        edgeCreateShort: "",
-        edgeCreateCosts: "",
-        edgeCreateTime: "",
-        edgeCreatesuCosts: "",
-        edgeCreatesuTime: "",
-        unitCost: "€",
-        unitTime: "Sek",
-        itemsName: [],
-        itemsID: [],
-        edgeNames: [],
-        startSelect: "",
-        endSelect: "",
-        fab: false,
-        showNodeTitle: "Erstelle einen Zustand",
-        showEdgeTitle: "Erstelle eine Verknüpfung",
-        validNodes: false,
-        validEdges: false,
-        clickX: 500,
-        clickY: 300,
-        nameNodeRules: [
-          v => !!v || "Zustandsname wird benötigt",
-          v => (v && v.length <= 18) || "Name ist zu lang",
-          v => !this.itemsName.includes(v) || "Name ist bereits vergeben"
-        ],
-        nameEdgeRules: [
-          v => !!v || "Verknüpfungsname wird benötigt",
-          v => (v && v.length <= 18) || "Name ist zu lang",
-          v => !this.edgeNames.includes(v) || "Name ist bereits vergeben"
-        ],
-        shortRules: [
-          v => !!v || "Kürzel wird benötigt",
-          v => (v && v.length <= 3) || "Kürzel ist zu lang"
-        ],
-        imgRules: [
-          v => !v || v.match(/\.(jpeg|jpg|gif|png)$/) || "Falsches Format"
-        ],
-        costRules: [
-          v => !!v || "Kosten werden benötigt",
-          v => v >= 0 || "Darf nicht negativ sein"
-        ],
-        timeRules: [
-          v => !!v || "Kosten werden benötigt",
-          v => v >= 0 || "Darf nicht negativ sein"
-        ],
-        suCostRules: [
-          v => !!v || "Kosten werden benötigt",
-          v => v >= 0 || "Darf nicht negativ sein"
-        ],
-        suTimeRules: [
-          v => !!v || "Kosten werden benötigt",
-          v => v >= 0 || "Darf nicht negativ sein"
-        ],
-        startRules: [
-          v => !!v || "Startzustand wird benötigt"
-        ],
-        endRules: [
-          v => !!v || "Endzustand wird benötigt",
-          v => v != this.startSelect || "Endzustand muss sich vom Startzustand unterscheiden"
-        ]
-      };
+    checkImg(url) {
+      return url.match(/\.(jpeg|jpg|gif|png)$/) != null;
     },
-    methods: {
-      getGraph() {
-        return this.$parent.$parent.$refs["vargraph"];
-      },
-      checkImg(url) {
-        return url.match(/\.(jpeg|jpg|gif|png)$/) != null;
-      },
-      setNodePos(x, y) {
-        this.clickX = x;
-        this.clickY = y;
-      },
-      setStart(start) {
-        this.startSelect = start;
-      },
-      setEnd(end) {
-        this.endSelect = end;
-      },
-      generateNodeShort() {
-        if (this.nodeCreateName != null) {
-          if (this.nodeCreateName.length > 0 && this.nodeCreateName != " ") {
-            let words = this.nodeCreateName.split(" ");
-            if (words.length >= 2 && words.length <= 3) {
-              this.nodeCreateShort = words
-                .map(words => words[0])
-                .join("")
-                .toUpperCase();
-            } else if (words.length == 1) {
-              this.nodeCreateShort = this.nodeCreateName
-                .substring(0, 3)
-                .toUpperCase();
-            }
-          }
-          if (this.nodeCreateName.length <= 18) {
-            this.showNodeTitle = this.nodeCreateName;
+    setNodePos(x, y) {
+      this.clickX = x;
+      this.clickY = y;
+    },
+    setStart(start) {
+      this.startSelect = start;
+    },
+    setEnd(end) {
+      this.endSelect = end;
+    },
+    generateNodeShort() {
+      if (this.nodeCreateName != null) {
+        if (this.nodeCreateName.length > 0 && this.nodeCreateName != " ") {
+          let words = this.nodeCreateName.split(" ");
+          if (words.length >= 2 && words.length <= 3) {
+            this.nodeCreateShort = words
+              .map(words => words[0])
+              .join("")
+              .toUpperCase();
+          } else if (words.length == 1) {
+            this.nodeCreateShort = this.nodeCreateName
+              .substring(0, 3)
+              .toUpperCase();
           }
         }
-      },
-      generateEdgeShort() {
-        if (this.edgeCreateName != null) {
-          if (this.edgeCreateName.length > 0 && this.edgeCreateName != " ") {
-            let words = this.edgeCreateName.split(" ");
-            if (words.length >= 2 && words.length <= 3) {
-              this.edgeCreateShort = words
-                .map(words => words[0])
-                .join("")
-                .toUpperCase();
-            } else if (words.length == 1) {
-              this.edgeCreateShort = this.edgeCreateName
-                .substring(0, 3)
-                .toUpperCase();
-            }
-          }
-          if (this.edgeCreateName.length <= 18) {
-            this.showEdgeTitle = this.edgeCreateName;
-          }
+        if (this.nodeCreateName.length <= 18) {
+          this.showNodeTitle = this.nodeCreateName;
         }
-      },
-      deactivateGui() {
-        this.nodeCreateGui = false;
-        this.edgeCreateGui = false;
-        this.fab = false;
-      },
-      openNodeGui() {
-        this.$parent.$parent.$refs.detailControls.deactivateGui();
-        this.nodeCreateGui = true;
-        this.edgeCreateGui = false;
-        this.$refs.createNodes.focus();
-      },
-      openEdgeGui() {
-        this.$parent.$parent.$refs.detailControls.deactivateGui();
-        this.nodeCreateGui = false;
-        this.edgeCreateGui = true;
-        this.$refs.createEdges.focus();
-        this.getUnits();
-      },
-      getUnits() {
-        this.unitCost = this.getGraph().getCytoGraph().data("settingsUnitCostSelection");
-        this.unitTime = this.getGraph().getCytoGraph().data("settingsUnitTimeSelection");
-      },
-      getNodeItemsID() {
-        this.itemsID = this.getGraph().getNodeID(this.getGraph());
-      },
-      getNodeItemsName() {
-        this.itemsName = this.getGraph().getNodeName(this.getGraph());
-        console.log(this.itemsName);
-      },
-      getEdgeItemsName() {
-        this.edgeNames = this.getGraph().getEdgeName(this.getGraph());
-      },
-      createEdge() {
-        if (this.$refs.formEdges.validate()) {
-          let newcost = parseFloat(this.edgeCreateCosts);
-          let newtime = parseFloat(this.edgeCreateTime);
-          let newsucost = parseFloat(this.edgeCreatesuCosts);
-          let newsutime = parseFloat(this.edgeCreatesuTime);
-
-          if (newcost < 0 || newtime < 0 || newsucost < 0 || newsutime < 0) {
-            alert("You can't use negative numbers");
-            return;
-          }
-
-          let indexStart = this.itemsName.indexOf(this.startSelect);
-          let startID = this.itemsID[indexStart];
-          let indexEnd = this.itemsName.indexOf(this.endSelect);
-          let endID = this.itemsID[indexEnd];
-
-          this.getGraph().createEdge(
-            this.getGraph(),
-            this.edgeCreateName,
-            this.edgeCreateShort,
-            startID,
-            endID,
-            newcost,
-            newtime,
-            newsucost,
-            newsutime
-          );
-          dialogComponent.dialogSuccess("Verknüpfung erfolgreich angelegt");
-          this.clearFields();
-          this.edgeCreateGui = false;
-        }
-      },
-      setTarget(id) {
-      },
-      createNode() {
-        if (this.$refs.formNodes.validate()) {
-          this.nodeCreateShort = this.nodeCreateShort.toUpperCase();
-          this.getGraph().createNode(
-            this.getGraph(),
-            this.nodeCreateName,
-            this.nodeCreateShort,
-            this.nodeCreateImgPath,
-            this.nodeCreateColor,
-            this.clickX,
-            this.clickY
-          ),
-            this.itemsName.push(this.nodeCreateName);
-          this.itemsID = this.getGraph().getNodeID(this.getGraph());
-
-          this.clearFields();
-          this.nodeCreateGui = false;
-          dialogComponent.dialogSuccess("Zustand erfolgreich angelegt");
-        }
-      },
-      cancel() {
-        this.clearFields();
-        this.deactivateGui();
-      },
-      clearFields() {
-        this.nodeCreateName = null;
-        this.nodeCreateShort = "";
-        this.nodeCreateImgPath = "";
-        this.nodeCreateColor = "2699FB";
-        this.edgeCreateName = "";
-        this.edgeCreateShort = "";
-        this.edgeCreateCosts = "";
-        this.edgeCreateTime = "";
-        this.edgeCreatesuCosts = "";
-        this.edgeCreatesuTime = "";
-        this.startSelect = "";
-        this.endSelect = "";
-        this.showNodeTitle = "Erstelle einen Zustand";
-        this.showEdgeTitle = "Erstelle eine Verknüpfung";
-        this.$refs.formNodes.reset();
-        this.$refs.formEdges.reset();
-        this.$refs.scrollingContainer.scrollTop = 0;
-      },
-      validateStartEnd() {
-        this.$refs.startzustand.validate();
-        this.$refs.endzustand.validate();
       }
+    },
+    generateEdgeShort() {
+      if (this.edgeCreateName != null) {
+        if (this.edgeCreateName.length > 0 && this.edgeCreateName != " ") {
+          let words = this.edgeCreateName.split(" ");
+          if (words.length >= 2 && words.length <= 3) {
+            this.edgeCreateShort = words
+              .map(words => words[0])
+              .join("")
+              .toUpperCase();
+          } else if (words.length == 1) {
+            this.edgeCreateShort = this.edgeCreateName
+              .substring(0, 3)
+              .toUpperCase();
+          }
+        }
+        if (this.edgeCreateName.length <= 18) {
+          this.showEdgeTitle = this.edgeCreateName;
+        }
+      }
+    },
+    deactivateGui() {
+      this.nodeCreateGui = false;
+      this.edgeCreateGui = false;
+      this.fab = false;
+    },
+    openNodeGui() {
+      this.$parent.$parent.$refs.detailControls.deactivateGui();
+      this.nodeCreateGui = true;
+      this.edgeCreateGui = false;
+      this.$refs.createNodes.focus();
+    },
+    openEdgeGui() {
+      this.$parent.$parent.$refs.detailControls.deactivateGui();
+      this.nodeCreateGui = false;
+      this.edgeCreateGui = true;
+      this.$refs.createEdges.focus();
+      this.getUnits();
+    },
+    getUnits() {
+      this.unitCost = this.getGraph()
+        .getCytoGraph()
+        .data("settingsUnitCostSelection");
+      this.unitTime = this.getGraph()
+        .getCytoGraph()
+        .data("settingsUnitTimeSelection");
+    },
+    getNodeItemsID() {
+      this.itemsID = this.getGraph().getNodeID(this.getGraph());
+    },
+    getNodeItemsName() {
+      this.itemsName = this.getGraph().getNodeName(this.getGraph());
+      console.log(this.itemsName);
+    },
+    getEdgeItemsName() {
+      this.edgeNames = this.getGraph().getEdgeName(this.getGraph());
+    },
+    createEdge() {
+      if (this.$refs.formEdges.validate()) {
+        let newcost = parseFloat(this.edgeCreateCosts);
+        let newtime = parseFloat(this.edgeCreateTime);
+        let newsucost = parseFloat(this.edgeCreatesuCosts);
+        let newsutime = parseFloat(this.edgeCreatesuTime);
+
+        if (newcost < 0 || newtime < 0 || newsucost < 0 || newsutime < 0) {
+          alert("You can't use negative numbers");
+          return;
+        }
+
+        let indexStart = this.itemsName.indexOf(this.startSelect);
+        let startID = this.itemsID[indexStart];
+        let indexEnd = this.itemsName.indexOf(this.endSelect);
+        let endID = this.itemsID[indexEnd];
+
+        this.getGraph().createEdge(
+          this.getGraph(),
+          this.edgeCreateName,
+          this.edgeCreateShort,
+          startID,
+          endID,
+          newcost,
+          newtime,
+          newsucost,
+          newsutime
+        );
+        dialogComponent.dialogSuccess("Verknüpfung erfolgreich angelegt");
+        this.clearFields();
+        this.edgeCreateGui = false;
+      }
+    },
+    setTarget(id) {},
+    createNode() {
+      if (this.$refs.formNodes.validate()) {
+        this.nodeCreateShort = this.nodeCreateShort.toUpperCase();
+        this.getGraph().createNode(
+          this.getGraph(),
+          this.nodeCreateName,
+          this.nodeCreateShort,
+          this.nodeCreateImgPath,
+          this.nodeCreateColor,
+          this.clickX,
+          this.clickY
+        ),
+          this.itemsName.push(this.nodeCreateName);
+        this.itemsID = this.getGraph().getNodeID(this.getGraph());
+
+        this.clearFields();
+        this.nodeCreateGui = false;
+        dialogComponent.dialogSuccess("Zustand erfolgreich angelegt");
+      }
+    },
+    cancel() {
+      this.clearFields();
+      this.deactivateGui();
+    },
+    clearFields() {
+      this.nodeCreateName = null;
+      this.nodeCreateShort = "";
+      this.nodeCreateImgPath = "";
+      this.nodeCreateColor = "2699FB";
+      this.edgeCreateName = "";
+      this.edgeCreateShort = "";
+      this.edgeCreateCosts = "";
+      this.edgeCreateTime = "";
+      this.edgeCreatesuCosts = "";
+      this.edgeCreatesuTime = "";
+      this.startSelect = "";
+      this.endSelect = "";
+      this.showNodeTitle = "Erstelle einen Zustand";
+      this.showEdgeTitle = "Erstelle eine Verknüpfung";
+      this.$refs.formNodes.reset();
+      this.$refs.formEdges.reset();
+      this.$refs.scrollingContainer.scrollTop = 0;
+    },
+    validateStartEnd() {
+      this.$refs.startzustand.validate();
+      this.$refs.endzustand.validate();
     }
-  };
+  }
+};
 </script>
