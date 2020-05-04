@@ -52,9 +52,9 @@ import CreateControls from "./controls/CreateControls";
 import DetailControls from "./controls/DetailControls";
 import ZoomControls from "./controls/ZoomControls";
 import NewGraphMenu from "./menus/NewGraphMenu";
-import ExportMenu from "./menus/ExportMenu";
+import ExportMenu from "./menus/export/ExportMenu";
 import RightClickMenu from "./menus/RightClickMenu";
-import SettingsMenu from "./menus/SettingsMenu";
+import SettingsMenu from "./menus/settings/SettingsMenu";
 import DatabaseMenu from "./menus/DatabaseMenu";
 import HTTPRequest from "./HTTPRequest";
 
