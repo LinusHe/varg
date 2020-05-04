@@ -17,7 +17,6 @@
               v-model="DataBaseName"
               required
               :rules="nameRules"
-              @input="switchbtntext"
             ></v-text-field>
           </v-col>
         </v-row>
@@ -28,11 +27,11 @@
               text
               :disabled="!validDB"
               id="save-menu-save"
-              @click="save"
+              @click="saveDB"
             >Speichern</v-btn>
           </v-col>
           <v-col sm="4">
-            <v-btn color="grey" text id="save-menu-cancel" @click="clearFields">Abbrechen</v-btn>
+            <v-btn color="grey" text id="save-menu-cancel" @click="closeDialog()">Abbrechen</v-btn>
           </v-col>
         </v-row>
       </v-form>
@@ -49,8 +48,8 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="error" text @click="deleteEdge()">Überschreiben</v-btn>
-          <v-btn color="grey" text @click="edgeDeleteDialog = false">Abbrechen</v-btn>
+          <v-btn color="error" text @click="confirmOverwrite()">Überschreiben</v-btn>
+          <v-btn color="grey" text @click="clearFields()">Abbrechen</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -83,7 +82,7 @@ export default {
       validDB: true,
       DataBaseName: "",
       database: this.getGraph().vars.testDatabase,
-      overwriteDialog: true
+      overwriteDialog: false
     };
   },
 
@@ -96,69 +95,55 @@ export default {
       this.DataBaseName = "";
       this.$refs.formDB.reset();
       this.$refs.formDB.resetValidation();
+      this.overwriteDialog = false;
     },
-    setbtntext(value) {
-      this.btntext = value;
+    closeDialog() {
+      this.clearFields();
+      this.$parent.$parent.$parent.$parent.$parent.$parent.$parent.setdialog(
+        false
+      );
     },
-    setmsg(value) {
-      this.message = value;
-    },
-    setLabel(value) {
-      this.DataBaseName = "";
-      this.label = value;
-    },
-    save() {
+    saveDB() {
       //Checks if menu formular was filled in correctly
       if (this.$refs.formDB.validate()) {
-        //switching on string values is possible in JS and
-        //is used here to determine in which state the menu is
-        switch (this.btntext) {
-          case "Speichern":
-            if (this.DataBaseName != "" && this.DataBaseName != null) {
-              let content = ExJSon.CreateJSon(this.getGraph());
-              content.data.filename = this.DataBaseName;
-              //Stringify makes content readable
-              if (this.database.save(content, false)) {
-                //no dupe
-                // eslint-disable-next-line no-console
-                console.log("save");
-                this.setdialog(false);
-                this.clearFields();
-                if (this.$parent.$parent.$refs.newGraphMenu.dialog) {
-                  this.$router.push({ name: "newGraph" });
-                }
-              } else {
-                //dupe case
-                this.setmsg(
-                  "Es existiert bereits eine Datei unter diesen Namen. Wollen Sie diese überschreiben ?"
-                );
-                this.setbtntext("Überschreiben");
-              }
-            }
-            break;
+        // update cytoscape filename
+        this.getGraph()
+          .getCytoGraph(this.getGraph())
+          .data("filename", this.DataBaseName);
 
-          case "Überschreiben":
-            if (this.DataBaseName != "" && this.DataBaseName != null) {
-              //Creates raw JSon Data that is unreadable
-              let content = ExJSon.CreateJSon(this.getGraph());
-              content.data.filename = this.DataBaseName;
-              //Stringify makes content readable
-              this.database.save(content, true);
-              //  eslint-disable-next-line no-console
-              console.log("overwrite");
-              // > Little trick: this should only be true if the user has previously opened
-              //   the newGraph menu - which creates the intended UX.
-              this.setdialog(false);
-              this.clearFields();
-              if (this.$parent.$parent.$refs.newGraphMenu.dialog) {
-                this.$router.push({ name: "newGraph" });
-              }
-            }
-            break;
+        // get json
+        let content = ExJSon.CreateJSon(this.getGraph());
 
-          default:
-            break;
+        if (this.database.save(content, false)) {
+          this.closeDialog();
+          dialogComponent.dialogSuccess("Graph erfolgreich gespeichert");
+          this.checkNewGraph();
+        } else {
+          // database.save(..) returns false if graph exists
+          this.overwriteDialog = true;
         }
+      }
+    },
+    confirmOverwrite() {
+      // get json
+      let content = ExJSon.CreateJSon(this.getGraph());
+      // force overwrite
+      this.database.save(content, true);
+
+      this.closeDialog();
+      dialogComponent.dialogSuccess("Graph erfolgreich überschrieben");
+
+      this.checkNewGraph();
+    },
+    checkNewGraph() {
+      // check dialog was opened by new Graph menu
+      if (
+        this.$parent.$parent.$parent.$parent.$parent.$parent.$parent.getNewGraph()
+      ) {
+        // continue with newGraph function
+        this.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$refs[
+          "newGraphMenu"
+        ].discard();
       }
     }
   }

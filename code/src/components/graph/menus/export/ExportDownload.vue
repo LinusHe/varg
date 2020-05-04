@@ -46,7 +46,7 @@
             >Download</v-btn>
           </v-col>
           <v-col sm="4">
-            <v-btn color="grey" text id="download-menu-cancel" @click="clearFields">Abbrechen</v-btn>
+            <v-btn color="grey" text id="download-menu-cancel" @click="closeDialog()">Abbrechen</v-btn>
           </v-col>
         </v-row>
       </v-form>
@@ -123,28 +123,37 @@ export default {
             break;
         }
         dialogComponent.dialogInfo("Datei wird heruntergeladen...");
-        this.clearFields();
+        this.closeDialog();
+        this.checkNewGraph();
       }
     },
     clearFields() {
-      this.DataBaseName = "";
-      // catch undefined form:
-      // if one of the tabs arent selected yet -> the form is undefined
-      if (typeof this.$refs.formLocal !== "undefined") {
-        this.$refs.formLocal.reset();
-        this.$refs.formLocal.resetValidation();
-      }
-      if (typeof this.$refs.formDB !== "undefined") {
-        this.$refs.formDB.reset();
-        this.$refs.formDB.resetValidation();
-      }
-      this.dialog = false;
+      this.filename = "";
+      this.$refs.formLocal.reset();
+      this.$refs.formLocal.resetValidation();
+    },
+    closeDialog() {
+      this.clearFields();
+      this.$parent.$parent.$parent.$parent.$parent.$parent.$parent.setdialog(
+        false
+      );
     },
     openHelpDialog() {
       dialogComponent.dialogInfo(
         "Wähle das Format <b>.json</b> oder<b>.xml</b> aus, um den Graphen in einem Format herunterzuladen, welches du später wieder im Editor importieren kannst. <br /> <br /> Wähle<b>.png</b> oder<b>.svg</b> aus, um den Graphen in einem Bildvormat herunterzuladen.",
         15000
       );
+    },
+    checkNewGraph() {
+      // check dialog was opened by new Graph menu
+      if (
+        this.$parent.$parent.$parent.$parent.$parent.$parent.$parent.getNewGraph()
+      ) {
+        // continue with newGraph function
+        this.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$refs[
+          "newGraphMenu"
+        ].discard();
+      }
     }
   }
 };

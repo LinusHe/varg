@@ -13,10 +13,10 @@
         </v-tab>
 
         <v-tab-item>
-          <exportDownload />
+          <exportDownload ref="exportDownload" />
         </v-tab-item>
         <v-tab-item>
-          <exportDatabase />
+          <exportDatabase ref="exportDatabase" />
         </v-tab-item>
       </v-tabs>
     </v-card>
@@ -31,8 +31,8 @@ import fileManager from "../../../../vargraph/importExport/FileManager.js";
 import ExJSon from "../../../../vargraph/JSonPersistence.js";
 
 // components
-import exportDownload from "./ExportDownload"
-import exportDatabase from "./ExportDatabase"
+import exportDownload from "./ExportDownload";
+import exportDatabase from "./ExportDatabase";
 
 let dialogComponent;
 
@@ -50,28 +50,7 @@ export default {
   data() {
     return {
       dialog: false,
-      format: "",
-      formatname: [".json", ".xml", ".png", ".svg", ".jpg"],
-      filename: "",
-      helpDialog: false,
-      helpTimeout: 10000,
-      successDialog: false,
-      successTimeout: 2000,
-      validLocal: true,
-      name: "",
-      nameRules: [
-        v => !!v || "Downloadname ist erforderlich",
-        v =>
-          (v && v.length <= 10) ||
-          "Downloadname muss kürzer als 10 Zeichen sein"
-      ],
-      validDB: true,
-      DataBaseName: "",
-      label: "Datenbankname",
-      message:
-        "Unter folgendem Namen kann der aktuelle Graph <b>in der Datenbank</b> gespeichert werden. Über das Menü 'Datenbank' kann er wieder geladen werden.",
-      btntext: "Speichern",
-      database: this.$parent.$parent.$refs["vargraph"].vars.testDatabase
+      newGraph: false
     };
   },
 
@@ -79,9 +58,15 @@ export default {
     getGraph() {
       return this.$parent.$parent.$refs["vargraph"];
     },
+    setNewGraph(bool) {
+      this.newGraph = bool;
+    },
+    getNewGraph() {
+      return this.newGraph;
+    },
     setdialog(boolean) {
       this.dialog = boolean;
-    },
+    }
   }
 };
 </script>
