@@ -5,10 +5,10 @@
         <h1>Exportieren</h1>
       </v-card-title>
       <v-tabs centered>
-        <v-tab>
+        <v-tab id="tab-localExport">
           <v-icon left>mdi-desktop-mac</v-icon>Lokal
         </v-tab>
-        <v-tab>
+        <v-tab id="tab-dbExport">
           <v-icon left>mdi-database</v-icon>Datenbank
         </v-tab>
 
