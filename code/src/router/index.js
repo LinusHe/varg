@@ -8,6 +8,7 @@ import Menu from "../views/Menu.vue";
 import NewGraph from "../views/NewGraph.vue";
 //import Vuex from 'vuex'
 import { store } from "../store/store.js";
+import LoadingScreen from "../views/LoadingScreen.vue"
 
 //var auth;
 Vue.use(VueRouter);
@@ -15,7 +16,7 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
-    redirect: "/home/login"
+    redirect: "/home/loading"
   },
   {
     path: "/home",
@@ -56,6 +57,10 @@ const routes = [
         meta: {
           requiresAuth: true
         }
+      },
+      {
+        path: "loading",
+        component: LoadingScreen
       }
     ]
   },
@@ -86,9 +91,17 @@ router.beforeEach((to, from, next) => {
   // If a route with a title was found, set the document (page) title to that value.
   if (nearestWithTitle) document.title = nearestWithTitle.meta.title;
 
+  //Before each routing check if store.ready === true
+  //else rerout to loadingScreen
+  //if(store.state.ready === false) {
+  //  next({
+  //    path: "/"
+  //  });
+  //}
+
   // Check for requiresAuth guard
   if (to.matched.some(record => record.meta.requiresAuth)) {
-      if(store.state.user.autehticated == true) {
+      if(store.state.user.autehticated === true) {
         //proceed to rout
         //Role management could take place here
         next();

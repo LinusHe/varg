@@ -58,7 +58,7 @@
     </v-list-item>
 
     <!-- DEBUGGING -->
-    <!-- <v-btn align="center" class="login-button" @click="getState()" large color="primary">get State</v-btn>
+    <v-btn align="center" class="login-button" @click="getState()" large color="primary">get State</v-btn>
 
     <v-btn
       align="center"
@@ -66,7 +66,7 @@
       @click="delLocal()"
       large
       color="primary"
-    >Remove localStorage</v-btn>-->
+    >Remove localStorage</v-btn>
     <!-- /DEBUGGING -->
   </div>
 </template>
@@ -97,10 +97,11 @@ export default {
   methods: {
     //For Debuging
     getState() {
-      // alert("Authenticated: " + this.$store.state.user.autehticated +
-      // "\nName: " + this.$store.state.user.name +
-      // "\nRole: " + this.$store.state.user.role +
-      // "\nReady: " + this.$store.state.ready);
+       alert("Authenticated: " + this.$store.state.user.autehticated +
+       "\nName: " + this.$store.state.user.name +
+       "\nRole: " + this.$store.state.user.role +
+       "\nReady: " + this.$store.state.ready
+       );
     },
     delLocal() {
       localStorage.removeItem("store");

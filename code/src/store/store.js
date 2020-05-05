@@ -29,7 +29,7 @@ export const store = new Vuex.Store({
     retrieveStore(state) {
 			if(localStorage.getItem("store")) {
 				this.replaceState((state, JSON.parse(localStorage.getItem("store"))));
-        // alert("Old state has been retrieved.");
+        //alert("Old state has been retrieved.");
       }
       state.ready = true;
     },
@@ -67,6 +67,9 @@ export const store = new Vuex.Store({
     }
   },
   getters: {
+    getAuth: state => {
+      return state.user.autehticated;
+    },
     getState: state => {
       return state.count;
     },
@@ -80,6 +83,9 @@ export const store = new Vuex.Store({
 });
 
 //Saves current state to local storage after each change
+
+//TODO: Make promisebased!
+
 store.subscribe((mutation, state) => {
   localStorage.setItem("store", JSON.stringify(state));
   //alert("Saved to localStorage.");
