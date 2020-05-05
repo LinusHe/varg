@@ -31,37 +31,88 @@ con.connect(function(err) {
 //api is the object variable to access the express functionality
 const api = express();
 
+//---------------------
+//ROUTES for our API
+
+let router = express.Router();
+
+//middleware functionality (inspection, logging etc.) here
+router.use(function(req,res,next) {
+    console.log("middleware could happen here");
+    //this will allow to (only) access the resources from the specified address
+    res.header("Access-Control-Allow-Origin", "http://localhost:8080");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next(); //continue past middleware
+});
+
+//test route
+router.get('/', (req, res) =>{
+    res.json({message: 'api is responsive'});
+});
+
+//any additional routes here
+
+//(graph)
+router.route('/graph')
+    //get all graphs - should probably be reserved to higher authority roles
+    .get(function (req, res) {
+        console.log('Sending all Graphs');
+        con.query("SELECT graphObject FROM cytographs", function(err, result) {
+            if (err) throw err;
+            console.log("Query was successful !");
+            res.send(result);
+        });
+    })
+    //post a graph
+    .post(function(req,res) {
+
+    });
+
+//graph/:graph_id
+router.route('/graph/:graph_id')
+    //get a single graph identified by id
+    .get(function(req, res) {
+        //the query should still involve some check if the user "owns" the graph
+        //example: SELECT graphObject FROM cytographs WHERE fileID=1 AND user=jdeo
+
+    })
+    //update a single graph idetnfied by id
+    .put(function(req, res) {
+
+    })
+    //delete a single graph identified by id
+    .delete(function(req, res) {
+
+    });
+
+//route for testing purposes - remove in build
+router.route('/test')
+
+    .get(function(req, res) {
+        res.send(parser.ParseRequest());
+    })
+    .post(function(req, res) {
+
+    })
+    .put(function(req, res) {
+
+    })
+    .delete(function(req, res) {
+
+    });
+
+//---------------------
+
+//REGISTER routes 
+
+//prefix any routes with /VarG
+api.use('/VarG', router);
+
+//---------------------
+
+//START the server
+
 //8080 is the port number -> probably needs to change
 api.listen(8080, () => {
-     console.log('API listens to Localhost');
+    console.log('API listens to 8080');
 });
-
-api.use(function(req, res, next) {
-    console.log(req);
-    res.header("Access-Control-Allow-Origin", "http://localhost:8080"); // update to match the domain you will make the request from
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-})
-
-//When accessing the root ('/') of the site (the localhost:8080)
-//a get request is send. The api will intercept and and do
-//the stuff defined here (req is the request, res is the response)
-//req gives you a lot of information about the request
-api.get('/master', (req,res) => {
-    console.log('I was here '+ req);
-    res.redirect('http://varg.nfl-server.de');
-});
-
-api.get('/Graph/ID_1', (req, res) => {
-    console.log('I was here '+ req);
-    con.query("SELECT graphObject FROM cytographs WHERE fileId=1", function(err, result) {
-        if (err) throw err;
-        console.log("Query was successful ! " + result);
-        res.send(result);
-    });
-})
-
-api.get('/test', (req, res) => {
-    console.log(req);
-    res.send(parser.ParseRequest());
-})
