@@ -12,7 +12,7 @@
 export default {
   name: "LoadingScreen",
   mounted: function() {
-    if (this.$store.state.user.autehticated === true) {
+    if (this.$store.getters.getAuth) {
       this.$router.replace("/home/menu");
     } else {
       this.$router.replace("/home/login");

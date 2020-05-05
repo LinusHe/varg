@@ -91,24 +91,18 @@ router.beforeEach((to, from, next) => {
   // If a route with a title was found, set the document (page) title to that value.
   if (nearestWithTitle) document.title = nearestWithTitle.meta.title;
 
-  //Before each routing check if store.ready === true
-  //else rerout to loadingScreen
-  //if(store.state.ready === false) {
-  //  next({
-  //    path: "/"
-  //  });
-  //}
 
   // Check for requiresAuth guard
   if (to.matched.some(record => record.meta.requiresAuth)) {
-      if(store.state.user.autehticated === true) {
+      if(store.getters.getAuth) {
+        
         //proceed to rout
         //Role management could take place here
         next();
       } else {
         //Go to Login
         next({
-          path: "/home/login",
+          path: "/home/loading",
           query: {
             redirect: to.fullPath
           }
@@ -121,7 +115,7 @@ router.beforeEach((to, from, next) => {
   // Check wether Graph is created
   if (to.matched.some(record => record.meta.requiresGraph)) {
     // Check if Graph has no Name
-    if (store.getters.getCyProdName == null) {
+    if (store.getters.getCyProdName === null) {
       // Main Menu
       next({
         path: "/home/menu"
