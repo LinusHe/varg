@@ -7,14 +7,17 @@
 //uses express module 
 const express = require('express');
 const mysql_driver = require('mysql');
+const parser = require('./APIparser')
 
-//MySQL Driver configuration
-const con=mysql_driver.createConnection({
+const config = {
     host: "192.168.99.101",
     user: "varg",
     password: "VarG2020",
     database: "vargdb"
-});
+};
+
+//MySQL Driver configuration
+const con=mysql_driver.createConnection(config);
 
 //Node connects to DB, test
 con.connect(function(err) {
@@ -31,7 +34,14 @@ const api = express();
 //8080 is the port number -> probably needs to change
 api.listen(8080, () => {
      console.log('API listens to Localhost');
- });
+});
+
+api.use(function(req, res, next) {
+    console.log(req);
+    res.header("Access-Control-Allow-Origin", "http://localhost:8080"); // update to match the domain you will make the request from
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+})
 
 //When accessing the root ('/') of the site (the localhost:8080)
 //a get request is send. The api will intercept and and do
@@ -49,4 +59,9 @@ api.get('/Graph/ID_1', (req, res) => {
         console.log("Query was successful ! " + result);
         res.send(result);
     });
+})
+
+api.get('/test', (req, res) => {
+    console.log(req);
+    res.send(parser.ParseRequest());
 })
