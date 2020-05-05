@@ -100,7 +100,9 @@ export default {
        alert("Authenticated: " + this.$store.state.user.autehticated +
        "\nName: " + this.$store.state.user.name +
        "\nRole: " + this.$store.state.user.role +
-       "\nReady: " + this.$store.state.ready
+       "\nReady: " + this.$store.state.ready +
+       "\nIssued: " + this.$store.state.issued +
+       "\nNow: " + Date.now()
        );
     },
     delLocal() {
