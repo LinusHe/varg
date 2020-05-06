@@ -92,16 +92,6 @@ export default {
     console.log("Graph Component", this.getGraph());
   },
   name: "GraphHeader",
-  data() {
-    return {
-      prodName: null,
-      prodQuant: null,
-      isEditingName: false,
-      isEditingQuant: false,
-      validQuant: false,
-      validName: false
-    };
-  },
   methods: {
     getGraph() {
       return this.$parent.$refs["vargraph"];
