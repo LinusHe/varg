@@ -26,13 +26,3 @@ export default {
   }
 };
 </script>
-
-
-
-      if (window.history.length > 1 ) {
-
-          //this.$router.push.redirect();
-      } else {
-        this.$router.replace("home/menu");
-      }
-      //alert("ROUUUTING");

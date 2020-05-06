@@ -57,7 +57,7 @@
       </v-list-item-content>
     </v-list-item>
   
-    <!-- DEBUGGING -->
+    <!-- DEBUGGING 
     <v-btn align="center" class="login-button" @click="getState()" large color="primary">get State</v-btn>
 
     <v-btn
@@ -67,7 +67,7 @@
       large
       color="primary"
     >Remove localStorage</v-btn> 
-    <!-- /DEBUGGING -->
+/DEBUGGING -->
   </div>
 </template>
 
@@ -83,7 +83,7 @@ export default {
     dialogComponent = this.$parent.$parent.$parent.$parent.$parent.$refs[
       "dialogs"
     ];
-  },
+  }, 
   data() {
     return {
       input: {
