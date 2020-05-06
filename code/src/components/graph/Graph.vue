@@ -83,7 +83,10 @@ export default {
   methods: {
     toggleHeader() {
       this.header = !this.header;
-      this.$refs.vargraph.calculateHeightOfCy(this.header);
+      this.$refs.vargraph.calculateHeightOfCy(this.$refs.vargraph);
+    },
+    getHeader() {
+      return this.header;
     }
   }
 };

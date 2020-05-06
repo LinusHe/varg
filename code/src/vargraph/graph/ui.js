@@ -8,17 +8,26 @@
 export default {
   // the main ui function, called at mounted vargraph
   adjustUI() {
-    this.calculateHeightOfCy(true);
+    this.calculateHeightOfCy(this);
+    var _this = this;
+    window.addEventListener(
+      "resize",
+      function() {
+        _this.calculateHeightOfCy(_this)
+      },
+      true
+    );
   },
 
   // sets height of the card
-  calculateHeightOfCy(visHeader) {
-    let margin = 150;
+  calculateHeightOfCy(graphComponent) {
+    let visHeader = graphComponent.$parent.$parent.getHeader();
+    let margin = 130;
     let topCardHeight = document.getElementById("graph-info").offsetHeight;
     let headerHeight = 72;
     if (visHeader) margin = margin + headerHeight;
     let full = document.getElementById("app").offsetHeight;
-    let height = full - margin - headerHeight;
+    let height = full - margin - topCardHeight;
     let cc = document.getElementById("cy");
     cc.style.height = height + "px";
   }
