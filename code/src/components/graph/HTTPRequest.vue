@@ -9,7 +9,12 @@ window.axios = require('axios')
 export default {
   name: 'HTTPRequest',
   mounted: function () {
-    axios.get('http://192.168.99.101:1110/')
+    axios.get('http://192.168.99.101:1110/', {
+      params: {
+        username: 'eheldt',
+        auth: 'admin'
+      }
+    })
       .then(response => console.log(response));
   }
 }
