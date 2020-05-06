@@ -70,6 +70,7 @@ const routes = [
     component: Graph,
     meta: {
       requiresAuth: true,
+      //declared for unnecessary! (for now) greetings LoginTeam ;) 
       //requiresGraph: true,
       title: "Varg - Graph Editor"
     }
