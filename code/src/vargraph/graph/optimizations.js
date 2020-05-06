@@ -123,6 +123,7 @@ export default {
   },
 
   markBestEdges(bestEdgesID) {
+    console.log("test")
     cyStore.data.cy.elements().removeClass("highlighted");
     let cy = cyStore.data.cy
     bestEdgesID.forEach(element => {
@@ -170,7 +171,7 @@ export default {
 
   getOptionValue(path) {
     let value
-    let option = this.optimizationOption;   // false = time, true = cost
+    let option = this.getCytoGraph().data("settingsOptimizationOption");   // false = time, true = cost
     if (option) {
       value = this.getTotalCost(path)
     }
@@ -242,7 +243,7 @@ export default {
         //if nextPathPerNode is allready in bestPaths, look for the next x in sortNodes
       while(this.wasAllreadyFound(nextPathPerNode, foundPaths)) {
         nextSearch ++
-        while(sortNode[nextSearch][0] != checkNode && nextSearch < sortNode.length) {
+        while(nextSearch < sortNode.length && sortNode[nextSearch][0] != checkNode) {
           nextSearch ++
         }
         if (nextSearch < sortNode.length) {
@@ -310,7 +311,8 @@ export default {
   
   optimizing: function() {
     let option = this.optimizationOption;   // false = time, true = cost
-    let nextBestCounter = this.optimizationNumber
+      //mit Regler verknüpfen
+    let nextBestCounter = 4
     
       // gets ID's of start-nodes
     let startIDs = this.getCytoGraph().data("startIDs");
@@ -353,11 +355,11 @@ export default {
 
               // node was allready found
               //'allreadyfound' ensures, only top 'nextBestCounter' costs of every node gets saved
-            if (sortNodes[k][0] == nextNode [0]) {
+            if (sortNodes[k][0] == nextNode[0]) {
               allreadyFound ++
 
                 // if new found way has lower cost correct all nodes that had it as part of their way
-              if (sortNodes[k][2] > nextNode [2]) {
+              if (sortNodes[k][2] > nextNode[2]) {
                 if(allreadyFound == 1) {
                   for (let correct = 0; correct < sortNodes.length; correct++) {
                     if(nextNode[0] != sortNodes[correct][0]) {
@@ -395,21 +397,17 @@ export default {
     
       //look for the end-node, first one found is the one with lowest cost
     let search = 0
-    console.log("sortNodes", sortNodes)
     while (search < sortNodes.length && sortNodes[search][0] != endID) {
       search++;
     }
 
-    bestPaths.push(sortNodes[search][1])
-
-/*    für später, evlt?
-    if(search == sortNodes.length) {
+    if(search >= sortNodes.length) {
       console.log("Kein Weg möglich...")
     }
     else {
       bestPaths.push(sortNodes[search][1])
     }
-    */
+    
 
       //saves the nextbest alternatives in array
     for(let rank = 1; rank < nextBestCounter; rank++) {
