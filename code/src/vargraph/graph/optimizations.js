@@ -395,8 +395,9 @@ export default {
     
       //look for the end-node, first one found is the one with lowest cost
     let search = 0
-    while(sortNodes[search][0] != endID && search < sortNodes.length) {
-      search ++
+    console.log("sortNodes", sortNodes)
+    while (search < sortNodes.length && sortNodes[search][0] != endID) {
+      search++;
     }
 
     bestPaths.push(sortNodes[search][1])

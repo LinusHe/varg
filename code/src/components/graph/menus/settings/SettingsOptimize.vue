@@ -215,10 +215,13 @@ export default {
       }
       // set StartIDs for Optimization Algorithm
       let startIDs = [];
-      for (let i = 0; i < this.startSelect.length; i++) {
+      console.log("StartIDs before", startIDs)
+      for (let i = 1; i < this.startSelect.length; i++) {
+        console.log("for " + i + ": ", startIDs);
         let indexStart = this.itemsName.indexOf(this.startSelect[i]);
-        startIDs[i] = this.itemsID[indexStart];
+        startIDs.push(this.itemsID[indexStart]);
       }
+      console.log("StartIDs after", startIDs)
       this.getGraph()
         .getCytoGraph(this.getGraph())
         .data("startIDs", startIDs);
