@@ -4,7 +4,7 @@
     <div class="header-bg">
       <v-row>
         <!-- Hamburger Btn to toggle Header -->
-        <v-btn icon class="toggleHeader" @click="header = !header">
+        <v-btn icon class="toggleHeader" @click="toggleHeader()">
           <v-icon color="white">mdi-menu</v-icon>
         </v-btn>
 
@@ -16,30 +16,29 @@
     </div>
 
     <!-- Body Card -->
-    <v-card class="content-card">
-      <!-- Graph Name, Quant, Optimization Bar -->
-      <GraphInfo ref="graphInfo" />
+      <v-card id="card-content" class="content-card">
+        <!-- Graph Name, Quant, Optimization Bar -->
+        <GraphInfo ref="graphInfo" id="graph-info"/>
 
-      <!-- Graph Component + Controls + Menus -->
-      <v-row class="card-bottom ma-0">
-        <!-- CytoGraph Component -->
-        <VarGraph class ref="vargraph" />
-        <!-- Controls: -->
-        <CreateControls ref="createControls" />
-        <DetailControls ref="detailControls" />
-        <ZoomControls ref="zoomControls" />
-        <OptimizeControls ref="optimizeControls" />
-        <!-- Menus:  -->
-        <NewGraphMenu ref="newGraphMenu" />
-        <ExportMenu ref="exportMenu" />
-        <RightClickMenu ref="rightClickMenu" />
-        <SettingsMenu ref="settingsMenu" />
-        <DatabaseMenu ref="databaseMenu" />
+        <!-- Graph Component + Controls + Menus -->
+        <v-row class="card-bottom ma-0">
+          <!-- CytoGraph Component -->
+          <VarGraph class ref="vargraph" />
+          <!-- Controls: -->
+          <CreateControls ref="createControls" />
+          <DetailControls ref="detailControls" />
+          <ZoomControls ref="zoomControls" />
+          <!-- Menus:  -->
+          <NewGraphMenu ref="newGraphMenu" />
+          <ExportMenu ref="exportMenu" />
+          <RightClickMenu ref="rightClickMenu" />
+          <SettingsMenu ref="settingsMenu" />
+          <DatabaseMenu ref="databaseMenu" />
 
-        <!-- Test -->
-        <HTTPRequest ref="httpRequest" />
-      </v-row>
-    </v-card>
+          <!-- Test -->
+          <HTTPRequest ref="httpRequest" />
+        </v-row>
+      </v-card>
   </div>
 </template>
 
@@ -52,11 +51,10 @@ import VarGraph from "./elements/VarGraph";
 import CreateControls from "./controls/CreateControls";
 import DetailControls from "./controls/DetailControls";
 import ZoomControls from "./controls/ZoomControls";
-import OptimizeControls from "./controls/OptimizeControls";
 import NewGraphMenu from "./menus/NewGraphMenu";
-import ExportMenu from "./menus/ExportMenu";
+import ExportMenu from "./menus/export/ExportMenu";
 import RightClickMenu from "./menus/RightClickMenu";
-import SettingsMenu from "./menus/SettingsMenu";
+import SettingsMenu from "./menus/settings/SettingsMenu";
 import DatabaseMenu from "./menus/DatabaseMenu";
 import HTTPRequest from "./HTTPRequest";
 
@@ -69,7 +67,6 @@ export default {
     GraphInfo,
     CreateControls,
     DetailControls,
-    OptimizeControls,
     NewGraphMenu,
     ExportMenu,
     RightClickMenu,
@@ -86,6 +83,10 @@ export default {
   methods: {
     toggleHeader() {
       this.header = !this.header;
+      this.$refs.vargraph.calculateHeightOfCy(this.$refs.vargraph);
+    },
+    getHeader() {
+      return this.header;
     }
   }
 };

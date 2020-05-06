@@ -92,16 +92,6 @@ export default {
     console.log("Graph Component", this.getGraph());
   },
   name: "GraphHeader",
-  data() {
-    return {
-      prodName: null,
-      prodQuant: null,
-      isEditingName: false,
-      isEditingQuant: false,
-      validQuant: false,
-      validName: false
-    };
-  },
   methods: {
     getGraph() {
       return this.$parent.$refs["vargraph"];
@@ -116,6 +106,7 @@ export default {
       this.$parent.$refs.exportMenu.setdialog(true);
     },
     openSettings() {
+      this.$parent.$refs.settingsMenu.setActiveTab(0);
       this.$parent.$refs.settingsMenu.openDialog();
     },
     SaveJSon: function() {
@@ -133,6 +124,10 @@ export default {
         console.log("Graph Component to load:", graphComponent);
         fileManager.loadGraphFromJson(event, graphComponent);
       }
+    },
+    account() {
+      this.$parent.$refs.settingsMenu.setActiveTab(3);
+      this.$parent.$refs.settingsMenu.openDialog();
     },
     logout() {
       this.$store.commit("logout");

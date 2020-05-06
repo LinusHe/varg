@@ -6,7 +6,6 @@
 
 // This file contains methods for graph optimization
 
-import graph from "./graph"
 import cyStore from "./cyStore";
 
 //function to format the seconds in HHMMSS
@@ -79,96 +78,376 @@ return allPaths
 
 
 export default {
-  // findPath(.. ): The method finds the shortest Path between 2 nodes
-  //                with the Dijkstra Algorithm
-  findPath(graphComponent, option, start, end) {
-
-    graphComponent = graph
-
-    let cy = graphComponent.getCytoGraph();
-    cy.elements().removeClass("highlighted"); //removes the old optimization
-    
-    let endNode = "#" + end;
-
+  countNewEdges(start) {
+    let cy = cyStore.data.cy
+    let EdgeCount = 0
+    cy.getElementById(start[0]).outgoers('edge').forEach(element => {
+      EdgeCount ++
+    })
+    return EdgeCount
+  },  
+  
+  getNextNode(start, option, count) {
+    let cy = cyStore.data.cy
     let quantity = cy.data("prodQuant")
+    
+      // all outgoing edges from node 'start'
+    let nextEdges = cy.getElementById(start[0]).outgoers('edge');
+    let newFoundNode = [3];
 
-   
-    let allPathsfromStartNodes = []
-    let arrayOfEdges = []
-    let arrayOfGraphElements = []
+      //converts all outgoing edges into sort-node form
+    newFoundNode [0] = nextEdges[count].data("target")
 
-    let map = new Map()
-
-
-    for(let l = 0 ; l< cy.edges().length; l++){
-     arrayOfEdges.push(cy.edges()[l].data("name"))
+    let newPath = []
+      // copy all edges of the current path
+    for(let i = 0; i < start[1].length; i++) {
+        // add new egde
+      newPath.push(start[1][i])
     }
-    for(let h = 0; h<cy.elements().length; h++){
-      arrayOfGraphElements.push(cy.elements()[h].data("name"))
-      
-    }
-  
-  
-  
-    for(let j = 0; j<start.length ; j++){
-      let startNode = "#" + start[j];
-      
-      let startArray = []
-      startArray.push(cy.$(startNode).data("name"))
-        
-      allPathsfromStartNodes =  allPathsfromStartNodes.concat(allPossiblePaths(cy.$(startNode), cy.$(endNode), startArray, [] ))
-  
-        
-      for(let i = 0; i< allPathsfromStartNodes.length; i++){
-        let costs = 0
-        let time = 0
-        for(let k = 0; k< allPathsfromStartNodes[i].length; k ++){
-          if(arrayOfEdges.includes(allPathsfromStartNodes[i][k])){
-              
-          let string = allPathsfromStartNodes[i][k]
-          
-          costs += ((cy.edges(`[name = '${string}']`).data("cost") * quantity) + cy.edges(`[name = '${string}']`).data("sucost"))
-          time += ((cy.edges(`[name = '${string}']`).data("time") * quantity) + cy.edges(`[name = '${string}']`).data("sutime"))
-          costs = Math.round(costs * 100) / 100
-          time = Math.round(time * 100) / 100
+    newPath.push(nextEdges[count].data("id"))
+    newFoundNode[1] = newPath
 
-          map.set(allPathsfromStartNodes[i], [costs, time])
+    if(option) {
+      let newcost = start[2] + nextEdges[count].data("cost") * quantity + nextEdges[count].data("sucost")
+      newcost = Math.round(newcost * 100) / 100
+      newFoundNode [2] = newcost           
+    }
+    else {
+      let newtime = start[2] + nextEdges[count].data("time") * quantity + nextEdges[count].data("sutime")
+      newtime = Math.round(newtime * 100) / 100
+      newFoundNode [2] = newtime            
+    }
+
+    return newFoundNode
+  },
+
+  markBestEdges(bestEdgesID) {
+    console.log("test")
+    cyStore.data.cy.elements().removeClass("highlighted");
+    let cy = cyStore.data.cy
+    bestEdgesID.forEach(element => {
+      cy.getElementById(element).addClass("highlighted")
+      cy.getElementById(element).unselect();
+    })
+  },
+
+  removeOptimization() {
+    // remove costs & time & show optimize button
+    this.$parent.$parent.$refs["graphInfo"].setOptimized(false);
+    // remove highlighting
+    this.unmarkBestEdges();
+  },
+
+  unmarkBestEdges() {
+    let edges = this.getCytoGraph(this).edges();
+    for (let i = 0; i < edges.length; i++) {
+      edges[i].removeClass("highlighted");
+    }
+  },
+
+  getTarget(edge) {
+    let cy = cyStore.data.cy
+    let node = cy.getElementById(edge).data("target")
+    return node
+  },
+
+  getPartCost(edge) {
+    let cy = cyStore.data.cy
+    let quantity = cy.data("prodQuant")
+    let partcost = cy.getElementById(edge).data("cost") * quantity + cy.getElementById(edge).data("sucost")
+    partcost = Math.round(partcost * 100) / 100
+    return partcost
+  },
+    
+  getTotalCost(Edges) {
+    let totalCost = 0
+    for(let i = 0; i < Edges.length; i++) {
+      totalCost += this.getPartCost(Edges[i])
+    }
+    return totalCost      
+  },
+
+  getPartTime(edge) {
+    let cy = cyStore.data.cy
+    let quantity = cy.data("prodQuant")
+    let parttime = cy.getElementById(edge).data("time") * quantity + cy.getElementById(edge).data("sutime")
+    parttime = Math.round(parttime * 100) / 100
+    return parttime
+  },  
+
+  getTotalTime(Edges) {
+    let totalTime = 0
+    for(let i = 0; i < Edges.length; i++) {
+      totalTime += this.getPartTime(Edges[i])
+    }   
+    return totalTime   
+  },
+
+  getOptionValue(path) {
+    let value
+    let option = this.getCytoGraph(this).data("settingsOptimizationOption");   // false = time, true = cost
+    if (option) {
+      value = this.getTotalCost(path)
+    }
+    else {
+      value = this.getTotalTime(path)
+    }
+    return value
+  },
+
+  wasAllreadyFound(path, foundPaths) {
+    //checks, if path is in foundPaths
+    let found = false
+    for (let i = 0 ; i < foundPaths.length && found == false; i++) {
+      if (path.length == foundPaths[i].length) {
+        let partFound = true
+        for (let j = 0; j < path.length && j < foundPaths[i].length && partFound; j++) {
+          if (path[j] != foundPaths[i][j]) {
+            partFound = false
           }
         }
-      }
-
-    }
-    if(option == "optionTime"){
-        
-      const sortedTimeMap = new Map([...map.entries()].sort((a, b) => a[1][1] - b[1][1])); //sorts the time values
-      console.log(sortedTimeMap);
-     
-    
-     for(let n = 0; n < sortedTimeMap.keys().next().value.length; n++){
-          if(arrayOfGraphElements.includes(sortedTimeMap.keys().next().value[n])){
-            let string = sortedTimeMap.keys().next().value[n]
-            cy.elements(`[name = '${string}']`).addClass("highlighted")
-          }
-      
-      }
-      return sortedTimeMap
-       
-    }
-    else{
-      const sortedCostMap = new Map([...map.entries()].sort((a, b) => a[1][0] - b[1][0])); 
-      console.log(sortedCostMap);
-
-      for(let n = 0; n < sortedCostMap.keys().next().value.length; n++){
-        if(arrayOfGraphElements.includes(sortedCostMap.keys().next().value[n])){
-          let string = sortedCostMap.keys().next().value[n]
-          cy.elements(`[name = '${string}']`).addClass("highlighted")
+        if(partFound == true) {
+          found = true
         }
-    
       }
-      return sortedCostMap
     }
-   
+    return found
+  },
+
+  findNextBest(path, sortNode, foundPaths) {
+    let distance = -2
+    let nextPath = []
+    let nextPathPerNode = []
+    let oldCost, newCost
+
+      // check all nodes on best path for the "best better way"   
+    for(let changingNode=0; changingNode < path.length; changingNode++) {
+      let nextSearch = 0
+      
+        //checkNode = next node on the path, starts at the first after startnode
+      let checkNode = this.getTarget(path[changingNode])
+      
+        // look for checkNode's Id in sortNodes[x][0], first one found is the currently used path (sortNodes[x][1])
+      while(nextSearch < sortNode.length && sortNode[nextSearch][0] != checkNode) {
+        nextSearch ++
+      }
+      
+      if (nextSearch < sortNode.length) {
+        oldCost = sortNode[nextSearch][2]
+      }
+      else {
+        oldCost = -2
+      }
+      nextSearch++
+        // second one found is the next best
+        // if there is no more, nextSearch == sortNode.length
+      while(nextSearch < sortNode.length && sortNode[nextSearch][0] != checkNode) {
+        nextSearch ++
+      }
+        //if there was a nextbest path to this node
+      if (nextSearch < sortNode.length) {
+          //nextPathPerNode is the nextbest path to this node plus the rest of path
+        nextPathPerNode = this.changePath(sortNode[nextSearch], path)
+        newCost = sortNode[nextSearch][2]
+      }
+      else {
+        newCost = -2
+      }
+
+        //if nextPathPerNode is allready in bestPaths, look for the next x in sortNodes
+      while(this.wasAllreadyFound(nextPathPerNode, foundPaths)) {
+        nextSearch ++
+        while(nextSearch < sortNode.length && sortNode[nextSearch][0] != checkNode) {
+          nextSearch ++
+        }
+        if (nextSearch < sortNode.length) {
+          nextPathPerNode = this.changePath(sortNode[nextSearch], path)
+          newCost = sortNode[nextSearch][2]
+        }
+        else {
+          nextPathPerNode = []
+        }
+      }
+        // check if distance is new best(low) and save id
+        // || distance < 0 to make sure, distance for first node is used
+        // if nextPath did not get an acttual path, nextPath.length != 0 to avoid errors
+        //anpassen?
+      if((distance > newCost-oldCost || distance < 0) && this.wasAllreadyFound(nextPathPerNode, foundPaths) == false && nextPathPerNode.length != 0) {
+          distance = newCost-oldCost
+          nextPath = nextPathPerNode
+      }
+    }
+    return nextPath
+  },
+
+  isPartOfPath(node, path){
+      //checks if and where node exists on path (as target of an edge in path)
+    let point = -2
+    for (let i = 0; i < path.length; i++) {
+      if(this.getTarget(path[i]) == node) {
+        point = i
+      }
+    }
+    return point
+  },
+
+  isPartOfNodes(node, nodes){
+      //checks if node is in nodes
+    let point = false
+    for (let i = 0; i < nodes.length-1; i++) {
+      if(node == nodes[i]) {
+        point = true
+      }
+    }
+    return point
+  },
+
+  changePath(newNode, oldPath) {
+      //combines newNode[1] and oldPath
+      //first half: newNode[1]
+      //second half: oldPath starting after the last target in newNode[1]
+    let point = this.isPartOfPath(newNode[0], oldPath)
+                          
+    if(point >= 0) {
+      let tempPath = []
+      for (let temp = 0; temp < newNode[1].length; temp ++) {
+        tempPath[temp] = newNode[1][temp]
+      }
+      let secondPart = newNode[1].length + oldPath.length - (point + 1)
+      for (let temp = newNode[1].length; temp < secondPart; temp ++) {
+        point ++
+        tempPath[temp] = oldPath[point]
+      }
+      oldPath = tempPath
+    }
+    return oldPath
+  },
+  
+  optimizing() {
+    let option = this.optimizationOption;   // false = time, true = cost
+      //mit Regler verknüpfen
+    let nextBestCounter = this.getCytoGraph(this).data("settingsOptimizationNumber");
     
+      // gets ID's of start-nodes
+    let startIDs = this.getCytoGraph(this).data("settingsOptimizationStartIDs");
+      
+      // "converts" start-nodes into sort-nodes
+      // sort-nodes save NodeID, usedEdges (from start-node) and "needed" costs (from start)
+    let sortNodes = [];
+    for (let i = 0; i < startIDs.length; i++) {
+      let Edges = [];
+      let optimizeNode = [3]
+      optimizeNode [0] = startIDs[i]          //NodeID
+      optimizeNode [1] = Edges                //usedEdges
+      optimizeNode [2] = 0                    //cost/time        
+      sortNodes.push(optimizeNode);
+    }
+
+      //checkedNodes noch nicht funktional, aber nur für performance relevant
+    let checkedNodes = []
+
+    for (let i = 0; i < sortNodes.length; i++) {
+        //checkedNodes noch nicht funktional, aber nur für performance relevant
+      if(this.isPartOfNodes(sortNodes[i][0], checkedNodes) == false) {
+
+        let Edges = [];
+        let optimizeNode = [3]
+
+          // nextEdgeCounter = number of reachable nodes
+        let nextEdgeCounter = this.countNewEdges(sortNodes[i])
+        let nextNode   
+        
+          // get next reachable nodes in sort-node form
+          // getting nexNodes individually from graph, otherwise problems (somehow)
+        for (let j = 0; j < nextEdgeCounter; j++) {
+
+          nextNode = this.getNextNode(sortNodes[i], option, j)
+
+          let allreadyFound = 0;
+            // checks if nextNode is allready part of sort-node (checking ID)
+          for (let k = 0; k < sortNodes.length; k++) {
+
+              // node was allready found
+              //'allreadyfound' ensures, only top 'nextBestCounter' costs of every node gets saved
+            if (sortNodes[k][0] == nextNode[0]) {
+              allreadyFound ++
+
+                // if new found way has lower cost correct all nodes that had it as part of their way
+              if (sortNodes[k][2] > nextNode[2]) {
+                if(allreadyFound == 1) {
+                  for (let correct = 0; correct < sortNodes.length; correct++) {
+                    if(nextNode[0] != sortNodes[correct][0]) {
+                      //otherwise would overwrite everything to that node anytime a new better path to a node is found
+                      let tempPath = this.changePath(nextNode, sortNodes[correct][1])
+                    
+                      sortNodes[correct][1] = tempPath
+                      sortNodes[correct][2] = this.getOptionValue(tempPath)
+                    }
+                  } 
+                }
+                  //insertion-sort-like
+                let tempCost = sortNodes[k][2]
+                sortNodes[k][2] = nextNode[2]
+                nextNode[2] = tempCost
+
+                let tempPath = sortNodes[k][1]
+                sortNodes[k][1] = nextNode[1]
+                nextNode[1] = tempPath
+              }
+            }
+          }       
+          if(allreadyFound < nextBestCounter) {
+            sortNodes.push(nextNode)
+          }
+        }
+          //checkedNodes noch nicht funktional, aber nur für performance relevant          
+        checkedNodes.push(sortNodes[i][0])
+      }
+    }
+  
+    let bestPaths = []
+    let bestPath = [3]
+    let endID = this.getCytoGraph(this).data("settingsOptimizationEndID");
+    
+      //look for the end-node, first one found is the one with lowest cost
+    let search = 0
+    while (search < sortNodes.length && sortNodes[search][0] != endID) {
+      search++;
+    }
+
+    if(search >= sortNodes.length) {
+      console.log("Kein Weg möglich...")
+    }
+    else {
+      bestPaths.push(sortNodes[search][1])
+    }
+    
+
+      //saves the nextbest alternatives in array
+    for(let rank = 1; rank < nextBestCounter; rank++) {
+      let nextRank, nextRankPath
+      let nextRankDistance = -2
+      for (let checks = 0; checks < bestPaths.length; checks++) {
+        nextRankPath = this.findNextBest(bestPaths[checks], sortNodes, bestPaths)
+        if (nextRankPath.length > 0 && (this.getOptionValue(nextRankPath) - this.getOptionValue(bestPaths[0]) < nextRankDistance || nextRankDistance < 0)) {
+          nextRankDistance = this.getOptionValue(nextRankPath) - this.getOptionValue(bestPaths[0])
+          nextRank = nextRankPath
+        }
+      }
+      bestPaths.push(nextRank)
+    }
+
+    // push best paths to cy.data
+    this.getCytoGraph(this).data("bestPaths", bestPaths);
+  
+    this.markBestEdges(bestPaths[0])
+
+    for(let ranking = 0; ranking < bestPaths.length; ranking ++) {
+      console.log(bestPaths[ranking])
+      console.log(this.getTotalCost(bestPaths[ranking]))
+      console.log(this.getTotalTime(bestPaths[ranking]))
+    }
+
   }
 
 };

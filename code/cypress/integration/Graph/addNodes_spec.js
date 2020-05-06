@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-describe("Graph Page", () => {
+describe("create Nodes menu", () => {
   before(() => {
     // Pre-defined Login Procedure: /cypress/support/commmands.js
     // TODO: Performance Boost, User-Auth. Token direkt mitgeben,
@@ -21,7 +21,7 @@ describe("Graph Page", () => {
     cy.get("#node-create").should("not.be.visible");
     cy.get("#cy").rightclick(100, 100);
     cy.get(".rcmenu")
-      .contains("Neuer Zustand")
+      .contains("Neues Teil")
       .click();
     cy.get("#node-create").should("be.visible");
     // Menu is still open

@@ -81,6 +81,7 @@ export default {
       this.dialog = value;
     },
     save() {
+      this.$parent.$parent.$refs.exportMenu.setNewGraph(true);
       this.$parent.$parent.$refs.exportMenu.setdialog(true);
     },
     discard() {
