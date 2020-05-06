@@ -133,7 +133,7 @@ export default {
     optimizationOptionItems: ["Zeit", "Kosten"],
     itemsName: [""],
     itemsID: [""],
-    startSelect: "",
+    startSelect: [""],
     endSelect: "",
     optimizationNumber: 4,
     optimizationSelection: 0
@@ -213,10 +213,25 @@ export default {
           .getCytoGraph(this.getGraph())
           .data("settingsOptimizationStartEndID", -1);
       }
+      // set StartIDs for Optimization Algorithm
+      let startIDs = [];
+      for (let i = 0; i < this.startSelect.length; i++) {
+        let indexStart = this.itemsName.indexOf(this.startSelect[i]);
+        startIDs[i] = this.itemsID[indexStart];
+      }
+      this.getGraph()
+        .getCytoGraph(this.getGraph())
+        .data("startIDs", startIDs);
+      let indexEnd = this.itemsName.indexOf(this.endSelect);
+      let endID = this.itemsID[indexEnd];
+      this.getGraph()
+        .getCytoGraph(this.getGraph())
+        .data("endID", endID);
       // set optimization number
       this.getGraph()
         .getCytoGraph(this.getGraph())
         .data("settingsOptimizationNumber", this.optimizationNumber);
+
       this.getGraph()
         .getCytoGraph(this.getGraph())
         .data("settingsOptimizationSelection", this.optimizationSelection);

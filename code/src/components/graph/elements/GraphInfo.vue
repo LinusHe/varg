@@ -228,7 +228,7 @@ export default {
       // this.$parent.$parent.$refs["optimizeControls"].setDialog(true);
     },
     startOptimizing() {
-      this.$parent.$parent.$refs["optimizeControls"].optimizing();
+      this.getGraph().optimizing();
     }
   }
 };

@@ -139,7 +139,7 @@ export default {
   getTotalCost(Edges) {
     let totalCost = 0
     for(let i = 0; i < Edges.length; i++) {
-      totalCost += this.getGraph().getTotalCost(Edges[i])
+      totalCost += this.getTotalCost(Edges[i])
     }
     return totalCost      
   },
@@ -147,7 +147,7 @@ export default {
   getTotalTime(Edges) {
     let totalTime = 0
     for(let i = 0; i < Edges.length; i++) {
-      totalTime += this.getGraph().getTotalTime(Edges[i])
+      totalTime += this.getTotalTime(Edges[i])
     }   
     return totalTime   
   },
@@ -194,7 +194,7 @@ export default {
       let nextSearch = 0
       
         //checkNode = next node on the path, starts at the first after startnode
-      let checkNode = this.getGraph().getTarget(path[changingNode])
+      let checkNode = this.getTarget(path[changingNode])
       
         // look for checkNode's Id in sortNodes[x][0], first one found is the currently used path (sortNodes[x][1])
       while(nextSearch < sortNode.length && sortNode[nextSearch][0] != checkNode) {
@@ -253,7 +253,7 @@ export default {
       //checks if and where node exists on path (as target of an edge in path)
     let point = -2
     for (let i = 0; i < path.length; i++) {
-      if(this.getGraph().getTarget(path[i]) == node) {
+      if(this.getTarget(path[i]) == node) {
         point = i
       }
     }
@@ -297,11 +297,7 @@ export default {
     let nextBestCounter = this.optimizationNumber
     
       // gets ID's of start-nodes
-    let startIDs = []
-    for (let i = 0; i < this.startSelect.length; i++) {
-      let indexStart = this.itemsName.indexOf(this.startSelect[i]);
-      startIDs.push(this.itemsID[indexStart]);
-    }
+    let startIDs = this.getCytoGraph().data("startIDs");
       
       // "converts" start-nodes into sort-nodes
       // sort-nodes save NodeID, usedEdges (from start-node) and "needed" costs (from start)
@@ -326,14 +322,14 @@ export default {
         let optimizeNode = [3]
 
           // nextEdgeCounter = number of reachable nodes
-        let nextEdgeCounter = this.getGraph().countNewEdges(sortNodes[i])
+        let nextEdgeCounter = this.countNewEdges(sortNodes[i])
         let nextNode   
         
           // get next reachable nodes in sort-node form
           // getting nexNodes individually from graph, otherwise problems (somehow)
         for (let j = 0; j < nextEdgeCounter; j++) {
 
-          nextNode = this.getGraph().getNextNode(sortNodes[i], option, j)
+          nextNode = this.getNextNode(sortNodes[i], option, j)
 
           let allreadyFound = 0;
             // checks if nextNode is allready part of sort-node (checking ID)
@@ -379,8 +375,7 @@ export default {
   
     let bestPaths = []
     let bestPath = [3]
-    let indexEnd = this.itemsName.indexOf(this.endSelect);
-    let endID = this.itemsID[indexEnd];
+    let endID = this.getCytoGraph().data("endID");
     
       //look for the end-node, first one found is the one with lowest cost
     let search = 0
@@ -413,7 +408,7 @@ export default {
       bestPaths.push(nextRank)
     }
   
-    this.getGraph().markBestEdges(bestPaths[0])
+    this.markBestEdges(bestPaths[0])
 
     for(let ranking = 0; ranking < bestPaths.length; ranking ++) {
       console.log(bestPaths[ranking])
