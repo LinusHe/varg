@@ -109,7 +109,7 @@ export default {
     },
     getOptionValue(path) {
       let value
-      let option = this.optimizingOption;   // false = time, true = cost
+      let option = this.optimizationOption;   // false = time, true = cost
       if (option) {
         value = this.getTotalCost(path)
       }
@@ -242,10 +242,8 @@ export default {
       return oldPath
     },
     optimizing: function() {
-      let option = this.optimizingOption;   // false = time, true = cost
-      let nextBestCounter = 4
-      //in neuer gui einfügen:
-      //let nextBestCounter = this.nextBestCounter
+      let option = this.optimizationOption;   // false = time, true = cost
+      let nextBestCounter = this.optimizationNumber
       
         // gets ID's of start-nodes
       let startIDs = []
