@@ -34,12 +34,6 @@ export const store = new Vuex.Store({
         this.replaceState((state, JSON.parse(localStorage.getItem("store"))));
         //alert(Date.now() > (state.issued + 30000));
         //Delay is set to 30 sec for debugging purposes
-        if(Date.now() > (state.issued + 30000)) {
-          localStorage.removeItem("store");
-          this.commit("logout");
-
-          this.$router.replace("/home/login");
-        }
         //alert("Old state has been retrieved.");
       }
       state.ready = true;
@@ -57,6 +51,9 @@ export const store = new Vuex.Store({
     },
     setRole(state, role) {
       state.user.role = role;
+    },
+    refreshIssued(state) {
+      state.issued = Date.now();
     },
 
     //old
@@ -83,6 +80,11 @@ export const store = new Vuex.Store({
     getAuth: state => {
       return state.user.autehticated;
     },
+
+    getIssuedTime: state => {
+      return state.issued;
+    },
+
     getState: state => {
       return state.count;
     },

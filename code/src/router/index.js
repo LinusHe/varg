@@ -70,7 +70,8 @@ const routes = [
     component: Graph,
     meta: {
       requiresAuth: true,
-      requiresGraph: true,
+      //declared for unnecessary! (for now) greetings LoginTeam ;) 
+      //requiresGraph: true,
       title: "Varg - Graph Editor"
     }
   }
@@ -95,7 +96,6 @@ router.beforeEach((to, from, next) => {
   // Check for requiresAuth guard
   if (to.matched.some(record => record.meta.requiresAuth)) {
       if(store.getters.getAuth) {
-        
         //proceed to rout
         //Role management could take place here
         next();
@@ -118,7 +118,7 @@ router.beforeEach((to, from, next) => {
     if (store.getters.getCyProdName === null) {
       // Main Menu
       next({
-        path: "/home/menu"
+        path: "/home/menu",
       });
     } else {
       // Proceed to route

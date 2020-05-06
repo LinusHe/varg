@@ -56,7 +56,7 @@
         </p>
       </v-list-item-content>
     </v-list-item>
-
+  
     <!-- DEBUGGING -->
     <v-btn align="center" class="login-button" @click="getState()" large color="primary">get State</v-btn>
 
@@ -66,7 +66,7 @@
       @click="delLocal()"
       large
       color="primary"
-    >Remove localStorage</v-btn>
+    >Remove localStorage</v-btn> 
     <!-- /DEBUGGING -->
   </div>
 </template>
@@ -102,7 +102,8 @@ export default {
        "\nRole: " + this.$store.state.user.role +
        "\nReady: " + this.$store.state.ready +
        "\nIssued: " + this.$store.state.issued +
-       "\nNow: " + Date.now()
+       "\nNow: " + Date.now() +
+       "\nGraphName: " + this.$store.getters.getCyProdName
        );
     },
     delLocal() {
@@ -116,6 +117,7 @@ export default {
       if (this.$refs.form.validate()) {
         if (this.input.email == "VarG" && this.input.password == "2020") {
           //new
+          this.$store.commit("refreshIssued");
           this.$store.commit("login");
           this.$store.commit("setName", "student");
           this.$store.commit("setRole", "student");
