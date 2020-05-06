@@ -135,19 +135,35 @@ export default {
     let node = cy.getElementById(edge).data("target")
     return node
   },
-  
+
+  getPartCost(edge) {
+    let cy = cyStore.data.cy
+    let quantity = cy.data("prodQuant")
+    let partcost = cy.getElementById(edge).data("cost") * quantity + cy.getElementById(edge).data("sucost")
+    partcost = Math.round(partcost * 100) / 100
+    return partcost
+  },
+    
   getTotalCost(Edges) {
     let totalCost = 0
     for(let i = 0; i < Edges.length; i++) {
-      totalCost += this.getTotalCost(Edges[i])
+      totalCost += this.getPartCost(Edges[i])
     }
     return totalCost      
   },
 
+  getPartTime(edge) {
+    let cy = cyStore.data.cy
+    let quantity = cy.data("prodQuant")
+    let parttime = cy.getElementById(edge).data("time") * quantity + cy.getElementById(edge).data("sutime")
+    parttime = Math.round(parttime * 100) / 100
+    return parttime
+  },  
+
   getTotalTime(Edges) {
     let totalTime = 0
     for(let i = 0; i < Edges.length; i++) {
-      totalTime += this.getTotalTime(Edges[i])
+      totalTime += this.getPartTime(Edges[i])
     }   
     return totalTime   
   },
@@ -291,7 +307,7 @@ export default {
     }
     return oldPath
   },
-
+  
   optimizing: function() {
     let option = this.optimizationOption;   // false = time, true = cost
     let nextBestCounter = this.optimizationNumber
