@@ -1,6 +1,7 @@
 const data = {
   IDCount: 0,
   latestSave: null,
+  user: "DefaultUser",
 
   // Graph name and quantity
   filename: "DefaultFileName",
