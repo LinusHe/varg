@@ -69,14 +69,20 @@ router.route('/graph')
     });
 
 //graph/:graph_id
+
+router.param('graph_id', function(req, res, next, id)   {
+    //check if Graph with id exists within database
+    console.log("Something should happen here.");
+    next();
+});
+
 router.route('/graph/:graph_id')
     //get a single graph identified by id
     .get(function(req, res) {
         //the query should still involve some check if the user "owns" the graph
         //example: SELECT graphObject FROM cytographs WHERE fileID=1 AND user=jdeo
-
     })
-    //update a single graph idetnfied by id
+    //update a single graph identified by id
     .put(function(req, res) {
 
     })
