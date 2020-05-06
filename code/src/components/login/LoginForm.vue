@@ -116,6 +116,7 @@ export default {
       if (this.$refs.form.validate()) {
         if (this.input.email == "VarG" && this.input.password == "2020") {
           //new
+          this.$store.commit("refreshIssued");
           this.$store.commit("login");
           this.$store.commit("setName", "student");
           this.$store.commit("setRole", "student");
