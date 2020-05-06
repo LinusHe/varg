@@ -41,7 +41,7 @@ export default {
         // increase radius if moving node and conflict node have a common edge
         if (this.edgeBetweenNodes(node, otherNodes[i])) {
           radius = radius + 250;
-        
+        }
 
         // conflict-node is on the right
         if (
@@ -82,6 +82,32 @@ export default {
           );
         }
       }
+    }
+  },
+
+  checkOverlapping(graphComponent, node) {
+    // get node positions
+    let eventX = node.position().x;
+    let eventY = node.position().y;
+    // get all nodes
+    let nodes = graphComponent.getCytoGraph(graphComponent).nodes();
+    // nodes that are different to moved node
+    let otherNodes = nodes.filter(n => n !== node);
+    // get radius from node with + some extra space
+    let radius = parseInt(node.style().width.replace("px", "")) + 10;
+    if (otherNodes.length > 0) {
+      for (let i = 0; i < otherNodes.length; i++) {
+        let otherX = otherNodes[i].position().x;
+        let otherY = otherNodes[i].position().y;
+        // increase radius if moving node and conflict node have a common edge
+        if (this.edgeBetweenNodes(node, otherNodes[i])) {
+          radius = radius + 250;
+        }
+        if (Math.abs(eventX - otherX) < radius &&
+            Math.abs(eventY - otherY) < radius)
+          {
+            return false;
+          }
       }
     }
   }
