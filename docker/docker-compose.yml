@@ -1,0 +1,31 @@
+version: "3.6"
+services:
+
+  db:
+    build: 
+      context: ./mysql
+      dockerfile: Dockerfile
+    ports:
+      - "3306:3306"
+    command:
+      - --character-set-server=utf8
+      - --collation-server=utf8_unicode_ci
+    restart: always
+
+  adminer:
+    image: adminer
+    depends_on:
+        - db
+    restart: always
+    ports:
+      - "1010:8080"
+
+  webserver:
+    build:
+      context: ./node.js
+      dockerfile: Dockerfile
+    ports: 
+      - "1110:8080"
+    depends_on: 
+      - db
+    restart: always
