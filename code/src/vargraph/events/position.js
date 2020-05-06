@@ -34,18 +34,14 @@ export default {
 
 
     if (otherNodes.length > 0) {
-      let done = Boolean;
-      done = false;
-      while (done == false){
-       for (let i = 0; i < otherNodes.length; i++) {
+      for (let i = 0; i < otherNodes.length; i++) {
         let otherX = otherNodes[i].position().x;
         let otherY = otherNodes[i].position().y;
-        
 
         // increase radius if moving node and conflict node have a common edge
         if (this.edgeBetweenNodes(node, otherNodes[i])) {
           radius = radius + 250;
-        }
+        
 
         // conflict-node is on the right
         if (
@@ -86,27 +82,7 @@ export default {
           );
         }
       }
-      for (let i = 0; i < otherNodes.length; i++) {
-        let otherX = otherNodes[i].position().x;
-        let otherY = otherNodes[i].position().y;
-        if (
-          Math.abs(eventX - otherX) < radius &&
-          Math.abs(eventY - otherY) < radius &&
-          otherX > eventX
-        ) {
-          done=false;
-          }
-        else if (
-          Math.abs(otherX - eventX) < radius &&
-          Math.abs(otherY - eventY) < radius &&
-          otherX <= eventX){
-            done=false;
-          }
-        else{
-            done=true
-        }
       }
-     }
     }
   }
 };
