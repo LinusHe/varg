@@ -159,25 +159,13 @@ export default {
       this.optimizationOptionItems = this.getGraph()
         .getCytoGraph(this.getGraph())
         .data("settingsOptimizationOptionItems");
-      // get start & end (default is -1 -> no selection)
-      if (
-        this.getGraph()
-          .getCytoGraph(this.getGraph())
-          .data("settingsOptimizationStartID") !== -1
-      ) {
-        this.startSelect = this.getGraph()
-          .getCytoGraph(this.getGraph())
-          .data("settingsOptimizationStartID");
-      }
-      if (
-        this.getGraph()
-          .getCytoGraph(this.getGraph())
-          .data("settingsOptimizationStartEndID")
-      ) {
-        this.endSelect = this.getGraph()
-          .getCytoGraph(this.getGraph())
-          .data("settingsOptimizationStartEndID");
-      }
+      // get start & end
+      this.startSelect = this.getGraph()
+        .getCytoGraph(this.getGraph())
+        .data("settingsOptimizationStartNames");
+      this.endSelect = this.getGraph()
+        .getCytoGraph(this.getGraph())
+        .data("settingsOptimizationStartEndName");
       // get optimization number
       this.optimizationNumber = this.getGraph()
         .getCytoGraph(this.getGraph())
@@ -203,25 +191,21 @@ export default {
         .getCytoGraph(this.getGraph())
         .data("settingsOptimizationOptionItems", this.optimizationOptionItems);
       // start & end
-      if (this.startSelect === "") {
-        this.getGraph()
-          .getCytoGraph(this.getGraph())
-          .data("settingsOptimizationStartID", -1);
-      }
-      if (this.endSelect === "") {
-        this.getGraph()
-          .getCytoGraph(this.getGraph())
-          .data("settingsOptimizationStartEndID", -1);
-      }
+      this.getGraph()
+        .getCytoGraph(this.getGraph())
+        .data("settingsOptimizationStartNames", this.startSelect);
+      this.getGraph()
+        .getCytoGraph(this.getGraph())
+        .data("settingsOptimizationStartEndName", this.endSelect);
       // set StartIDs for Optimization Algorithm
       let startIDs = [];
-      console.log("StartIDs before", startIDs)
+      console.log("StartIDs before", startIDs);
       for (let i = 1; i < this.startSelect.length; i++) {
         console.log("for " + i + ": ", startIDs);
         let indexStart = this.itemsName.indexOf(this.startSelect[i]);
         startIDs.push(this.itemsID[indexStart]);
       }
-      console.log("StartIDs after", startIDs)
+      console.log("StartIDs after", startIDs);
       this.getGraph()
         .getCytoGraph(this.getGraph())
         .data("startIDs", startIDs);

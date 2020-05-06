@@ -30,8 +30,8 @@ const data = {
   // - Optimization Settings
   settingsOptimizationOption: "optionTime",
   settingsOptimizationOptionItems: ["Zeit", "Kosten"],
-  settingsOptimizationStartID: -1,
-  settingsOptimizationStartEndID: -1,
+  settingsOptimizationStartNames: [],
+  settingsOptimizationStartEndName: [],
   settingsOptimizationNumber: 7,
   settingsOptimizationSelection: 0,
   // Optimizations
