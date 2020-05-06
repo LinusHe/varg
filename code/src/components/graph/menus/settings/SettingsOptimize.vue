@@ -95,7 +95,7 @@
                     <v-radio color="primary" :value="i">
                       <template v-slot:label>
                         <v-card-text class="ma-0 pa-0 pt-1">
-                          <strong>Kosten:</strong> 10€,
+                          <strong>TODO! Kosten:</strong> 10€,
                           <strong>Zeit:</strong> 10s
                         </v-card-text>
                       </template>
@@ -197,23 +197,23 @@ export default {
       this.getGraph()
         .getCytoGraph(this.getGraph())
         .data("settingsOptimizationStartEndName", this.endSelect);
+
       // set StartIDs for Optimization Algorithm
       let startIDs = [];
-      console.log("StartIDs before", startIDs);
-      for (let i = 1; i < this.startSelect.length; i++) {
-        console.log("for " + i + ": ", startIDs);
+      for (let i = 0; i < this.startSelect.length; i++) {
         let indexStart = this.itemsName.indexOf(this.startSelect[i]);
         startIDs.push(this.itemsID[indexStart]);
       }
-      console.log("StartIDs after", startIDs);
       this.getGraph()
         .getCytoGraph(this.getGraph())
-        .data("startIDs", startIDs);
+        .data("settingsOptimizationStartIDs", startIDs);
+      // set endID for Optimization Algorithm
       let indexEnd = this.itemsName.indexOf(this.endSelect);
       let endID = this.itemsID[indexEnd];
       this.getGraph()
         .getCytoGraph(this.getGraph())
-        .data("endID", endID);
+        .data("settingsOptimizationEndID", endID);
+
       // set optimization number
       this.getGraph()
         .getCytoGraph(this.getGraph())
@@ -222,6 +222,9 @@ export default {
       this.getGraph()
         .getCytoGraph(this.getGraph())
         .data("settingsOptimizationSelection", this.optimizationSelection);
+
+      // remove optimization
+      this.getGraph().removeOptimization();
     },
 
     getNodeItemsID() {

@@ -516,6 +516,8 @@ export default {
         dialogComponent.dialogSuccess("Verknüpfung erfolgreich angelegt");
         this.clearFields();
         this.edgeCreateGui = false;
+        // remove optimization
+        this.getGraph().removeOptimization();
       }
     },
     setTarget(id) {},

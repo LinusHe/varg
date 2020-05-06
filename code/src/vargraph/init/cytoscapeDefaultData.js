@@ -32,11 +32,12 @@ const data = {
   settingsOptimizationOptionItems: ["Zeit", "Kosten"],
   settingsOptimizationStartNames: [],
   settingsOptimizationStartEndName: [],
-  settingsOptimizationNumber: 7,
+  settingsOptimizationNumber: 1,
   settingsOptimizationSelection: 0,
+  settingsOptimizationStartIDs: [],
+  settingsOptimizationEndID: -1,
   // Optimizations
-  settingsOptimizations: [{}],
-  
+  settingsOptimizations: [{}]
 };
 
 export default data;

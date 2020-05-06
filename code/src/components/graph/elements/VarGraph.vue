@@ -32,6 +32,7 @@ import cytoscape from "cytoscape";
 import cyStore from "@/vargraph/graph/cyStore";
 
 let cy;
+let dialogComponent;
 
 // activate methods
 const methods = Object.assign(

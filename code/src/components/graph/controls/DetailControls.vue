@@ -558,6 +558,8 @@ export default {
         );
         this.edgeGui = false;
         dialogComponent.dialogSuccess("Kante erfolgreich aktualisiert");
+        // remove optimization
+        this.getGraph().removeOptimization();
       }
     },
     deleteEdge() {
@@ -566,6 +568,8 @@ export default {
       this.edgeDeleteDialog = false;
       this.edgeGui = false;
       dialogComponent.dialogWarning("Kante erfolgreich gelöscht");
+      // remove optimization
+        this.getGraph().removeOptimization();
     },
     openEdgeDeleteMenu() {
       this.edgeDeleteDialog = true;

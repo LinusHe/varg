@@ -6,7 +6,6 @@
 
 // This file contains methods for graph optimization
 
-import graph from "./graph"
 import cyStore from "./cyStore";
 
 //function to format the seconds in HHMMSS
@@ -128,7 +127,22 @@ export default {
     let cy = cyStore.data.cy
     bestEdgesID.forEach(element => {
       cy.getElementById(element).addClass("highlighted")
+      cy.getElementById(element).unselect();
     })
+  },
+
+  removeOptimization() {
+    // remove costs & time & show optimize button
+    this.$parent.$parent.$refs["graphInfo"].setOptimized(false);
+    // remove highlighting
+    this.unmarkBestEdges();
+  },
+
+  unmarkBestEdges() {
+    let edges = this.getCytoGraph(this).edges();
+    for (let i = 0; i < edges.length; i++) {
+      edges[i].removeClass("highlighted");
+    }
   },
 
   getTarget(edge) {
@@ -171,7 +185,7 @@ export default {
 
   getOptionValue(path) {
     let value
-    let option = this.getCytoGraph().data("settingsOptimizationOption");   // false = time, true = cost
+    let option = this.getCytoGraph(this).data("settingsOptimizationOption");   // false = time, true = cost
     if (option) {
       value = this.getTotalCost(path)
     }
@@ -309,13 +323,13 @@ export default {
     return oldPath
   },
   
-  optimizing: function() {
+  optimizing() {
     let option = this.optimizationOption;   // false = time, true = cost
       //mit Regler verknüpfen
-    let nextBestCounter = 4
+    let nextBestCounter = this.getCytoGraph(this).data("settingsOptimizationNumber");
     
       // gets ID's of start-nodes
-    let startIDs = this.getCytoGraph().data("startIDs");
+    let startIDs = this.getCytoGraph(this).data("settingsOptimizationStartIDs");
       
       // "converts" start-nodes into sort-nodes
       // sort-nodes save NodeID, usedEdges (from start-node) and "needed" costs (from start)
@@ -393,7 +407,7 @@ export default {
   
     let bestPaths = []
     let bestPath = [3]
-    let endID = this.getCytoGraph().data("endID");
+    let endID = this.getCytoGraph(this).data("settingsOptimizationEndID");
     
       //look for the end-node, first one found is the one with lowest cost
     let search = 0
@@ -422,6 +436,9 @@ export default {
       }
       bestPaths.push(nextRank)
     }
+
+    // push best paths to cy.data
+    this.getCytoGraph(this).data("bestPaths", bestPaths);
   
     this.markBestEdges(bestPaths[0])
 

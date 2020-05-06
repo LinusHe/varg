@@ -15,7 +15,7 @@
               required
               label="Name"
               v-model="filename"
-              :counter="10"
+              :counter="30"
               :rules="nameRules"
               lazy-validation
             ></v-text-field>
@@ -79,8 +79,8 @@ export default {
       nameRules: [
         v => !!v || "Downloadname ist erforderlich",
         v =>
-          (v && v.length <= 10) ||
-          "Downloadname muss kürzer als 10 Zeichen sein"
+          (v && v.length <= 30) ||
+          "Downloadname muss kürzer als 30 Zeichen sein"
       ]
     };
   },
