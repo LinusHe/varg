@@ -79,96 +79,77 @@ return allPaths
 
 
 export default {
-  // findPath(.. ): The method finds the shortest Path between 2 nodes
-  //                with the Dijkstra Algorithm
-  findPath(graphComponent, option, start, end) {
-
-    graphComponent = graph
-
-    let cy = graphComponent.getCytoGraph();
-    cy.elements().removeClass("highlighted"); //removes the old optimization
-    
-    let endNode = "#" + end;
-
+  countNewEdges(start) {
+    let cy = cyStore.data.cy
+    let EdgeCount = 0
+    cy.getElementById(start[0]).outgoers('edge').forEach(element => {
+      EdgeCount ++
+    })
+    return EdgeCount
+  },  
+  
+  getNextNode(start, option, count) {
+    let cy = cyStore.data.cy
     let quantity = cy.data("prodQuant")
-
-   
-    let allPathsfromStartNodes = []
-    let arrayOfEdges = []
-    let arrayOfGraphElements = []
-
-    let map = new Map()
-
-
-    for(let l = 0 ; l< cy.edges().length; l++){
-     arrayOfEdges.push(cy.edges()[l].data("name"))
-    }
-    for(let h = 0; h<cy.elements().length; h++){
-      arrayOfGraphElements.push(cy.elements()[h].data("name"))
-      
-    }
-  
-  
-  
-    for(let j = 0; j<start.length ; j++){
-      let startNode = "#" + start[j];
-      
-      let startArray = []
-      startArray.push(cy.$(startNode).data("name"))
-        
-      allPathsfromStartNodes =  allPathsfromStartNodes.concat(allPossiblePaths(cy.$(startNode), cy.$(endNode), startArray, [] ))
-  
-        
-      for(let i = 0; i< allPathsfromStartNodes.length; i++){
-        let costs = 0
-        let time = 0
-        for(let k = 0; k< allPathsfromStartNodes[i].length; k ++){
-          if(arrayOfEdges.includes(allPathsfromStartNodes[i][k])){
-              
-          let string = allPathsfromStartNodes[i][k]
-          
-          costs += ((cy.edges(`[name = '${string}']`).data("cost") * quantity) + cy.edges(`[name = '${string}']`).data("sucost"))
-          time += ((cy.edges(`[name = '${string}']`).data("time") * quantity) + cy.edges(`[name = '${string}']`).data("sutime"))
-          costs = Math.round(costs * 100) / 100
-          time = Math.round(time * 100) / 100
-
-          map.set(allPathsfromStartNodes[i], [costs, time])
-          }
-        }
-      }
-
-    }
-    if(option == "optionTime"){
-        
-      const sortedTimeMap = new Map([...map.entries()].sort((a, b) => a[1][1] - b[1][1])); //sorts the time values
-      console.log(sortedTimeMap);
-     
     
-     for(let n = 0; n < sortedTimeMap.keys().next().value.length; n++){
-          if(arrayOfGraphElements.includes(sortedTimeMap.keys().next().value[n])){
-            let string = sortedTimeMap.keys().next().value[n]
-            cy.elements(`[name = '${string}']`).addClass("highlighted")
-          }
-      
-      }
-      return sortedTimeMap
-       
-    }
-    else{
-      const sortedCostMap = new Map([...map.entries()].sort((a, b) => a[1][0] - b[1][0])); 
-      console.log(sortedCostMap);
+      // all outgoing edges from node 'start'
+    let nextEdges = cy.getElementById(start[0]).outgoers('edge');
+    let newFoundNode = [3];
 
-      for(let n = 0; n < sortedCostMap.keys().next().value.length; n++){
-        if(arrayOfGraphElements.includes(sortedCostMap.keys().next().value[n])){
-          let string = sortedCostMap.keys().next().value[n]
-          cy.elements(`[name = '${string}']`).addClass("highlighted")
-        }
-    
-      }
-      return sortedCostMap
+      //converts all outgoing edges into sort-node form
+    newFoundNode [0] = nextEdges[count].data("target")
+
+    let newPath = []
+      // copy all edges of the current path
+    for(let i = 0; i < start[1].length; i++) {
+        // add new egde
+      newPath.push(start[1][i])
     }
-   
-    
+    newPath.push(nextEdges[count].data("id"))
+    newFoundNode[1] = newPath
+
+    if(option) {
+      let newcost = start[2] + nextEdges[count].data("cost") * quantity + nextEdges[count].data("sucost")
+      newcost = Math.round(newcost * 100) / 100
+      newFoundNode [2] = newcost           
+    }
+    else {
+      let newtime = start[2] + nextEdges[count].data("time") * quantity + nextEdges[count].data("sutime")
+      newtime = Math.round(newtime * 100) / 100
+      newFoundNode [2] = newtime            
+    }
+
+    return newFoundNode
+  },
+
+  markBestEdges(bestEdgesID) {
+    cyStore.data.cy.elements().removeClass("highlighted");
+    let cy = cyStore.data.cy
+    bestEdgesID.forEach(element => {
+      cy.getElementById(element).addClass("highlighted")
+    })
+  },
+
+  getTarget(edge) {
+    let cy = cyStore.data.cy
+    let node = cy.getElementById(edge).data("target")
+    return node
+  },
+
+  getTotalCost(edge) {
+    let cy = cyStore.data.cy
+    let quantity = cy.data("prodQuant")
+    let partcost = cy.getElementById(edge).data("cost") * quantity + cy.getElementById(edge).data("sucost")
+    partcost = Math.round(partcost * 100) / 100
+    return partcost
+  },
+
+  getTotalTime(edge) {
+    let cy = cyStore.data.cy
+    let quantity = cy.data("prodQuant")
+    let parttime = cy.getElementById(edge).data("time") * quantity + cy.getElementById(edge).data("sutime")
+    parttime = Math.round(parttime * 100) / 100
+    return parttime
   }
 
 };
