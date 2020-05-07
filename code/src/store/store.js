@@ -12,6 +12,8 @@ export const store = new Vuex.Store({
       autehticated: false,
       role: "guest"
     },
+    issued : Date.now(),
+
     //shows wheather an atempt to load from localStorage was made
     //Probably useless
     ready: false,
@@ -28,8 +30,11 @@ export const store = new Vuex.Store({
     //Checks if old state can be loaded and then does so
     retrieveStore(state) {
 			if(localStorage.getItem("store")) {
-				this.replaceState((state, JSON.parse(localStorage.getItem("store"))));
-        // alert("Old state has been retrieved.");
+        //Please make this promise based, Lennart
+        this.replaceState((state, JSON.parse(localStorage.getItem("store"))));
+        //alert(Date.now() > (state.issued + 30000));
+        //Delay is set to 30 sec for debugging purposes
+        //alert("Old state has been retrieved.");
       }
       state.ready = true;
     },
@@ -38,12 +43,17 @@ export const store = new Vuex.Store({
     },
     logout(state) {
       state.user.autehticated = false;
+      state.user.name = "Gast";
+      state.user.role = "guest";
     },
     setName(state, name) {
       state.user.name = name;
     },
     setRole(state, role) {
       state.user.role = role;
+    },
+    refreshIssued(state) {
+      state.issued = Date.now();
     },
 
     //old
@@ -67,6 +77,14 @@ export const store = new Vuex.Store({
     }
   },
   getters: {
+    getAuth: state => {
+      return state.user.autehticated;
+    },
+
+    getIssuedTime: state => {
+      return state.issued;
+    },
+
     getState: state => {
       return state.count;
     },
@@ -80,6 +98,9 @@ export const store = new Vuex.Store({
 });
 
 //Saves current state to local storage after each change
+
+//TODO: Make promisebased!
+
 store.subscribe((mutation, state) => {
   localStorage.setItem("store", JSON.stringify(state));
   //alert("Saved to localStorage.");

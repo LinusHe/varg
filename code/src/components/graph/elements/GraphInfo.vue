@@ -114,8 +114,22 @@
           <v-card-subtitle class="pb-0">
             Gesamtkosten:
             <v-icon @click="openOptimize" color="#636364" class="ml-2 mb-1" small>mdi-cog</v-icon>
+            <v-icon
+              v-if="optimized"
+              @click="startOptimizing"
+              color="#636364"
+              class="ml-2 mb-1"
+              small
+            >mdi-refresh</v-icon>
           </v-card-subtitle>
-          <v-card-title class="pt-0 pb-0">1546,5€</v-card-title>
+          <v-card-title v-if="optimized" class="pt-0 pb-0">{{costs}}</v-card-title>
+          <v-btn
+            v-if="!optimized"
+            @click="startOptimizing"
+            class="ml-4 pa-0"
+            text
+            color="#6c7dff"
+          >Graph optimieren</v-btn>
         </p>
       </v-row>
     </v-col>
@@ -130,8 +144,22 @@
           <v-card-subtitle class="pb-0">
             Gesamtzeit:
             <v-icon @click="openOptimize" color="#636364" class="ml-2 mb-1" small>mdi-cog</v-icon>
+            <v-icon
+              v-if="optimized"
+              @click="startOptimizing"
+              color="#636364"
+              class="ml-2 mb-1"
+              small
+            >mdi-refresh</v-icon>
           </v-card-subtitle>
-          <v-btn @click="startOptimizing" class="ml-4 pa-0" text color="#6c7dff">Graph optimieren</v-btn>
+          <v-card-title v-if="optimized" class="pt-0 pb-0">{{time}}</v-card-title>
+          <v-btn
+            v-if="!optimized"
+            @click="startOptimizing"
+            class="ml-4 pa-0"
+            text
+            color="#6c7dff"
+          >Graph optimieren</v-btn>
         </p>
       </v-row>
     </v-col>
@@ -158,7 +186,10 @@ export default {
       isEditingName: false,
       isEditingQuant: false,
       validQuant: false,
-      validName: false
+      validName: false,
+      optimized: false,
+      costs: "",
+      time: ""
     };
   },
   methods: {
@@ -212,6 +243,8 @@ export default {
           .getCytoGraph(this.getGraph())
           .data("prodQuant", this.prodQuant);
         dialogComponent.dialogSuccess("Stückzahl erfolgreich geändert");
+        // remove optimization
+        this.getGraph().removeOptimization();
       } else if (this.prodQuant.length == 0) {
         dialogComponent.dialogError(
           "Stückzahl nicht geändert: <b>Bitte Stückzahl eingeben</b>"
@@ -223,10 +256,75 @@ export default {
       }
     },
     openOptimize() {
-      this.$parent.$parent.$refs["optimizeControls"].setDialog(true);
+      this.$parent.$parent.$refs.settingsMenu.setActiveTab(2);
+      this.$parent.$parent.$refs.settingsMenu.openDialog();
+    },
+    scrollToAlternativeOptimizations() {
+      this.$parent.$parent.$refs.settingsMenu.$refs.settingsOptimize.scrollToAlternatives();
+    },
+    setOptimized(bool) {
+      this.optimized = bool;
     },
     startOptimizing() {
-      this.$parent.$parent.$refs["optimizeControls"].optimizing();
+      if (
+        (this.getGraph()
+          .getCytoGraph(this.getGraph())
+          .data("settingsOptimizationStartIDs").length = !0) &&
+        this.getGraph()
+          .getCytoGraph(this.getGraph())
+          .data("settingsOptimizationEndID") != -1
+      ) {
+        // run optimization
+        this.getGraph().optimizing();
+
+        // get best path
+        let bestPaths = this.getGraph()
+          .getCytoGraph(this.getGraph())
+          .data("bestPaths");
+
+        // map costs
+        this.costs =
+          this.getGraph().getTotalCost(bestPaths[0]) +
+          " " +
+          this.getGraph()
+            .getCytoGraph(this.getGraph())
+            .data("settingsUnitCostSelection");
+
+        // map time
+        this.time =
+          this.getGraph().getTotalTime(bestPaths[0]) +
+          " " +
+          this.getGraph()
+            .getCytoGraph(this.getGraph())
+            .data("settingsUnitTimeSelection");
+
+        // set optimized
+        this.optimized = true;
+
+        // notify with dialog
+        dialogComponent.dialogSuccess(
+          "Graph wurde erfolgreich optimiert." +
+            "<br><em>Derzeit wird der beste Weg angezeigt.</em>" +
+            "<br>Öffne die <b>Optimierungs-Einstellungen</b> für weitere Wege!",
+          8000
+        );
+
+        // open dialog, if in settings enabled
+        if (
+          typeof this.$parent.$parent.$refs.settingsMenu.$refs
+            .settingsGeneral !== "undefined" &&
+          this.$parent.$parent.$refs.settingsMenu.$refs.settingsGeneral.getAlternativePopUp()
+        ) {
+          // open graph settings and scroll to alternative paths
+          this.openOptimize();
+          this.scrollToAlternativeOptimizations();
+        }
+      } else {
+        dialogComponent.dialogError(
+          "Es wurden keine Start- oder Endzustände gefunden. Bitte stelle diese in den Optimierungs-Einstellungen ein!",
+          6000
+        );
+      }
     }
   }
 };

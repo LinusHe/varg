@@ -15,7 +15,7 @@ describe("createEdge menu", () => {
   it("should open through rightclick menu", () => {
     cy.get("#cy").rightclick(100, 100);
     cy.get(".rcmenu")
-      .contains("Neue Verknüpfung")
+      .contains("Neuer Bearbeitungsschritt")
       .click();
     cy.get("#edge-create").should("be.visible");
     cy.get("#cy").click(100, 100);
@@ -36,7 +36,7 @@ describe("createEdge menu", () => {
   it("should close by clicking outside the menu or on the X button", () => {
     cy.get("#cy").rightclick(100, 100);
     cy.get(".rcmenu")
-      .contains("Neue Verknüpfung")
+      .contains("Neuer Bearbeitungsschritt")
       .click();
     cy.get("#edge-create").should("be.visible");
     cy.get("#cy").click(100, 100);
@@ -44,7 +44,7 @@ describe("createEdge menu", () => {
 
     cy.get("#cy").rightclick(100, 100);
     cy.get(".rcmenu")
-      .contains("Neue Verknüpfung")
+      .contains("Neuer Bearbeitungsschritt")
       .click();
     cy.get("#edge-create").should("be.visible");
     cy.get("#edge-create > button[class~=btn-close]").click();

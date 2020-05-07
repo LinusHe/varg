@@ -34,6 +34,7 @@ describe("NewGraphControls", () => {
     //rerouting to create new graph
     expect(cy.route("http://localhost:8080/home/menu"));
     //get back to the main page
+    cy.login();
     cy.get("#newGraph").click();
     cy.get("#prodname").type("Testprodukt");
     cy.get("#prodquantity").type("1000");
@@ -52,9 +53,31 @@ describe("NewGraphControls", () => {
   });
   //testing of the save menu doesn't need be in this test suite
   //tests save-btn for rerouting
-  it("should reroute on correct save", () => {
+  it("should reroute on correct local save", () => {
     cy.server();
     cy.get("#newgraph-menu-save").click();
+    cy.get("#fileName").type("Hexagon");
+    cy.get("[data-cy=formatselect]").type(".json{enter}", { force: true });  
+    cy.get("#download-menu-save").click();
+    //rerouting to create new graph
+    expect(cy.route("http://localhost:8080/home/menu"));
+    cy.on("uncaught:exception", (err, runnable) => {
+      expect(err.message).to.include("target.is is not a function");
+      return false;
+    });
+    //get back to the main page
+    cy.login();
+    cy.get("#newGraph").click();
+    cy.get("#prodname").type("Testprodukt");
+    cy.get("#prodquantity").type("1000");
+    cy.get(".btn-creategraph").click();
+  });
+
+  it("should reroute on db save", () => {
+    cy.server();
+    cy.get("#newgraph-btn").click();
+    cy.get("#newgraph-menu-save").click();
+    cy.get("#tab-dbExport").click();
     cy.get("#DatabaseName").type("Hexagon");
     cy.get("#save-menu-save").click();
     //rerouting to create new graph
@@ -64,29 +87,8 @@ describe("NewGraphControls", () => {
       return false;
     });
     //get back to the main page
-    cy.get("#prodname").type("Testprodukt");
-    cy.get("#prodquantity").type("1000");
-    cy.get(".btn-creategraph").click();
-  });
-
-  //test rewrite on correct overwrite
-  it("should reroute on overwrite", () => {
-    cy.server();
-    cy.get("#save-btn").click();
-    cy.get("#DatabaseName").type("Hexagon");
-    cy.get("#save-menu-save").click();
-    cy.get("#newgraph-btn").click();
-    cy.get("#newgraph-menu-save").click();
-    cy.get("#DatabaseName").type("Hexagon");
-    cy.get("#save-menu-save").click();
-    cy.get("#save-menu-save > .v-btn__content").contains("Überschreiben");
-    cy.get("#save-menu-save").click();
-    expect(cy.route("http://localhost:8080/home/menu"));
-    cy.on("uncaught:exception", (err, runnable) => {
-      expect(err.message).to.include("target.is is not a function");
-      return false;
-    });
-    //get back to the main page
+    cy.login();
+    cy.get("#newGraph").click();
     cy.get("#prodname").type("Testprodukt");
     cy.get("#prodquantity").type("1000");
     cy.get(".btn-creategraph").click();
@@ -96,8 +98,8 @@ describe("NewGraphControls", () => {
   it("should still show newgraph-menu when cancelling the save menu", () => {
     cy.get("#newgraph-btn").click();
     cy.get("#newgraph-menu-save").click();
-    cy.get("#save-menu").should("be.visible");
-    cy.get("#save-menu-cancel").click();
+    cy.get("#export-menu").should("be.visible");
+    cy.get("#download-menu-cancel").click();
     cy.get("#newgraph-menu").should("be.visible");
   });
 });

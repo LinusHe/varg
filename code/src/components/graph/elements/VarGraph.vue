@@ -25,12 +25,14 @@ import labels from "@/vargraph/graph/labels";
 import saveGraph from "@/vargraph/importExport/saveGraph";
 import loadGraph from "@/vargraph/importExport/loadGraph";
 import zoom from "@/vargraph/graph/zoom";
+import ui from "@/vargraph/graph/ui";
 
 // import cytoscape
 import cytoscape from "cytoscape";
 import cyStore from "@/vargraph/graph/cyStore";
 
 let cy;
+let dialogComponent;
 
 // activate methods
 const methods = Object.assign(
@@ -47,7 +49,8 @@ const methods = Object.assign(
   labels,
   saveGraph,
   loadGraph,
-  zoom
+  zoom,
+  ui
 );
 
 export default {
@@ -59,6 +62,9 @@ export default {
     };
   },
   mounted: function() {
+    // ui adjustments
+    this.adjustUI();
+
     // cy pre config
     this.preConfig(cytoscape);
 

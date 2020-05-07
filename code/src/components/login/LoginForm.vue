@@ -56,9 +56,9 @@
         </p>
       </v-list-item-content>
     </v-list-item>
-
-    <!-- DEBUGGING -->
-    <!-- <v-btn align="center" class="login-button" @click="getState()" large color="primary">get State</v-btn>
+  
+    <!-- DEBUGGING 
+    <v-btn align="center" class="login-button" @click="getState()" large color="primary">get State</v-btn>
 
     <v-btn
       align="center"
@@ -66,8 +66,8 @@
       @click="delLocal()"
       large
       color="primary"
-    >Remove localStorage</v-btn>-->
-    <!-- /DEBUGGING -->
+    >Remove localStorage</v-btn> 
+/DEBUGGING -->
   </div>
 </template>
 
@@ -83,7 +83,7 @@ export default {
     dialogComponent = this.$parent.$parent.$parent.$parent.$parent.$refs[
       "dialogs"
     ];
-  },
+  }, 
   data() {
     return {
       input: {
@@ -97,10 +97,14 @@ export default {
   methods: {
     //For Debuging
     getState() {
-      // alert("Authenticated: " + this.$store.state.user.autehticated +
-      // "\nName: " + this.$store.state.user.name +
-      // "\nRole: " + this.$store.state.user.role +
-      // "\nReady: " + this.$store.state.ready);
+       alert("Authenticated: " + this.$store.state.user.autehticated +
+       "\nName: " + this.$store.state.user.name +
+       "\nRole: " + this.$store.state.user.role +
+       "\nReady: " + this.$store.state.ready +
+       "\nIssued: " + this.$store.state.issued +
+       "\nNow: " + Date.now() +
+       "\nGraphName: " + this.$store.getters.getCyProdName
+       );
     },
     delLocal() {
       localStorage.removeItem("store");
@@ -113,6 +117,7 @@ export default {
       if (this.$refs.form.validate()) {
         if (this.input.email == "VarG" && this.input.password == "2020") {
           //new
+          this.$store.commit("refreshIssued");
           this.$store.commit("login");
           this.$store.commit("setName", "student");
           this.$store.commit("setRole", "student");

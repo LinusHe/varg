@@ -8,6 +8,7 @@ import Menu from "../views/Menu.vue";
 import NewGraph from "../views/NewGraph.vue";
 //import Vuex from 'vuex'
 import { store } from "../store/store.js";
+import LoadingScreen from "../views/LoadingScreen.vue"
 
 //var auth;
 Vue.use(VueRouter);
@@ -15,7 +16,7 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
-    redirect: "/home/login"
+    redirect: "/home/loading"
   },
   {
     path: "/home",
@@ -56,6 +57,10 @@ const routes = [
         meta: {
           requiresAuth: true
         }
+      },
+      {
+        path: "loading",
+        component: LoadingScreen
       }
     ]
   },
@@ -65,7 +70,8 @@ const routes = [
     component: Graph,
     meta: {
       requiresAuth: true,
-      requiresGraph: true,
+      //declared for unnecessary! (for now) greetings LoginTeam ;) 
+      //requiresGraph: true,
       title: "Varg - Graph Editor"
     }
   }
@@ -86,16 +92,17 @@ router.beforeEach((to, from, next) => {
   // If a route with a title was found, set the document (page) title to that value.
   if (nearestWithTitle) document.title = nearestWithTitle.meta.title;
 
+
   // Check for requiresAuth guard
   if (to.matched.some(record => record.meta.requiresAuth)) {
-      if(store.state.user.autehticated == true) {
+      if(store.getters.getAuth) {
         //proceed to rout
         //Role management could take place here
         next();
       } else {
         //Go to Login
         next({
-          path: "/home/login",
+          path: "/home/loading",
           query: {
             redirect: to.fullPath
           }
@@ -108,10 +115,10 @@ router.beforeEach((to, from, next) => {
   // Check wether Graph is created
   if (to.matched.some(record => record.meta.requiresGraph)) {
     // Check if Graph has no Name
-    if (store.getters.getCyProdName == null) {
+    if (store.getters.getCyProdName === null) {
       // Main Menu
       next({
-        path: "/home/menu"
+        path: "/home/menu",
       });
     } else {
       // Proceed to route
