@@ -34,6 +34,7 @@ describe("NewGraphControls", () => {
     //rerouting to create new graph
     expect(cy.route("http://localhost:8080/home/menu"));
     //get back to the main page
+    cy.login();
     cy.get("#newGraph").click();
     cy.get("#prodname").type("Testprodukt");
     cy.get("#prodquantity").type("1000");
@@ -65,6 +66,7 @@ describe("NewGraphControls", () => {
       return false;
     });
     //get back to the main page
+    cy.login();
     cy.get("#newGraph").click();
     cy.get("#prodname").type("Testprodukt");
     cy.get("#prodquantity").type("1000");
@@ -85,6 +87,7 @@ describe("NewGraphControls", () => {
       return false;
     });
     //get back to the main page
+    cy.login();
     cy.get("#newGraph").click();
     cy.get("#prodname").type("Testprodukt");
     cy.get("#prodquantity").type("1000");
