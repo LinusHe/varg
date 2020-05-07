@@ -114,7 +114,13 @@
           <v-card-subtitle class="pb-0">
             Gesamtkosten:
             <v-icon @click="openOptimize" color="#636364" class="ml-2 mb-1" small>mdi-cog</v-icon>
-            <v-icon v-if="optimized" @click="startOptimizing" color="#636364" class="ml-2 mb-1" small>mdi-refresh</v-icon>
+            <v-icon
+              v-if="optimized"
+              @click="startOptimizing"
+              color="#636364"
+              class="ml-2 mb-1"
+              small
+            >mdi-refresh</v-icon>
           </v-card-subtitle>
           <v-card-title v-if="optimized" class="pt-0 pb-0">{{costs}}</v-card-title>
           <v-btn
@@ -138,7 +144,13 @@
           <v-card-subtitle class="pb-0">
             Gesamtzeit:
             <v-icon @click="openOptimize" color="#636364" class="ml-2 mb-1" small>mdi-cog</v-icon>
-            <v-icon v-if="optimized" @click="startOptimizing" color="#636364" class="ml-2 mb-1" small>mdi-refresh</v-icon>
+            <v-icon
+              v-if="optimized"
+              @click="startOptimizing"
+              color="#636364"
+              class="ml-2 mb-1"
+              small
+            >mdi-refresh</v-icon>
           </v-card-subtitle>
           <v-card-title v-if="optimized" class="pt-0 pb-0">{{time}}</v-card-title>
           <v-btn
@@ -246,7 +258,9 @@ export default {
     openOptimize() {
       this.$parent.$parent.$refs.settingsMenu.setActiveTab(2);
       this.$parent.$parent.$refs.settingsMenu.openDialog();
-      // this.$parent.$parent.$refs["optimizeControls"].setDialog(true);
+    },
+    scrollToAlternativeOptimizations() {
+      this.$parent.$parent.$refs.settingsMenu.$refs.settingsOptimize.scrollToAlternatives();
     },
     setOptimized(bool) {
       this.optimized = bool;
@@ -255,10 +269,10 @@ export default {
       if (
         (this.getGraph()
           .getCytoGraph(this.getGraph())
-          .data("settingsOptimizationStartIDs").length =!0) &&
-          (this.getGraph()
-            .getCytoGraph(this.getGraph())
-            .data("settingsOptimizationEndID") != -1)
+          .data("settingsOptimizationStartIDs").length = !0) &&
+        this.getGraph()
+          .getCytoGraph(this.getGraph())
+          .data("settingsOptimizationEndID") != -1
       ) {
         // run optimization
         this.getGraph().optimizing();
@@ -294,6 +308,17 @@ export default {
             "<br>Öffne die <b>Optimierungs-Einstellungen</b> für weitere Wege!",
           8000
         );
+
+        // open dialog, if in settings enabled
+        if (
+          typeof this.$parent.$parent.$refs.settingsMenu.$refs
+            .settingsGeneral !== "undefined" &&
+          this.$parent.$parent.$refs.settingsMenu.$refs.settingsGeneral.getAlternativePopUp()
+        ) {
+          // open graph settings and scroll to alternative paths
+          this.openOptimize();
+          this.scrollToAlternativeOptimizations();
+        }
       } else {
         dialogComponent.dialogError(
           "Es wurden keine Start- oder Endzustände gefunden. Bitte stelle diese in den Optimierungs-Einstellungen ein!",

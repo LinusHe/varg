@@ -1,6 +1,6 @@
 <template>
   <v-card flat>
-    <v-card-text class="scrolling-container pb-10">
+    <v-card-text id="scrollOpt" class="scrolling-container pb-10" style="max-height: 55vh">
       <v-card-subtitle>Grundeinstellungen</v-card-subtitle>
       <v-card class="ml-6 mr-6">
         <v-divider></v-divider>
@@ -83,7 +83,7 @@
         </v-row>
       </v-card>
 
-      <v-card-subtitle class="mt-10 pb-0">Alternative Optimierungswege</v-card-subtitle>
+      <v-card-subtitle class="mt-10 pb-0" id="alternatives">Alternative Optimierungswege</v-card-subtitle>
       <!-- <v-card class="mr-6 ml-6 mt-0"> -->
       <v-row class="ma-0">
         <v-col sm="12" class="ma-0 pa-0">
@@ -142,6 +142,11 @@ export default {
     getGraph() {
       return this.$parent.$parent.$parent.$parent.$parent.$parent.$parent
         .$parent.$parent.$refs["vargraph"];
+    },
+
+    scrollToAlternatives() {
+      let scrollbox = document.getElementById("scrollOpt")
+      scrollbox.scrollTo(0, 500);
     },
 
     // get Settings

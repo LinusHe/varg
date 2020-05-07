@@ -1,6 +1,6 @@
 <template>
   <v-card flat>
-    <v-card-text class="scrolling-container pb-10">
+    <v-card-text class="scrolling-container pb-10" style="max-height: 55vh">
       <v-card-subtitle>Grundeinstellungen</v-card-subtitle>
       <v-card class="ml-6 mr-6">
         <v-row>

@@ -1,5 +1,5 @@
 <template>
-  <v-card flat class="scrolling-container">
+  <v-card flat class="scrolling-container" style="max-height: 55vh">
     <v-card-text>
       <p>
         Morbi nec metus. Suspendisse faucibus, nunc et pellentesque egestas, lacus ante convallis tellus, vitae
