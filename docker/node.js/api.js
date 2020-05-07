@@ -81,6 +81,14 @@ router.route('/graph/:graph_id')
     .get(function(req, res) {
         //the query should still involve some check if the user "owns" the graph
         //example: SELECT graphObject FROM cytographs WHERE fileID=1 AND user=jdeo
+        //let username = req.query.user;
+        let id=req.params.graph_id;
+        console.log('Sending Graph');
+        con.query("SELECT graphObject FROM cytographs WHERE fileID="+ id /*+ " AND user=" + username*/, function(err, result) {
+            if (err) throw err;
+            console.log("Query was successful!");
+            res.send(result);
+        });
     })
     //update a single graph identified by id
     .put(function(req, res) {

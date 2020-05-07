@@ -203,6 +203,7 @@ INSERT INTO cytographs (fileName, userName, graphObject) VALUES ('sampleGraph.js
     "data": {
       "IDCount": 5,
       "latestSave": null,
+      "user": "eheldt",
       "filename": "DefaultFileName",
       "prodName": "testprodukt",
       "prodQuant": "12345",
