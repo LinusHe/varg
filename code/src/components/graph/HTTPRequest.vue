@@ -10,10 +10,10 @@ export default {
   name: 'HTTPRequest',
   mounted: function () {
     axios.get('http://192.168.99.101:1110/VarG/graph/1', {
-      /*params: {
+      params: {
         user: 'eheldt',
         auth: 'admin'
-      }*/
+      }
     })
       .then(response => console.log(response));
   }

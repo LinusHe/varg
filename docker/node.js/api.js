@@ -76,15 +76,16 @@ router.param('graph_id', function(req, res, next, id)   {
     next();
 });
 
-router.route('/graph/:graph_id')
+router.route('/graph/:graph_id?')
     //get a single graph identified by id
     .get(function(req, res) {
         //the query should still involve some check if the user "owns" the graph
         //example: SELECT graphObject FROM cytographs WHERE fileID=1 AND user=jdeo
         //let username = req.query.user;
         let id=req.params.graph_id;
+        let username=req.query.user;
         console.log('Sending Graph');
-        con.query("SELECT graphObject FROM cytographs WHERE fileID="+ id /*+ " AND user=" + username*/, function(err, result) {
+        con.query("SELECT graphObject FROM cytographs WHERE fileID="+ id + " AND userName=" + '"' + username + '"', function(err, result) {
             if (err) throw err;
             console.log("Query was successful!");
             res.send(result);
