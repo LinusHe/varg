@@ -8,13 +8,13 @@
     onNewGraphConfirm(value){
       if (value){
         //save Case
-        this.$parent.$refs.newGraphMenu.showSaveMenu();
+        this.$parent.$parent.$refs.newGraphMenu.showSaveMenu();
       }
       else{
         //discard case
         graph.getCytoGraph().nodes().remove()
         graph.getCytoGraph().edges().remove()
-        this.$parent.$refs.newGraphMenu.setdialog(false)
+        this.$parent.$parent.$refs.newGraphMenu.setdialog(false)
         //this works!!!
         router.push({name: 'newGraph'});
       }

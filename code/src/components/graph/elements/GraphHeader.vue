@@ -1,178 +1,140 @@
 <template>
   <div class="header-graph-container" id="graph-header">
-    <div id="headertext_out">
-      <div id="headertext_in">
-        <v-row>
-          <p align="left" id="header-prodName">
-            Produkt:
-            <span v-show="!isEditingName" @click="editName()">{{prodName}}</span>
-            <v-form
-              ref="formName"
-              v-model="validName"
-              lazy-validation
-              class="d-inline-block"
-              @submit="saveNewName()"
-              onsubmit="return false;"
-            >
-              <v-text-field
-                id="nameInput"
-                ref="nameInput"
-                v-if="isEditingName"
-                v-model="prodName"
-                class="d-inline-block"
-                dense
-                hide-details
-                counter="25"
-                @submit="saveNewName()"
-                v-on:blur="saveNewName()"
-                :rules="[v => !!v || 'Fehlender Name', v => (v || '').length <= 25  ||'Name ist zu lang']"
-              ></v-text-field>
-            </v-form>
-            <v-icon
-              v-if="!isEditingName"
-              @click="editName()"
-              color="lightgrey"
-              class="ml-2 mb-3"
-              small
-            >mdi-pencil</v-icon>
-            <v-icon
-              v-else
-              @click="saveNewName()"
-              :disabled="!validName"
-              dark
-              color="success"
-              class="ml-2"
-            >mdi-check-bold</v-icon>
-          </p>
-        </v-row>
-        <v-row>
-          <p align="left" id="header-prodQuant">
-            Anzahl:
-            <span v-show="!isEditingQuant" @click="editQuant()">{{prodQuant}}</span>
-            <v-form
-              ref="formQuant"
-              v-model="validQuant"
-              lazy-validation
-              class="d-inline-block"
-              @submit="saveNewQuant()"
-              onsubmit="return false;"
-            >
-              <v-text-field
-                v-if="isEditingQuant"
-                v-model="prodQuant"
-                ref="quantInput"
-                id="quantInput"
-                value="prodQuant"
-                class="d-inline-block"
-                dense
-                hide-details
-                type="number"
-                v-on:blur="saveNewQuant()"
-                :rules="[v => !!v || 'Feld darf nicht leer sein', v => v > 0 ||'mindestens 1', v => v < 9999999999999999 ||'bist du wahnsinnig!?']"
-              ></v-text-field>
-            </v-form>
-            <v-icon
-              v-if="!isEditingQuant"
-              @click="editQuant()"
-              color="lightgrey"
-              class="ml-2 mb-3"
-              small
-            >mdi-pencil</v-icon>
-            <v-icon
-              v-else
-              @click="saveNewQuant()"
-              :disabled="!validQuant"
-              dark
-              color="success"
-              class="ml-2"
-            >mdi-check-bold</v-icon>
-          </p>
-        </v-row>
-      </div>
-    </div>
+    <v-row>
+      <v-col align="left" xs="12" sm="1">
+        <h1 class="headline mb-1 ml-12">varg</h1>
+      </v-col>
+
+      <v-col align="center">
+        <v-btn
+          outlined
+          tile
+          color="#b9c5ff"
+          class="bora-l-10 bo-r-0"
+          id="newgraph-btn"
+          @click="NewGraph"
+        >
+          <v-icon dark>mdi-plus</v-icon>Neuer Graph
+        </v-btn>
+        <v-btn outlined tile color="#b9c5ff" class="bo-r-0" id="database-btn" @click="datenbank()">
+          <v-icon class="mr-1">mdi-database</v-icon>Datenbank
+        </v-btn>
+        <v-btn outlined tile color="#b9c5ff" class="bo-r-0" @click="LoadJSon" id="ImportGraph">
+          <input type="file" ref="file" accept=".json" style="display: none" />
+          <v-icon class="mr-1">mdi-import</v-icon>Import
+        </v-btn>
+        <v-btn outlined tile color="#b9c5ff" class="bo-r-0" @click="Download" id="download-btn">
+          <v-icon class="mr-1">mdi-export</v-icon>Export
+        </v-btn>
+        <v-btn
+          outlined
+          tile
+          color="#b9c5ff"
+          class="bora-r-10"
+          @click="openSettings"
+          id="SettingsBtn"
+        >
+          <v-icon class="mr-1">mdi-cog</v-icon>Einstellungen
+        </v-btn>
+      </v-col>
+
+      <!-- User Icon-->
+      <v-col align="right" sm="1" class="mr-12">
+        <v-menu bottom left offset-y>
+          <template v-slot:activator="{ on }">
+            <v-btn id="avatar-btn" height="48px" color="primary" icon v-on="on">
+              <v-avatar color="red">
+                <span class="white--text headline">CJ</span>
+              </v-avatar>
+            </v-btn>
+          </template>
+
+          <v-list>
+            <v-list-item key="account" @click="account()">
+              <v-list-item-icon>
+                <v-icon>mdi-account</v-icon>
+              </v-list-item-icon>
+              <v-list-item-title>Account</v-list-item-title>
+            </v-list-item>
+            <v-list-item key="logout" id="logout-btn" @click="logout()">
+              <v-list-item-icon>
+                <v-icon>mdi-logout</v-icon>
+              </v-list-item-icon>
+              <v-list-item-title>Logout</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
+      </v-col>
+    </v-row>
   </div>
 </template>
 
 <script>
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
+/* eslint-disable standard/computed-property-even-spacing */
+import fileManager from "../../../vargraph/importExport/FileManager.js";
+import TestDatabase from "../../../vargraph/TestDatabase.js";
+
 let dialogComponent;
 
 export default {
-  mounted: function() {
-    dialogComponent = this.$parent.$parent.$parent.$parent.$refs["dialogs"];
-  },
-  name: "GraphHeader",
-  data() {
-    return {
-      prodName: null,
-      prodQuant: null,
-      isEditingName: false,
-      isEditingQuant: false,
-      validQuant: false,
-      validName: false
+  created() {
+    this.vars = {
+      // initializes new instance of TestDatabase when Toolbar is loaded for the first time
+      testDatabase: new TestDatabase()
     };
   },
+  mounted: function() {
+    dialogComponent = this.$parent.$parent.$parent.$parent.$parent.$refs[
+      "dialogs"
+    ];
+    console.log("Graph Component", this.getGraph());
+  },
+  name: "GraphHeader",
   methods: {
     getGraph() {
       return this.$parent.$refs["vargraph"];
     },
-    refresh() {
-      this.prodName = this.getGraph()
-        .getCytoGraph(this.getGraph())
-        .data("prodName");
-      this.prodQuant = this.getGraph()
-        .getCytoGraph(this.getGraph())
-        .data("prodQuant");
+    NewGraph() {
+      this.$parent.$refs.newGraphMenu.setObject(this.testDatabase);
+      this.$parent.$refs.newGraphMenu.setdialog(true);
     },
-    updateData(newProdName, newProdQuant) {
-      this.prodName = newProdName;
-      this.prodQuant = newProdQuant;
-      this.saveNewName();
-      this.saveNewQuant();
+    Download: function() {
+      //not-best-practice aka coupling of components is not wanted
+      //in order to make components reusable
+      this.$parent.$refs.exportMenu.setdialog(true);
     },
-    editName() {
-      this.isEditingName = true;
-      this.$nextTick(() => this.$refs.nameInput.focus());
+    openSettings() {
+      this.$parent.$refs.settingsMenu.setActiveTab(0);
+      this.$parent.$refs.settingsMenu.openDialog();
     },
-    saveNewName() {
-      //Checks if menu formular was filled in correctly
-      if (this.$refs.formName.validate()) {
-        this.isEditingName = false;
-        this.getGraph()
-          .getCytoGraph(this.getGraph())
-          .data("prodName", this.prodName);
-        dialogComponent.dialogSuccess("Produktname erfolgreich geändert");
-      } else if (this.prodName.length > 25) {
-        dialogComponent.dialogError(
-          "Produktname nicht geändert: <b>Bitte Namen mit maximal 25 Zeichen eingeben</b>"
-        );
-      } else if (this.prodName.length == 0) {
-        dialogComponent.dialogError(
-          "Produktname nicht geändert: <b>Bitte Namen eingeben</b>"
-        );
+    SaveJSon: function() {
+      this.$parent.$refs.saveMenu.setdialog(true);
+    },
+    LoadJSon() {
+      this.$refs.file;
+      this.$refs.file.click();
+
+      this.$refs.file.addEventListener("change", onChange);
+
+      let graphComponent = this.getGraph();
+
+      function onChange(event) {
+        console.log("Graph Component to load:", graphComponent);
+        fileManager.loadGraphFromJson(event, graphComponent);
       }
     },
-    editQuant() {
-      this.isEditingQuant = true;
-      this.$nextTick(() => this.$refs.quantInput.focus());
+    account() {
+      this.$parent.$refs.settingsMenu.setActiveTab(3);
+      this.$parent.$refs.settingsMenu.openDialog();
     },
-    saveNewQuant() {
-      if (this.$refs.formQuant.validate()) {
-        this.isEditingQuant = false;
-        this.getGraph()
-          .getCytoGraph(this.getGraph())
-          .data("prodQuant", this.prodQuant);
-        dialogComponent.dialogSuccess("Stückzahl erfolgreich geändert");
-      } else if (this.prodQuant.length == 0) {
-        dialogComponent.dialogError(
-          "Stückzahl nicht geändert: <b>Bitte Stückzahl eingeben</b>"
-        );
-      } else if (this.prodQuant < 1) {
-        dialogComponent.dialogError(
-          "Stückzahl nicht geändert: <b>Es sind nur positive Stückzahlen erlaubt</b>"
-        );
-      }
+    logout() {
+      this.$store.commit("logout");
+      this.$router.push({ name: "login" });
+    },
+    datenbank() {
+      this.$parent.$refs.databaseMenu.openDialog();
     }
   }
 };

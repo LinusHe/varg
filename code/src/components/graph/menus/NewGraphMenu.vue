@@ -6,15 +6,27 @@
         <v-card-text>
           <p>Möchtest du den Graph speichern?</p>
           <em>Wenn der Graph verworfen wird, besteht keine Möglichkeit, den Graph wiederherzustellen.</em>
-          <v-row sm="10" class="mt-8">
+          <v-row justify="end">
             <v-col sm="4">
-              <v-btn color="success" id="newgraph-menu-save" block @click="save">Speichern</v-btn>
+              <v-btn
+                color="green darken-1"
+                text
+                id="newgraph-menu-save"
+                block
+                @click="save"
+              >Speichern</v-btn>
             </v-col>
             <v-col sm="4">
-              <v-btn color="warning" id="newgraph-menu-discard" block @click="discard">Verwerfen</v-btn>
+              <v-btn color="error" text id="newgraph-menu-discard" block @click="discard">Verwerfen</v-btn>
             </v-col>
             <v-col sm="4">
-              <v-btn color="error" id="newgraph-menu-cancel" block @click="dialog=false">Abbrechen</v-btn>
+              <v-btn
+                color="grey"
+                text
+                id="newgraph-menu-cancel"
+                block
+                @click="dialog=false"
+              >Abbrechen</v-btn>
             </v-col>
           </v-row>
         </v-card-text>
@@ -51,13 +63,16 @@
 <script>
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
+/* eslint-disable standard/computed-property-even-spacing */
 import router from "@/router/index.js";
 let dialogComponent;
 
 export default {
   name: "NewGraphMenu.vue",
   mounted: function() {
-    dialogComponent = this.$parent.$parent.$parent.$parent.$refs["dialogs"];
+    dialogComponent = this.$parent.$parent.$parent.$parent.$parent.$refs[
+      "dialogs"
+    ];
   },
   data() {
     return {
@@ -67,20 +82,21 @@ export default {
   },
   methods: {
     getGraph() {
-      return this.$parent.$refs["vargraph"];
+      return this.$parent.$parent.$refs["vargraph"];
     },
     setObject(DataBaseObject) {
       this.database = DataBaseObject;
     },
     showSaveMenu() {
-      this.$parent.$refs.saveMenu.setdialog(true);
+      this.$parent.$parent.$refs.exportMenu.setdialog(true);
       this.dialog = false;
     },
     setdialog(value) {
       this.dialog = value;
     },
     save() {
-      this.$parent.$refs.saveMenu.setdialog(true);
+      this.$parent.$parent.$refs.exportMenu.setNewGraph(true);
+      this.$parent.$parent.$refs.exportMenu.setdialog(true);
     },
     discard() {
       this.getGraph()
@@ -91,12 +107,13 @@ export default {
         .getCytoGraph(this.getGraph())
         .edges()
         .remove();
-      this.$parent.$refs.newGraphMenu.setdialog(false);
+      this.$parent.$parent.$refs.newGraphMenu.setdialog(false);
       //this works!!!
 
       // this.getGraph().getCytoGraph(this.getGraph()).destroy();
 
       router.push({ name: "menu" });
+      this.$router.go();
 
       //  this.$parent.$destroy();
     }

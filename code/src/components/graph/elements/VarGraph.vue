@@ -5,6 +5,9 @@
 <script>
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
+/* eslint-disable standard/computed-property-even-spacing */
+import TestDatabase from "@/vargraph/TestDatabase.js";
+
 import style from "@/vargraph/init/cytoscapeStyle.js";
 import elements from "@/vargraph/init/exampleElements.js";
 
@@ -22,12 +25,14 @@ import labels from "@/vargraph/graph/labels";
 import saveGraph from "@/vargraph/importExport/saveGraph";
 import loadGraph from "@/vargraph/importExport/loadGraph";
 import zoom from "@/vargraph/graph/zoom";
+import ui from "@/vargraph/graph/ui";
 
 // import cytoscape
 import cytoscape from "cytoscape";
 import cyStore from "@/vargraph/graph/cyStore";
 
 let cy;
+let dialogComponent;
 
 // activate methods
 const methods = Object.assign(
@@ -44,12 +49,22 @@ const methods = Object.assign(
   labels,
   saveGraph,
   loadGraph,
-  zoom
+  zoom,
+  ui
 );
 
 export default {
   name: "VarGraph",
+  created() {
+    this.vars = {
+      // initializes new instance of TestDatabase when Toolbar is loaded for the first time
+      testDatabase: new TestDatabase()
+    };
+  },
   mounted: function() {
+    // ui adjustments
+    this.adjustUI();
+
     // cy pre config
     this.preConfig(cytoscape);
 

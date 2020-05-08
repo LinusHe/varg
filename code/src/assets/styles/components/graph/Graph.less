@@ -1,0 +1,54 @@
+.graph {
+  height: 100%;
+  background-color: #f8f8fa;
+
+  .header-bg {
+    width: 100%;
+    // transition: auto 0.3s ease-out;
+    // height: auto;
+    min-height: 150px;
+    background: #4c64ff;
+    background: linear-gradient(0deg, #7684ff, #4c64ff);
+    // padding-bottom: 130px;
+    padding: 30px 50px 130px 50px;
+    color: #fff;
+  }
+
+  button.toggleHeader {
+    position: absolute;
+    left: 20px;
+    top: 42px;
+  }
+
+  .content-card {
+    
+    margin-top: -107px;
+    margin-right: 80px;
+    margin-left: 80px;
+    border-radius: 20px !important;
+
+    .card-top {
+      background-color: #f8f8fa;
+
+      .v-card {
+        border-radius: 20px !important;
+      }
+    }
+
+    @media(min-width: 1400px) {
+      .card-top {
+        padding: 0 10vw;
+      }
+    }
+
+    .card-bottom {
+      background-color: #ffffff;
+    }
+  }
+
+  @media(min-width: 1400px) {
+    .card-top {
+      padding: 0 10vw;
+    }
+  }
+}

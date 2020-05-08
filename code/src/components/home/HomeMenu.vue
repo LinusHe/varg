@@ -1,8 +1,8 @@
 <template>
   <v-list-item three-line class="homemenu-container" align="center">
     <v-list-item-content>
-      <v-list-item-title align="center" class="login-pre-headline mt-5">Variantengraph-Editor</v-list-item-title>
-      <v-list-item-title align="center" class="login-headline mb-1">varg</v-list-item-title>
+      <v-list-item-title align="center" class="login-pre-headline mt-5 mb-3">Variantengraph-Editor</v-list-item-title>
+      <v-list-item-title align="center" class="login-headline mb-1">VarG</v-list-item-title>
       <v-row class="button-container">
         <v-col sm="4">
           <v-card outlined align="center">
@@ -17,16 +17,17 @@
 
         <v-col sm="4">
           <v-card outlined align="center">
-            <v-btn depressed fab color="primary" class="mt-4">
+            <v-btn :loading="loading" depressed fab :color="importBtnColor" @click="openFromFile()" class="mt-4">
               <v-icon>mdi-import</v-icon>
             </v-btn>
+            <input type="file" ref="file" accept=".json" style="display: none" />
           </v-card>
           <a>Graphen importieren</a>
         </v-col>
 
         <v-col sm="4">
           <v-card outlined align="center">
-            <router-link to="/database" tag="button" id="database">
+            <router-link to="database" tag="button" id="database">
               <v-btn depressed fab color="primary" class="mt-4">
                 <v-icon>mdi-database-export</v-icon>
               </v-btn>
@@ -46,7 +47,45 @@
 </template>
 
 <script>
+/* eslint-disable no-console */
+/* eslint-disable no-unused-vars */
+/* eslint-disable standard/computed-property-even-spacing */
+import fileManager from "../../vargraph/importExport/FileManager";
+
+let dialogComponent;
+
 export default {
-  name: "Menu"
+  name: "Menu",
+  data() {
+    return {
+      loading: false,
+      importBtnColor: "primary",
+    };
+  },
+  mounted: function() {
+    dialogComponent = this.$parent.$parent.$parent.$parent.$parent.$refs["dialogs"];
+  },
+  methods: {
+    openFromFile() {
+      this.$refs.file.click();
+      this.loading = true;
+      this.importBtnColor = "warning";
+
+      this.loading = true;
+
+      this.$refs.file.addEventListener("change", onChange);
+      this.$store.commit(
+        "setCyProdName",
+        "Importiertes Produkt wird geladen..."
+      );
+      // waitUntilNext;
+      function onChange(event) {
+        
+        fileManager.loadGraphFromJson(event, null);
+        dialogComponent.dialogSuccess("Graph erfolgreich geladen");
+      }
+      
+    }
+  }
 };
 </script>

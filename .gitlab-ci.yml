@@ -1,24 +1,31 @@
-image: node:12.14.1
+image: cypress/base:10
 
 stages:
-  - build
   - test
+  - build
 
 cache:
   paths:
     - node_modules/
 
-install_dependencies:
-  stage: .pre
+run_cypress:
+  stage: test
   script:
     - cd code
     - npm install
-    - npm install -g @vue/cli
-    - npm install -g @vue/cli-service-global
+    - npm run cytest
+  artifacts:
+    expire_in: 1 week
+    when: always
+    paths:
+    - /builds/weicker/varg/code/cypress/screenshots
+    - /builds/weicker/varg/code/cypress/videos
+    - /builds/weicker/varg/code/servelog.txt
 
 build_code:
   stage: build
-  script: 
-  - cd code
-  - npm install
-  - npm run build
+  script:
+    - ls
+    - cd code
+    - npm install
+    - npm run build

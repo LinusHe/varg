@@ -11,7 +11,7 @@
             style="height: 150px"
             v-bind:style="{ background: '#'+nodeColor }"
           >
-            <v-card-subtitle style="color: #ffffff" class="pb-0">Zustand bearbeiten:</v-card-subtitle>
+            <v-card-subtitle style="color: #ffffff" class="pb-0">Teil bearbeiten:</v-card-subtitle>
             <v-card-title class="pt-12">{{showNodeTitle}}</v-card-title>
             <!-- <p class="prodname ml-3 mr-12 mb-0 pt-10">{{nodeCreateName}}</p> -->
             <!-- Color Selection -->
@@ -85,22 +85,26 @@
             </v-row>
 
             <!-- Save & Delete Buttons -->
-            <v-row>
-              <v-spacer sm="4" />
-              <v-col sm="4" align="right">
-                <v-btn color="success" :disabled="!validNodes" @click="saveNode()">Speichern</v-btn>
+            <v-row justify="end">
+              <v-col sm="4">
+                <v-btn
+                  color="green darken-1"
+                  text
+                  :disabled="!validNodes"
+                  @click="saveNode()"
+                >Speichern</v-btn>
               </v-col>
-              <v-col sm="4" align="right">
-                <v-btn color="warning" @click="openNodeDeleteMenu()">Löschen</v-btn>
+              <v-col sm="4">
+                <v-btn color="error" text @click="openNodeDeleteMenu()">Löschen</v-btn>
               </v-col>
-              <v-col sm="4" align="right">
-                <v-btn color="error" @click="cancel()">Abbrechen</v-btn>
+              <v-col sm="4">
+                <v-btn color="grey" text @click="cancel()">Abbrechen</v-btn>
               </v-col>
               <v-dialog v-model="nodeDeleteDialog" persistent max-width="400">
                 <v-card>
-                  <v-card-title class="headline">Zustand löschen</v-card-title>
+                  <v-card-title class="headline">Teil löschen</v-card-title>
                   <v-card-text>
-                    Soll der Zustand
+                    Soll das Teil
                     <b>{{nodeName}}</b> endgültig gelöscht werden? Diese Aktion kann nicht rückgängig gemacht werden.
                     <span
                       v-show="deleteInvEdges"
@@ -108,7 +112,7 @@
                       <br />
                       <br />
                       <b>ACHTUNG!</b>
-                      <br />Die folgenden Verbindungen werden ebenfalls gelöscht:
+                      <br />Die folgenden Bearbeitungsschritte werden ebenfalls gelöscht:
                       <br />
                       <b style="white-space: pre-line">{{ involvedEdges }}</b>
                     </span>
@@ -140,7 +144,7 @@
             class="white--text align-end"
             style="height: 100px; background: #2699FB; background-color: #2699FB"
           >
-            <v-card-subtitle style="color: #ffffff" class="pb-0">Verknüpfung bearbeiten:</v-card-subtitle>
+            <v-card-subtitle style="color: #ffffff" class="pb-0">Bearbeitungsschritt bearbeiten:</v-card-subtitle>
             <v-card-title class="pt-12">{{showEdgeTitle}}</v-card-title>
           </div>
 
@@ -185,10 +189,13 @@
                 <v-col sm="12">
                   <v-select
                     @focus="getNodeItemsName(); getNodeItemsID();"
+                    @change="validateStartEnd()"
                     v-model="startSelect"
                     :items="itemsName"
                     id="detailStartzustand"
+                    ref="detailStartzustand"
                     label="Startzustand"
+                    :rules="startRules"
                   ></v-select>
                 </v-col>
               </v-row>
@@ -196,11 +203,13 @@
                 <v-col sm="12">
                   <v-select
                     @focus="getNodeItemsName(); getNodeItemsID()"
+                    @change="validateStartEnd()"
                     v-model="endSelect"
                     :items="itemsName"
                     id="detailEndzustand"
+                    ref="detailEndzustand"
                     label="Endzustand"
-                    :rules="startEndRule"
+                    :rules="endRules"
                   ></v-select>
                 </v-col>
               </v-row>
@@ -254,36 +263,39 @@
                   ></v-text-field>
                 </v-col>
               </v-row>
-
-              <!-- Save & Delete Buttons -->
-              <v-row>
-                <v-spacer sm="4" />
-                <v-col sm="4" align="right">
-                  <v-btn color="success" :disabled="!validEdges" @click="saveEdge()">Speichern</v-btn>
-                </v-col>
-                <v-col sm="4" align="right">
-                  <v-btn color="warning" @click="openEdgeDeleteMenu">Löschen</v-btn>
-                </v-col>
-                <v-col sm="4" align="right">
-                  <v-btn color="error" @click="cancel">Abbrechen</v-btn>
-                </v-col>
-                <v-dialog v-model="edgeDeleteDialog" persistent max-width="400">
-                  <v-card>
-                    <v-card-title class="headline">Verbindung löschen</v-card-title>
-                    <v-card-text>
-                      Soll die Verbindung
-                      <b>{{edgeName}}</b> endgültig gelöscht werden? Diese Aktion kann nicht rückgängig gemacht werden.
-                    </v-card-text>
-                    <v-card-actions>
-                      <v-spacer></v-spacer>
-                      <v-btn color="error" text @click="deleteEdge()">Löschen</v-btn>
-                      <v-btn color="grey" text @click="edgeDeleteDialog = false">Abbrechen</v-btn>
-                    </v-card-actions>
-                  </v-card>
-                </v-dialog>
-              </v-row>
             </v-form>
           </div>
+          <!-- Save & Delete Buttons -->
+          <v-row justify="end">
+            <v-col sm="4">
+              <v-btn
+                color="green darken-1"
+                text
+                :disabled="!validEdges"
+                @click="saveEdge()"
+              >Speichern</v-btn>
+            </v-col>
+            <v-col sm="4">
+              <v-btn color="error" text @click="openEdgeDeleteMenu">Löschen</v-btn>
+            </v-col>
+            <v-col sm="4">
+              <v-btn color="grey" text @click="cancel">Abbrechen</v-btn>
+            </v-col>
+            <v-dialog v-model="edgeDeleteDialog" persistent max-width="400">
+              <v-card>
+                <v-card-title class="headline">Verbindung löschen</v-card-title>
+                <v-card-text>
+                  Soll die Verbindung
+                  <b>{{edgeName}}</b> endgültig gelöscht werden? Diese Aktion kann nicht rückgängig gemacht werden.
+                </v-card-text>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn color="error" text @click="deleteEdge()">Löschen</v-btn>
+                  <v-btn color="grey" text @click="edgeDeleteDialog = false">Abbrechen</v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+          </v-row>
         </v-card>
       </v-slide-x-reverse-transition>
     </div>
@@ -293,6 +305,7 @@
 <script>
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
+/* eslint-disable standard/computed-property-even-spacing */
 let dialogComponent;
 
 export default {
@@ -300,7 +313,9 @@ export default {
   mounted: function() {
     this.getNodeItemsID();
     this.getNodeItemsName();
-    dialogComponent = this.$parent.$parent.$parent.$parent.$refs["dialogs"];
+    dialogComponent = this.$parent.$parent.$parent.$parent.$parent.$refs[
+      "dialogs"
+    ];
   },
   data() {
     return {
@@ -328,12 +343,12 @@ export default {
       endSelect: "",
       deleteInvEdges: false,
       involvedEdges: "",
-      showNodeTitle: "Erstelle einen Zustand",
-      showEdgeTitle: "Erstelle eine Verknüpfung",
+      showNodeTitle: "Erstelle ein Teil",
+      showEdgeTitle: "Erstelle einen Bearbeitungsschritt",
       validNodes: false,
       validEdges: false,
       nameNodeRules: [
-        v => !!v || "Zustands-Name wird benötigt",
+        v => !!v || "Name für Teil wird benötigt",
         v => (v && v.length <= 18) || "Name ist zu lang",
         // todo: other given name
         v =>
@@ -342,7 +357,7 @@ export default {
           "Name ist bereits vergeben"
       ],
       nameEdgeRules: [
-        v => !!v || "Verknüpfung-Name wird benötigt",
+        v => !!v || "Name für Bearbeitungsschritt wird benötigt",
         v => (v && v.length <= 18) || "Name ist zu lang",
         // todo: other given name
         v =>
@@ -358,29 +373,31 @@ export default {
         v => !v || v.match(/\.(jpeg|jpg|gif|png)$/) || "Falsches Format"
       ],
       costRules: [
-        v => !!v || v != 0 || "Darf nicht leer sein",
-        v => v >= 0 || "nicht negativ"
+        v => !!v || v == 0 || "Kosten werden benötigt",
+        v => v >= 0 || "Darf nicht negativ sein"
       ],
       timeRules: [
-        v => !!v || v != 0 || "Darf nicht leer sein",
-        v => v >= 0 || "nicht negativ"
+        v => !!v || v == 0 || "Kosten werden benötigt",
+        v => v >= 0 || "Darf nicht negativ sein"
       ],
       suCostRules: [
-        v => !!v || v != 0 || "Darf nicht leer sein",
-        v => v >= 0 || "nicht negativ"
+        v => !!v || v == 0 || "Kosten werden benötigt",
+        v => v >= 0 || "Darf nicht negativ sein"
       ],
       suTimeRules: [
-        v => !!v || v != 0 || "Darf nicht leer sein",
-        v => v >= 0 || "nicht negativ"
+        v => !!v || v == 0 || "Kosten werden benötigt",
+        v => v >= 0 || "Darf nicht negativ sein"
       ],
-      startEndRule: [
-        v => v != this.startSelect || "Ende muss sich vom Start unterscheiden"
+      startRules: [v => !!v || "Startzustand ist benötigt"],
+      endRules: [
+        v => !!v || "Endprodukt ist benötigt",
+        v => v != this.startSelect || "Endprodukt muss sich vom Startzustand unterscheiden"
       ]
     };
   },
   methods: {
     getGraph() {
-      return this.$parent.$refs["vargraph"];
+      return this.$parent.$parent.$refs["vargraph"];
     },
     log() {
       console.log("hi");
@@ -425,8 +442,8 @@ export default {
     },
     closeMenus() {
       this.deactivateGui();
-      this.$parent.$refs.createControls.deactivateGui();
-      this.$parent.$refs.createControls.$refs.scrollingContainer.scrollTop = 0;
+      this.$parent.$parent.$refs.createControls.deactivateGui();
+      this.$parent.$parent.$refs.createControls.$refs.scrollingContainer.scrollTop = 0;
       this.$refs.scrollingContainer.scrollTop = 0;
     },
     generateNodeShort() {
@@ -478,22 +495,26 @@ export default {
     },
     openNodeDetails(node) {
       this.loadNodeData(node);
-      this.$parent.$refs.createControls.deactivateGui();
+      this.$parent.$parent.$refs.createControls.deactivateGui();
       this.edgeGui = false;
       this.nodeGui = true;
       this.$refs.nodeDetails.focus();
     },
     openEdgeDetails(edge) {
       this.loadEdgeData(edge);
-      this.$parent.$refs.createControls.deactivateGui();
+      this.$parent.$parent.$refs.createControls.deactivateGui();
       this.nodeGui = false;
       this.edgeGui = true;
       this.$refs.edgeDetails.focus();
       this.getUnits();
     },
     getUnits() {
-      this.unitCost = this.getGraph().getCytoGraph().data("settingsUnitCostSelection");
-      this.unitTime = this.getGraph().getCytoGraph().data("settingsUnitTimeSelection");
+      this.unitCost = this.getGraph()
+        .getCytoGraph()
+        .data("settingsUnitCostSelection");
+      this.unitTime = this.getGraph()
+        .getCytoGraph()
+        .data("settingsUnitTimeSelection");
     },
     deactivateGui() {
       this.nodeGui = false;
@@ -511,7 +532,7 @@ export default {
         );
 
         this.nodeGui = false;
-        dialogComponent.dialogSuccess("Knoten erfolgreich aktualisiert");
+        dialogComponent.dialogSuccess("Teil erfolgreich aktualisiert");
       }
     },
     saveEdge() {
@@ -534,7 +555,9 @@ export default {
           this.edgesuTime
         );
         this.edgeGui = false;
-        dialogComponent.dialogSuccess("Kante erfolgreich aktualisiert");
+        dialogComponent.dialogSuccess("Bearbeitungsschritt erfolgreich aktualisiert");
+        // remove optimization
+        this.getGraph().removeOptimization();
       }
     },
     deleteEdge() {
@@ -542,7 +565,9 @@ export default {
 
       this.edgeDeleteDialog = false;
       this.edgeGui = false;
-      dialogComponent.dialogWarning("Kante erfolgreich gelöscht");
+      dialogComponent.dialogWarning("Bearbeitungsschritt erfolgreich gelöscht");
+      // remove optimization
+        this.getGraph().removeOptimization();
     },
     openEdgeDeleteMenu() {
       this.edgeDeleteDialog = true;
@@ -567,12 +592,16 @@ export default {
       this.nodeDeleteDialog = false;
       this.nodeGui = false;
       this.deleteInvEdges = false;
-      dialogComponent.dialogWarning("Knoten erfolgreich gelöscht");
+      dialogComponent.dialogWarning("Teil erfolgreich gelöscht");
     },
     cancel() {
       // this.clearFields();
       this.deactivateGui();
       this.$refs.scrollingContainer.scrollTop = 0;
+    },
+    validateStartEnd() {
+      this.$refs.detailStartzustand.validate();
+      this.$refs.detailEndzustand.validate();
     }
   }
 };

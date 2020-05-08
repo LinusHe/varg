@@ -14,21 +14,24 @@ export default {
     console.log("left click event: ", event);
     console.log("left click target -> ", event.target);
     // if (event.target === this.$refs.cyRef.instance)
-    // this.$parent.$refs.detailControls.closeMenus();
-
-    this.$parent.$refs.detailControls.handleDetails(event.target);
+    // this.$parent.$parent.$refs.detailControls.closeMenus();
+    console.log(this.$parent.$parent.$refs);
+    this.$parent.$parent.$refs.detailControls.handleDetails(event.target);
   },
   // handle right click
   rightClick(event) {
     console.log("right click event: ", event);
     console.log("right click target -> ", event.target);
     // open component
-    this.$parent.$refs.rightClickMenu.openMenu(window.event, event.target);
+    this.$parent.$parent.$refs.rightClickMenu.openMenu(
+      window.event,
+      event.target
+    );
     // get click position
     var offset = document.getElementById("graph-header").clientHeight;
     var posX = event.originalEvent.x;
     var posY = event.originalEvent.y - offset;
-    this.$parent.$refs.rightClickMenu.setClickPos(posX, posY);
+    this.$parent.$parent.$refs.rightClickMenu.setClickPos(posX, posY);
     console.log("clicked at", posX, posY);
   }
 };

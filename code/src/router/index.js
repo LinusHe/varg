@@ -8,6 +8,7 @@ import Menu from "../views/Menu.vue";
 import NewGraph from "../views/NewGraph.vue";
 //import Vuex from 'vuex'
 import { store } from "../store/store.js";
+import LoadingScreen from "../views/LoadingScreen.vue"
 
 //var auth;
 Vue.use(VueRouter);
@@ -15,15 +16,17 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
-    redirect: "/home/login"
+    redirect: "/home/loading"
   },
   {
     path: "/home",
-    name: "login",
+    name: "home",
     component: Home,
+    redirect: "/home/menu",
     children: [
       {
         path: "login",
+        name: "login",
         component: Login,
         meta: {
           title: "Varg - Login"
@@ -46,6 +49,18 @@ const routes = [
           requiresAuth: true,
           title: "Varg - Neuer Graph"
         }
+      },
+      {
+        path: "database",
+        name: "Varg - Datenbank import",
+        component: Database,
+        meta: {
+          requiresAuth: true
+        }
+      },
+      {
+        path: "loading",
+        component: LoadingScreen
       }
     ]
   },
@@ -55,16 +70,9 @@ const routes = [
     component: Graph,
     meta: {
       requiresAuth: true,
-      requiresGraph: true,
+      //declared for unnecessary! (for now) greetings LoginTeam ;) 
+      //requiresGraph: true,
       title: "Varg - Graph Editor"
-    }
-  },
-  {
-    path: "/database",
-    name: "Varg - Datenbank import",
-    component: Database,
-    meta: {
-      requiresAuth: true
     }
   }
 ];
@@ -84,48 +92,33 @@ router.beforeEach((to, from, next) => {
   // If a route with a title was found, set the document (page) title to that value.
   if (nearestWithTitle) document.title = nearestWithTitle.meta.title;
 
+
   // Check for requiresAuth guard
   if (to.matched.some(record => record.meta.requiresAuth)) {
-    // Check if NO logged user
-    if (store.state.count == 0) {
-      // Go to login
-      next({
-        path: "/home/login",
-        query: {
-          redirect: to.fullPath
-        }
-      });
-    } else {
-      // Proceed to route
-      next();
-    }
-    // Guest proceed optional, maybe later?
-  } else if (to.matched.some(record => record.meta.requiresGuest)) {
-    // Check if NO logged user
-    if (this.$main.auth) {
-      // Go to login
-      next({
-        path: "/",
-        query: {
-          redirect: to.fullPath
-        }
-      });
-    } else {
-      // Proceed to route
-      next();
-    }
+      if(store.getters.getAuth) {
+        //proceed to rout
+        //Role management could take place here
+        next();
+      } else {
+        //Go to Login
+        next({
+          path: "/home/loading",
+          query: {
+            redirect: to.fullPath
+          }
+        });
+      }
   } else {
-    // Proceed to route
     next();
   }
 
   // Check wether Graph is created
   if (to.matched.some(record => record.meta.requiresGraph)) {
     // Check if Graph has no Name
-    if (store.getters.getCyProdName == null) {
+    if (store.getters.getCyProdName === null) {
       // Main Menu
       next({
-        path: "/home/menu"
+        path: "/home/menu",
       });
     } else {
       // Proceed to route
