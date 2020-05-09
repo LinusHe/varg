@@ -107,7 +107,7 @@ export default {
     newPath.push(nextEdges[count].data("id"))
     newFoundNode[1] = newPath
 
-    if(option) {
+    if(option == "optionCost") {
       let newcost = start[2] + nextEdges[count].data("cost") * quantity + nextEdges[count].data("sucost")
       newcost = Math.round(newcost * 100) / 100
       newFoundNode [2] = newcost           
@@ -186,7 +186,7 @@ export default {
   getOptionValue(path) {
     let value
     let option = this.getCytoGraph(this).data("settingsOptimizationOption");   // false = time, true = cost
-    if (option) {
+    if (option == "optionCost") {
       value = this.getTotalCost(path)
     }
     else {
@@ -324,7 +324,7 @@ export default {
   },
   
   optimizing() {
-    let option = this.optimizationOption;   // false = time, true = cost
+    let option = this.getCytoGraph(this).data("settingsOptimizationOption");   // false = time, true = cost
       //mit Regler verknüpfen
     let nextBestCounter = this.getCytoGraph(this).data("settingsOptimizationNumber");
     
