@@ -2,7 +2,7 @@
   <v-row class="card-top pt-2 ma-0">
     <v-col sm="3" class="graph-info">
       <v-row>
-        <v-card align="center" class="mt-2 ml-8 mb-2" width="60px" height="60px">
+        <v-card align="center" class="icon-card mt-2 ml-8 mb-2" width="60px" height="60px">
           <v-icon size="40px" class="mt-2" color="#6c7dff">mdi-rocket</v-icon>
         </v-card>
         <p class="mb-0">
@@ -54,7 +54,7 @@
     <v-col sm="3">
       <v-row>
         <v-divider class="mx-4" vertical></v-divider>
-        <v-card align="center" class="mt-2 ml-4" width="60px" height="60px">
+        <v-card align="center" class="icon-card mt-2 ml-4" width="60px" height="60px">
           <v-icon size="40px" class="mt-2" color="#6c7dff">mdi-counter</v-icon>
         </v-card>
         <p class="mb-0">
@@ -107,7 +107,7 @@
     <v-col sm="3">
       <v-row>
         <v-divider class="mx-4" vertical></v-divider>
-        <v-card align="center" class="mt-2 ml-4" width="60px" height="60px">
+        <v-card align="center" class="icon-card mt-2 ml-4" width="60px" height="60px">
           <v-icon size="40px" class="mt-2" color="#6c7dff">mdi-cash</v-icon>
         </v-card>
         <p class="mb-0">
@@ -137,7 +137,7 @@
     <v-col sm="3">
       <v-row>
         <v-divider class="mx-4" vertical></v-divider>
-        <v-card align="center" class="mt-2 ml-4" width="60px" height="60px">
+        <v-card align="center" class="icon-card mt-2 ml-4" width="60px" height="60px">
           <v-icon size="40px" class="mt-2" color="#6c7dff">mdi-clock-outline</v-icon>
         </v-card>
         <p class="mb-0">

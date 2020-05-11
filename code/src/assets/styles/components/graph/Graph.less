@@ -21,7 +21,7 @@
   }
 
   .content-card {
-    
+
     margin-top: -107px;
     margin-right: 80px;
     margin-left: 80px;
@@ -35,20 +35,24 @@
       }
     }
 
-    @media(min-width: 1400px) {
-      .card-top {
-        padding: 0 10vw;
-      }
-    }
-
     .card-bottom {
       background-color: #ffffff;
     }
   }
 
-  @media(min-width: 1400px) {
+  @media(min-width: 1600px) {
     .card-top {
       padding: 0 10vw;
+    }
+  }
+
+  @media(max-width: 1270px) {
+    .icon-card {
+      display: none;
+    }
+
+    .card-top {
+      padding: 0 30px;
     }
   }
 }
