@@ -25,21 +25,16 @@ export default {
       warning: false,
       success: false,
       error: false,
-      wait: false
     };
   },
   methods: {
-    waitUntilNext() {
-      this.wait = true;
-      this.dialogTimeout = 3000000;
-    },
     dialogReset() {
       this.dialogVisible = false;
       this.info = false;
       this.warning = false;
       this.success = false;
       this.error = false;
-      if (this.wait == false) this.dialogTimeout = 3000;
+      this.dialogTimeout = 3000;
       this.wait = false;
       this.dialogText = "";
     },

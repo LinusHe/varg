@@ -78,7 +78,6 @@ export default {
         "setCyProdName",
         "Importiertes Produkt wird geladen..."
       );
-      // waitUntilNext;
       function onChange(event) {
         
         fileManager.loadGraphFromJson(event, null);
