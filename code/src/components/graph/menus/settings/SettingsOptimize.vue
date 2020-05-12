@@ -209,10 +209,17 @@ export default {
         let indexStart = this.itemsName.indexOf(this.startSelect[i]);
         startIDs.push(this.itemsID[indexStart]);
       }
-      this.getGraph()
-        .getCytoGraph(this.getGraph())
+      
+      console.log("vor optimierung: " + startIDs)
+
+     /* this.getGraph()
+        .getCytoGraph()
         .data("settingsOptimizationStartIDs", startIDs);
-      // set endID for Optimization Algorithm
+     
+     */
+     // set endID for Optimization Algorithm
+
+
       let indexEnd = this.itemsName.indexOf(this.endSelect);
       let endID = this.itemsID[indexEnd];
       this.getGraph()
@@ -227,6 +234,7 @@ export default {
       this.getGraph()
         .getCytoGraph(this.getGraph())
         .data("settingsOptimizationSelection", this.optimizationSelection);
+
 
       // remove optimization
       this.getGraph().removeOptimization();

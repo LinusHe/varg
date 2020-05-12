@@ -329,7 +329,23 @@ export default {
     let nextBestCounter = this.getCytoGraph(this).data("settingsOptimizationNumber");
     
       // gets ID's of start-nodes
-    let startIDs = this.getCytoGraph(this).data("settingsOptimizationStartIDs");
+    let startIDs = []
+
+    let cy = this.getCytoGraph()
+    
+
+    for(let i=0; i < cy.data("settingsOptimizationStartNames").length; i++ ){
+      let string = cy.data("settingsOptimizationStartNames")[i]
+      startIDs.push((cy.nodes(`[name = '${string}']`).data("id")))
+    }
+
+    console.log("während Optimierung: " +startIDs)
+
+
+
+
+
+
       
       // "converts" start-nodes into sort-nodes
       // sort-nodes save NodeID, usedEdges (from start-node) and "needed" costs (from start)
