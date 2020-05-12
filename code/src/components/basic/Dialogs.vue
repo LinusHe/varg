@@ -1,12 +1,20 @@
 <template>
   <div class="varg-alert" id="varg-dialog">
-    <v-snackbar :color="color" :timeout="dialogTimeout" v-model="dialogVisible">
-      <v-icon v-show="info" color="#ffffff" class="ml-2 mr-8">mdi-information</v-icon>
-      <v-icon v-show="warning" color="#ffffff" class="ml-2 mr-8">mdi-exclamation</v-icon>
-      <v-icon v-show="success" color="#ffffff" class="ml-2 mr-8">mdi-check-circle</v-icon>
-      <v-icon v-show="error" color="#ffffff" class="ml-2 mr-8">mdi-alert</v-icon>
-      <p class="mt-4" style="color: #ffffff" v-html="dialogText"></p>
-      <v-btn class="mr-2" color="#ffffff" text @click="dialogVisible = false">Schließen</v-btn>
+    <!-- TODO: Make style relative to snackbar height (instead of 80) -->
+    <v-snackbar
+      v-for="(snackbar, index) in snackbars.filter(s => s.dialogVisible)"
+      :color="snackbar.color"
+      :timeout="snackbar.dialogTimeout"
+      v-model="snackbar.dialogVisible"
+      :key="snackbar.dialogText + Math.random()"
+      :style="`bottom: ${(index * 80) + 8}px`"
+    >
+      <v-icon v-show="snackbar.info" color="#ffffff" class="ml-2 mr-8">mdi-information</v-icon>
+      <v-icon v-show="snackbar.warning" color="#ffffff" class="ml-2 mr-8">mdi-exclamation</v-icon>
+      <v-icon v-show="snackbar.success" color="#ffffff" class="ml-2 mr-8">mdi-check-circle</v-icon>
+      <v-icon v-show="snackbar.error" color="#ffffff" class="ml-2 mr-8">mdi-alert</v-icon>
+      <p class="mt-4" style="color: #ffffff" v-html="snackbar.dialogText"></p>
+      <v-btn class="mr-2" color="#ffffff" text @click="snackbar.dialogVisible = false">Schließen</v-btn>
     </v-snackbar>
   </div>
 </template>
@@ -17,26 +25,19 @@
 export default {
   data() {
     return {
-      dialogTimeout: 3000,
-      dialogVisible: false,
-      dialogText: "",
-      color: "info",
-      info: false,
-      warning: false,
-      success: false,
-      error: false,
+      snackbars: []
     };
   },
   methods: {
-    dialogReset() {
-      this.dialogVisible = false;
-      this.info = false;
-      this.warning = false;
-      this.success = false;
-      this.error = false;
-      this.dialogTimeout = 3000;
-      this.wait = false;
-      this.dialogText = "";
+    defaultDialog(dialog) {
+      dialog.dialogVisible = false;
+      dialog.info = false;
+      dialog.warning = false;
+      dialog.success = false;
+      dialog.error = false;
+      dialog.dialogTimeout = 3000;
+      dialog.wait = false;
+      dialog.dialogText = "";
     },
     dialogInfo(text, newtimeout) {
       this.dialogReset();
@@ -63,12 +64,15 @@ export default {
       if (newtimeout != null) this.dialogTimeout = newtimeout;
     },
     dialogError(text, newtimeout) {
-      this.dialogReset();
-      this.error = true;
-      this.color = "error";
-      this.dialogText = text;
-      this.dialogVisible = true;
-      if (newtimeout != null) this.dialogTimeout = newtimeout;
+      let mySb = {}
+      this.defaultDialog(mySb);
+      mySb.error = true;
+      mySb.color = "error";
+      mySb.dialogText = text;
+      mySb.dialogVisible = true;
+      if (newtimeout != null) mySb.dialogTimeout = newtimeout;
+      this.snackbars.push(mySb);
+      console.log(this.snackbars);
     }
   }
 };
