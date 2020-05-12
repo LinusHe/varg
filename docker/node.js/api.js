@@ -72,8 +72,18 @@ router.route('/graph')
 
 router.param('graph_id', function(req, res, next, id)   {
     //check if Graph with id exists within database
-    console.log("Something should happen here.");
-    next();
+    let username=req.query.user;
+    console.log("Checking Database for Graph");
+    con.query("SELECT graphObject FROM cytographs WHERE fileID="+ id + " AND userName=" + '"' + username + '"', function(err, result) {
+        if (err) {
+            console.log("Graph may not exist.");
+            throw err;
+        }
+        else{
+            console.log("Graph does exist.");
+            next();
+        }
+    });
 });
 
 router.route('/graph/:graph_id?')
@@ -87,17 +97,32 @@ router.route('/graph/:graph_id?')
         console.log('Sending Graph');
         con.query("SELECT graphObject FROM cytographs WHERE fileID="+ id + " AND userName=" + '"' + username + '"', function(err, result) {
             if (err) throw err;
-            console.log("Query was successful!");
+            console.log("Get-Query was successful!");
             res.send(result);
         });
     })
     //update a single graph identified by id
     .put(function(req, res) {
-
+        let id = req.params.graph_id;
+        let username=req.query.user;
+        console.log('Updating Graph');
+        /* req.params.json is not yet implemented*/
+        con.query("UPDATE cytographs SET graphObject=" + req.params.json + " WHERE fileID="+ id + " AND userName=" + '"' + username + '"', function(err, result) {
+            if (err) throw err;
+            console.log("Update-Query succesfull");
+            res.send(result);
+        });
     })
     //delete a single graph identified by id
     .delete(function(req, res) {
-
+        let id = req.params.graph_id;
+        let username=req.query.user;
+        console.log('Deleting Graph');
+        con.query("DELETE FROM cytographs WHERE fileID="+ id + " AND userName=" + '"' + username + '"', function(err, result)   {
+            if (err) throw err;
+            console.log("Delete-Query succesfull");
+            res.send(result);
+        });
     });
 
 //route for testing purposes - remove in build
