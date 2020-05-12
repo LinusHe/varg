@@ -329,23 +329,43 @@ export default {
     let nextBestCounter = this.getCytoGraph(this).data("settingsOptimizationNumber");
     
       // gets ID's of start-nodes
-    let startIDs = []
+
 
     let cy = this.getCytoGraph()
-    
+    console.log(cy.data())
 
-    for(let i=0; i < cy.data("settingsOptimizationStartNames").length; i++ ){
-      let string = cy.data("settingsOptimizationStartNames")[i]
-      startIDs.push((cy.nodes(`[name = '${string}']`).data("id")))
+  
+
+    let startIDs= cy.data("settingsOptimizationStartIDs")
+
+    let endID = this.getCytoGraph(this).data("settingsOptimizationEndID");
+    
+    //automatically initialize startnodes if no startnodes were selected
+    if(startIDs.length == 0 ){
+      for(let o = 0; o < cy.nodes().length; o++){
+        if(cy.nodes()[o].incomers().length == 0){
+          startIDs.push(cy.nodes()[o].data("id"))
+          
+        }
+      }
+    }
+    
+    //automatically initialize endnode if no endnode were selected
+    if(endID == undefined || endID == "" || endID == -1){
+      for(let o = 0; o < cy.nodes().length; o++){
+        if(cy.nodes()[o].outgoers().length == 0){
+          endID = cy.nodes()[o].data("id")
+          
+        }
+      }
     }
 
-    console.log("während Optimierung: " +startIDs)
 
 
 
-
-
-
+    console.log("startids" + startIDs)
+    console.log("endid" + endID)
+    
       
       // "converts" start-nodes into sort-nodes
       // sort-nodes save NodeID, usedEdges (from start-node) and "needed" costs (from start)
@@ -423,7 +443,7 @@ export default {
   
     let bestPaths = []
     let bestPath = [3]
-    let endID = this.getCytoGraph(this).data("settingsOptimizationEndID");
+   // let endID = this.getCytoGraph(this).data("settingsOptimizationEndID");
     
       //look for the end-node, first one found is the one with lowest cost
     let search = 0

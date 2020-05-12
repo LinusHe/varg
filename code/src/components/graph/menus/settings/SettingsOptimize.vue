@@ -212,11 +212,11 @@ export default {
       
       console.log("vor optimierung: " + startIDs)
 
-     /* this.getGraph()
+      this.getGraph()
         .getCytoGraph()
         .data("settingsOptimizationStartIDs", startIDs);
      
-     */
+     
      // set endID for Optimization Algorithm
 
 
