@@ -7,7 +7,7 @@
       :timeout="snackbar.dialogTimeout"
       v-model="snackbar.dialogVisible"
       :key="snackbar.dialogText + Math.random()"
-      :style="`bottom: ${(index * 80) + 8}px`"
+      :style="calcHeight(index)"
     >
       <v-icon v-show="snackbar.info" color="#ffffff" class="ml-2 mr-8">mdi-information</v-icon>
       <v-icon v-show="snackbar.warning" color="#ffffff" class="ml-2 mr-8">mdi-exclamation</v-icon>
@@ -25,11 +25,13 @@
 export default {
   data() {
     return {
+      // dialog queue:
       snackbars: []
     };
   },
   methods: {
     defaultDialog(dialog) {
+      // default values:
       dialog.dialogVisible = false;
       dialog.info = false;
       dialog.warning = false;
@@ -40,39 +42,87 @@ export default {
       dialog.dialogText = "";
     },
     dialogInfo(text, newtimeout) {
-      this.dialogReset();
-      this.info = true;
-      this.color = "infoAlert";
-      this.dialogText = text;
-      this.dialogVisible = true;
+      // set to default values
+      let mySb = {};
+      this.defaultDialog(mySb);
+
+      // set own values
+      mySb.info = true;
+      mySb.color = "infoAlert";
+      mySb.dialogText = text;
+      mySb.dialogVisible = true;
       if (newtimeout != null) this.dialogTimeout = newtimeout;
+
+      // push to dialog queue
+      this.snackbars.push(mySb);
     },
     dialogWarning(text, newtimeout) {
-      this.dialogReset();
-      this.warning = true;
-      this.color = "warning";
-      this.dialogText = text;
-      this.dialogVisible = true;
+      // set to default values
+      let mySb = {};
+      this.defaultDialog(mySb);
+
+      // set own values
+      mySb.warning = true;
+      mySb.color = "warning";
+      mySb.dialogText = text;
+      mySb.dialogVisible = true;
       if (newtimeout != null) this.dialogTimeout = newtimeout;
+
+      // push to dialog-queue
+      this.snackbars.push(mySb);
     },
     dialogSuccess(text, newtimeout) {
-      this.dialogReset();
-      this.success = true;
-      this.color = "success";
-      this.dialogText = text;
-      this.dialogVisible = true;
+      // set to default values
+      let mySb = {};
+      this.defaultDialog(mySb);
+
+      // set own values
+      mySb.success = true;
+      mySb.color = "success";
+      mySb.dialogText = text;
+      mySb.dialogVisible = true;
       if (newtimeout != null) this.dialogTimeout = newtimeout;
+
+      // push to dialog-queue
+      this.snackbars.push(mySb);
     },
     dialogError(text, newtimeout) {
-      let mySb = {}
+      // set to default values
+      let mySb = {};
       this.defaultDialog(mySb);
+
+      // set own values
       mySb.error = true;
       mySb.color = "error";
       mySb.dialogText = text;
       mySb.dialogVisible = true;
       if (newtimeout != null) mySb.dialogTimeout = newtimeout;
+
+      // push to dialog-queue
       this.snackbars.push(mySb);
-      console.log(this.snackbars);
+    },
+    calcHeight(index) {
+      let heightString = "bottom: ";
+      // fallback value 
+      let indexHeight = index * 80 + 8;
+
+      let openDialogs = document.getElementsByClassName("v-snack");
+      if (typeof openDialogs[index] != "undefined") {
+        console.log(index, openDialogs[index].offsetHeight);
+        console.log(index, openDialogs[index].style.bottom);
+      }
+
+      // style for first dialog
+      if (index == 0) {
+        return "bottom: 8px";
+      } 
+      // style for next dialogs
+      else {
+        indexHeight = parseInt(openDialogs[index-1].style.bottom) + openDialogs[index-1].offsetHeight + 18;
+      }
+
+      heightString += indexHeight + "px";
+      return heightString;
     }
   }
 };
