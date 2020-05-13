@@ -41,6 +41,7 @@ router.use(function(req,res,next) {
     console.log("middleware could happen here");
     //this will allow to (only) access the resources from the specified address
     res.header("Access-Control-Allow-Origin", "http://localhost:8080");
+    res.header("Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next(); //continue past middleware
 });
