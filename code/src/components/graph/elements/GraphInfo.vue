@@ -28,7 +28,7 @@
                 counter="25"
                 @submit="saveNewName()"
                 v-on:blur="saveNewName()"
-                :rules="[v => !!v || 'Fehlender Name', v => (v || '').length <= 25  ||'Name ist zu lang']"
+                :rules="[v => !!v || '', v => v.length <= 25 || '', v => v[0] != ' ' || '']"
               ></v-text-field>
             </v-form>
             <v-icon
@@ -81,7 +81,7 @@
                 type="number"
                 width="100px"
                 v-on:blur="saveNewQuant()"
-                :rules="[v => !!v || 'Feld darf nicht leer sein', v => v > 0 ||'mindestens 1', v => v < 9999999999999999 ||'bist du wahnsinnig!?']"
+                :rules="[v => !!v || '', v => v > 0 || '', v => v < 9999999999999999 || '', v => Number.isInteger(+v) || '']"
               ></v-text-field>
             </v-form>
             <v-icon
@@ -204,12 +204,6 @@ export default {
         .getCytoGraph(this.getGraph())
         .data("prodQuant");
     },
-    updateData(newProdName, newProdQuant) {
-      this.prodName = newProdName;
-      this.prodQuant = newProdQuant;
-      this.saveNewName();
-      this.saveNewQuant();
-    },
     editName() {
       this.isEditingName = true;
       this.$nextTick(() => this.$refs.nameInput.focus());
@@ -238,6 +232,7 @@ export default {
     },
     saveNewQuant() {
       if (this.$refs.formQuant.validate()) {
+        this.prodQuant = +this.prodQuant;
         this.isEditingQuant = false;
         this.getGraph()
           .getCytoGraph(this.getGraph())
