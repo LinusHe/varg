@@ -122,7 +122,14 @@ export default {
 
       function onChange(event) {
         console.log("Graph Component to load:", graphComponent);
-        fileManager.loadGraphFromJson(event, graphComponent);
+        try {
+          fileManager.loadGraphFromJson(event, graphComponent);
+        }
+        catch (err) {
+          dialogComponent.dialogError(
+          "Datei-Fehler: <b>JSon wurde nicht ordentlich geladen</b>"
+          );
+        }
       }
     },
     account() {
