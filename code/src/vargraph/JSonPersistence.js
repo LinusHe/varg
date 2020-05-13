@@ -10,7 +10,13 @@ export function CreateJSon(graphComponent) {
 
 export function LoadJSon(content, graphComponent) {
   //Turns stringified JSon back to JSon format
-  content = JSON.parse(content);
+  try {
+    content = JSON.parse(content);
+  }
+  //should catch wrong JSon syntax, doesn't catch bad cytoscape syntax
+  catch (err){
+    throw new Error("Json failed to parse");
+  }
   console.log("Json: ", content);
 
   if (graphComponent == null) {
