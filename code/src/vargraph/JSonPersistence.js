@@ -27,6 +27,7 @@ export function LoadJSon(content, graphComponent) {
     //apply node colors
     cy.nodes().forEach(node => {
       node.style("background-color", "#" + node.data("color"));
+      node.addClass("nodelabel");       
     });
   }
 }

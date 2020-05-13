@@ -7,6 +7,7 @@ import cyStore from "@/vargraph/graph/cyStore";
 import nodeHtmlLabel from "cytoscape-node-html-label";
 import klay from "cytoscape-klay";
 import defaultData from "@/vargraph/init/cytoscapeDefaultData.js";
+import edgehandles from "cytoscape-edgehandles";
 
 export default {
   // this method will run before cytoscape is configured
@@ -14,6 +15,7 @@ export default {
     console.log("calling pre-config", cytoscape);
     nodeHtmlLabel(cytoscape);
     cytoscape.use(klay);
+    cytoscape.use(edgehandles);
   },
   // this config will run after cytoscape is configured
   afterCreated(cy) {
@@ -72,6 +74,7 @@ export default {
     // Apply Color for nodes
     cy.nodes().forEach(n => {
       n.style("background-color", "#" + n.data("color"));
+      n.addClass("nodelabel"); 
     });
 
     // Generate Edge Labels
@@ -98,5 +101,8 @@ export default {
 
     // Generates Node HTML Label
     this.updateNodeLabel(graphComponent, cy);
+
+    // sets edgeHandle Default Valuse
+    cy.edgehandles(this.getEdgeHandleDefaults());
   }
 };

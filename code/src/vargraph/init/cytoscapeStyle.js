@@ -63,6 +63,15 @@ const style = [
       "source-arrow-color": "black",
       "text-outline-color": "black"
     }
+  },
+  // Edge Handle Classes
+  {
+    selector: ".eh-handle",
+    style: {
+      "background-color": "#4c64ff",
+      width: 50,
+      height: 50
+    }
   }
 ];
 

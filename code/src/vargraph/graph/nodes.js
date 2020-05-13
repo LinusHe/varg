@@ -90,6 +90,8 @@ export default {
     let node = cy.getElementById(count);
     console.log("added node: ", node);
 
+    node.addClass("nodelabel"); 
+
     // update position if conflict occurs
     this.moveNodesInConflict(graphComponent, node)
 

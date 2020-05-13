@@ -19,6 +19,7 @@ import positionEvents from "@/vargraph/events/position";
 import graph from "@/vargraph/graph/graph";
 import nodes from "@/vargraph/graph/nodes";
 import edges from "@/vargraph/graph/edges";
+import edgeHandle from "@/vargraph/graph/edgeHandle";
 import settings from "@/vargraph/graph/settings";
 import optimizations from "@/vargraph/graph/optimizations";
 import labels from "@/vargraph/graph/labels";
@@ -44,6 +45,7 @@ const methods = Object.assign(
   graph,
   nodes,
   edges,
+  edgeHandle,
   optimizations,
   settings,
   labels,

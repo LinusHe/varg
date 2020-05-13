@@ -78,13 +78,13 @@ export default {
 
     cy.nodeHtmlLabel([
       {
-        query: "node", // cytoscape query selector
+        query: ".nodelabel", // cytoscape query selector
         halign: "center", // title vertical position. Can be 'left',''center, 'right'
         valign: "center", // title vertical position. Can be 'top',''center, 'bottom'
         halignBox: "center", // title vertical position. Can be 'left',''center, 'right'
         valignBox: "center", // title relative box vertical position. Can be 'top',''center, 'bottom'
         cssClass: "findme", // any classes will be as attribute of <div> container for every title
-        tpl: function (data) {
+        tpl: function(data) {
           if (data.imgUrl != null && data.imgUrl != "") {
             // Template for Image-Node
             return (
