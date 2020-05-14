@@ -111,7 +111,7 @@ router.route('/graph/:graph_id?')
         con.query("UPDATE cytographs SET graphObject=" + req.params.json + " WHERE fileID="+ id + " AND userName=" + '"' + username + '"', function(err, result) {
             if (err) throw err;
             console.log("Update-Query succesfull");
-            res.send(result);
+            res.sendStatus(200);
         });
     })
     //delete a single graph identified by id
