@@ -206,6 +206,10 @@ export default {
     }
   },
   methods: {
+    getGraph() {
+      //geht auch nicht :(
+      return this.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$refs["vargraph"];
+    },
     axiosSave() {
       //TODO warum geht das nicht??
       //this.$parent.$parent.$refs.exportMenu.setdialog(true);
