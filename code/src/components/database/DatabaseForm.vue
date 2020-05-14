@@ -11,6 +11,7 @@
     >
       <template v-slot:header>
         <v-toolbar dark color="blue darken-3" class="mb-1">
+          <v-btn @click="axiosSave()">Hochladen</v-btn>
           <v-text-field v-model="search" clearable flat solo-inverted hide-details label="Search"></v-text-field>
           <template v-if="$vuetify.breakpoint.mdAndUp">
             <v-spacer></v-spacer>
@@ -41,7 +42,7 @@
           <v-row class="ma-0">
             <v-col v-for="item in props.items" :key="item.name" cols="12" sm="6" md="6" lg="6">
               <v-card>
-                <v-card-title class="subheading font-weight-bold">{{ item.name }}</v-card-title>
+                <v-card-title class="subheading font-weight-bold">{{ item.name }}<v-btn @click="axiosLoad()">Laden</v-btn></v-card-title>
                   <v-img
                     src="https://d2slcw3kip6qmk.cloudfront.net/marketing/pages/chart/UML-state-diagram-tutorial/FeaturedImage.png"
                   ></v-img>
@@ -99,6 +100,8 @@
 
 <script>
 /* eslint-disable standard/computed-property-even-spacing */
+import axios from 'axios';
+import ExJSon from "@/vargraph/JSonPersistence.js";
 
 export default {
   data() {
@@ -203,6 +206,23 @@ export default {
     }
   },
   methods: {
+    axiosSave() {
+      //TODO warum geht das nicht??
+      //this.$parent.$parent.$refs.exportMenu.setdialog(true);
+      let content = ExJSon.CreateJSon(this.getGraph());
+      axios.put('http://192.168.1.102:1110/VarG/graph/1', {
+        params: {
+          json: content,
+          //graph_id: 2,
+          user: 'eheldt'
+        }
+      // eslint-disable-next-line no-console
+      });
+    },
+    axiosLoad() {
+      // eslint-disable-next-line no-console
+      axios.get('http://192.168.1.102:1110/VarG/graph/1',{params:{user:'eheldt'}}).then(r => console.log('axios response:',r))
+    },
     nextPage() {
       if (this.page + 1 <= this.numberOfPages) this.page += 1;
     },

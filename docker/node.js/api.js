@@ -10,7 +10,7 @@ const mysql_driver = require('mysql');
 const parser = require('./APIparser')
 
 const config = {
-    host: "192.168.99.101",
+    host: "192.168.1.102",
     user: "varg",
     password: "VarG2020",
     database: "vargdb"
@@ -41,6 +41,7 @@ router.use(function(req,res,next) {
     console.log("middleware could happen here");
     //this will allow to (only) access the resources from the specified address
     res.header("Access-Control-Allow-Origin", "http://localhost:8080");
+    res.header("Access-Control-Allow-Methods","GET,PUT,POST,DELETE,OPTIONS");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next(); //continue past middleware
 });
@@ -94,7 +95,7 @@ router.route('/graph/:graph_id?')
         //let username = req.query.user;
         let id=req.params.graph_id;
         let username=req.query.user;
-        console.log('Sending Graph');
+        console.log('Sending Graph with id:',id,', username:',username);
         con.query("SELECT graphObject FROM cytographs WHERE fileID="+ id + " AND userName=" + '"' + username + '"', function(err, result) {
             if (err) throw err;
             console.log("Get-Query was successful!");
