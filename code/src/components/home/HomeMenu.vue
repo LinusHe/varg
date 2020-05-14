@@ -17,7 +17,7 @@
 
         <v-col sm="4">
           <v-card outlined align="center">
-            <v-btn :loading="loading" depressed fab :color="importBtnColor" @click="openFromFile()" class="mt-4">
+            <v-btn depressed fab :color="importBtnColor" @click="openFromFile()" class="mt-4">
               <v-icon>mdi-import</v-icon>
             </v-btn>
             <input type="file" ref="file" accept=".json" style="display: none" />
@@ -68,10 +68,6 @@ export default {
   methods: {
     openFromFile() {
       this.$refs.file.click();
-      this.loading = true;
-      this.importBtnColor = "warning";
-
-     
 
       this.$refs.file.addEventListener("change", onChange);
       this.$store.commit(
@@ -80,8 +76,6 @@ export default {
       );
       // waitUntilNext;
       function onChange(event) {
-        this.loading = false;
-        this.importBtnColor = "primary";
         fileManager.loadGraphFromJson(event, null);
         dialogComponent.dialogSuccess("Graph erfolgreich geladen");
 
