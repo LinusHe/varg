@@ -4,6 +4,7 @@
 // The holding component is code\src\components\graph\elements\VarGraph.vue
 
 // This File contains methods for the edgeHandling (Drag & Drop Handling)
+// More details: https://github.com/cytoscape/cytoscape.js-edgehandles 
 
 export default {
   getEdgeHandleDefaults() {
@@ -58,6 +59,7 @@ export default {
       },
       complete: function(sourceNode, targetNode, addedEles) {
         // fired when edgehandles is done and elements are added
+        console.log(addedEles)
       },
       stop: function(sourceNode) {
         // fired when edgehandles interaction is stopped (either complete with added edges or incomplete)

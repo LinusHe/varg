@@ -68,9 +68,18 @@ const style = [
   {
     selector: ".eh-handle",
     style: {
-      "background-color": "#4c64ff",
+      "background-color": "#797979",
       width: 50,
-      height: 50
+      height: 50,
+      label: ""
+    }
+  },
+  {
+    selector: ".eh-ghost-edge",
+    style: {
+      "line-color": "#797979",
+      "target-arrow-color": "#797979",
+      "line-style": "dashed"
     }
   }
 ];
