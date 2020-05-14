@@ -66,7 +66,13 @@ router.route('/graph')
     })
     //post a graph
     .post(function(req,res) {
-
+        console.log('Attempting to post a graph');
+        con.query("INSERT INTO cytographs VALUES (" +  req.query.filename + ", " + req.query.user + ", " + req.query.json + ")",
+         function(err, result) {
+            if (err) throw err;
+            console.log("Post was succesfull.");
+            res.sendStatus(201);
+        });
     });
 
 //graph/:graph_id
