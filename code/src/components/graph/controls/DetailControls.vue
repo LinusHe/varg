@@ -549,10 +549,10 @@ export default {
           this.edgeShort,
           startID,
           endID,
-          this.edgeCosts,
-          this.edgeTime,
-          this.edgesuCosts,
-          this.edgesuTime
+          parseFloat(this.edgeCosts),
+          parseFloat(this.edgeTime),
+          parseFloat(this.edgesuCosts),
+          parseFloat(this.edgesuTime)
         );
         this.edgeGui = false;
         dialogComponent.dialogSuccess("Bearbeitungsschritt erfolgreich aktualisiert");
