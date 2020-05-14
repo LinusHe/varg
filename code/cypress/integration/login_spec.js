@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 describe("First Page", () => {
   it("Login should be first Page", () => {
     cy.visit("/");
