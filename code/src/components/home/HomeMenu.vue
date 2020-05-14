@@ -71,7 +71,7 @@ export default {
       this.loading = true;
       this.importBtnColor = "warning";
 
-      this.loading = true;
+     
 
       this.$refs.file.addEventListener("change", onChange);
       this.$store.commit(
@@ -80,9 +80,11 @@ export default {
       );
       // waitUntilNext;
       function onChange(event) {
-        
+        this.loading = false;
+        this.importBtnColor = "primary";
         fileManager.loadGraphFromJson(event, null);
         dialogComponent.dialogSuccess("Graph erfolgreich geladen");
+
       }
       
     }
