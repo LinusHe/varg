@@ -66,7 +66,13 @@ router.route('/graph')
     })
     //post a graph
     .post(function(req,res) {
-
+        console.log('Attempting to post a graph');
+        con.query("INSERT INTO cytographs VALUES (" +  req.query.filename + ", " + req.query.user + ", " + req.query.json + ")",
+         function(err, result) {
+            if (err) throw err;
+            console.log("Post was succesfull.");
+            res.sendStatus(201);
+        });
     });
 
 //graph/:graph_id
@@ -111,7 +117,7 @@ router.route('/graph/:graph_id?')
         con.query("UPDATE cytographs SET graphObject=" + req.params.json + " WHERE fileID="+ id + " AND userName=" + '"' + username + '"', function(err, result) {
             if (err) throw err;
             console.log("Update-Query succesfull");
-            res.send(result);
+            res.sendStatus(200);
         });
     })
     //delete a single graph identified by id
