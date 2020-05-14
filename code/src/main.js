@@ -6,8 +6,15 @@ import router from "./router";
 import vuetify from "./plugins/vuetify";
 import Vuex from "vuex";
 import { store } from "./store/store.js";
+import Darkmode from 'darkmode-js';
+
+
+
 // import VueCytoscape from "vue-cytoscape";
 Vue.config.productionTip = false;
+
+//Darkmode
+new Darkmode().showWidget();
 
 // Vue.use(VueCytoscape);
 
