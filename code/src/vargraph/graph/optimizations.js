@@ -154,8 +154,10 @@ export default {
   getPartCost(edge) {
     let cy = cyStore.data.cy
     let quantity = cy.data("prodQuant")
-    let partcost = cy.getElementById(edge).data("cost") * (quantity)
-                 + cy.getElementById(edge).data("sucost") * (parseInt(quantity-1/cy.getElementById(edge).data("lotsize"))+1)
+    let partcost, partquantcost, partsucost
+    partquantcost = cy.getElementById(edge).data("cost") * (quantity)
+    partsucost = cy.getElementById(edge).data("sucost") * (parseInt((quantity-1)/cy.getElementById(edge).data("lotsize"))+1)
+    partcost = partquantcost + partsucost
     partcost = Math.round(partcost * 100) / 100
     return partcost
   },
@@ -171,8 +173,10 @@ export default {
   getPartTime(edge) {
     let cy = cyStore.data.cy
     let quantity = cy.data("prodQuant")
-    let parttime = cy.getElementById(edge).data("time") * quantity 
-                 + cy.getElementById(edge).data("sutime") * (parseInt(quantity-1/cy.getElementById(edge).data("lotsize"))+1)
+    let parttime, partquanttime, partsutime
+    partquanttime = cy.getElementById(edge).data("time") * quantity 
+    partsutime = cy.getElementById(edge).data("sutime") * (parseInt((quantity-1)/cy.getElementById(edge).data("lotsize"))+1)
+    parttime  = partquanttime + partsutime
     parttime = Math.round(parttime * 100) / 100
     return parttime
   },  
@@ -326,29 +330,22 @@ export default {
   },
   
   optimizing() {
-
-    let option = this.getCytoGraph(this).data("settingsOptimizationOption");   // false = time, true = cost
-      //mit Regler verknüpfen
-    let nextBestCounter = this.getCytoGraph(this).data("settingsOptimizationNumber");
-    
-      // gets ID's of start-nodes
-
-
+   
     let cy = this.getCytoGraph()
     console.log(cy.data())
 
-  
-
+    let option = cy.data("settingsOptimizationOption");   // false = time, true = cost
+    let nextBestCounter = cy.data("settingsOptimizationNumber");
     let startIDs= cy.data("settingsOptimizationStartIDs")
-
-    let endID = this.getCytoGraph(this).data("settingsOptimizationEndID");
+    let endID = cy.data("settingsOptimizationEndID");
     
+      // gets ID's of start- and endnodes
+      
     //automatically initialize startnodes if no startnodes were selected
     if(startIDs.length == 0 ){
       for(let o = 0; o < cy.nodes().length; o++){
         if(cy.nodes()[o].incomers().length == 0){
           startIDs.push(cy.nodes()[o].data("id"))
-          
         }
       }
     }
@@ -357,17 +354,15 @@ export default {
     if(endID == undefined || endID == "" || endID == -1){
       for(let o = 0; o < cy.nodes().length; o++){
         if(cy.nodes()[o].outgoers().length == 0){
-          endID = cy.nodes()[o].data("id")
-          
+          endID = cy.nodes()[o].data("id")          
         }
       }
     }
 
 
-
-
     console.log("startids" + startIDs)
     console.log("endid" + endID)
+    console.log("start")
     
       
       // "converts" start-nodes into sort-nodes
