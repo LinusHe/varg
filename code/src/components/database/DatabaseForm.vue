@@ -42,7 +42,7 @@
           <v-row class="ma-0">
             <v-col v-for="item in props.items" :key="item.name" cols="12" sm="6" md="6" lg="6">
               <v-card>
-                <v-card-title class="subheading font-weight-bold">{{ item.name }}<v-btn @click="axiosLoad()">Laden</v-btn></v-card-title>
+                <v-card-title class="subheading font-weight-bold">{{ item.name }}<v-btn @click="loadGraph(item)">Laden</v-btn></v-card-title>
                   <v-img
                     src="https://d2slcw3kip6qmk.cloudfront.net/marketing/pages/chart/UML-state-diagram-tutorial/FeaturedImage.png"
                   ></v-img>
@@ -207,25 +207,23 @@ export default {
   },
   methods: {
     getGraph() {
-      //geht auch nicht :(
-      return this.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$refs["vargraph"];
+      return this.$parent.$parent.$parent.$parent.$parent.$parent.$refs["vargraph"];
     },
     axiosSave() {
-      //TODO warum geht das nicht??
-      //this.$parent.$parent.$refs.exportMenu.setdialog(true);
       let content = ExJSon.CreateJSon(this.getGraph());
-      axios.put('http://192.168.1.102:1110/VarG/graph/1', {
-        params: {
+      //TODO not working yet for some reason, params are undefined in API query to DB
+      axios.post('http://192.168.1.102:1110/VarG/graph', {
+        params:{
+          filename: 'file2',
+          user: 'eheldt',
           json: content,
-          //graph_id: 2,
-          user: 'eheldt'
         }
-      // eslint-disable-next-line no-console
       });
     },
-    axiosLoad() {
+    loadGraph(item) {
       // eslint-disable-next-line no-console
-      axios.get('http://192.168.1.102:1110/VarG/graph/1',{params:{user:'eheldt'}}).then(r => console.log('axios response:',r))
+      console.log('item:',item,' item.json:',item.json);
+      ExJSon.LoadJSon({"object": "Object"},item.json)
     },
     nextPage() {
       if (this.page + 1 <= this.numberOfPages) this.page += 1;
@@ -238,6 +236,26 @@ export default {
     },
     backBtn(number) {
       
+    },
+    getItems() {
+      this.items = [];
+      axios.get('http://192.168.1.102:1110/VarG/graph',{params:{user:'eheldt'}}).then(response => {
+        for(let i = 0; i < response.data.length; i++) {
+          const el = JSON.parse(response.data[i].graphObject)
+          // eslint-disable-next-line no-console
+          console.log('graphObject:',el)
+          this.items.push({
+            'name': el.data.prodName,
+            'stückzahl': el.data.prodQuant,
+            'startzustand': el.data.start,
+            'endprodukt': el.data.end,
+            'bearbeitungsschritte': el.data.IDCount,
+            'teile': el.data.IDCount,
+            'autor': el.data.user,
+            'json': el
+          })
+        }
+      })
     }
   }
 };

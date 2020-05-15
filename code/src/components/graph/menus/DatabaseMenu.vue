@@ -5,7 +5,7 @@
       <v-card-title class="text-center justify-center mb-3 pt-8" color="primary">
         <h1>Datenbank</h1>
       </v-card-title>
-      <datenbank />
+      <datenbank ref="datenbank"/>
     </v-card>
   </v-dialog>
 </template>
@@ -27,6 +27,9 @@ export default {
   methods: {
     openDialog() {
       this.dialog = true;
+      this.$nextTick(() => {
+        this.$refs.datenbank.getItems();
+      });
     }
   }
 };

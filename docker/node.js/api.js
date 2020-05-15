@@ -54,10 +54,10 @@ router.get('/', (req, res) =>{
 //any additional routes here
 
 //(graph)
-router.route('/graph')
+router.route('/graph?')
     //get all graphs - should probably be reserved to higher authority roles
     .get(function (req, res) {
-        console.log('Sending all Graphs');
+        console.log('Sending all Graphs with user:',req.query.user);
         con.query("SELECT graphObject FROM cytographs", function(err, result) {
             if (err) throw err;
             console.log("Query was successful !");
@@ -66,7 +66,7 @@ router.route('/graph')
     })
     //post a graph
     .post(function(req,res) {
-        console.log('Attempting to post a graph');
+        console.log('Attempting to post a graph with filename:',req.query.filename);
         con.query("INSERT INTO cytographs VALUES (" +  req.query.filename + ", " + req.query.user + ", " + req.query.json + ")",
          function(err, result) {
             if (err) throw err;
