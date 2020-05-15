@@ -202,6 +202,9 @@ export default {
       this.edgeShowSuTime = this.getGraph()
         .getCytoGraph(this.getGraph())
         .data("settingsEdgeShowSuTime");
+      this.edgeShowLotSize = this.getGraph()
+        .getCytoGraph(this.getGraph())
+        .data("settingsEdgeShowLotSize");
       this.edgeTitleItems = this.getGraph()
         .getCytoGraph(this.getGraph())
         .data("settingsEdgeTitleItems");
@@ -248,6 +251,9 @@ export default {
       this.getGraph()
         .getCytoGraph(this.getGraph())
         .data("settingsEdgeShowSuTime", this.edgeShowSuTime);
+      this.getGraph()
+        .getCytoGraph(this.getGraph())
+        .data("settingsEdgeShowLotSize", this.edgeShowLotSize);
       this.getGraph()
         .getCytoGraph(this.getGraph())
         .data("settingsEdgeTitleItems", this.edgeTitleItems);

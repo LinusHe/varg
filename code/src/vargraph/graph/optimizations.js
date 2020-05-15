@@ -154,7 +154,8 @@ export default {
   getPartCost(edge) {
     let cy = cyStore.data.cy
     let quantity = cy.data("prodQuant")
-    let partcost = cy.getElementById(edge).data("cost") * quantity + cy.getElementById(edge).data("sucost")
+    let partcost = cy.getElementById(edge).data("cost") * (quantity)
+                 + cy.getElementById(edge).data("sucost") * (parseInt(quantity-1/cy.getElementById(edge).data("lotsize"))+1)
     partcost = Math.round(partcost * 100) / 100
     return partcost
   },
@@ -170,7 +171,8 @@ export default {
   getPartTime(edge) {
     let cy = cyStore.data.cy
     let quantity = cy.data("prodQuant")
-    let parttime = cy.getElementById(edge).data("time") * quantity + cy.getElementById(edge).data("sutime")
+    let parttime = cy.getElementById(edge).data("time") * quantity 
+                 + cy.getElementById(edge).data("sutime") * (parseInt(quantity-1/cy.getElementById(edge).data("lotsize"))+1)
     parttime = Math.round(parttime * 100) / 100
     return parttime
   },  
@@ -186,7 +188,7 @@ export default {
   getOptionValue(path) {
     let value
     let option = this.getCytoGraph(this).data("settingsOptimizationOption");   // false = time, true = cost
-    if (option == "optionCost") {
+    if(option == "optionCost") {
       value = this.getTotalCost(path)
     }
     else {
@@ -324,6 +326,7 @@ export default {
   },
   
   optimizing() {
+
     let option = this.getCytoGraph(this).data("settingsOptimizationOption");   // false = time, true = cost
       //mit Regler verknüpfen
     let nextBestCounter = this.getCytoGraph(this).data("settingsOptimizationNumber");
