@@ -23,7 +23,8 @@ export const store = new Vuex.Store({
     count: 0,
     
     cyProdName: null,
-    cyProdQuant: null
+    cyProdQuant: null,
+    graph: null
   },
   mutations: {
     //new
@@ -37,6 +38,10 @@ export const store = new Vuex.Store({
         //alert("Old state has been retrieved.");
       }
       state.ready = true;
+    },
+
+    saveGraph(state, graphh) {
+      state.graph = graphh;
     },
     login(state) {
       state.user.autehticated = true;

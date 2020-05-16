@@ -57,6 +57,7 @@ import RightClickMenu from "./menus/RightClickMenu";
 import SettingsMenu from "./menus/settings/SettingsMenu";
 import DatabaseMenu from "./menus/DatabaseMenu";
 import HTTPRequest from "./HTTPRequest";
+//import loadGraph from "@/vargraph/importExport/loadGraph";
 
 export default {
   /* eslint-disable no-console */
@@ -88,6 +89,11 @@ export default {
     getHeader() {
       return this.header;
     }
-  }
+  },
+  /*mounted: function() {
+    if (this.$store.state.graph != null){
+          this.$refs.vargraph = this.$store.state.graph;
+    }
+  }*/
 };
 </script>

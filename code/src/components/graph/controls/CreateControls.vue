@@ -395,6 +395,7 @@ export default {
   methods: {
     getGraph() {
       return this.$parent.$parent.$refs["vargraph"];
+       
     },
     checkImg(url) {
       return url.match(/\.(jpeg|jpg|gif|png)$/) != null;
@@ -514,6 +515,7 @@ export default {
           newsutime
         );
         dialogComponent.dialogSuccess("Verknüpfung erfolgreich angelegt");
+        this.$store.commit('saveGraph', this.getGraph().getCytoGraph(this.getGraph()).json());
         this.clearFields();
         this.edgeCreateGui = false;
         // remove optimization
@@ -539,6 +541,7 @@ export default {
         this.clearFields();
         this.nodeCreateGui = false;
         dialogComponent.dialogSuccess("Zustand erfolgreich angelegt");
+        localStorage.setItem("Knoten",JSON.stringify(this.itemsName));
       }
     },
     cancel() {
