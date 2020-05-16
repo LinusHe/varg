@@ -17,11 +17,11 @@ export const store = new Vuex.Store({
     //shows wheather an atempt to load from localStorage was made
     //Probably useless
     ready: false,
-    
+
     //old
     //kept for now to prevent everything from breaking
     count: 0,
-    
+
     cyProdName: null,
     cyProdQuant: null,
     graph: null
@@ -84,6 +84,9 @@ export const store = new Vuex.Store({
   getters: {
     getAuth: state => {
       return state.user.autehticated;
+    },
+    getGraph: state => {
+      return state.graph;
     },
 
     getIssuedTime: state => {

@@ -15,16 +15,40 @@
 export default {
   name: "LoadingScreen",
   mounted: function() {
+
     if (Date.now() > this.$store.getters.getIssuedTime + 3000000000000) {
+      alert("Date überprüft");
       localStorage.removeItem("store"); //To do: dont remove store, only user
       this.$store.commit("logout");
       this.$router.replace("/home/login");
-    } else if (this.$store.getters.getAuth && window.history.length > 1) {
+    }else if (this.$store.getters.getAuth){   //Token ist gültig!
+      if(window.history.length > 1){   // Waren wir da !
+        if(this.$store.getters.getGraph === null) {
+          this.$router.replace("/home/menu");
+        }else{
+          this.$router.replace("/graph");
+        }
+      }else{
+        this.$router.replace("/home/login");
+      }
+    }
+    /* else if (this.$store.getters.getAuth && window.history.length > 1 && this.$store.getters.getGraph === null) {
+      alert("Nicht Initial betreten");
+      alert(window.history.length);
+      alert(this.$route.query.redirect);
       this.$router.replace(this.$route.query.redirect);
-    } else if (this.$store.getters.getAuth && window.history.length <= 1) {
+    } else if (this.$store.getters.getAuth && window.history.length > 1 && !(this.$store.getters.getGraph === null)) {
+      alert("Reload");
       //To do: check if graph exists in storage and redirect correctly
-      this.$router.replace("/home/menu");
-    } else {
+
+      if(this.$store.getters.getGraph === null){
+       alert("Kein Graphen");
+        this.$router.replace("/home/menu");
+      }else{
+        alert("Graph gefunden");
+        this.$router.replace("/graph");
+      }
+    }*/ else {
       this.$router.replace("/home/login");
     }
   }
