@@ -310,6 +310,7 @@
 </template>
 
 <script>
+import cyStore from "@/vargraph/graph/cyStore";
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
 /* eslint-disable standard/computed-property-even-spacing */
@@ -393,6 +394,11 @@ export default {
     };
   },
   methods: {
+      backupGraph() {
+
+    //let gra = cyStore.data.cy;
+    this.$store.commit('saveGraph', cyStore.data.cy.json());
+  },
     getGraph() {
       return this.$parent.$parent.$refs["vargraph"];
        
@@ -515,12 +521,14 @@ export default {
           newsutime
         );
         dialogComponent.dialogSuccess("Verknüpfung erfolgreich angelegt");
-        this.$store.commit('saveGraph', this.getGraph().getCytoGraph(this.getGraph()).json());
+        
         this.clearFields();
         this.edgeCreateGui = false;
         // remove optimization
         this.getGraph().removeOptimization();
       }
+      this.backupGraph();
+
     },
     setTarget(id) {},
     createNode() {
@@ -541,8 +549,8 @@ export default {
         this.clearFields();
         this.nodeCreateGui = false;
         dialogComponent.dialogSuccess("Zustand erfolgreich angelegt");
-        localStorage.setItem("Knoten",JSON.stringify(this.itemsName));
       }
+      this.backupGraph();
     },
     cancel() {
       this.clearFields();
@@ -572,5 +580,7 @@ export default {
       this.$refs.endzustand.validate();
     }
   }
+
+
 };
 </script>

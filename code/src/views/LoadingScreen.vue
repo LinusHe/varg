@@ -11,6 +11,7 @@
 
 
 <script>
+import cyStore from "@/vargraph/graph/cyStore";
 //import LoginForm from "@/components/login/LoginForm";
 export default {
   name: "LoadingScreen",
@@ -26,7 +27,11 @@ export default {
         if(this.$store.getters.getGraph === null) {
           this.$router.replace("/home/menu");
         }else{
+          let content = this.$store.getters.getGraph;
+      // content = JSON.parse(content);
+       cyStore.data.importedJson = content;
           this.$router.replace("/graph");
+
         }
       }else{
         this.$router.replace("/home/login");

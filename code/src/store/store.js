@@ -10,8 +10,10 @@ export const store = new Vuex.Store({
     user: {
       name: "Gast",
       autehticated: false,
-      role: "guest"
+      role: "guest",
+      admin: false
     },
+    
     issued : Date.now(),
 
     //shows wheather an atempt to load from localStorage was made
