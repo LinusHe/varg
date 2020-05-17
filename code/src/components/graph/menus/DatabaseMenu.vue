@@ -30,6 +30,9 @@ export default {
       this.$nextTick(() => {
         this.$refs.datenbank.getItems();
       });
+    },
+    closeDialog() {
+      this.dialog = false;
     }
   }
 };

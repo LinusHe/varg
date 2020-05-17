@@ -53,11 +53,16 @@ router.get('/', (req, res) =>{
 
 //any additional routes here
 
+//parser for body information in post requests
+let bodyParser = require('body-parser');
+router.use(bodyParser.json());
+router.use(bodyParser.urlencoded({ extended: true }));
+
 //(graph)
 router.route('/graph?')
     //get all graphs - should probably be reserved to higher authority roles
     .get(function (req, res) {
-        console.log('Sending all Graphs with user:',req.query.user);
+        console.log('Sending all Graphs');
         con.query("SELECT graphObject FROM cytographs", function(err, result) {
             if (err) throw err;
             console.log("Query was successful !");
@@ -66,12 +71,24 @@ router.route('/graph?')
     })
     //post a graph
     .post(function(req,res) {
-        console.log('Attempting to post a graph with filename:',req.query.filename);
-        con.query("INSERT INTO cytographs VALUES (" +  req.query.filename + ", " + req.query.user + ", " + req.query.json + ")",
+        console.log('Attempting to post a graph with filename:',req.body.filename);
+        con.query("INSERT INTO cytographs (fileName, userName, graphObject) VALUES ('" +  req.body.filename + "', '" + req.body.user + "', '" + req.body.json + "')",
          function(err, result) {
             if (err) throw err;
             console.log("Post was succesfull.");
             res.sendStatus(201);
+        });
+    });
+
+//get metadata of all graphs from specified user
+router.route('/graph/meta')
+    .get(function (req, res) {
+        console.log('Sending all metadata of user:',req.query.user);
+        con.query('SELECT JSON_EXTRACT(graphObject,"$.data") AS "metadata", fileId, fileName, userName FROM cytographs WHERE userName = "' + req.query.user + '"',
+        function(err, result) {
+            if (err) throw err;
+            console.log("Query was successful !");
+            res.send(result);
         });
     });
 

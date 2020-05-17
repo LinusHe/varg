@@ -42,7 +42,7 @@
           <v-row class="ma-0">
             <v-col v-for="item in props.items" :key="item.name" cols="12" sm="6" md="6" lg="6">
               <v-card>
-                <v-card-title class="subheading font-weight-bold">{{ item.name }}<v-btn @click="loadGraph(item)">Laden</v-btn></v-card-title>
+                <v-card-title class="subheading font-weight-bold">{{ item.name }}<v-btn @click="loadGraph(item)">Laden</v-btn><v-btn @click="deleteGraph(item)">Löschen</v-btn></v-card-title>
                   <v-img
                     src="https://d2slcw3kip6qmk.cloudfront.net/marketing/pages/chart/UML-state-diagram-tutorial/FeaturedImage.png"
                   ></v-img>
@@ -103,7 +103,12 @@
 import axios from 'axios';
 import ExJSon from "@/vargraph/JSonPersistence.js";
 
+let dialogComponent;
+
 export default {
+  mounted () {
+    dialogComponent = this.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$refs["dialogs"];
+  },
   data() {
     return {
       itemsPerPageArray: [4, 8, 12],
@@ -210,20 +215,53 @@ export default {
       return this.$parent.$parent.$parent.$parent.$parent.$parent.$refs["vargraph"];
     },
     axiosSave() {
+      //TODO make this method open ExportDatabase.vue and move all the axios.post & axios.put stuff there
       let content = ExJSon.CreateJSon(this.getGraph());
-      //TODO not working yet for some reason, params are undefined in API query to DB
-      axios.post('http://192.168.1.102:1110/VarG/graph', {
-        params:{
+      try {
+        axios.post('http://192.168.1.102:1110/VarG/graph', {
           filename: 'file2',
           user: 'eheldt',
-          json: content,
-        }
-      });
+          json: JSON.stringify(content)
+        });
+        this.getItems();
+        dialogComponent.dialogSuccess('Graph erfolgreich in Datenbank hochgeladen');
+      } catch (err) {
+        dialogComponent.dialogError('Hochladen fehlgeschlagen');
+      }
     },
     loadGraph(item) {
-      // eslint-disable-next-line no-console
-      console.log('item:',item,' item.json:',item.json);
-      ExJSon.LoadJSon({"object": "Object"},item.json)
+      if(confirm('Beim Laden wird der derzeitige Graph überschrieben. Wirklich den Graph "'+item.name+'" aus der Datenbank laden?')) {
+        try {
+          const url = 'http://192.168.1.102:1110/VarG/graph/' + item.fileId;
+          axios.get(url, {
+            params: {
+              user: 'eheldt'
+            }
+          }).then(response => {
+            ExJSon.LoadJSon(response.data[0].graphObject, this.getGraph());
+          });
+          this.$parent.$parent.$parent.$parent.closeDialog();
+          dialogComponent.dialogSuccess('Graph erfolgreich aus Datenbank geladen');
+        } catch (err) {
+          dialogComponent.dialogError('Laden fehlgeschlagen');
+        }
+      }
+    },
+    deleteGraph (item) {
+      if(confirm('Wirklich den Graph "'+item.name+'" unwiderruflich aus der Datenbank löschen?')) {
+        try {
+          const url = 'http://192.168.1.102:1110/VarG/graph/' + item.fileId;
+          axios.delete(url, {
+            params: {
+              user: 'eheldt'
+            }
+          });
+          this.getItems();
+          dialogComponent.dialogSuccess('Graph erfolgreich von Datenbank gelöscht');
+        } catch (err) {
+          dialogComponent.dialogError('Löschen fehlgeschlagen');
+        }
+      }
     },
     nextPage() {
       if (this.page + 1 <= this.numberOfPages) this.page += 1;
@@ -239,21 +277,27 @@ export default {
     },
     getItems() {
       this.items = [];
-      axios.get('http://192.168.1.102:1110/VarG/graph',{params:{user:'eheldt'}}).then(response => {
+      axios.get('http://192.168.1.102:1110/VarG/graph/meta',{params:{user:'eheldt'}}).then(response => {
+        // eslint-disable-next-line no-console
+        console.log(response)
         for(let i = 0; i < response.data.length; i++) {
-          const el = JSON.parse(response.data[i].graphObject)
+          const el = response.data[i];
+          const md = JSON.parse(el.metadata);
           // eslint-disable-next-line no-console
-          console.log('graphObject:',el)
+          console.log('graphObject:',md)
           this.items.push({
-            'name': el.data.prodName,
-            'stückzahl': el.data.prodQuant,
-            'startzustand': el.data.start,
-            'endprodukt': el.data.end,
-            'bearbeitungsschritte': el.data.IDCount,
-            'teile': el.data.IDCount,
-            'autor': el.data.user,
-            'json': el
-          })
+            'name': el.fileName,
+            'stückzahl': md.prodQuant,
+            'startzustand': md.start,
+            'endprodukt': md.end,
+            'bearbeitungsschritte': md.IDCount,
+            'teile': md.IDCount,
+            'autor': el.userName,
+            'fileId': el.fileId
+          });
+          /* somehow load preview image like this
+          let loadedGraph = cy.json(el);
+          this.pngData = loadedGraph.png();*/
         }
       })
     }
