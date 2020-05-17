@@ -72,7 +72,8 @@ export default {
         _this
           .getDialogComponent(_this)
           .dialogWarning(
-            "<b>Bearbeitungsschritt vorerst ohne Zeit & Kosten angelegt.</b> <br>Um die Werte zu hinterlegen, klicke bitte auf den Bearbeitungsschritt"
+            "<b>Bearbeitungsschritt vorerst ohne Zeit & Kosten angelegt.</b> <br>Um die Werte zu hinterlegen, klicke bitte auf den Bearbeitungsschritt - davor kann nicht optimiert werden",
+            7000
           );
       },
       stop: function(sourceNode) {

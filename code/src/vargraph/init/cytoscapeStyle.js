@@ -52,6 +52,18 @@ const style = [
     }
   },
   {
+    selector: ".quick-edge",
+    style: {
+      "line-style": "dashed"
+    }
+  },
+  {
+    selector: ".eh-preview",
+    style: {
+      "line-style": "dashed"
+    }
+  },
+  {
     selector: ":selected",
     style: {
       "border-width": 5.5,

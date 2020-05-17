@@ -156,6 +156,11 @@ export default {
 
   // createQuickEdge(..): creates an Edge, just with the start and end information
   createQuickEdge(graphComponent, startNode, endNode) {
+    // get cytoscape instance
+    let cy = graphComponent.getCytoGraph();
+    // get id counter
+    let edgeID = cy.data("IDCount");
+
     let edgeName = this.generateQuickEdgeName(
       graphComponent,
       startNode,
@@ -178,6 +183,10 @@ export default {
       null,
       null
     );
+
+    // get created edge and add dotted class
+    let edge = cy.getElementById(edgeID);
+    edge.addClass("quick-edge");
   },
 
   // generateQuickEdgeName(..):  generates Edge Name just with the startNode and endNode ID
@@ -307,6 +316,9 @@ export default {
     edge.data("sutime", newsutime);
     edge.data("label", label);
 
+    // remove quick-edge class
+    if (edge.hasClass("quick-edge")) edge.removeClass("quick-edge");
+
     console.log("after update: ", edge);
   },
 
@@ -321,5 +333,16 @@ export default {
     console.log("edge removed: ", edge);
 
     edge.remove();
+  },
+
+  hasQuickEdges(graphComponent) {
+    // get cytoscape instance
+    let cy = graphComponent.getCytoGraph();
+
+    var edges = cy.edges();
+    for (let i = 0; i < edges.length; i++) {
+      if (edges[i].hasClass("quick-edge")) return true;
+    }
+    return false;
   }
 };

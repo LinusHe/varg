@@ -261,101 +261,109 @@ export default {
       this.optimized = bool;
     },
 
-    runOptimization(){
-
+    runOptimization() {
       this.getGraph().optimizing();
 
-        // get best path
-        let bestPaths = this.getGraph()
-          .getCytoGraph(this.getGraph())
-          .data("bestPaths");
+      // get best path
+      let bestPaths = this.getGraph()
+        .getCytoGraph(this.getGraph())
+        .data("bestPaths");
 
-        // map costs
-        this.costs =
-          this.getGraph().getTotalCost(bestPaths[0]) +
-          " " +
-          this.getGraph()
-            .getCytoGraph(this.getGraph())
-            .data("settingsUnitCostSelection");
-
-        // map time
-        this.time =
-          this.getGraph().getTotalTime(bestPaths[0]) +
-          " " +
-          this.getGraph()
-            .getCytoGraph(this.getGraph())
-            .data("settingsUnitTimeSelection");
-
-        // set optimized
-        this.optimized = true;
-
-
-        // open dialog, if in settings enabled
-        if (
-          typeof this.$parent.$parent.$refs.settingsMenu.$refs
-            .settingsGeneral !== "undefined" &&
-          this.$parent.$parent.$refs.settingsMenu.$refs.settingsGeneral.getAlternativePopUp()
-        ) {
-          // open graph settings and scroll to alternative paths
-          this.openOptimize();
-          this.scrollToAlternativeOptimizations();
-        }
-
-    },
-
-
-    startOptimizing() {
-
-      console.log("Länge der Startknoten: " + this.getGraph().getCytoGraph(this.getGraph()).data("settingsOptimizationStartNames").length)
-
-      if (
-        (this.getGraph()
-          .getCytoGraph(this.getGraph())
-          .data("settingsOptimizationStartNames").length != 0) &&
+      // map costs
+      this.costs =
+        this.getGraph().getTotalCost(bestPaths[0]) +
+        " " +
         this.getGraph()
           .getCytoGraph(this.getGraph())
-          .data("settingsOptimizationEndID") != -1
+          .data("settingsUnitCostSelection");
+
+      // map time
+      this.time =
+        this.getGraph().getTotalTime(bestPaths[0]) +
+        " " +
+        this.getGraph()
+          .getCytoGraph(this.getGraph())
+          .data("settingsUnitTimeSelection");
+
+      // set optimized
+      this.optimized = true;
+
+      // open dialog, if in settings enabled
+      if (
+        typeof this.$parent.$parent.$refs.settingsMenu.$refs.settingsGeneral !==
+          "undefined" &&
+        this.$parent.$parent.$refs.settingsMenu.$refs.settingsGeneral.getAlternativePopUp()
       ) {
-
-        this.runOptimization();
-
-        // notify with dialog
-        dialogComponent.dialogSuccess(
-          "Graph wurde erfolgreich optimiert." +
-            "<br><em>Derzeit wird der beste Weg angezeigt.</em>" +
-            "<br>Öffne die <b>Optimierungs-Einstellungen</b> für weitere Wege!",
-          8000
-        );
-       
-     } 
-      else if( this.getGraph().getCytoGraph(this.getGraph()).data("settingsOptimizationStartNames") == 0 && this.getGraph().getCytoGraph(this.getGraph()).data("settingsOptimizationEndID") != -1 ) 
-          {
-          
-          this.runOptimization()
-        dialogComponent.dialogWarning(
-          "Die Startzustände wurden automatisch eingestellt. Wenn du sie ändern möchtest öffne die Optimierungseinstellungen!",
-          6000
-        );
-      }  
-
-      else if(this.getGraph().getCytoGraph(this.getGraph()).data("settingsOptimizationEndID") == -1 && this.getGraph().getCytoGraph(this.getGraph()).data("settingsOptimizationStartNames") != 0 ) {
-
-        this.runOptimization()
-        dialogComponent.dialogWarning(
-          "Der Endzustand wurde automatisch eingestellt. Wenn du ihn ändern möchtest öffne die Optimierungseinstellungen!",
-          6000
-        );
-
+        // open graph settings and scroll to alternative paths
+        this.openOptimize();
+        this.scrollToAlternativeOptimizations();
       }
+    },
 
-      else {
-        this.runOptimization()
-         dialogComponent.dialogWarning(
-          "Die Start- und Endzustände wurden automatisch eingestellt. Wenn du sie ändern möchtest öffne die Optimierungseinstellungen!",
-          6000
+    startOptimizing() {
+      console.log(
+        "Länge der Startknoten: " +
+          this.getGraph()
+            .getCytoGraph(this.getGraph())
+            .data("settingsOptimizationStartNames").length
+      );
+
+      if (!this.getGraph().hasQuickEdges(this.getGraph())) {
+        if (
+          this.getGraph()
+            .getCytoGraph(this.getGraph())
+            .data("settingsOptimizationStartNames").length != 0 &&
+          this.getGraph()
+            .getCytoGraph(this.getGraph())
+            .data("settingsOptimizationEndID") != -1
+        ) {
+          this.runOptimization();
+
+          // notify with dialog
+          dialogComponent.dialogSuccess(
+            "Graph wurde erfolgreich optimiert." +
+              "<br><em>Derzeit wird der beste Weg angezeigt.</em>" +
+              "<br>Öffne die <b>Optimierungs-Einstellungen</b> für weitere Wege!",
+            8000
+          );
+        } else if (
+          this.getGraph()
+            .getCytoGraph(this.getGraph())
+            .data("settingsOptimizationStartNames") == 0 &&
+          this.getGraph()
+            .getCytoGraph(this.getGraph())
+            .data("settingsOptimizationEndID") != -1
+        ) {
+          this.runOptimization();
+          dialogComponent.dialogWarning(
+            "Die Startzustände wurden automatisch eingestellt. Wenn du sie ändern möchtest öffne die Optimierungseinstellungen!",
+            6000
+          );
+        } else if (
+          this.getGraph()
+            .getCytoGraph(this.getGraph())
+            .data("settingsOptimizationEndID") == -1 &&
+          this.getGraph()
+            .getCytoGraph(this.getGraph())
+            .data("settingsOptimizationStartNames") != 0
+        ) {
+          this.runOptimization();
+          dialogComponent.dialogWarning(
+            "Der Endzustand wurde automatisch eingestellt. Wenn du ihn ändern möchtest öffne die Optimierungseinstellungen!",
+            6000
+          );
+        } else {
+          this.runOptimization();
+          dialogComponent.dialogWarning(
+            "Die Start- und Endzustände wurden automatisch eingestellt. Wenn du sie ändern möchtest öffne die Optimierungseinstellungen!",
+            6000
+          );
+        }
+      } else {
+        dialogComponent.dialogError(
+          "Dein Graph enthält noch Bearbeitungsschritte mit unvollständigen Angaben. Bitte gib Kosten und Zeiten bei den gestrichelten Bearbeitungsschritte an!"
         );
       }
-
     }
   }
 };
