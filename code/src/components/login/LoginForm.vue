@@ -100,10 +100,11 @@ export default {
        alert("Authenticated: " + this.$store.state.user.autehticated +
        "\nName: " + this.$store.state.user.name +
        "\nRole: " + this.$store.state.user.role +
-       "\nReady: " + this.$store.state.ready +
+       //"\nReady: " + this.$store.state.ready +
        "\nIssued: " + this.$store.state.issued +
        "\nNow: " + Date.now() +
-       "\nGraphName: " + this.$store.getters.getCyProdName
+       "\nprodName: " + this.$store.getters.getProdName +
+       "\nprodQuant: " + this.$store.getters.getProdQuant
        );
     },
     delLocal() {
@@ -115,17 +116,31 @@ export default {
      */
     login() {
       if (this.$refs.form.validate()) {
-        if (this.input.email == "VarG" && this.input.password == "2020") {
+        if (this.input.email === "VarG" && this.input.password === "2020") {
           //new
           this.$store.commit("refreshIssued");
           this.$store.commit("login");
-          this.$store.commit("setName", "student");
+          this.$store.commit("setName", "Hubertus Schmalz");
           this.$store.commit("setRole", "student");
 
           //old
-          this.$store.commit("increment");
+          //this.$store.commit("increment");
 
           this.$router.replace("/home/menu");
+
+          
+        }else if (this.input.email === "GraV" && this.input.password === "0202") {
+          //new
+          this.$store.commit("refreshIssued");
+          this.$store.commit("login");
+          this.$store.commit("setName", "Dr. Schmalz");
+          this.$store.commit("setRole", "admin");
+
+          //old
+          //this.$store.commit("increment");
+          
+          //TODO: Create alternative Menu for administrative functionality
+          this.$router.replace("/home/Menu");
         } else {
           dialogComponent.dialogError(
             "Falscher Nutzername oder falsches Passwort"

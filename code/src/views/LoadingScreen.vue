@@ -27,9 +27,9 @@ export default {
         if(this.$store.getters.getGraph === null) {
           this.$router.replace("/home/menu");
         }else{
-          let content = this.$store.getters.getGraph;
+          //let content = this.$store.getters.getGraph;
       // content = JSON.parse(content);
-       cyStore.data.importedJson = content;
+       cyStore.data.importedJson = this.$store.getters.getGraph;
           this.$router.replace("/graph");
 
         }

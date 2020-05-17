@@ -395,7 +395,6 @@ export default {
   },
   methods: {
       backupGraph() {
-
     //let gra = cyStore.data.cy;
     this.$store.commit('saveGraph', cyStore.data.cy.json());
   },

@@ -22,10 +22,13 @@ export const store = new Vuex.Store({
 
     //old
     //kept for now to prevent everything from breaking
+    /*
     count: 0,
-
+    */
     cyProdName: null,
     cyProdQuant: null,
+    
+
     graph: null
   },
   mutations: {
@@ -39,7 +42,7 @@ export const store = new Vuex.Store({
         //Delay is set to 30 sec for debugging purposes
         //alert("Old state has been retrieved.");
       }
-      state.ready = true;
+      //state.ready = true;
     },
 
     saveGraph(state, graphh) {
@@ -66,13 +69,13 @@ export const store = new Vuex.Store({
       state.graph =null;
     },
 
-    //old
+    /*old
     increment(state) {
       state.count++;
     },
     decrement(state) {
       state.count--;
-    },
+    },*/
 
     setCyProdName(state, newName) {
       state.cyProdName = newName;
@@ -87,6 +90,12 @@ export const store = new Vuex.Store({
     }
   },
   getters: {
+    getGraphName: state => {
+      return state.graph.data.prodName;
+    },
+    getGraphQuant: state => {
+      return state.graph.data.prodQuant;
+    },
     getAuth: state => {
       return state.user.autehticated;
     },
