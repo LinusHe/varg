@@ -60,6 +60,9 @@ export const store = new Vuex.Store({
     refreshIssued(state) {
       state.issued = Date.now();
     },
+    ResetGraph(state){
+      state.graph =null;
+    },
 
     //old
     increment(state) {
