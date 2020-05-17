@@ -111,6 +111,9 @@ export default {
     // increment id counter
     count++;
     cy.data("IDCount", count);
+
+    // remove optimization
+    this.removeOptimization();
   },
 
   // createEdgeWithID(..): DO NOT USE THIS FUNCTION BY DEFAULT!
@@ -319,6 +322,9 @@ export default {
     // remove quick-edge class
     if (edge.hasClass("quick-edge")) edge.removeClass("quick-edge");
 
+    // remove optimization
+    this.removeOptimization();
+
     console.log("after update: ", edge);
   },
 
@@ -333,6 +339,9 @@ export default {
     console.log("edge removed: ", edge);
 
     edge.remove();
+
+    // remove optimization
+    this.removeOptimization();
   },
 
   hasQuickEdges(graphComponent) {
