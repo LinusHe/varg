@@ -1,13 +1,15 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 
 // This file is part of the cytoscape graph
 // The holding component is code\src\components\graph\elements\VarGraph.vue
 
 // This File contains methods for the edgeHandling (Drag & Drop Handling)
-// More details: https://github.com/cytoscape/cytoscape.js-edgehandles 
+// More details: https://github.com/cytoscape/cytoscape.js-edgehandles
 
 export default {
   getEdgeHandleDefaults() {
+    var _this = this;
     // the default values of each option are outlined below:
     let defaults = {
       preview: true, // whether to show added edges preview before releasing selection
@@ -59,7 +61,13 @@ export default {
       },
       complete: function(sourceNode, targetNode, addedEles) {
         // fired when edgehandles is done and elements are added
-        console.log(addedEles)
+        //
+        _this.removeEdge(_this, addedEles.data("id"));
+        _this.createQuickEdge(
+          _this,
+          sourceNode.data("id"),
+          targetNode.data("id")
+        );
       },
       stop: function(sourceNode) {
         // fired when edgehandles interaction is stopped (either complete with added edges or incomplete)

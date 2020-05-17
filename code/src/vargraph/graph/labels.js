@@ -21,16 +21,16 @@ export default {
       else label = newShort;
 
       // Cost / Time Data
-      if (cy.data("settingsEdgeShowCost") || cy.data("settingsEdgeShowTime")) label += "\n";
-      if (cy.data("settingsEdgeShowCost")) label += "Kosten: " + newcost + " " + cy.data("settingsUnitCostSelection");
-      if (cy.data("settingsEdgeShowCost") && cy.data("settingsEdgeShowTime")) label += " | ";
-      if (cy.data("settingsEdgeShowTime")) label += "Zeit: " + newtime + " " + cy.data("settingsUnitTimeSelection");
+      if ((cy.data("settingsEdgeShowCost") && newcost != null) || (cy.data("settingsEdgeShowTime") && newtime != null)) label += "\n";
+      if (cy.data("settingsEdgeShowCost") && newcost != null) label += "Kosten: " + newcost + " " + cy.data("settingsUnitCostSelection");
+      if (cy.data("settingsEdgeShowCost") && cy.data("settingsEdgeShowTime") && newcost != null && newtime != null) label += " | ";
+      if (cy.data("settingsEdgeShowTime") && newtime != null) label += "Zeit: " + newtime + " " + cy.data("settingsUnitTimeSelection");
 
       // SuCost / SuTime Data
-      if (cy.data("settingsEdgeShowSuCost") || cy.data("settingsEdgeShowSuTime")) label += "\n";
-      if (cy.data("settingsEdgeShowSuCost")) label += "Rüstkosten: " + newsucost + " " + cy.data("settingsUnitCostSelection");
-      if (cy.data("settingsEdgeShowSuCost") && cy.data("settingsEdgeShowSuTime")) label += " | ";
-      if (cy.data("settingsEdgeShowSuTime")) label += "Rüstzeit: " + newsutime + " " + cy.data("settingsUnitTimeSelection");
+      if ((cy.data("settingsEdgeShowSuCost") && newsucost != null) || (cy.data("settingsEdgeShowSuTime") && newsutime != null)) label += "\n";
+      if (cy.data("settingsEdgeShowSuCost") && newsucost != null) label += "Rüstkosten: " + newsucost + " " + cy.data("settingsUnitCostSelection");
+      if (cy.data("settingsEdgeShowSuCost") && cy.data("settingsEdgeShowSuTime") && newsucost != null && newsutime != null) label += " | ";
+      if (cy.data("settingsEdgeShowSuTime") && newsutime != null) label += "Rüstzeit: " + newsutime + " " + cy.data("settingsUnitTimeSelection");
     }
 
 
@@ -69,7 +69,6 @@ export default {
       );
       edge.data("label", newlabel);
     });
-
   },
 
   updateNodeLabel(graphComponent) {

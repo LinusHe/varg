@@ -1,3 +1,4 @@
+/* eslint-disable no-unexpected-multiline */
 /* eslint-disable no-console */
 
 // This file is part of the cytoscape graph
@@ -38,8 +39,14 @@ export default {
   // edgeBetweenNodes(node1, node2): returns whether an edge exists between two nodes
   edgeBetweenNodes(node1, node2) {
     for (let i = 0; i < node1.connectedEdges().length; i++) {
-      let edgeSid = node1.connectedEdges()[i].source().id();
-      let edgeTid = node1.connectedEdges()[i].target().id();
+      let edgeSid = node1
+        .connectedEdges()
+        [i].source()
+        .id();
+      let edgeTid = node1
+        .connectedEdges()
+        [i].target()
+        .id();
       let node2id = node2.id();
 
       // check if edge has node2 as source or target
@@ -97,10 +104,9 @@ export default {
 
     console.log("added edge: ", cy.getElementById(count));
 
-
     // move end-node position if conflict occurs
     let endNode = cy.getElementById(end);
-    this.moveNodesInConflict(graphComponent, endNode)
+    this.moveNodesInConflict(graphComponent, endNode);
 
     // increment id counter
     count++;
@@ -146,6 +152,97 @@ export default {
 
     // reset counter to original count
     cy.data("IDCount", originalCount);
+  },
+
+  // createQuickEdge(..): creates an Edge, just with the start and end information
+  createQuickEdge(graphComponent, startNode, endNode) {
+    let edgeName = this.generateQuickEdgeName(
+      graphComponent,
+      startNode,
+      endNode
+    );
+    let edgeShort = this.generateQuickEdgeShort(
+      graphComponent,
+      startNode,
+      endNode
+    );
+
+    this.createEdge(
+      graphComponent,
+      edgeName,
+      edgeShort,
+      startNode,
+      endNode,
+      null,
+      null,
+      null,
+      null
+    );
+  },
+
+  // generateQuickEdgeName(..):  generates Edge Name just with the startNode and endNode ID
+  //                             example: A -> B | 1
+  generateQuickEdgeName(graphComponent, startNode, endNode) {
+    // get node names
+    let startName = this.getNodeNameByID(graphComponent, startNode);
+    let endName = this.getNodeNameByID(graphComponent, endNode);
+    let number =
+      this.numberOfEdgesBetween(graphComponent, startNode, endNode) + 1;
+
+    // generate label
+    let nameString =
+      startName.charAt(0).toUpperCase() +
+      " -> " +
+      endName.charAt(0).toUpperCase() +
+      " | " +
+      number;
+
+    return nameString;
+  },
+
+  // generateQuickEdgeShort(..): generates Edge Short just with the startNode and endNode ID
+  //                             example: AB1
+  generateQuickEdgeShort(graphComponent, startNode, endNode) {
+    // get node names
+    let startName = this.getNodeNameByID(graphComponent, startNode);
+    let endName = this.getNodeNameByID(graphComponent, endNode);
+    let number =
+      this.numberOfEdgesBetween(graphComponent, startNode, endNode) + 1;
+
+    // generate label
+    let shortString =
+      startName.charAt(0).toUpperCase() +
+      endName.charAt(0).toUpperCase() +
+      number;
+    return shortString;
+  },
+
+  // numberOfEdgesBetween(..): returns number of edges between two nodes
+  numberOfEdgesBetween(graphComponent, startNode, endNode) {
+    // get cytoscape instance
+    let cy = graphComponent.getCytoGraph();
+    // get edge by id
+    let node1 = cy.getElementById(startNode);
+    let node2 = cy.getElementById(endNode);
+    let count = 0;
+    for (let i = 0; i < node1.connectedEdges().length; i++) {
+      let edgeSid = node1
+        .connectedEdges()
+        [i].source()
+        .id();
+      let edgeTid = node1
+        .connectedEdges()
+        [i].target()
+        .id();
+      let node2id = node2.id();
+
+      // check if edge has node2 as source or target
+      if (edgeSid === node2id || edgeTid === node2id) {
+        console.log("Edge between nodes");
+        count++;
+      }
+    }
+    return count;
   },
 
   // updateEdge(..): Updates an Edge by ID with the given arguments

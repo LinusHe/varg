@@ -41,6 +41,15 @@ export default {
     return nodesArray;
   },
 
+  // getNodeNameByID(..): Returns Noode Name from Node ID
+  getNodeNameByID(graphComponent, nodeID) {
+    // get cytoscape instance
+    let cy = graphComponent.getCytoGraph();
+
+    var node = cy.getElementById(nodeID);
+    return node.data("name");
+  },
+
   // getNodePositions(): returns Array with all Node Positions
   // is used in position.js Event
   getNodePositions(graphComponent) {
