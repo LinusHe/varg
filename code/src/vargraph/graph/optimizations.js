@@ -342,20 +342,18 @@ export default {
     
     //automatically initialize startnodes if no startnodes were selected
     if(startIDs.length == 0 ){
-      for(let o = 0; o < cy.nodes().length; o++){
-        if(cy.nodes()[o].incomers().length == 0){
-          startIDs.push(cy.nodes()[o].data("id"))
-          
+      for (let o = 0; o < this.getNodeArr(this).length; o++) {
+        if (this.getNodeArr(this)[o].incomers().length == 0) {
+          startIDs.push(this.getNodeArr(this)[o].data("id"));
         }
       }
     }
     
     //automatically initialize endnode if no endnode were selected
     if(endID == undefined || endID == "" || endID == -1){
-      for(let o = 0; o < cy.nodes().length; o++){
-        if(cy.nodes()[o].outgoers().length == 0){
-          endID = cy.nodes()[o].data("id")
-          
+      for (let o = 0; o < this.getNodeArr(this).length; o++) {
+        if (this.getNodeArr(this)[o].outgoers().length == 0) {
+          endID = this.getNodeArr(this)[o].data("id");
         }
       }
     }

@@ -72,9 +72,9 @@ export default {
     cyStore.data.importedJson = null;
 
     // Apply Color for nodes
-    cy.nodes().forEach(n => {
+    graphComponent.getNodeArr(graphComponent).forEach(n => {
       n.style("background-color", "#" + n.data("color"));
-      n.addClass("nodelabel"); 
+      n.addClass("nodelabel");
     });
 
     // Generate Edge Labels
@@ -104,5 +104,9 @@ export default {
 
     // sets edgeHandle Default Valuse
     cy.edgehandles(this.getEdgeHandleDefaults());
+  },
+
+  getDialogComponent(graphComponent) {
+    return this.$parent.$parent.$parent.$parent.$parent.$refs["dialogs"];
   }
 };

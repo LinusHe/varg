@@ -68,6 +68,12 @@ export default {
           sourceNode.data("id"),
           targetNode.data("id")
         );
+
+        _this
+          .getDialogComponent(_this)
+          .dialogWarning(
+            "<b>Bearbeitungsschritt vorerst ohne Zeit & Kosten angelegt.</b> <br>Um die Werte zu hinterlegen, klicke bitte auf den Bearbeitungsschritt"
+          );
       },
       stop: function(sourceNode) {
         // fired when edgehandles interaction is stopped (either complete with added edges or incomplete)

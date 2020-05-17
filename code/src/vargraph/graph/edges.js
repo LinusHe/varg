@@ -192,7 +192,7 @@ export default {
     // generate label
     let nameString =
       startName.charAt(0).toUpperCase() +
-      " -> " +
+      " - " +
       endName.charAt(0).toUpperCase() +
       " | " +
       number;

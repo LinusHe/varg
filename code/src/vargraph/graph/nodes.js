@@ -11,16 +11,20 @@ export default {
     // get cytoscape instance
     let cy = graphComponent.getCytoGraph();
 
-    return cy.nodes();
+    let nodeArr=[];
+
+    cy.nodes().forEach(node => {
+      if (!node.hasClass("eh-handle")) {
+        nodeArr.push(node);
+      }
+    });
+
+    return nodeArr;
   },
 
   // getNodeID(): Returns an Array with all Node IDs of the Graph
   getNodeID(graphComponent) {
-    // get cytoscape instance
-    // console.log(this)
-    let cy = graphComponent.getCytoGraph();
-
-    var nodes = cy.nodes();
+    var nodes = graphComponent.getNodeArr(graphComponent);
     var nodesArray = [];
     for (let i = 0; i < nodes.length; i++) {
       nodesArray.push(nodes[i].data("id"));
@@ -30,10 +34,7 @@ export default {
 
   // getNodeName(): Returns an Array with all Node Names of the Graph
   getNodeName(graphComponent) {
-    // get cytoscape instance
-    let cy = graphComponent.getCytoGraph();
-
-    var nodes = cy.nodes();
+    var nodes = graphComponent.getNodeArr(graphComponent);
     var nodesArray = [];
     for (let i = 0; i < nodes.length; i++) {
       nodesArray.push(nodes[i].data("name"));
@@ -53,10 +54,7 @@ export default {
   // getNodePositions(): returns Array with all Node Positions
   // is used in position.js Event
   getNodePositions(graphComponent) {
-    // get cytoscape instance
-    let cy = graphComponent.getCytoGraph();
-
-    let nodes = cy.nodes();
+    let nodes = graphComponent.getNodeArr(graphComponent);
     let posArray = [];
     for (let i = 0; i < nodes.length; i++) {
       posArray.push(nodes[i].position());
