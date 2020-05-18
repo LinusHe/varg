@@ -26,6 +26,7 @@ const data = {
   settingsEdgeShowTime: true,
   settingsEdgeShowSuCost: true,
   settingsEdgeShowSuTime: true,
+  settingsEdgeShowLotSize: true,
   settingsEdgeTitleItems: ["Name", "Kürzel"],
   settingsEdgeTitleSelection: "Name",
   // - Optimization Settings

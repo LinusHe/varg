@@ -7,7 +7,7 @@
 
 export default {
   // generateEdgeLabel(..): Creates and Returns the Edge-Label based on the Weights
-  generateEdgeLabel(graphComponent, newName, newShort, newcost, newtime, newsucost, newsutime) {
+  generateEdgeLabel(graphComponent, newName, newShort, newcost, newtime, newsucost, newsutime, newlotsize) {
     // get cytoscape instance
     let cy = graphComponent.getCytoGraph();
     let label = "";
@@ -26,7 +26,9 @@ export default {
       if (cy.data("settingsEdgeShowCost") && cy.data("settingsEdgeShowTime")) label += " | ";
       if (cy.data("settingsEdgeShowTime")) label += "Zeit: " + newtime + " " + cy.data("settingsUnitTimeSelection");
 
-      // SuCost / SuTime Data
+      // SuCost / SuTime Data, Lotsize Data
+      if (cy.data("settingsEdgeShowLotSize")) label += "\n";
+      if (cy.data("settingsEdgeShowLotSize")) label += "Losgröße: " + newlotsize + " " + "Stück";
       if (cy.data("settingsEdgeShowSuCost") || cy.data("settingsEdgeShowSuTime")) label += "\n";
       if (cy.data("settingsEdgeShowSuCost")) label += "Rüstkosten: " + newsucost + " " + cy.data("settingsUnitCostSelection");
       if (cy.data("settingsEdgeShowSuCost") && cy.data("settingsEdgeShowSuTime")) label += " | ";
@@ -65,7 +67,8 @@ export default {
         edge.data("cost"),
         edge.data("time"),
         edge.data("sucost"),
-        edge.data("sutime")
+        edge.data("sutime"),
+        edge.data("lotsize")
       );
       edge.data("label", newlabel);
     });

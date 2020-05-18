@@ -62,7 +62,8 @@ export default {
     newcost,
     newtime,
     newsucost,
-    newsutime
+    newsutime,
+    newlotsize
   ) {
     // get cytoscape instance
     let cy = graphComponent.getCytoGraph();
@@ -78,7 +79,8 @@ export default {
       newcost,
       newtime,
       newsucost,
-      newsutime
+      newsutime,
+      newlotsize
     );
     cy.add({
       data: {
@@ -91,7 +93,8 @@ export default {
         time: newtime,
         sucost: newsucost,
         sutime: newsutime,
-        label: newlabel
+        label: newlabel,
+        lotsize: newlotsize
       }
     });
 
@@ -121,6 +124,7 @@ export default {
     newtime,
     newsucost,
     newsutime,
+    lotsize,
     edgeLabel
   ) {
     // get cytoscape instance
@@ -141,6 +145,7 @@ export default {
       newtime,
       newsucost,
       newsutime,
+      lotsize,
       edgeLabel
     );
 
@@ -159,7 +164,8 @@ export default {
     newCost,
     newTime,
     newsucost,
-    newsutime
+    newsutime,
+    lotsize
   ) {
     // get cytoscape instance
     let cy = graphComponent.getCytoGraph();
@@ -178,7 +184,8 @@ export default {
       newCost,
       newTime,
       newsucost,
-      newsutime
+      newsutime,
+      lotsize
     );
 
     // Generate New Edge, if source or target are changing
@@ -195,6 +202,7 @@ export default {
         newTime,
         newsucost,
         newsutime,
+        lotsize,
         label
       );
     }
@@ -208,6 +216,7 @@ export default {
     edge.data("time", newTime);
     edge.data("sucost", newsucost);
     edge.data("sutime", newsutime);
+    edge.data("lotsize", lotsize);
     edge.data("label", label);
 
     console.log("after update: ", edge);

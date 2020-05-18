@@ -90,7 +90,8 @@ export default {
           e.data("cost"),
           e.data("time"),
           e.data("sucost"),
-          e.data("sutime")
+          e.data("sutime"),
+          e.data("lotsize")
         )
       );
       e.layoutDimensions(options);

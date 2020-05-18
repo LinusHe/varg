@@ -286,6 +286,18 @@
                   ></v-text-field>
                 </v-col>
               </v-row>
+              <!-- LotSize  -->
+              <v-row>
+                <v-col sm="6">
+                  <v-text-field
+                    id="edgeLotSize"
+                    label="Losgröße"
+                    type="number"
+                    v-model="edgeCreateLotSize"
+                    @keyup.enter="createEdge()"
+                  ></v-text-field>
+                </v-col>
+              </v-row>
             </v-form>
           </div>
           <!-- Create Buttons -->
@@ -491,6 +503,7 @@ export default {
         let newtime = parseFloat(this.edgeCreateTime);
         let newsucost = parseFloat(this.edgeCreatesuCosts);
         let newsutime = parseFloat(this.edgeCreatesuTime);
+        let newlotsize = parseFloat(this.edgeCreateLotSize);
 
         if (newcost < 0 || newtime < 0 || newsucost < 0 || newsutime < 0) {
           alert("You can't use negative numbers");
@@ -511,7 +524,8 @@ export default {
           newcost,
           newtime,
           newsucost,
-          newsutime
+          newsutime,
+          newlotsize
         );
         dialogComponent.dialogSuccess("Verknüpfung erfolgreich angelegt");
         this.clearFields();

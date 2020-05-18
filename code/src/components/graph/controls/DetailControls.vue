@@ -263,6 +263,18 @@
                   ></v-text-field>
                 </v-col>
               </v-row>
+              <!-- LotSize  -->
+              <v-row>
+                <v-col sm="6">
+                  <v-text-field
+                    id="edgeLotSize"
+                    label="Losgröße"
+                    type="number"
+                    v-model="edgeLotSize"
+                    @keyup.enter="saveEdge()"
+                  ></v-text-field>
+                </v-col>
+              </v-row>
             </v-form>
           </div>
           <!-- Save & Delete Buttons -->
@@ -552,7 +564,8 @@ export default {
           parseFloat(this.edgeCosts),
           parseFloat(this.edgeTime),
           parseFloat(this.edgesuCosts),
-          parseFloat(this.edgesuTime)
+          parseFloat(this.edgesuTime),
+          parseFloat(this.edgeLotSize)
         );
         this.edgeGui = false;
         dialogComponent.dialogSuccess("Bearbeitungsschritt erfolgreich aktualisiert");

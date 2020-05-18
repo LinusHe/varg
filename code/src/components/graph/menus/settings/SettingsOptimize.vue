@@ -209,8 +209,6 @@ export default {
         let indexStart = this.itemsName.indexOf(this.startSelect[i]);
         startIDs.push(this.itemsID[indexStart]);
       }
-      
-      console.log("vor optimierung: " + startIDs)
 
       this.getGraph()
         .getCytoGraph()
