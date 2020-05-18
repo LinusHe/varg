@@ -1,0 +1,831 @@
+{
+  "elements": {
+    "nodes": [
+      {
+        "data": {
+          "id": "-1",
+          "name": "Rohmaterial: Stahl",
+          "short": "RS",
+          "color": "2699FB",
+          "imgUrl": "https://de.wiki.forgeofempires.com/images/c/c9/Steel.png"
+        },
+        "position": {
+          "x": -388,
+          "y": 690.9446828925342
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "pannable": false,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "-2",
+          "name": "Stahlrohre",
+          "short": "SR",
+          "color": "00CEC9"
+        },
+        "position": {
+          "x": 706,
+          "y": 1295.09044852366
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "pannable": false,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "-3",
+          "name": "Schrauben",
+          "short": "SCH",
+          "color": "FF7675",
+          "imgUrl": "https://www.augenblicke-eingefangen.de/media/image/8a/2a/28/Grainger_Industrial_Supply_5WFA8_1_4_UNC-Foto-Gewinde-Schraube_Senkkopf_AE11968.png"
+        },
+        "position": {
+          "x": 2526,
+          "y": 655.9982375957651
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "pannable": false,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "0",
+          "name": "A",
+          "short": "A",
+          "color": "2699FB"
+        },
+        "position": {
+          "x": -331.9961726893106,
+          "y": 45.000289349949014
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "pannable": false,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "1",
+          "name": "B",
+          "short": "B",
+          "color": "2699FB"
+        },
+        "position": {
+          "x": 456,
+          "y": 385.09044852365986
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "pannable": false,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "2",
+          "name": "C",
+          "short": "C",
+          "color": "2699FB"
+        },
+        "position": {
+          "x": 1616,
+          "y": 137
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "pannable": false,
+        "classes": ""
+      }
+    ],
+    "edges": [
+      {
+        "data": {
+          "id": "-10",
+          "name": "Schneiden",
+          "source": "-1",
+          "target": "-2",
+          "cost": 2,
+          "time": 0.3,
+          "sucost": 15,
+          "sutime": 45,
+          "label": "Schneiden\nKosten: 2 € | Zeit: 0.3 Sekunden\nLosgröße: 1 Stück\nRüstkosten: 15 € | Rüstzeit: 45 Sekunden",
+          "short": "RS",
+          "lotsize": 1
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        },
+        "group": "edges",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "pannable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "-11",
+          "name": "Fräsen",
+          "source": "-1",
+          "target": "-2",
+          "cost": 1.8,
+          "time": 1,
+          "sucost": 20,
+          "sutime": 15,
+          "label": "Fräsen\nKosten: 1.8 € | Zeit: 1 Sekunden\nLosgröße: 1 Stück\nRüstkosten: 20 € | Rüstzeit: 15 Sekunden",
+          "short": "F",
+          "lotsize": 1
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        },
+        "group": "edges",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "pannable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "-12",
+          "name": "Gewinde walzen",
+          "source": "-2",
+          "target": "-3",
+          "cost": 2.4,
+          "time": 2.7,
+          "sucost": 10,
+          "sutime": 10,
+          "label": "Gewinde walzen\nKosten: 2.4 € | Zeit: 2.7 Sekunden\nLosgröße: 1 Stück\nRüstkosten: 10 € | Rüstzeit: 10 Sekunden",
+          "short": "GW",
+          "lotsize": 1
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        },
+        "group": "edges",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "pannable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "-14",
+          "name": "Gewinde schneiden",
+          "source": "-2",
+          "target": "-3",
+          "cost": 2.1,
+          "time": 1.8,
+          "sucost": 10,
+          "sutime": 15,
+          "label": "Gewinde schneiden\nKosten: 2.1 € | Zeit: 1.8 Sekunden\nLosgröße: 1 Stück\nRüstkosten: 10 € | Rüstzeit: 15 Sekunden",
+          "short": "GS",
+          "lotsize": 1
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        },
+        "group": "edges",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "pannable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "-15",
+          "name": "Gewinde irgw",
+          "source": "-2",
+          "target": "-3",
+          "cost": 2.1,
+          "time": 0.8,
+          "sucost": 25,
+          "sutime": 30,
+          "label": "Gewinde irgw\nKosten: 2.1 € | Zeit: 0.8 Sekunden\nLosgröße: 1 Stück\nRüstkosten: 25 € | Rüstzeit: 30 Sekunden",
+          "short": "GG",
+          "lotsize": 1
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        },
+        "group": "edges",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "pannable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "-16",
+          "name": "Gewinde 4",
+          "source": "-2",
+          "target": "-3",
+          "cost": 2.1,
+          "time": 0.9,
+          "sucost": 30,
+          "sutime": 25,
+          "label": "Gewinde 4\nKosten: 2.1 € | Zeit: 0.9 Sekunden\nLosgröße: 1 Stück\nRüstkosten: 30 € | Rüstzeit: 25 Sekunden",
+          "short": "G4",
+          "lotsize": 1
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        },
+        "group": "edges",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "pannable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "3",
+          "short": "D",
+          "name": "D",
+          "source": "0",
+          "target": "1",
+          "cost": 1,
+          "time": 1,
+          "sucost": 1,
+          "sutime": 1,
+          "label": "D\nKosten: 1 € | Zeit: 1 Sekunden\nLosgröße: 1 Stück\nRüstkosten: 1 € | Rüstzeit: 1 Sekunden",
+          "lotsize": 1
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        },
+        "group": "edges",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "pannable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "4",
+          "short": "E",
+          "name": "E",
+          "source": "0",
+          "target": "1",
+          "cost": 2,
+          "time": 3,
+          "sucost": 1,
+          "sutime": 34,
+          "label": "E\nKosten: 2 € | Zeit: 3 Sekunden\nLosgröße: 1 Stück\nRüstkosten: 1 € | Rüstzeit: 34 Sekunden",
+          "lotsize": 1
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        },
+        "group": "edges",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "pannable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "5",
+          "short": "F",
+          "name": "F",
+          "source": "0",
+          "target": "1",
+          "cost": 2,
+          "time": 32,
+          "sucost": 12,
+          "sutime": 5,
+          "label": "F\nKosten: 2 € | Zeit: 32 Sekunden\nLosgröße: 1 Stück\nRüstkosten: 12 € | Rüstzeit: 5 Sekunden",
+          "lotsize": 1
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        },
+        "group": "edges",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "pannable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "6",
+          "short": "G",
+          "name": "G",
+          "source": "1",
+          "target": "-2",
+          "cost": 0.1,
+          "time": 0.2,
+          "sucost": 0.3,
+          "sutime": 1,
+          "label": "G\nKosten: 0.1 € | Zeit: 0.2 Sekunden\nLosgröße: 1 Stück\nRüstkosten: 0.3 € | Rüstzeit: 1 Sekunden",
+          "lotsize": 1
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        },
+        "group": "edges",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "pannable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "7",
+          "short": "H",
+          "name": "H",
+          "source": "1",
+          "target": "-2",
+          "cost": 0.3,
+          "time": 0.4,
+          "sucost": 0.2,
+          "sutime": 0.6,
+          "label": "H\nKosten: 0.3 € | Zeit: 0.4 Sekunden\nLosgröße: 1 Stück\nRüstkosten: 0.2 € | Rüstzeit: 0.6 Sekunden",
+          "lotsize": 1
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        },
+        "group": "edges",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "pannable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "8",
+          "short": "I",
+          "name": "I",
+          "source": "1",
+          "target": "2",
+          "cost": 3,
+          "time": 2,
+          "sucost": 1,
+          "sutime": 3,
+          "label": "I\nKosten: 3 € | Zeit: 2 Sekunden\nLosgröße: 1 Stück\nRüstkosten: 1 € | Rüstzeit: 3 Sekunden",
+          "lotsize": 1
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        },
+        "group": "edges",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "pannable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "9",
+          "short": "J",
+          "name": "J",
+          "source": "0",
+          "target": "2",
+          "cost": 23,
+          "time": 41,
+          "sucost": 2,
+          "sutime": 23,
+          "label": "J\nKosten: 23 € | Zeit: 41 Sekunden\nLosgröße: 1 Stück\nRüstkosten: 2 € | Rüstzeit: 23 Sekunden",
+          "lotsize": 1
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        },
+        "group": "edges",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "pannable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "10",
+          "short": "K",
+          "name": "K",
+          "source": "0",
+          "target": "2",
+          "cost": 32,
+          "time": 1,
+          "sucost": 23,
+          "sutime": 35,
+          "label": "K\nKosten: 32 € | Zeit: 1 Sekunden\nLosgröße: 1 Stück\nRüstkosten: 23 € | Rüstzeit: 35 Sekunden",
+          "lotsize": 1
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        },
+        "group": "edges",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "pannable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "11",
+          "short": "L",
+          "name": "L",
+          "source": "0",
+          "target": "2",
+          "cost": 23,
+          "time": 12,
+          "sucost": 6,
+          "sutime": 8,
+          "label": "L\nKosten: 23 € | Zeit: 12 Sekunden\nLosgröße: 1 Stück\nRüstkosten: 6 € | Rüstzeit: 8 Sekunden",
+          "lotsize": 1
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        },
+        "group": "edges",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "pannable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "12",
+          "short": "M",
+          "name": "M",
+          "source": "1",
+          "target": "-3",
+          "cost": 21,
+          "time": 134,
+          "sucost": 1,
+          "sutime": 23,
+          "label": "M\nKosten: 21 € | Zeit: 134 Sekunden\nLosgröße: 1 Stück\nRüstkosten: 1 € | Rüstzeit: 23 Sekunden",
+          "lotsize": 1
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        },
+        "group": "edges",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "pannable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "13",
+          "short": "N",
+          "name": "N",
+          "source": "1",
+          "target": "-3",
+          "cost": 0.1,
+          "time": 34,
+          "sucost": 2,
+          "sutime": 0.7,
+          "label": "N\nKosten: 0.1 € | Zeit: 34 Sekunden\nLosgröße: 1 Stück\nRüstkosten: 2 € | Rüstzeit: 0.7 Sekunden",
+          "lotsize": 1
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        },
+        "group": "edges",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "pannable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "14",
+          "short": "O",
+          "name": "O",
+          "source": "1",
+          "target": "-3",
+          "cost": 3,
+          "time": 2,
+          "sucost": 9,
+          "sutime": 7,
+          "label": "O\nKosten: 3 € | Zeit: 2 Sekunden\nLosgröße: 1 Stück\nRüstkosten: 9 € | Rüstzeit: 7 Sekunden",
+          "lotsize": 1
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        },
+        "group": "edges",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "pannable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "15",
+          "short": "P",
+          "name": "P",
+          "source": "2",
+          "target": "-3",
+          "cost": 134,
+          "time": 43,
+          "sucost": 67,
+          "sutime": 45,
+          "label": "P\nKosten: 134 € | Zeit: 43 Sekunden\nLosgröße: 1 Stück\nRüstkosten: 67 € | Rüstzeit: 45 Sekunden",
+          "lotsize": 1
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        },
+        "group": "edges",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "pannable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "16",
+          "short": "Q",
+          "name": "Q",
+          "source": "2",
+          "target": "-3",
+          "cost": 56,
+          "time": 67,
+          "sucost": 43,
+          "sutime": 88,
+          "label": "Q\nKosten: 56 € | Zeit: 67 Sekunden\nLosgröße: 1 Stück\nRüstkosten: 43 € | Rüstzeit: 88 Sekunden",
+          "lotsize": 1
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        },
+        "group": "edges",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "pannable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "17",
+          "short": "R",
+          "name": "R",
+          "source": "2",
+          "target": "-3",
+          "cost": 25,
+          "time": 67,
+          "sucost": 43,
+          "sutime": 35,
+          "label": "R\nKosten: 25 € | Zeit: 67 Sekunden\nLosgröße: 1 Stück\nRüstkosten: 43 € | Rüstzeit: 35 Sekunden",
+          "lotsize": 1
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        },
+        "group": "edges",
+        "removed": false,
+        "selected": true,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "pannable": true,
+        "classes": ""
+      }
+    ]
+  },
+  "style": [
+    {
+      "selector": "node",
+      "style": {
+        "background-color": "rgb(38,153,251)",
+        "width": "150px",
+        "height": "150px",
+        "text-wrap": "wrap"
+      }
+    },
+    {
+      "selector": "edge",
+      "style": {
+        "label": "data(label)",
+        "line-color": "rgb(38,153,251)",
+        "target-arrow-color": "rgb(38,153,251)",
+        "target-arrow-shape": "triangle",
+        "curve-style": "bezier",
+        "control-point-step-size": "150px",
+        "font-size": "14px",
+        "color": "rgb(119,119,119)",
+        "source-distance-from-node": "10px",
+        "target-distance-from-node": "10px",
+        "text-wrap": "wrap",
+        "text-background-color": "rgb(255,255,255)",
+        "text-background-opacity": "1",
+        "text-background-shape": "round-rectangle",
+        "text-background-padding": "10px",
+        "text-border-opacity": "1",
+        "text-border-color": "rgb(38,153,251)",
+        "text-border-width": "3px",
+        "text-events": "yes",
+        "line-height": "1.5"
+      }
+    },
+    {
+      "selector": ".highlighted",
+      "style": {
+        "border-width": "5.5px",
+        "border-opacity": "1",
+        "border-color": "rgb(255,118,117)",
+        "line-color": "rgb(255,118,117)",
+        "text-border-color": "rgb(255,118,117)",
+        "target-arrow-color": "rgb(255,118,117)",
+        "source-arrow-color": "rgb(0,0,0)",
+        "text-outline-color": "rgb(0,0,0)"
+      }
+    },
+    {
+      "selector": ":selected",
+      "style": {
+        "border-width": "5.5px",
+        "border-opacity": "0.5",
+        "border-color": "rgb(115,115,115)",
+        "line-color": "rgb(0,57,139)",
+        "text-border-color": "rgb(0,57,139)",
+        "target-arrow-color": "rgb(0,57,139)",
+        "source-arrow-color": "rgb(0,0,0)",
+        "text-outline-color": "rgb(0,0,0)"
+      }
+    }
+  ],
+  "data": {
+    "IDCount": 18,
+    "latestSave": "TESTDATE",
+    "user": "DefaultUser",
+    "filename": "DefaultFileName",
+    "prodName": "TESTPRODUCT",
+    "prodQuant": 1,
+    "settingsUnitCostItems": [
+      "cent",
+      "€",
+      "$",
+      "£"
+    ],
+    "settingsUnitCostSelection": "€",
+    "settingsUnitTimeItems": [
+      "Millisekunden",
+      "Sekunden",
+      "Minuten",
+      "Stunden",
+      "Tage"
+    ],
+    "settingsUnitTimeSelection": "Sekunden",
+    "settingsEdgeShowShortOnly": false,
+    "settingsEdgeShowCost": true,
+    "settingsEdgeShowTime": true,
+    "settingsEdgeShowSuCost": true,
+    "settingsEdgeShowSuTime": true,
+    "settingsEdgeShowLotSize": true,
+    "settingsEdgeTitleItems": [
+      "Name",
+      "Kürzel"
+    ],
+    "settingsEdgeTitleSelection": "Name",
+    "settingsOptimizationOption": "optionTime",
+    "settingsOptimizationOptionItems": [
+      "Zeit",
+      "Kosten"
+    ],
+    "settingsOptimizationStartNames": [
+      "Rohmaterial: Stahl",
+      "A"
+    ],
+    "settingsOptimizationStartEndName": "Schrauben",
+    "settingsOptimizationNumber": 1,
+    "settingsOptimizationSelection": 0,
+    "settingsOptimizationStartIDs": [
+      "-1",
+      "0"
+    ],
+    "settingsOptimizationEndID": "-3",
+    "settingsOptimizations": [
+      {}
+    ],
+    "minZoom": 0.5,
+    "graphName": "TESTNAME",
+    "name": "TESTPRODUKT"
+  },
+  "zoomingEnabled": true,
+  "userZoomingEnabled": true,
+  "zoom": 0.5,
+  "minZoom": 0.5,
+  "maxZoom": 2,
+  "panningEnabled": true,
+  "userPanningEnabled": true,
+  "pan": {
+    "x": 621.4744879401617,
+    "y": -108.62796668658683
+  },
+  "boxSelectionEnabled": true,
+  "renderer": {
+    "name": "canvas"
+  }
+}
