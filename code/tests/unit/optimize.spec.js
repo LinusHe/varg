@@ -56,11 +56,11 @@ describe('Optimizing tests', () => {
             });
         cyto.add(
             {
-                data: { id: 12, name: 'CD', source: 2, target: 3, cost: 1, time: 1, sucost: 25, sutime: 25, lotsize: 10, label: '' }
+                data: { id: 12, name: 'CD', source: 2, target: 3, cost: 1, time: 1, sucost: 30, sutime: 30, lotsize: 10, label: '' }
             });
         cyto.add(
             {
-                data: { id: 13, name: 'DF', source: 3, target: 5, cost: 1, time: 1, sucost: 8, sutime: 8, lotsize: 10, label: '' }
+                data: { id: 13, name: 'DF', source: 3, target: 5, cost: 1, time: 1, sucost: 9, sutime: 9, lotsize: 10, label: '' }
             });
         cyto.add(
             {
@@ -68,7 +68,7 @@ describe('Optimizing tests', () => {
             });
         cyto.add(
             {
-                data: { id: 15, name: 'CE', source: 2, target: 4, cost: 5, time: 5, sucost: 20, sutime: 20, lotsize: 10, label: '' }
+                data: { id: 15, name: 'CE', source: 2, target: 4, cost: 5, time: 5, sucost: 30, sutime: 30, lotsize: 10, label: '' }
             });
         cyto.add(
             {
