@@ -155,9 +155,15 @@ export default {
     let cy = cyStore.data.cy
     let quantity = cy.data("prodQuant")
     let partcost, partquantcost, partsucost
-    partquantcost = cy.getElementById(edge).data("cost") * (quantity)
-    partsucost = cy.getElementById(edge).data("sucost") * (parseInt((quantity-1)/cy.getElementById(edge).data("lotsize"))+1)
-    partcost = partquantcost + partsucost
+    let lotsize = cy.getElementById(edge).data("lotsize")
+    if(lotsize > 1) {
+      partquantcost = cy.getElementById(edge).data("cost") * (quantity)
+      partsucost = cy.getElementById(edge).data("sucost") * parseInt((quantity-1)/(lotsize)+1)
+      partcost = partquantcost + partsucost
+    }
+    else {
+      partcost = quantity * (cy.getElementById(edge).data("cost") + cy.getElementById(edge).data("sucost"))
+    }
     partcost = Math.round(partcost * 100) / 100
     return partcost
   },
@@ -174,9 +180,15 @@ export default {
     let cy = cyStore.data.cy
     let quantity = cy.data("prodQuant")
     let parttime, partquanttime, partsutime
-    partquanttime = cy.getElementById(edge).data("time") * quantity 
-    partsutime = cy.getElementById(edge).data("sutime") * (parseInt((quantity-1)/cy.getElementById(edge).data("lotsize"))+1)
-    parttime  = partquanttime + partsutime
+    let lotsize = cy.getElementById(edge).data("lotsize")
+    if(lotsize > 1) {
+      partquanttime = cy.getElementById(edge).data("time") * (quantity)
+      partsutime = cy.getElementById(edge).data("sutime") * parseInt((quantity-1)/(lotsize)+1)
+      parttime = partquanttime + partsutime
+    }
+    else {
+      parttime = quantity * (cy.getElementById(edge).data("time") + cy.getElementById(edge).data("sutime"))
+    }
     parttime = Math.round(parttime * 100) / 100
 
     
