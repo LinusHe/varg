@@ -391,7 +391,9 @@ export default {
       startRules: [v => !!v || "Startzustand ist benötigt"],
       endRules: [
         v => !!v || "Endprodukt ist benötigt",
-        v => v != this.startSelect || "Endprodukt muss sich vom Startzustand unterscheiden"
+        v =>
+          v != this.startSelect ||
+          "Endprodukt muss sich vom Startzustand unterscheiden"
       ]
     };
   },
@@ -434,8 +436,10 @@ export default {
     handleDetails(target) {
       if (target === this.getGraph().getCytoGraph(this.getGraph())) {
         this.closeMenus();
-      } else if (target.group() == "nodes") {
+      } else if (target.group() == "nodes" && !target.hasClass("eh-handle")) {
         this.openNodeDetails(target);
+      } else if (target.group() == "nodes" && target.hasClass("eh-handle")) {
+        dialogComponent.dialogWarning("Halte die Maustaste gedrückt und ziehe zu einem anderen Knoten, um einen neuen Bearbeitungsschritt zu erstellen!")
       } else if (target.group() == "edges") {
         this.openEdgeDetails(target);
       }
@@ -555,7 +559,9 @@ export default {
           this.edgesuTime
         );
         this.edgeGui = false;
-        dialogComponent.dialogSuccess("Bearbeitungsschritt erfolgreich aktualisiert");
+        dialogComponent.dialogSuccess(
+          "Bearbeitungsschritt erfolgreich aktualisiert"
+        );
         // remove optimization
         this.getGraph().removeOptimization();
       }
@@ -567,7 +573,7 @@ export default {
       this.edgeGui = false;
       dialogComponent.dialogWarning("Bearbeitungsschritt erfolgreich gelöscht");
       // remove optimization
-        this.getGraph().removeOptimization();
+      this.getGraph().removeOptimization();
     },
     openEdgeDeleteMenu() {
       this.edgeDeleteDialog = true;
