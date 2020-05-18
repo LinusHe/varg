@@ -27,6 +27,7 @@ export default {
       window.event,
       event.target
     );
+
     // get click position
     var offset = document.getElementById("graph-header").clientHeight;
     var posX = event.originalEvent.x;

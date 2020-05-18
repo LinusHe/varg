@@ -91,7 +91,7 @@ export default {
     openMenu(e, target) {
       if (target === this.getGraph().getCytoGraph(this.getGraph())) {
         this.backgroundMenu();
-      } else if (target.group() == "nodes") {
+      } else if (target.group() == "nodes" && !target.hasClass('eh-handle')) {
         this.targetID = target.data("id");
         this.nodeMenu(target);
       } else if (target.group() == "edges") {
