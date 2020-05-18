@@ -87,7 +87,7 @@ export default {
     return EdgeCount
   },  
   
-  getNextNode(start, option, count) {
+  getNextNode(start, count) {
     let cy = cyStore.data.cy
     let quantity = cy.data("prodQuant")
     
@@ -107,16 +107,27 @@ export default {
     newPath.push(nextEdges[count].data("id"))
     newFoundNode[1] = newPath
 
+    newFoundNode[2] = this.getOptionValue(newPath)
+
+
+    /*
     if(option == "optionCost") {
+      newFoundNode[2] = start[2] + this.getTotalCost(nextEdges[count])
+      
       let newcost = start[2] + nextEdges[count].data("cost") * quantity + nextEdges[count].data("sucost")
       newcost = Math.round(newcost * 100) / 100
       newFoundNode [2] = newcost           
+      
     }
     else {
+      newFoundNode[2] = start[2] + this.getTotalTime(nextEdges[count])
+      
       let newtime = start[2] + nextEdges[count].data("time") * quantity + nextEdges[count].data("sutime")
       newtime = Math.round(newtime * 100) / 100
-      newFoundNode [2] = newtime            
+      newFoundNode [2] = newtime   
+            
     }
+    */
 
     return newFoundNode
   },
@@ -396,9 +407,6 @@ export default {
         //checkedNodes noch nicht funktional, aber nur für performance relevant
       if(this.isPartOfNodes(sortNodes[i][0], checkedNodes) == false) {
 
-        let Edges = [];
-        let optimizeNode = [3]
-
           // nextEdgeCounter = number of reachable nodes
         let nextEdgeCounter = this.countNewEdges(sortNodes[i])
         let nextNode   
@@ -407,7 +415,7 @@ export default {
           // getting nexNodes individually from graph, otherwise problems (somehow)
         for (let j = 0; j < nextEdgeCounter; j++) {
 
-          nextNode = this.getNextNode(sortNodes[i], option, j)
+          nextNode = this.getNextNode(sortNodes[i], j)
 
           let allreadyFound = 0;
             // checks if nextNode is allready part of sort-node (checking ID)
@@ -452,7 +460,6 @@ export default {
     }
   
     let bestPaths = []
-    let bestPath = [3]
    // let endID = cyStore.data.cy.data("settingsOptimizationEndID");
     
       //look for the end-node, first one found is the one with lowest cost
