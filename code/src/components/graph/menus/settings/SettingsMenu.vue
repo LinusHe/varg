@@ -92,6 +92,9 @@ export default {
     },
     saveSettings() {
       // if user clicks on save, but tab wasnt activated before -> type is undefined
+
+      
+
       if (typeof this.$refs.settingsGraph !== "undefined") {
         this.$refs.settingsGraph.setGraphSettings();
         console.log("updated graph Settings:", this.getGraph())

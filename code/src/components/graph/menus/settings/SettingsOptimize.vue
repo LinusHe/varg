@@ -244,6 +244,17 @@ export default {
 
     getNodeItemsName() {
       this.itemsName = this.getGraph().getNodeName(this.getGraph());
+      this.startSelect= [""]
+     let selectNodes = this.getGraph().getCytoGraph().data("settingsOptimizationStartIDs")
+     for(let i = 0; i < selectNodes.length; i++){
+       console.log(this.getGraph().getCytoGraph().nodes("#" + selectNodes[i]).data("name"))
+       this.startSelect.push(this.getGraph().getCytoGraph().nodes("#" + selectNodes[i]).data("name"))
+     }
+
+     
+    this.endSelect= this.getGraph().getCytoGraph().nodes("#" + this.getGraph().getCytoGraph().data("settingsOptimizationEndID")).data("name")
+    
+
     }
   }
 };

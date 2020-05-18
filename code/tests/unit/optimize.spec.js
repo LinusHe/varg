@@ -122,7 +122,7 @@ describe('Optimizing tests', () => {
             }
 
         }
-        console.log(parseInt(99)/101)
+    
 
         expect(array).toMatchObject(["W", "X", "Z"])
 
@@ -148,7 +148,7 @@ describe('Optimizing tests', () => {
             }
 
         }
-        console.log(parseInt(99)/101)
+      
 
         expect(array).toMatchObject(["Y", "Z"])
 

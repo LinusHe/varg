@@ -122,7 +122,7 @@ export default {
   },
 
   markBestEdges(bestEdgesID) {
-    console.log("test")
+   
     cyStore.data.cy.elements().removeClass("highlighted");
     let cy = cyStore.data.cy
     bestEdgesID.forEach(element => {
@@ -334,13 +334,13 @@ export default {
   optimizing() {
    
     let cy = cyStore.data.cy
-    console.log(cy.data())
+  
 
     let option = cy.data("settingsOptimizationOption");   // false = time, true = cost
     let nextBestCounter = cy.data("settingsOptimizationNumber");
     let startIDs= cy.data("settingsOptimizationStartIDs")
     let endID = cy.data("settingsOptimizationEndID");
-    console.log(cy.data())
+  
     
       // gets ID's of start- and endnodes
       
@@ -357,7 +357,8 @@ export default {
     if(endID == undefined || endID == "" || endID == -1){
       for(let o = 0; o < cy.nodes().length; o++){
         if(cy.nodes()[o].outgoers().length == 0){
-          endID = cy.nodes()[o].data("id")          
+          endID = cy.nodes()[o].data("id")   
+          cyStore.data.cy.data("settingsOptimizationEndID", endID)       
         }
       }
     }
@@ -473,7 +474,7 @@ export default {
 
     // push best paths to cy.data
     cyStore.data.cy.data("bestPaths", bestPaths);
-    console.log("debug")
+    
   
     this.markBestEdges(bestPaths[0])
 
