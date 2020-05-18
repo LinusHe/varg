@@ -51,11 +51,32 @@ export default {
 
       // check if edge has node2 as source or target
       if (edgeSid === node2id || edgeTid === node2id) {
-        console.log("Edge between nodes");
         return true;
       }
     }
     return false;
+  },
+
+  // edgeBetweenNodes(node1, node2): returns an array with the edges between two nodes
+  edgeBetweenNodesArr(node1, node2) {
+    let edges = [];
+    for (let i = 0; i < node1.connectedEdges().length; i++) {
+      let edgeSid = node1
+        .connectedEdges()
+        [i].source()
+        .id();
+      let edgeTid = node1
+        .connectedEdges()
+        [i].target()
+        .id();
+      let node2id = node2.id();
+
+      // check if edge has node2 as source or target
+      if (edgeSid === node2id || edgeTid === node2id) {
+        edges.push(node1.connectedEdges()[i]);
+      }
+    }
+    return edges;
   },
 
   // createEdge(..): Adds an edge to the Cytograph with an automatic
@@ -195,6 +216,9 @@ export default {
   // generateQuickEdgeName(..):  generates Edge Name just with the startNode and endNode ID
   //                             example: A -> B | 1
   generateQuickEdgeName(graphComponent, startNode, endNode) {
+    // get cy from graphComponent
+    let cy = graphComponent.getCytoGraph();
+
     // get node names
     let startName = this.getNodeNameByID(graphComponent, startNode);
     let endName = this.getNodeNameByID(graphComponent, endNode);
@@ -208,6 +232,24 @@ export default {
       endName.charAt(0).toUpperCase() +
       " | " +
       number;
+
+    // check if name already exists
+    let edges = this.edgeBetweenNodesArr(
+      cy.getElementById(startNode),
+      cy.getElementById(endNode)
+    );
+    for (let i = 0; i < edges.length; i++) {
+      if (nameString == edges[i].data("name")) {
+        number++;
+        // generate label
+        nameString =
+          startName.charAt(0).toUpperCase() +
+          " - " +
+          endName.charAt(0).toUpperCase() +
+          " | " +
+          number;
+      }
+    }
 
     return nameString;
   },
