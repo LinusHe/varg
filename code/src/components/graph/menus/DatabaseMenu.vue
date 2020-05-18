@@ -5,7 +5,7 @@
       <v-card-title class="text-center justify-center mb-3 pt-8" color="primary">
         <h1>Datenbank</h1>
       </v-card-title>
-      <datenbank ref="datenbank"/>
+      <databaseGUI ref="databaseGUI"/>
     </v-card>
   </v-dialog>
 </template>
@@ -14,7 +14,7 @@
 // @ is an alias to /src
 /* eslint-disable standard/computed-property-even-spacing */
 
-import datenbank from "@/components/database/DatabaseForm.vue";
+import databaseGUI from "@/components/database/DatabaseForm.vue";
 
 export default {
   name: "database",
@@ -22,13 +22,16 @@ export default {
     dialog: false
   }),
   components: {
-    datenbank
+    databaseGUI
   },
   methods: {
     openDialog() {
       this.dialog = true;
       this.$nextTick(() => {
-        this.$refs.datenbank.getItems();
+        // TODO might need to create a loading animation while loading items
+        // and show an error message when unable to connect
+        // either way the DB window should always be at full size and not collapse when empty (looks better) 
+        this.$refs.databaseGUI.loadItems();
       });
     },
     closeDialog() {

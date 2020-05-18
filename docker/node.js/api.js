@@ -72,7 +72,7 @@ router.route('/graph?')
     //post a graph
     .post(function(req,res) {
         console.log('Attempting to post a graph with filename:',req.body.filename);
-        con.query("INSERT INTO cytographs (fileName, userName, graphObject) VALUES ('" +  req.body.filename + "', '" + req.body.user + "', '" + req.body.json + "')",
+        con.query("INSERT INTO cytographs (fileId, fileName, userName, graphObject) VALUES ("+req.body.fileId+", '" +  req.body.filename + "', '" + req.body.user + "', '" + req.body.json + "')",
          function(err, result) {
             if (err) throw err;
             console.log("Post was succesfull.");
@@ -128,10 +128,10 @@ router.route('/graph/:graph_id?')
     //update a single graph identified by id
     .put(function(req, res) {
         let id = req.params.graph_id;
-        let username=req.query.user;
+        let username=req.body.user;
         console.log('Updating Graph');
         /* req.params.json is not yet implemented*/
-        con.query("UPDATE cytographs SET graphObject=" + req.params.json + " WHERE fileID="+ id + " AND userName=" + '"' + username + '"', function(err, result) {
+        con.query("UPDATE cytographs SET graphObject='" + req.body.json + "' WHERE fileID="+ id + " AND userName=" + '"' + username + '"', function(err, result) {
             if (err) throw err;
             console.log("Update-Query succesfull");
             res.sendStatus(200);
