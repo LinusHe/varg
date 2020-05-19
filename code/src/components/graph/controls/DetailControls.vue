@@ -270,8 +270,10 @@
                     id="edgeLotSize"
                     label="Losgröße"
                     type="number"
+                    suffix="Stück"
                     v-model="edgeLotSize"
                     @keyup.enter="saveEdge()"
+                    :rules="lotSizeRules"
                   ></v-text-field>
                 </v-col>
               </v-row>
@@ -346,6 +348,7 @@ export default {
       edgeTime: "",
       edgesuCosts: "",
       edgesuTime: "",
+      edgeLotSize: "",
       unitCost: "€",
       unitTime: "Sek",
       itemsName: [],
@@ -403,7 +406,15 @@ export default {
       startRules: [v => !!v || "Startzustand ist benötigt"],
       endRules: [
         v => !!v || "Endprodukt ist benötigt",
-        v => v != this.startSelect || "Endprodukt muss sich vom Startzustand unterscheiden"
+        v =>
+          v != this.startSelect ||
+          "Endprodukt muss sich vom Startzustand unterscheiden"
+      ],
+      lotSizeRules: [
+        v => !!v || "Losgröße wird benötigt",
+        v => v > 0 || "Darf nicht negativ sein",
+        v => v < 9999999999999999 || "bist du dir sicher?",
+        v => Number.isInteger(+v) || "Nur ganzzahlige Werte!"
       ]
     };
   },
@@ -439,6 +450,7 @@ export default {
       this.edgeTime = edge.data("time");
       this.edgesuCosts = edge.data("sucost");
       this.edgesuTime = edge.data("sutime");
+      this.edgeLotSize = edge.data("lotsize");
       this.startSelect = startName;
       this.endSelect = endName;
       this.showEdgeTitle = this.edgeName;
@@ -568,7 +580,9 @@ export default {
           parseFloat(this.edgeLotSize)
         );
         this.edgeGui = false;
-        dialogComponent.dialogSuccess("Bearbeitungsschritt erfolgreich aktualisiert");
+        dialogComponent.dialogSuccess(
+          "Bearbeitungsschritt erfolgreich aktualisiert"
+        );
         // remove optimization
         this.getGraph().removeOptimization();
       }
@@ -580,7 +594,7 @@ export default {
       this.edgeGui = false;
       dialogComponent.dialogWarning("Bearbeitungsschritt erfolgreich gelöscht");
       // remove optimization
-        this.getGraph().removeOptimization();
+      this.getGraph().removeOptimization();
     },
     openEdgeDeleteMenu() {
       this.edgeDeleteDialog = true;
