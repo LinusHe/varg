@@ -58,7 +58,6 @@ export default {
   name: "Menu",
   data() {
     return {
-      loading: false,
       importBtnColor: "primary",
     };
   },
@@ -74,13 +73,12 @@ export default {
         "setCyProdName",
         "Importiertes Produkt wird geladen..."
       );
+
       // waitUntilNext;
       function onChange(event) {
-        fileManager.loadGraphFromJson(event, null);
+        fileManager.loadGraphFromJson(event, null, dialogComponent); 
         dialogComponent.dialogSuccess("Graph erfolgreich geladen");
-
       }
-      
     }
   }
 };

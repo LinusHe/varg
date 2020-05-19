@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import saveAs from "file-saver";
 import ExJSon from "../JSonPersistence";
 
@@ -9,20 +10,13 @@ export function saveGraphAsJson(graph, name) {
   saveAs(jsonfile, filename);
 }
 
-export function loadGraphFromJson(event, graphComponent) {
+export function loadGraphFromJson(event, graphComponent, dialog) {
     var reader = new FileReader();
     reader.onload = onReaderLoad;
     reader.readAsText(event.target.files[0]);
 
-
   function onReaderLoad(event) {
-    try {
-      ExJSon.LoadJSon(event.target.result, graphComponent);
-    }
-    catch (err) {
-      // eslint-disable-next-line no-console
-      console.log("Json failed to parse");
-    }
+    ExJSon.LoadJSon(event.target.result, graphComponent, dialog);
   }
 }
 
