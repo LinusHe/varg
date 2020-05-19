@@ -100,7 +100,7 @@ describe('Optimizing tests', () => {
     });
     
     
-    it('should show right Path after time optimizing in TestGraph(1) with Startnode A and B and Prodquant = 1', () => {
+    it('should show right Path after time optimizing in TestGraph(2) with Startnode A and B and Prodquant = 1', () => {
                 
         cyStore.data.cy.data("prodQuant", 1);
         cyStore.data.cy.data("settingsOptimizationStartIDs", ["0", "1"])
@@ -121,7 +121,7 @@ describe('Optimizing tests', () => {
         expect(array).toMatchObject(["BC","CE", "EF", "FH", "HI", "IJ"])
     });
 
-    it('should show right Path after cost optimizing in TestGraph(1) with Startnode A and B and Prodquant = 1', () => {
+    it('should show right Path after cost optimizing in TestGraph(2) with Startnode A and B and Prodquant = 1', () => {
                 
         cyStore.data.cy.data("prodQuant", 1);
         cyStore.data.cy.data("settingsOptimizationStartIDs", ["0", "1"])
@@ -142,7 +142,7 @@ describe('Optimizing tests', () => {
         expect(array).toMatchObject(["AC","CE", "EF", "FH", "HI", "IJ"])
     });
 
-    it('should show right Path after cost optimizing in TestGraph(1) with Startnode A and B and Prodquant = 10', () => {
+    it('should show right Path after cost optimizing in TestGraph(2) with Startnode A and B and Prodquant = 10', () => {
                 
         cyStore.data.cy.data("prodQuant", 10);
         cyStore.data.cy.data("settingsOptimizationStartIDs", ["0", "1"])
@@ -163,7 +163,7 @@ describe('Optimizing tests', () => {
         expect(array).toMatchObject(["AC","CD", "DF", "FG", "GJ"])
     });
 
-    it('should show right Path after cost optimizing in TestGraph(1) with Startnode A and B and Prodquant = 100', () => {
+    it('should show right Path after cost optimizing in TestGraph(2) with Startnode A and B and Prodquant = 100', () => {
                 
         cyStore.data.cy.data("prodQuant", 100);
         cyStore.data.cy.data("settingsOptimizationStartIDs", ["0", "1"])
