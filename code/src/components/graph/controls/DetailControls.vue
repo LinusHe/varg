@@ -346,6 +346,7 @@ export default {
       edgeTime: "",
       edgesuCosts: "",
       edgesuTime: "",
+      edgeLotSize: "",
       unitCost: "€",
       unitTime: "Sek",
       itemsName: [],
@@ -439,6 +440,7 @@ export default {
       this.edgeTime = edge.data("time");
       this.edgesuCosts = edge.data("sucost");
       this.edgesuTime = edge.data("sutime");
+      this.edgeLotSize = edge.data("lotsize");
       this.startSelect = startName;
       this.endSelect = endName;
       this.showEdgeTitle = this.edgeName;

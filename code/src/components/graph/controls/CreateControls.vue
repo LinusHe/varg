@@ -290,7 +290,7 @@
               <v-row>
                 <v-col sm="6">
                   <v-text-field
-                    id="edgeLotSize"
+                    id="edgeCreateLotSize"
                     label="Losgröße"
                     type="number"
                     v-model="edgeCreateLotSize"
@@ -348,6 +348,7 @@ export default {
       edgeCreateTime: "",
       edgeCreatesuCosts: "",
       edgeCreatesuTime: "",
+      edgeCreateLotSize: "",
       unitCost: "€",
       unitTime: "Sek",
       itemsName: [],

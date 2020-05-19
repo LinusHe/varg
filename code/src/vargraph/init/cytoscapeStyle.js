@@ -20,7 +20,7 @@ const style = [
       "target-arrow-shape": "triangle",
       "curve-style": "bezier",
       // 'control-point-distance': '80px', // replaced with 'control-point-step-size'
-      "control-point-step-size": "150px", // distance between successive bezier edges.
+      "control-point-step-size": "170px", // distance between successive bezier edges.
       // 'control-point-weight': '0.5', // '0': curve towards source node, '1': towards target node. 0.5 is default!
       "font-size": "14px",
       color: "#777",
