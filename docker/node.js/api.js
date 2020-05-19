@@ -10,6 +10,8 @@ const mysql_driver = require('mysql');
 const parser = require('./APIparser')
 
 const config = {
+    // eheldt: 192.168.1.102
+    // jhohlfel: 192.168.99.101
     host: "192.168.1.102",
     user: "varg",
     password: "VarG2020",
@@ -42,7 +44,7 @@ router.use(function(req,res,next) {
     //TODO: Serverside Verification could happen here with req.query.user 
     //this will allow to (only) access the resources from the specified address
     res.header("Access-Control-Allow-Origin", "http://localhost:8080");
-    res.header("Access-Control-Allow-Methods","GET,PUT,POST,DELETE,OPTIONS");
+    res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next(); //continue past middleware
 });

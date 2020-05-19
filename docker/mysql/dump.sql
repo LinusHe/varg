@@ -96,7 +96,7 @@ INSERT INTO cytographs (fileId, fileName, userName, graphObject) VALUES (-233086
             "time": 1,
             "sucost": 2,
             "sutime": 10,
-            "label": "abBACKSLASHNKosten: 5 € | Zeit: 1 SekundenBACKSLASHNRüstkosten: 2 € | Rüstzeit: 10 Sekunden"
+            "label": "ab\\nKosten: 5 $ | Zeit: 1 Sekunden\\nRüstkosten: 2 € | Rüstzeit: 10 Sekunden"
           },
           "position": {
             "x": 0,
@@ -122,7 +122,7 @@ INSERT INTO cytographs (fileId, fileName, userName, graphObject) VALUES (-233086
             "time": 1,
             "sucost": 1,
             "sutime": 1,
-            "label": "bcBACKSLASHNKosten: 1 € | Zeit: 1 SekundenBACKSLASHNRüstkosten: 1 € | Rüstzeit: 1 Sekunden"
+            "label": "bc\\nKosten: 1 € | Zeit: 1 Sekunden\\nRüstkosten: 1 € | Rüstzeit: 1 Sekunden"
           },
           "position": {
             "x": 0,
@@ -329,7 +329,7 @@ INSERT INTO cytographs (fileId, fileName, userName, graphObject) VALUES (-233086
             "time": 1,
             "sucost": 2,
             "sutime": 10,
-            "label": "abBACKSLASHNKosten: 5 € | Zeit: 1 SekundenBACKSLASHNRüstkosten: 2 € | Rüstzeit: 10 Sekunden"
+            "label": "ab\\nKosten: 5 € | Zeit: 1 Sekunden\\nRüstkosten: 2 € | Rüstzeit: 10 Sekunden"
           },
           "position": {
             "x": 0,
@@ -355,7 +355,7 @@ INSERT INTO cytographs (fileId, fileName, userName, graphObject) VALUES (-233086
             "time": 1,
             "sucost": 1,
             "sutime": 1,
-            "label": "bcBACKSLASHNKosten: 1 € | Zeit: 1 SekundenBACKSLASHNRüstkosten: 1 € | Rüstzeit: 1 Sekunden"
+            "label": "bc\\nKosten: 1 € | Zeit: 1 Sekunden\\nRüstkosten: 1 € | Rüstzeit: 1 Sekunden"
           },
           "position": {
             "x": 0,
@@ -562,7 +562,7 @@ INSERT INTO cytographs (fileId, fileName, userName, graphObject) VALUES (-233086
             "time": 1,
             "sucost": 2,
             "sutime": 10,
-            "label": "abBACKSLASHNKosten: 5 € | Zeit: 1 SekundenBACKSLASHNRüstkosten: 2 € | Rüstzeit: 10 Sekunden"
+            "label": "ab\\nKosten: 5 € | Zeit: 1 Sekunden\\nRüstkosten: 2 € | Rüstzeit: 10 Sekunden"
           },
           "position": {
             "x": 0,
@@ -588,7 +588,7 @@ INSERT INTO cytographs (fileId, fileName, userName, graphObject) VALUES (-233086
             "time": 1,
             "sucost": 1,
             "sutime": 1,
-            "label": "bcBACKSLASHNKosten: 1 € | Zeit: 1 SekundenBACKSLASHNRüstkosten: 1 € | Rüstzeit: 1 Sekunden"
+            "label": "bc\\nKosten: 1 € | Zeit: 1 Sekunden\\nRüstkosten: 1 € | Rüstzeit: 1 Sekunden"
           },
           "position": {
             "x": 0,
