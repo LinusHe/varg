@@ -10,7 +10,7 @@
       hide-default-footer
     >
       <template v-slot:header>
-        <v-toolbar dark color="blue darken-3" class="mb-1">
+        <v-toolbar dark color="blue darken-3" class="mb-1 darkmode-ign">
           <v-text-field v-model="search" clearable flat solo-inverted hide-details label="Search"></v-text-field>
           <template v-if="$vuetify.breakpoint.mdAndUp">
             <v-spacer></v-spacer>
@@ -66,7 +66,7 @@
           <span class="grey--text">Graphen pro Seite</span>
           <v-menu offset-y>
             <template v-slot:activator="{ on }">
-              <v-btn dark text color="primary" class="ml-2" v-on="on">
+              <v-btn dark text color="primary" class="ml-2 darkmode-ign" v-on="on">
                 {{ itemsPerPage }}
                 <v-icon>mdi-chevron-down</v-icon>
               </v-btn>
@@ -85,10 +85,10 @@
           <v-spacer></v-spacer>
 
           <span class="mr-4 grey--text">Seite <b>{{ page }}</b> von {{ numberOfPages }}</span>
-          <v-btn fab dark small color="primary" class="mr-1" @click="formerPage">
+          <v-btn fab dark small color="primary" class="mr-1 darkmode-ign" @click="formerPage">
             <v-icon>mdi-chevron-left</v-icon>
           </v-btn>
-          <v-btn fab dark small color="primary" class="ml-1" @click="nextPage">
+          <v-btn fab dark small color="primary" class="ml-1 darkmode-ign" @click="nextPage">
             <v-icon>mdi-chevron-right</v-icon>
           </v-btn>
         </v-row>

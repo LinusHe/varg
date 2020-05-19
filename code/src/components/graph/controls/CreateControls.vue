@@ -14,7 +14,7 @@
         <template v-slot:activator>
           <v-tooltip left>
             <template v-slot:activator="{ on }">
-              <v-btn v-model="fab" v-on="on" color="primary" dark fab large>
+              <v-btn class="darkmode-ign" v-model="fab" v-on="on" color="primary" dark fab large>
                 <v-icon v-if="fab">mdi-close</v-icon>
                 <v-icon v-else>mdi-plus</v-icon>
               </v-btn>
@@ -52,7 +52,7 @@
         >
           <!-- Colored Div -->
           <div
-            class="white--text align-end"
+            class="white--text align-end darkmode-ign"
             style="height: 150px"
             v-bind:style="{ background: '#'+nodeCreateColor }"
             v-ripple
@@ -133,6 +133,7 @@
             <v-row justify="end">
               <v-col sm="4">
                 <v-btn
+                  class="darkmode-ign"
                   :disabled="!validNodes"
                   color="green darken-1"
                   text
@@ -164,7 +165,7 @@
 
           <!-- Colored Div -->
           <div
-            class="white--text align-end"
+            class="white--text align-end darkmode-ign"
             style="height: 100px; background: #2699FB; background-color: #2699FB"
           >
             <v-card-subtitle style="color: #ffffff" class="pb-0">Neuer Bearbeitungsschritt:</v-card-subtitle>
@@ -292,6 +293,7 @@
           <v-row class="mb-5" justify="end">
             <v-col sm="4">
               <v-btn
+                class="darkmode-ign"
                 :disabled="!validEdges"
                 color="green darken-1"
                 text

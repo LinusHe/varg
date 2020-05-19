@@ -2,8 +2,8 @@
   <div>
     <v-list-item three-line class="login-container">
       <v-list-item-content>
-        <v-list-item-title align="center" class="login-pre-headline mt-5">Variantengraph-Editor</v-list-item-title>
-        <v-list-item-title align="center" class="login-headline mb-1">varg</v-list-item-title>
+        <v-list-item-title align="center" class="login-pre-headline mt-5 darkmode-ign">Variantengraph-Editor</v-list-item-title>
+        <v-list-item-title align="center" class="login-headline mb-1 darkmode-ign">VarG</v-list-item-title>
         <v-form
           align="center"
           ref="form"
@@ -40,7 +40,7 @@
           ></v-text-field>
           <v-btn
             align="center"
-            class="login-button"
+            class="login-button darkmode-ign"
             @click="login()"
             large
             color="primary"

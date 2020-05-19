@@ -38,6 +38,7 @@
         <v-row justify="end">
           <v-col sm="3">
             <v-btn
+              class="darkmode-ign"
               color="green darken-1"
               text
               :disabled="!validLocal"

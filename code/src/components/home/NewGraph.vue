@@ -3,7 +3,7 @@
     <v-list-item-content>
       <v-list-item-title
         align="center"
-        class="newgraph-headline mb-1 font-weight-black"
+        class="newgraph-headline mb-1 font-weight-black darkmode-ign"
       >Neues Produkt</v-list-item-title>
       <p class="mt-4 mb-8 font-weight-light" align="center">
         um einen neuen VarGraph zu erstellen,<br>
@@ -39,7 +39,7 @@
               :disabled="!valid"
               color="primary"
               text
-              class="btn-creategraph"
+              class="btn-creategraph darkmode-ign"
             >Starten</v-btn>
           </v-col>
           <v-col sm="3" class="mt-3">

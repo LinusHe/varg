@@ -1,5 +1,5 @@
 <template>
-  <div id="cy"></div>
+  <div class="darkmode-ign" id="cy"></div>
 </template>
 
 <script>

@@ -7,7 +7,7 @@
         <v-card class="detail-card" v-show="nodeGui" transition="scroll-y-transition">
           <!-- Colored Div  -->
           <div
-            class="white--text align-end"
+            class="white--text align-end darkmode-ign"
             style="height: 150px"
             v-bind:style="{ background: '#'+nodeColor }"
           >
@@ -88,6 +88,7 @@
             <v-row justify="end">
               <v-col sm="4">
                 <v-btn
+                  class="darkmode-ign"
                   color="green darken-1"
                   text
                   :disabled="!validNodes"
@@ -95,7 +96,7 @@
                 >Speichern</v-btn>
               </v-col>
               <v-col sm="4">
-                <v-btn color="error" text @click="openNodeDeleteMenu()">Löschen</v-btn>
+                <v-btn class="darkmode-ign" color="error" text @click="openNodeDeleteMenu()">Löschen</v-btn>
               </v-col>
               <v-col sm="4">
                 <v-btn color="grey" text @click="cancel()">Abbrechen</v-btn>
@@ -141,7 +142,7 @@
 
           <!-- Colored Div -->
           <div
-            class="white--text align-end"
+            class="white--text align-end darkmode-ign"
             style="height: 100px; background: #2699FB; background-color: #2699FB"
           >
             <v-card-subtitle style="color: #ffffff" class="pb-0">Bearbeitungsschritt bearbeiten:</v-card-subtitle>
@@ -269,6 +270,7 @@
           <v-row justify="end">
             <v-col sm="4">
               <v-btn
+                class="darkmode-ign"
                 color="green darken-1"
                 text
                 :disabled="!validEdges"
@@ -276,7 +278,7 @@
               >Speichern</v-btn>
             </v-col>
             <v-col sm="4">
-              <v-btn color="error" text @click="openEdgeDeleteMenu">Löschen</v-btn>
+              <v-btn class="darkmode-ign" color="error" text @click="openEdgeDeleteMenu">Löschen</v-btn>
             </v-col>
             <v-col sm="4">
               <v-btn color="grey" text @click="cancel">Abbrechen</v-btn>

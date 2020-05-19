@@ -3,7 +3,7 @@
     <v-col sm="3" class="graph-info">
       <v-row>
         <v-card align="center" class="icon-card mt-2 ml-8 mb-2" width="60px" height="60px">
-          <v-icon size="40px" class="mt-2" color="#6c7dff">mdi-rocket</v-icon>
+          <v-icon size="40px" class="mt-2 darkmode-ign" color="#6c7dff">mdi-rocket</v-icon>
         </v-card>
         <p class="mb-0">
           <v-card-subtitle class="pb-0">Produktname:</v-card-subtitle>
@@ -55,7 +55,7 @@
       <v-row>
         <v-divider class="mx-4" vertical></v-divider>
         <v-card align="center" class="icon-card mt-2 ml-4" width="60px" height="60px">
-          <v-icon size="40px" class="mt-2" color="#6c7dff">mdi-counter</v-icon>
+          <v-icon size="40px" class="mt-2 darkmode-ign" color="#6c7dff">mdi-counter</v-icon>
         </v-card>
         <p class="mb-0">
           <v-card-subtitle class="pb-0">Stückzahl:</v-card-subtitle>
@@ -108,7 +108,7 @@
       <v-row>
         <v-divider class="mx-4" vertical></v-divider>
         <v-card align="center" class="icon-card mt-2 ml-4" width="60px" height="60px">
-          <v-icon size="40px" class="mt-2" color="#6c7dff">mdi-cash</v-icon>
+          <v-icon size="40px" class="mt-2 darkmode-ign" color="#6c7dff">mdi-cash</v-icon>
         </v-card>
         <p class="mb-0">
           <v-card-subtitle class="pb-0">
@@ -126,7 +126,7 @@
           <v-btn
             v-if="!optimized"
             @click="startOptimizing"
-            class="ml-4 pa-0"
+            class="ml-4 pa-0 darkmode-ign"
             text
             color="#6c7dff"
           >Graph optimieren</v-btn>
@@ -138,7 +138,7 @@
       <v-row>
         <v-divider class="mx-4" vertical></v-divider>
         <v-card align="center" class="icon-card mt-2 ml-4" width="60px" height="60px">
-          <v-icon size="40px" class="mt-2" color="#6c7dff">mdi-clock-outline</v-icon>
+          <v-icon size="40px" class="mt-2 darkmode-ign" color="#6c7dff">mdi-clock-outline</v-icon>
         </v-card>
         <p class="mb-0">
           <v-card-subtitle class="pb-0">
@@ -148,7 +148,7 @@
               v-if="optimized"
               @click="startOptimizing"
               color="#636364"
-              class="ml-2 mb-1"
+              class="ml-2 mb-1 "
               small
             >mdi-refresh</v-icon>
           </v-card-subtitle>
@@ -156,7 +156,7 @@
           <v-btn
             v-if="!optimized"
             @click="startOptimizing"
-            class="ml-4 pa-0"
+            class="ml-4 pa-0 darkmode-ign"
             text
             color="#6c7dff"
           >Graph optimieren</v-btn>
