@@ -1,5 +1,9 @@
-.darkmode-layer, .darkmode-toggle {
-    z-index: 500;
-  }
-  
-//*{filter: hue-rotate(180deg);}
+.darkmode-layer,
+.darkmode-toggle {
+  z-index: 500;
+}
+
+.darkmode--activated .darkmode-ign {
+  mix-blend-mode: difference;
+  isolation: isolate;
+}

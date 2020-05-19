@@ -2,7 +2,7 @@
   <div class="header-graph-container" id="graph-header">
     <v-row>
       <v-col align="left" xs="12" sm="1">
-        <h1 class="headline mb-1 ml-12">varg</h1>
+        <h1 class="headline mb-1 ml-12">VarG</h1>
       </v-col>
 
       <v-col align="center">
