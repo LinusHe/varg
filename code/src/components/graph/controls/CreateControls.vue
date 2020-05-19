@@ -293,8 +293,10 @@
                     id="edgeCreateLotSize"
                     label="Losgröße"
                     type="number"
+                    suffix="Stück"
                     v-model="edgeCreateLotSize"
                     @keyup.enter="createEdge()"
+                    :rules="lotSizeRules"
                   ></v-text-field>
                 </v-col>
               </v-row>
@@ -402,6 +404,12 @@ export default {
         v =>
           v != this.startSelect ||
           "Endzustand muss sich vom Startzustand unterscheiden"
+      ],
+      lotSizeRules: [
+        v => !!v || "Losgröße wird benötigt",
+        v => v > 0 || "Darf nicht negativ sein",
+        v => v < 9999999999999999 || "bist du dir sicher?",
+        v => Number.isInteger(+v) || "Nur ganzzahlige Werte!"
       ]
     };
   },
