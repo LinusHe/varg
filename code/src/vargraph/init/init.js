@@ -101,8 +101,6 @@ export default {
   },
 
   getDialogComponent(graphComponent) {
-    return graphComponent.$parent.$parent.$parent.$parent.$parent.$refs[
-      "dialogs"
-    ];
+    return graphComponent.$parent.$parent.$parent.$parent.$parent.$refs["dialogs"];
   }
 };
