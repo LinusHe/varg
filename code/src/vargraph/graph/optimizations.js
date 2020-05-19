@@ -440,7 +440,6 @@ export default {
     }
   
     let bestPaths = []
-    let bestPath = [3]
    // let endID = this.getCytoGraph(this).data("settingsOptimizationEndID");
     
       //look for the end-node, first one found is the one with lowest cost

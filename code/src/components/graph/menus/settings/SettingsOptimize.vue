@@ -90,19 +90,20 @@
           <v-radio-group v-model="optimizationSelection" :mandatory="false" class="ml-6 mr-6">
             <template>
               <v-expansion-panels hover accordion>
-                <v-expansion-panel v-for="(item,i) in optimizationNumber" :key="i">
+                <v-expansion-panel v-for="(rank, i) in rankArray" :key="i">
                   <v-expansion-panel-header>
                     <v-radio color="primary" :value="i">
                       <template v-slot:label>
-                        <v-card-text class="ma-0 pa-0 pt-1">
-                          <strong>TODO! Kosten:</strong> 10€,
-                          <strong>Zeit:</strong> 10s
+                        <v-card-text class="ma-0 pa-0 pt-1">  
+                          {{i + 1}}. Platz
+                          <strong>Kosten:</strong> {{rank.cost}} €,
+                          <strong>Zeit:</strong> {{rank.time}} s
                         </v-card-text>
                       </template>
                     </v-radio>
                   </v-expansion-panel-header>
                   <v-expansion-panel-content class="ml-8">
-                    <v-card-text>Weg: A - B - C - B - A</v-card-text>
+                    <v-card-text>Weg: {{rank.path}}</v-card-text>
                   </v-expansion-panel-content>
                 </v-expansion-panel>
               </v-expansion-panels>
@@ -137,7 +138,8 @@ export default {
     startSelect: [""],
     endSelect: "",
     optimizationNumber: 4,
-    optimizationSelection: 0
+    optimizationSelection: 0,
+    rankArray: []
   }),
   methods: {
     getGraph() {
@@ -151,7 +153,26 @@ export default {
     },
 
     applyRanking() {
-      console.log("Ranking Function called");
+      this.rankArray = []
+      let nextRank = {}
+      let bestPaths = this.getGraph().getCytoGraph(this).data("bestPaths")
+
+      for(let i = 0; i < bestPaths.length; i++) {
+        nextRank.cost = this.getGraph().getTotalCost(bestPaths[i])
+        nextRank.time = this.getGraph().getTotalTime(bestPaths[i])
+        nextRank.path = []
+        for(let j = 0; j < bestPaths[i].length; j++) {
+          nextRank.path.push(this.getGraph().getCytoGraph(this).getElementById(bestPaths[i][j]).data('name'))
+        }
+        this.rankArray.push(nextRank)
+      } 
+      
+      for(let rA = 0; rA < this.rankArray.length; rA++) {
+        console.log("Anzahl", this.rankArray)
+        console.log("hier1", this.getGraph().getTotalCost(bestPaths[rA]))
+        console.log("hier2", this.rankArray[rA].cost)
+        console.log("hier3", this.rankArray[rA].path)
+      }
     },
 
     // get Settings
@@ -218,8 +239,10 @@ export default {
       this.getGraph()
         .getCytoGraph()
         .data("settingsOptimizationStartIDs", startIDs);
+     
+     
+     // set endID for Optimization Algorithm
 
-      // set endID for Optimization Algorithm
 
       let indexEnd = this.itemsName.indexOf(this.endSelect);
       let endID = this.itemsID[indexEnd];
@@ -235,6 +258,7 @@ export default {
       this.getGraph()
         .getCytoGraph(this.getGraph())
         .data("settingsOptimizationSelection", this.optimizationSelection);
+
 
       // remove optimization
       this.getGraph().removeOptimization();
