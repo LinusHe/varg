@@ -12,7 +12,7 @@ const parser = require('./APIparser')
 const config = {
     // eheldt: 192.168.1.102
     // jhohlfel: 192.168.99.101
-    host: "192.168.1.102",
+    host: "192.168.99.101",
     user: "varg",
     password: "VarG2020",
     database: "vargdb"
@@ -75,8 +75,12 @@ router.route('/graph?')
     //post a graph
     .post(function(req,res) {
         console.log('Attempting to post a graph with filename:',req.body.filename);
-        con.query("INSERT INTO cytographs (fileId, fileName, userName, graphObject) VALUES ("+req.body.fileId+", '" +  req.body.filename + "', '" + req.body.user + "', '" + req.body.json + "')",
-         function(err, result) {
+        let post = {fileID: req.body.fileID,
+                    filename: req.body.filename, 
+                    userName: "'"+req.body.user +"'", 
+                    graphObject: req.body.json};
+        con.query("INSERT INTO cytographs SET ?", post,
+         function(err, result, fields) {
             if (err) throw err;
             console.log("Post was succesfull.");
             res.sendStatus(201);
