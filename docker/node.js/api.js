@@ -39,6 +39,7 @@ let router = express.Router();
 //middleware functionality (inspection, logging etc.) here
 router.use(function(req,res,next) {
     console.log("middleware could happen here");
+    //TODO: Serverside Verification could happen here with req.query.user 
     //this will allow to (only) access the resources from the specified address
     res.header("Access-Control-Allow-Origin", "http://localhost:8080");
     res.header("Access-Control-Allow-Methods","GET,PUT,POST,DELETE,OPTIONS");
