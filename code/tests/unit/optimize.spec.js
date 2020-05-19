@@ -105,7 +105,7 @@ describe('Optimizing tests', () => {
         cyStore.data.cy.data("prodQuant", 1);
         cyStore.data.cy.data("settingsOptimizationStartIDs", ["0", "1"])
         cyStore.data.cy.data("settingsOptimizationOption", "optionTime")
-        cyStore.data.cy.data("settingsOptimizationEndID", 4)
+        cyStore.data.cy.data("settingsOptimizationEndID", 9)
         cyStore.data.cy.data("settingsOptimizationNumber" ,1)
         
         let array = []
@@ -118,7 +118,7 @@ describe('Optimizing tests', () => {
             }
         }
 
-        expect(array).toMatchObject(["BC","CE", "EF", "FH", "HI", "IJ")
+        expect(array).toMatchObject(["BC","CE", "EF", "FH", "HI", "IJ"])
     });
 
     it('should show right Path after cost optimizing in TestGraph(1) with Startnode A and B and Prodquant = 1', () => {
@@ -126,7 +126,7 @@ describe('Optimizing tests', () => {
         cyStore.data.cy.data("prodQuant", 1);
         cyStore.data.cy.data("settingsOptimizationStartIDs", ["0", "1"])
         cyStore.data.cy.data("settingsOptimizationOption", "optionCost")
-        cyStore.data.cy.data("settingsOptimizationEndID", 4)
+        cyStore.data.cy.data("settingsOptimizationEndID", 9)
         cyStore.data.cy.data("settingsOptimizationNumber" ,1)
         
         let array = []
@@ -144,10 +144,10 @@ describe('Optimizing tests', () => {
 
     it('should show right Path after cost optimizing in TestGraph(1) with Startnode A and B and Prodquant = 10', () => {
                 
-        cyStore.data.cy.data("prodQuant", 1);
+        cyStore.data.cy.data("prodQuant", 10);
         cyStore.data.cy.data("settingsOptimizationStartIDs", ["0", "1"])
         cyStore.data.cy.data("settingsOptimizationOption", "optionCost")
-        cyStore.data.cy.data("settingsOptimizationEndID", 4)
+        cyStore.data.cy.data("settingsOptimizationEndID", 9)
         cyStore.data.cy.data("settingsOptimizationNumber" ,1)
         
         let array = []
@@ -165,10 +165,10 @@ describe('Optimizing tests', () => {
 
     it('should show right Path after cost optimizing in TestGraph(1) with Startnode A and B and Prodquant = 100', () => {
                 
-        cyStore.data.cy.data("prodQuant", 1);
+        cyStore.data.cy.data("prodQuant", 100);
         cyStore.data.cy.data("settingsOptimizationStartIDs", ["0", "1"])
         cyStore.data.cy.data("settingsOptimizationOption", "optionCost")
-        cyStore.data.cy.data("settingsOptimizationEndID", 4)
+        cyStore.data.cy.data("settingsOptimizationEndID", 9)
         cyStore.data.cy.data("settingsOptimizationNumber" ,1)
         
         let array = []
