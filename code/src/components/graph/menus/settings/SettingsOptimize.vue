@@ -154,10 +154,10 @@ export default {
 
     applyRanking() {
       this.rankArray = []
-      let nextRank = {}
       let bestPaths = this.getGraph().getCytoGraph(this).data("bestPaths")
 
       for(let i = 0; i < bestPaths.length; i++) {
+        let nextRank = {}
         nextRank.cost = this.getGraph().getTotalCost(bestPaths[i])
         nextRank.time = this.getGraph().getTotalTime(bestPaths[i])
         nextRank.path = []
@@ -166,13 +166,6 @@ export default {
         }
         this.rankArray.push(nextRank)
       } 
-      
-      for(let rA = 0; rA < this.rankArray.length; rA++) {
-        console.log("Anzahl", this.rankArray)
-        console.log("hier1", this.getGraph().getTotalCost(bestPaths[rA]))
-        console.log("hier2", this.rankArray[rA].cost)
-        console.log("hier3", this.rankArray[rA].path)
-      }
     },
 
     // get Settings
