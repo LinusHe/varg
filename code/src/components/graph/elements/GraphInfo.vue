@@ -261,62 +261,69 @@ export default {
       this.optimized = bool;
     },
 
-    runOptimization(){
-
+    runOptimization() {
       this.getGraph().optimizing();
 
-        // get best path
-        let bestPaths = this.getGraph()
+      // get best path
+      let bestPaths = this.getGraph()
+        .getCytoGraph(this.getGraph())
+        .data("bestPaths");
+
+      // map costs
+      this.costs =
+        this.getGraph().getTotalCost(bestPaths[0]) +
+        " " +
+        this.getGraph()
           .getCytoGraph(this.getGraph())
-          .data("bestPaths");
+          .data("settingsUnitCostSelection");
 
-        // map costs
-        this.costs =
-          this.getGraph().getTotalCost(bestPaths[0]) +
-          " " +
-          this.getGraph()
-            .getCytoGraph(this.getGraph())
-            .data("settingsUnitCostSelection");
+      // map time
+      this.time =
+        this.getGraph().getTotalTime(bestPaths[0]) +
+        " " +
+        this.getGraph()
+          .getCytoGraph(this.getGraph())
+          .data("settingsUnitTimeSelection");
 
-        // map time
-        this.time =
-          this.getGraph().getTotalTime(bestPaths[0]) +
-          " " +
-          this.getGraph()
-            .getCytoGraph(this.getGraph())
-            .data("settingsUnitTimeSelection");
+      // set optimized
+      this.optimized = true;
 
-        // set optimized
-        this.optimized = true;
+      // call ranking function in settingsOptimize.vue
+      if (
+        typeof this.$parent.$parent.$refs.settingsMenu.$refs
+          .settingsOptimize !== "undefined"
+      ) {
+        this.$parent.$parent.$refs.settingsMenu.$refs.settingsOptimize.applyRanking();
+      }
 
-
-        // open dialog, if in settings enabled
-        if (
-          typeof this.$parent.$parent.$refs.settingsMenu.$refs
-            .settingsGeneral !== "undefined" &&
-          this.$parent.$parent.$refs.settingsMenu.$refs.settingsGeneral.getAlternativePopUp()
-        ) {
-          // open graph settings and scroll to alternative paths
-          this.openOptimize();
-          this.scrollToAlternativeOptimizations();
-        }
-
+      // open dialog, if in settings enabled
+      if (
+        typeof this.$parent.$parent.$refs.settingsMenu.$refs.settingsGeneral !==
+          "undefined" &&
+        this.$parent.$parent.$refs.settingsMenu.$refs.settingsGeneral.getAlternativePopUp()
+      ) {
+        // open graph settings and scroll to alternative paths
+        this.openOptimize();
+        this.scrollToAlternativeOptimizations();
+      }
     },
 
-
     startOptimizing() {
-
-      console.log("Länge der Startknoten: " + this.getGraph().getCytoGraph(this.getGraph()).data("settingsOptimizationStartNames").length)
+      console.log(
+        "Länge der Startknoten: " +
+          this.getGraph()
+            .getCytoGraph(this.getGraph())
+            .data("settingsOptimizationStartNames").length
+      );
 
       if (
-        (this.getGraph()
+        this.getGraph()
           .getCytoGraph(this.getGraph())
-          .data("settingsOptimizationStartNames").length != 0) &&
+          .data("settingsOptimizationStartNames").length != 0 &&
         this.getGraph()
           .getCytoGraph(this.getGraph())
           .data("settingsOptimizationEndID") != -1
       ) {
-
         this.runOptimization();
 
         // notify with dialog
@@ -326,36 +333,39 @@ export default {
             "<br>Öffne die <b>Optimierungs-Einstellungen</b> für weitere Wege!",
           8000
         );
-       
-     } 
-      else if( this.getGraph().getCytoGraph(this.getGraph()).data("settingsOptimizationStartNames") == 0 && this.getGraph().getCytoGraph(this.getGraph()).data("settingsOptimizationEndID") != -1 ) 
-          {
-          
-          this.runOptimization()
+      } else if (
+        this.getGraph()
+          .getCytoGraph(this.getGraph())
+          .data("settingsOptimizationStartNames") == 0 &&
+        this.getGraph()
+          .getCytoGraph(this.getGraph())
+          .data("settingsOptimizationEndID") != -1
+      ) {
+        this.runOptimization();
         dialogComponent.dialogWarning(
           "Die Startzustände wurden automatisch eingestellt. Wenn du sie ändern möchtest öffne die Optimierungseinstellungen!",
           6000
         );
-      }  
-
-      else if(this.getGraph().getCytoGraph(this.getGraph()).data("settingsOptimizationEndID") == -1 && this.getGraph().getCytoGraph(this.getGraph()).data("settingsOptimizationStartNames") != 0 ) {
-
-        this.runOptimization()
+      } else if (
+        this.getGraph()
+          .getCytoGraph(this.getGraph())
+          .data("settingsOptimizationEndID") == -1 &&
+        this.getGraph()
+          .getCytoGraph(this.getGraph())
+          .data("settingsOptimizationStartNames") != 0
+      ) {
+        this.runOptimization();
         dialogComponent.dialogWarning(
           "Der Endzustand wurde automatisch eingestellt. Wenn du ihn ändern möchtest öffne die Optimierungseinstellungen!",
           6000
         );
-
-      }
-
-      else {
-        this.runOptimization()
-         dialogComponent.dialogWarning(
+      } else {
+        this.runOptimization();
+        dialogComponent.dialogWarning(
           "Die Start- und Endzustände wurden automatisch eingestellt. Wenn du sie ändern möchtest öffne die Optimierungseinstellungen!",
           6000
         );
       }
-
     }
   }
 };

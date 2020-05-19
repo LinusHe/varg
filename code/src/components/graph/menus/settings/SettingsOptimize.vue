@@ -127,6 +127,7 @@ export default {
     dialogComponent = this.$parent.$parent.$parent.$parent.$parent.$parent
       .$parent.$parent.$parent.$parent.$parent.$parent.$refs["dialogs"];
     this.getOptimizeSettings();
+    this.applyRanking();
   },
   data: () => ({
     optimizationOption: "Zeit",
@@ -145,8 +146,12 @@ export default {
     },
 
     scrollToAlternatives() {
-      let scrollbox = document.getElementById("scrollOpt")
+      let scrollbox = document.getElementById("scrollOpt");
       scrollbox.scrollTo(0, 500);
+    },
+
+    applyRanking() {
+      console.log("Ranking Function called");
     },
 
     // get Settings
@@ -213,10 +218,8 @@ export default {
       this.getGraph()
         .getCytoGraph()
         .data("settingsOptimizationStartIDs", startIDs);
-     
-     
-     // set endID for Optimization Algorithm
 
+      // set endID for Optimization Algorithm
 
       let indexEnd = this.itemsName.indexOf(this.endSelect);
       let endID = this.itemsID[indexEnd];
@@ -232,7 +235,6 @@ export default {
       this.getGraph()
         .getCytoGraph(this.getGraph())
         .data("settingsOptimizationSelection", this.optimizationSelection);
-
 
       // remove optimization
       this.getGraph().removeOptimization();
