@@ -1,5 +1,5 @@
 <template>
-  <v-card flat>
+  <v-card flat class="settings-optimize">
     <v-card-text id="scrollOpt" class="scrolling-container pb-10" style="max-height: 55vh">
       <v-card-subtitle>Grundeinstellungen</v-card-subtitle>
       <v-card class="ml-6 mr-6">
@@ -94,16 +94,20 @@
                   <v-expansion-panel-header>
                     <v-radio color="primary" :value="i">
                       <template v-slot:label>
-                        <v-card-text class="ma-0 pa-0 pt-1">  
-                          {{i + 1}}. Platz
-                          <strong>Kosten:</strong> {{rank.cost}} €,
-                          <strong>Zeit:</strong> {{rank.time}} s
+                        <v-card-text class="ma-0 pa-0 pt-1">
+                          {{i + 1}}. Platz | 
+                          <strong>Kosten:</strong>
+                          {{rank.cost}} €,
+                          <strong>Zeit:</strong>
+                          {{rank.time}} s
                         </v-card-text>
                       </template>
                     </v-radio>
                   </v-expansion-panel-header>
                   <v-expansion-panel-content class="ml-8">
-                    <v-card-text>Weg: {{rank.path}}</v-card-text>
+                    <v-card-text>
+                      <span v-for="(way, j) in rank.path" :key="j" class="rank-way">{{way}}</span>
+                    </v-card-text>
                   </v-expansion-panel-content>
                 </v-expansion-panel>
               </v-expansion-panels>
@@ -153,19 +157,42 @@ export default {
     },
 
     applyRanking() {
-      this.rankArray = []
-      let bestPaths = this.getGraph().getCytoGraph(this).data("bestPaths")
+      this.rankArray = [];
+      let bestPaths = this.getGraph()
+        .getCytoGraph(this)
+        .data("bestPaths");
 
-      for(let i = 0; i < bestPaths.length; i++) {
-        let nextRank = {}
-        nextRank.cost = this.getGraph().getTotalCost(bestPaths[i])
-        nextRank.time = this.getGraph().getTotalTime(bestPaths[i])
-        nextRank.path = []
-        for(let j = 0; j < bestPaths[i].length; j++) {
-          nextRank.path.push(this.getGraph().getCytoGraph(this).getElementById(bestPaths[i][j]).data('name'))
+      for (let i = 0; i < bestPaths.length; i++) {
+        let nextRank = {};
+        nextRank.cost = this.getGraph().getTotalCost(bestPaths[i]);
+        nextRank.time = this.getGraph().getTotalTime(bestPaths[i]);
+        nextRank.path = [];
+        for (let j = 0; j < bestPaths[i].length; j++) {
+          if (j == 0) {
+            nextRank.path.push(
+              this.getGraph()
+                .getCytoGraph(this)
+                .getElementById(bestPaths[i][j])
+                .source()
+                .data("name")
+            );
+          }
+          nextRank.path.push(
+            this.getGraph()
+              .getCytoGraph(this)
+              .getElementById(bestPaths[i][j])
+              .data("name")
+          );
+          nextRank.path.push(
+            this.getGraph()
+              .getCytoGraph(this)
+              .getElementById(bestPaths[i][j])
+              .target()
+              .data("name")
+          );
         }
-        this.rankArray.push(nextRank)
-      } 
+        this.rankArray.push(nextRank);
+      }
     },
 
     // get Settings
@@ -232,10 +259,8 @@ export default {
       this.getGraph()
         .getCytoGraph()
         .data("settingsOptimizationStartIDs", startIDs);
-     
-     
-     // set endID for Optimization Algorithm
 
+      // set endID for Optimization Algorithm
 
       let indexEnd = this.itemsName.indexOf(this.endSelect);
       let endID = this.itemsID[indexEnd];
@@ -251,7 +276,6 @@ export default {
       this.getGraph()
         .getCytoGraph(this.getGraph())
         .data("settingsOptimizationSelection", this.optimizationSelection);
-
 
       // remove optimization
       this.getGraph().removeOptimization();
