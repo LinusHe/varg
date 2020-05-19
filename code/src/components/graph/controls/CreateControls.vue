@@ -14,7 +14,7 @@
         <template v-slot:activator>
           <v-tooltip left>
             <template v-slot:activator="{ on }">
-              <v-btn class="darkmode-ign" v-model="fab" v-on="on" color="primary" dark fab large>
+              <v-btn class="darkmode-ign blackbtngraph" v-model="fab" v-on="on" color="primary" dark fab large>
                 <v-icon v-if="fab">mdi-close</v-icon>
                 <v-icon v-else>mdi-plus</v-icon>
               </v-btn>
@@ -24,7 +24,7 @@
         </template>
         <v-tooltip left>
           <template v-slot:activator="{ on }">
-            <v-btn @click="openNodeGui" v-on="on" fab dark color="secondary" id="dial-add-node">
+            <v-btn @click="openNodeGui" v-on="on" fab dark color="secondary" id="dial-add-node" class="darkmode-ign">
               <v-icon>mdi-plus-circle-outline</v-icon>
             </v-btn>
           </template>
@@ -32,7 +32,7 @@
         </v-tooltip>
         <v-tooltip left>
           <template v-slot:activator="{ on }">
-            <v-btn @click="openEdgeGui" v-on="on" fab dark color="secondary" id="dial-add-edge">
+            <v-btn @click="openEdgeGui" v-on="on" fab dark color="secondary" id="dial-add-edge" class="darkmode-ign">
               <v-icon>mdi-link-variant-plus</v-icon>
             </v-btn>
           </template>

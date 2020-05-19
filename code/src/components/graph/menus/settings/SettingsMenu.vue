@@ -1,6 +1,6 @@
 <template>
   <v-dialog v-model="dialog" max-width="750">
-    <v-card class="settings-dialog">
+    <v-card class="settings-dialog hueshift">
       <v-card-title class="text-center justify-center mb-3 pt-8" color="primary">
         <h1>Einstellungen</h1>
       </v-card-title>
@@ -39,7 +39,7 @@
       </v-tabs>
       <v-card-actions class="pr-5 pb-5 mt-3">
         <v-spacer></v-spacer>
-        <v-btn class="darkmode-ign" color="green darken-1" text @click="saveSettings()">Anwenden</v-btn>
+        <v-btn color="green darken-1" text @click="saveSettings()">Anwenden</v-btn>
         <v-btn color="grey" text @click="dialog = false">Schließen</v-btn>
       </v-card-actions>
     </v-card>
