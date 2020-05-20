@@ -104,6 +104,7 @@ export default {
     Download: function() {
       //not-best-practice aka coupling of components is not wanted
       //in order to make components reusable
+      this.$parent.$refs.exportMenu.setActiveTab(0);
       this.$parent.$refs.exportMenu.setdialog(true);
     },
     openSettings() {

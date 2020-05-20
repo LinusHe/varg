@@ -13,7 +13,7 @@
             <v-text-field
               class="mt-6"
               id="DatabaseName"
-              label="Datenbankname"
+              label="Dateiname"
               v-model="DataBaseName"
               required
               :rules="nameRules"
@@ -48,7 +48,7 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="error" id="overwriteOK" text @click="confirmOverwrite()">Überschreiben</v-btn>
+          <v-btn color="error" id="overwriteOK" text @click="confirmOverwrite(hashkey)">Überschreiben</v-btn>
           <v-btn color="grey" id="overwriteCancel" text @click="clearFields()">Abbrechen</v-btn>
         </v-card-actions>
       </v-card>
@@ -62,6 +62,7 @@
 /* eslint-disable standard/computed-property-even-spacing */
 import fileManager from "../../../../vargraph/importExport/FileManager.js";
 import ExJSon from "../../../../vargraph/JSonPersistence.js";
+import axios from 'axios';
 
 let dialogComponent;
 
@@ -74,15 +75,16 @@ export default {
   data() {
     return {
       nameRules: [
-        v => !!v || "Datenbankname ist erforderlich",
+        v => !!v || "Dateiname ist erforderlich",
         v =>
-          (v && v.length <= 20) ||
-          "Datenbankname muss kürzer als 20 Zeichen sein"
+          (v && v.length <= 25) ||
+          "Dateiname darf maximal 25 Zeichen lang sein"
       ],
       validDB: true,
       DataBaseName: "",
       database: this.getGraph().vars.testDatabase,
-      overwriteDialog: false
+      overwriteDialog: false,
+      hashkey: -1
     };
   },
 
@@ -104,8 +106,55 @@ export default {
       );
     },
     saveDB() {
-      //Checks if menu formular was filled in correctly
+
+      // copy pasted hash generator (TODO remove when primary key is changed from fileId to userName+fileName)
+      String.prototype.hashCode = function() {
+        var hash = 0;
+        if (this.length == 0) {
+          return hash;
+        }
+        for (var i = 0; i < this.length; i++) {
+          var char = this.charCodeAt(i);
+          hash = ((hash<<5)-hash)+char;
+          hash = hash & hash; // Convert to 32bit integer
+        }
+        return hash;
+      }
+
+      // Checks if menu formular was filled in correctly, then makes an axios.post request
       if (this.$refs.formDB.validate()) {
+        const CONTENT = ExJSon.CreateJSon(this.getGraph());
+        this.hashkey = this.DataBaseName.hashCode();
+        axios
+          .post('http://192.168.1.102:1110/VarG/graph', {
+            fileId: this.hashkey,
+            filename: this.DataBaseName,
+            user: 'eheldt', // TODO replace with actual login info
+            json: JSON.stringify(CONTENT)
+          })
+          .then(response => {
+            this.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$refs.databaseMenu.$refs.databaseGUI.loadItems();
+            this.closeDialog();
+            dialogComponent.dialogSuccess('Graph erfolgreich in Datenbank hochgeladen');
+            this.checkNewGraph(); // TODO what does this do?
+          })
+          .catch(error => {
+            /* TODO to use these error distinctions, the API must return proper errors instead of ERR_EMPTY_RESPONSE
+
+            if (error.response) {
+              console.log(error.response)*/
+              this.overwriteDialog = true;  // TODO check if error.response actually says duplicate key error, if not then show varg-dialog with "Hochladen fehlgeschlagen"
+            /*}
+            else if (error.request) {
+              console.log(error.request)
+              dialogComponent.dialogError('Hochladen fehlgeschlagen: <b>Konnte nicht zum Server verbinden</b>');
+            }
+            else {
+              dialogComponent.dialogError('Hochladen fehlgeschlagen: <b>Unbekannter Fehler</b>');
+            }*/
+          }); 
+          
+        /* TODO remove code for TestDatabase.js
         // update cytoscape filename
         this.getGraph()
           .getCytoGraph(this.getGraph())
@@ -121,19 +170,36 @@ export default {
         } else {
           // database.save(..) returns false if graph exists
           this.overwriteDialog = true;
-        }
+        }*/
       }
     },
-    confirmOverwrite() {
+    confirmOverwrite(fileId) {
       // get json
-      let content = ExJSon.CreateJSon(this.getGraph());
+      const URL = 'http://192.168.1.102:1110/VarG/graph/' + fileId;
+      const CONTENT = ExJSon.CreateJSon(this.getGraph());
+      axios
+        .put(URL, {
+          user: 'eheldt', // TODO replace with actual login info
+          json: JSON.stringify(CONTENT)
+        })
+        .then(response => {
+          this.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$refs.databaseMenu.$refs.databaseGUI.loadItems();
+          this.closeDialog();
+          dialogComponent.dialogSuccess('Graph erfolgreich in der Datenbank überschrieben');
+          this.checkNewGraph(); // TODO what does this do?
+        })
+        .catch(error => {
+          dialogComponent.dialogError('Hochladen fehlgeschlagen: <b>Unbekannter Fehler</b>');
+        });
+
+      /* TODO remove code for TestDatabase.js
       // force overwrite
       this.database.save(content, true);
 
       this.closeDialog();
       dialogComponent.dialogSuccess("Graph erfolgreich überschrieben");
 
-      this.checkNewGraph();
+      this.checkNewGraph();*/
     },
     checkNewGraph() {
       // check dialog was opened by new Graph menu

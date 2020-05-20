@@ -4,7 +4,7 @@
       <v-card-title class="text-center justify-center mb-3 pt-8" color="primary">
         <h1>Exportieren</h1>
       </v-card-title>
-      <v-tabs centered>
+      <v-tabs centered v-model="activeTab">
         <v-tab id="tab-localExport">
           <v-icon left>mdi-desktop-mac</v-icon>Lokal
         </v-tab>
@@ -50,6 +50,7 @@ export default {
   data() {
     return {
       dialog: false,
+      activeTab: -1,
       newGraph: false
     };
   },
@@ -57,6 +58,11 @@ export default {
   methods: {
     getGraph() {
       return this.$parent.$parent.$refs["vargraph"];
+    },
+    setActiveTab(int) {
+      // 0: Lokal
+      // 1: Datenbank
+      this.activeTab = int;
     },
     setNewGraph(bool) {
       this.newGraph = bool;

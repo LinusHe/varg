@@ -11,6 +11,7 @@
     >
       <template v-slot:header>
         <v-toolbar dark color="blue darken-3" class="mb-1">
+          <v-btn @click="axiosSave()">Hochladen</v-btn>
           <v-text-field v-model="search" clearable flat solo-inverted hide-details label="Search"></v-text-field>
           <template v-if="$vuetify.breakpoint.mdAndUp">
             <v-spacer></v-spacer>
@@ -41,7 +42,7 @@
           <v-row class="ma-0">
             <v-col v-for="item in props.items" :key="item.name" cols="12" sm="6" md="6" lg="6">
               <v-card>
-                <v-card-title class="subheading font-weight-bold">{{ item.name }}</v-card-title>
+                <v-card-title class="subheading font-weight-bold">{{ item.name }}<v-btn @click="loadGraph(item)">Laden</v-btn><v-btn @click="deleteGraph(item)">Löschen</v-btn></v-card-title>
                   <v-img
                     src="https://d2slcw3kip6qmk.cloudfront.net/marketing/pages/chart/UML-state-diagram-tutorial/FeaturedImage.png"
                   ></v-img>
@@ -99,8 +100,15 @@
 
 <script>
 /* eslint-disable standard/computed-property-even-spacing */
+import axios from 'axios';
+import ExJSon from "@/vargraph/JSonPersistence.js";
+
+let dialogComponent;
 
 export default {
+  mounted () {
+    dialogComponent = this.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$refs["dialogs"];
+  },
   data() {
     return {
       itemsPerPageArray: [4, 8, 12],
@@ -203,6 +211,79 @@ export default {
     }
   },
   methods: {
+    getGraph() {
+      return this.$parent.$parent.$parent.$parent.$parent.$parent.$refs["vargraph"];
+    },
+    loadItems() {
+      this.items = [];
+      axios
+        .get('http://192.168.1.102:1110/VarG/graph/meta', {
+          params: {
+            user:'eheldt'
+          }
+        })
+        .then(response => {
+          for (let i = 0; i < response.data.length; i++) {
+            const el = response.data[i];
+            const md = JSON.parse(el.metadata);
+            this.items.push({
+              'name': el.fileName,
+              'stückzahl': md.prodQuant,
+              'startzustand': md.start,
+              'endprodukt': md.end,
+              'bearbeitungsschritte': md.IDCount,
+              'teile': md.IDCount,
+              'autor': el.userName,
+              'fileId': el.fileId
+            });
+            /* somehow load preview image like this
+            let loadedGraph = cy.json(el);
+            this.pngData = loadedGraph.png();*/
+          }
+        })
+    },
+    axiosSave() {
+      //TODO make this method open ExportDatabase.vue and move all the axios.post & axios.put stuff there
+      this.$parent.$parent.$parent.$parent.$parent.$parent.$refs.exportMenu.setActiveTab(1);
+      this.$parent.$parent.$parent.$parent.$parent.$parent.$refs.exportMenu.setdialog(true);
+    },
+    loadGraph(item) {
+      if(confirm('Beim Laden wird der derzeitige Graph überschrieben. Wirklich den Graph "'+item.name+'" aus der Datenbank laden?')) {
+        const url = 'http://192.168.1.102:1110/VarG/graph/' + item.fileId;
+        axios
+          .get(url, {
+            params: {
+              user: 'eheldt'
+            }
+          })
+          .then(response => {
+            ExJSon.LoadJSon(response.data[0].graphObject, this.getGraph());
+            this.$parent.$parent.$parent.$parent.closeDialog();
+            dialogComponent.dialogSuccess('Graph erfolgreich aus Datenbank geladen');
+          })
+          .catch(error => {
+            dialogComponent.dialogError('Laden fehlgeschlagen');
+          });
+      }
+    },
+    deleteGraph (item) {
+      if(confirm('Wirklich den Graph "'+item.name+'" unwiderruflich aus der Datenbank löschen?')) {
+        const url = 'http://192.168.1.102:1110/VarG/graph/' + item.fileId;
+        axios
+          .delete(url, {
+            params: {
+              user: 'eheldt'
+            }
+          })
+          .then(response => {
+            this.loadItems();
+            dialogComponent.dialogSuccess('Graph erfolgreich von Datenbank gelöscht');
+          })
+          .catch(error => {
+            dialogComponent.dialogError('Löschen fehlgeschlagen');
+          });
+      }
+    },
     nextPage() {
       if (this.page + 1 <= this.numberOfPages) this.page += 1;
     },

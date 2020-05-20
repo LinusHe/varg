@@ -34,9 +34,7 @@
           <RightClickMenu ref="rightClickMenu" />
           <SettingsMenu ref="settingsMenu" />
           <DatabaseMenu ref="databaseMenu" />
-
-          <!-- Test -->
-          <HTTPRequest ref="httpRequest" />
+          
         </v-row>
       </v-card>
   </div>
@@ -56,7 +54,6 @@ import ExportMenu from "./menus/export/ExportMenu";
 import RightClickMenu from "./menus/RightClickMenu";
 import SettingsMenu from "./menus/settings/SettingsMenu";
 import DatabaseMenu from "./menus/DatabaseMenu";
-import HTTPRequest from "./HTTPRequest";
 
 export default {
   /* eslint-disable no-console */
@@ -72,8 +69,7 @@ export default {
     RightClickMenu,
     ZoomControls,
     SettingsMenu,
-    DatabaseMenu,
-    HTTPRequest
+    DatabaseMenu
   },
   data() {
     return {

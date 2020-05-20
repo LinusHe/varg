@@ -10,6 +10,8 @@ const mysql_driver = require('mysql');
 const parser = require('./APIparser')
 
 const config = {
+    // eheldt: 192.168.1.102
+    // jhohlfel: 192.168.99.101
     host: "192.168.99.101",
     user: "varg",
     password: "VarG2020",
@@ -39,8 +41,10 @@ let router = express.Router();
 //middleware functionality (inspection, logging etc.) here
 router.use(function(req,res,next) {
     console.log("middleware could happen here");
+    //TODO: Serverside Verification could happen here with req.query.user 
     //this will allow to (only) access the resources from the specified address
     res.header("Access-Control-Allow-Origin", "http://localhost:8080");
+    res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next(); //continue past middleware
 });
@@ -52,8 +56,13 @@ router.get('/', (req, res) =>{
 
 //any additional routes here
 
+//parser for body information in post requests
+let bodyParser = require('body-parser');
+router.use(bodyParser.json());
+router.use(bodyParser.urlencoded({ extended: true }));
+
 //(graph)
-router.route('/graph')
+router.route('/graph?')
     //get all graphs - should probably be reserved to higher authority roles
     .get(function (req, res) {
         console.log('Sending all Graphs');
@@ -65,7 +74,29 @@ router.route('/graph')
     })
     //post a graph
     .post(function(req,res) {
+        console.log('Attempting to post a graph with filename:',req.body.filename);
+        let post = {fileID: -233086229,
+                    filename: req.body.filename, 
+                    userName: req.body.user, 
+                    graphObject: req.body.json};
+        con.query("INSERT INTO cytographs SET ?", post,
+         function(err, result, fields) {
+            if (err) throw err;
+            console.log("Post was succesfull.");
+            res.sendStatus(201);
+        });
+    });
 
+//get metadata of all graphs from specified user
+router.route('/graph/meta')
+    .get(function (req, res) {
+        console.log('Sending all metadata of user:',req.query.user);
+        con.query('SELECT JSON_EXTRACT(graphObject,"$.data") AS "metadata", fileId, fileName, userName FROM cytographs WHERE userName = "' + req.query.user + '"',
+        function(err, result) {
+            if (err) throw err;
+            console.log("Query was successful !");
+            res.send(result);
+        });
     });
 
 //graph/:graph_id
@@ -94,7 +125,7 @@ router.route('/graph/:graph_id?')
         //let username = req.query.user;
         let id=req.params.graph_id;
         let username=req.query.user;
-        console.log('Sending Graph');
+        console.log('Sending Graph with id:',id,', username:',username);
         con.query("SELECT graphObject FROM cytographs WHERE fileID="+ id + " AND userName=" + '"' + username + '"', function(err, result) {
             if (err) throw err;
             console.log("Get-Query was successful!");
@@ -104,13 +135,13 @@ router.route('/graph/:graph_id?')
     //update a single graph identified by id
     .put(function(req, res) {
         let id = req.params.graph_id;
-        let username=req.query.user;
+        let username=req.body.user;
         console.log('Updating Graph');
         /* req.params.json is not yet implemented*/
-        con.query("UPDATE cytographs SET graphObject=" + req.params.json + " WHERE fileID="+ id + " AND userName=" + '"' + username + '"', function(err, result) {
+        con.query("UPDATE cytographs SET graphObject='" + req.body.json + "' WHERE fileID="+ id + " AND userName=" + '"' + username + '"', function(err, result) {
             if (err) throw err;
             console.log("Update-Query succesfull");
-            res.send(result);
+            res.sendStatus(200);
         });
     })
     //delete a single graph identified by id
