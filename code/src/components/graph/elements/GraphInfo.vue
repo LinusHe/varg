@@ -296,6 +296,11 @@ export default {
         this.$parent.$parent.$refs.settingsMenu.$refs.settingsOptimize.applyRanking();
       }
 
+      // select best way
+      this.getGraph()
+        .getCytoGraph(this.getGraph())
+        .data("settingsOptimizationSelection", 0);
+
       // open dialog, if in settings enabled
       if (
         typeof this.$parent.$parent.$refs.settingsMenu.$refs.settingsGeneral !==

@@ -106,7 +106,7 @@
       <!-- <v-card class="mr-6 ml-6 mt-0"> -->
       <v-row class="ma-0">
         <v-col sm="12" class="ma-0 pa-0">
-          <v-radio-group v-model="optimizationSelection" :mandatory="false" class="ml-6 mr-6">
+          <v-radio-group @change="changeHighlighting" v-model="optimizationSelection" :mandatory="false" class="ml-6 mr-6">
             <template>
               <v-expansion-panels hover accordion>
                 <v-expansion-panel v-for="(rank, i) in rankArray" :key="i">
@@ -216,6 +216,22 @@ export default {
 
     clearRanking() {
       this.rankArray = [];
+    },
+
+    changeHighlighting() {
+      let bestPaths = this.getGraph()
+        .getCytoGraph(this)
+        .data("bestPaths");
+      this.getGraph().markBestEdges(bestPaths[this.optimizationSelection]);
+       
+      this.getGraph().getCytoGraph(this.getGraph())
+        .data("settingsOptimizationSelection", this.optimizationSelection);
+
+      if(this.optimizationSelection != 0) {
+        dialogComponent.dialogSuccess(this.optimizationSelection+1 +". alternative Optimierung wurde markiert")
+      } else {
+        dialogComponent.dialogSuccess("Beste Optimierung wurde markiert")
+      }
     },
 
     startOptimization() {
