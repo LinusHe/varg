@@ -122,7 +122,6 @@ export default {
   },
 
   markBestEdges(bestEdgesID) {
-    console.log("test")
     cyStore.data.cy.elements().removeClass("highlighted");
     let cy = cyStore.data.cy
     bestEdgesID.forEach(element => {
@@ -145,6 +144,25 @@ export default {
     for (let i = 0; i < edges.length; i++) {
       edges[i].removeClass("highlighted");
     }
+  },
+
+  calculateBoundary(node, end) {
+    //rekursive counting of possible ways, stop at 7
+    let pathCount = 0
+    let cy = this.getCytoGraph()
+    let ways = cy.getElementById(node).outgoers('edge')
+    for(let i = 0; i < ways.length; i++) {
+      if(pathCount < 7) {
+        let target = ways[i].data("target")
+        if (target == end) {
+          pathCount ++
+        }
+        else {
+          pathCount = pathCount + this.calculateBoundary(target, end)
+        }
+      }
+    }
+    return pathCount
   },
 
   getTarget(edge) {
@@ -334,7 +352,6 @@ export default {
   optimizing() {
    
     let cy = this.getCytoGraph()
-    console.log(cy.data())
 
     let option = cy.data("settingsOptimizationOption");   // false = time, true = cost
     let nextBestCounter = cy.data("settingsOptimizationNumber");
@@ -359,13 +376,7 @@ export default {
           endID = cy.nodes()[o].data("id")          
         }
       }
-    }
-
-
-    console.log("startids" + startIDs)
-    console.log("endid" + endID)
-    console.log("start")
-    
+    }    
       
       // "converts" start-nodes into sort-nodes
       // sort-nodes save NodeID, usedEdges (from start-node) and "needed" costs (from start)
