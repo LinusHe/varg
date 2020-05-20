@@ -9,9 +9,9 @@ window.axios = require('axios')
 export default {
   name: 'HTTPRequest',
   mounted: function () {
-    axios.get('http://192.168.99.101:1110/', {
+    axios.get('http://192.168.99.101:1110/VarG/graph/1', {
       params: {
-        username: 'eheldt',
+        user: 'eheldt',
         auth: 'admin'
       }
     })

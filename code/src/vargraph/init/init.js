@@ -99,5 +99,9 @@ export default {
 
     // Generates Node HTML Label
     this.updateNodeLabel(graphComponent, cy);
+  },
+
+  getDialogComponent(graphComponent) {
+    return graphComponent.$parent.$parent.$parent.$parent.$parent.$refs["dialogs"];
   }
 };

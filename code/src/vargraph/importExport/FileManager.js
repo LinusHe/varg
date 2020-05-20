@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import saveAs from "file-saver";
 import ExJSon from "../JSonPersistence";
 
@@ -9,15 +10,14 @@ export function saveGraphAsJson(graph, name) {
   saveAs(jsonfile, filename);
 }
 
-export function loadGraphFromJson(event, graphComponent) {
-  var reader = new FileReader();
-  reader.onload = onReaderLoad;
-  reader.readAsText(event.target.files[0]);
+export function loadGraphFromJson(event, graphComponent, dialog) {
+    var reader = new FileReader();
+    reader.onload = onReaderLoad;
+    reader.readAsText(event.target.files[0]);
 
   function onReaderLoad(event) {
-    ExJSon.LoadJSon(event.target.result, graphComponent);
+    ExJSon.LoadJSon(event.target.result, graphComponent, dialog);
   }
-  // TODO: Catch Wrong Format and other Errors!
 }
 
 export function saveGraphAsPng(graph, name) {

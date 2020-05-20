@@ -8,12 +8,17 @@ export function CreateJSon(graphComponent) {
   return cy.json();
 }
 
-export function LoadJSon(content, graphComponent) {
+export function LoadJSon(content, graphComponent, dialog) {
   //Turns stringified JSon back to JSon format
-  content = JSON.parse(content);
+  try{
+    content = JSON.parse(content);
+  }
+  catch(err){
+    dialog.dialogError("Datei-Fehler: <b>JSON-Format erforderlich<b>");
+    return false;
+  }
   console.log("Json: ", content);
-
-  if (graphComponent == null) {
+  if (router.currentRoute.path == "/home/menu") {
     cyStore.data.importedJson = content;
     router.push({ name: "graph" });
   } else {
@@ -26,9 +31,9 @@ export function LoadJSon(content, graphComponent) {
     cy.json(content);
     //apply node colors
     cy.nodes().forEach(node => {
-      node.style("background-color", "#" + node.data("color"));
+    node.style("background-color", "#" + node.data("color"));
     });
-  }
+  }  
 }
 
 export default { CreateJSon, LoadJSon };

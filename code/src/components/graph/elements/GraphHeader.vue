@@ -86,10 +86,11 @@ export default {
     };
   },
   mounted: function() {
-    dialogComponent = this.$parent.$parent.$parent.$parent.$parent.$refs[
+    dialogComponent = this.$parent.$parent.$parent.$parent.$refs[
       "dialogs"
     ];
     console.log("Graph Component", this.getGraph());
+    console.log(dialogComponent);
   },
   name: "GraphHeader",
   methods: {
@@ -121,8 +122,9 @@ export default {
       let graphComponent = this.getGraph();
 
       function onChange(event) {
-        console.log("Graph Component to load:", graphComponent);
-        fileManager.loadGraphFromJson(event, graphComponent);
+        console.log(dialogComponent);
+        fileManager.loadGraphFromJson(event, graphComponent, dialogComponent); 
+        dialogComponent.dialogSuccess("Graph erfolgreich geladen");
       }
     },
     account() {
