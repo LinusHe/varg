@@ -75,9 +75,9 @@ router.route('/graph?')
     //post a graph
     .post(function(req,res) {
         console.log('Attempting to post a graph with filename:',req.body.filename);
-        let post = {fileID: req.body.fileID,
+        let post = {fileID: -233086229,
                     filename: req.body.filename, 
-                    userName: "'"+req.body.user +"'", 
+                    userName: req.body.user, 
                     graphObject: req.body.json};
         con.query("INSERT INTO cytographs SET ?", post,
          function(err, result, fields) {
