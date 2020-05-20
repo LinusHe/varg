@@ -152,7 +152,6 @@ export default {
       .$parent.$parent.$parent.$parent.$parent.$parent.$refs["dialogs"];
     this.getOptimizeSettings();
     this.applyRanking();
-    this.createBoundary();
   },
   data: () => ({
     optimizationOption: "Zeit",
@@ -215,18 +214,6 @@ export default {
       }
     },
 
-    createBoundary() {
-      let pathCount = 0
-      let startIDs= this.getGraph().getCytoGraph().data("settingsOptimizationStartIDs")
-      let endID = this.getGraph().getCytoGraph().data("settingsOptimizationEndID");
-      for (let i = 0; i < startIDs.length; i++) {
-        if(pathCount < 7) {
-          pathCount = pathCount + this.getGraph().calculateBoundary(startIDs[i], endID)
-        }
-      }
-      return pathCount
-    },
-
     clearRanking() {
       this.rankArray = [];
     },
@@ -245,7 +232,6 @@ export default {
       } else {
         dialogComponent.dialogSuccess("Beste Optimierung wurde markiert")
       }
-      this.createBoundary()
     },
 
     startOptimization() {

@@ -146,6 +146,37 @@ export default {
     }
   },
 
+  createBoundary() {
+    let cy = this.getCytoGraph()
+    let startIDs= cy.data("settingsOptimizationStartIDs")
+      // gets ID's of start- and endnodes
+    let endID = cy.data("settingsOptimizationEndID");
+      //automatically initialize startnodes if no startnodes were selected
+    if(startIDs.length == 0 ){
+      for(let o = 0; o < cy.nodes().length; o++){
+        if(cy.nodes()[o].incomers().length == 0){
+          startIDs.push(cy.nodes()[o].data("id"))
+        }
+      }
+    }
+      //automatically initialize endnode if no endnode were selected
+    if(endID == undefined || endID == "" || endID == -1){
+      for(let o = 0; o < cy.nodes().length; o++){
+        if(cy.nodes()[o].outgoers().length == 0){
+          endID = cy.nodes()[o].data("id")          
+        }
+      }
+    } 
+
+    let pathCount = 0
+    for (let i = 0; i < startIDs.length; i++) {
+      if(pathCount < 7) {
+        pathCount = pathCount + this.calculateBoundary(startIDs[i], endID)
+      }
+    }
+    return pathCount
+  },
+
   calculateBoundary(node, end) {
     //rekursive counting of possible ways, stop at 7
     let pathCount = 0
@@ -354,13 +385,10 @@ export default {
     let cy = this.getCytoGraph()
 
     let option = cy.data("settingsOptimizationOption");   // false = time, true = cost
-    let nextBestCounter = cy.data("settingsOptimizationNumber");
     let startIDs= cy.data("settingsOptimizationStartIDs")
-    let endID = cy.data("settingsOptimizationEndID");
-    
       // gets ID's of start- and endnodes
-      
-    //automatically initialize startnodes if no startnodes were selected
+    let endID = cy.data("settingsOptimizationEndID");
+      //automatically initialize startnodes if no startnodes were selected
     if(startIDs.length == 0 ){
       for(let o = 0; o < cy.nodes().length; o++){
         if(cy.nodes()[o].incomers().length == 0){
@@ -368,15 +396,22 @@ export default {
         }
       }
     }
-    
-    //automatically initialize endnode if no endnode were selected
+      //automatically initialize endnode if no endnode were selected
     if(endID == undefined || endID == "" || endID == -1){
       for(let o = 0; o < cy.nodes().length; o++){
         if(cy.nodes()[o].outgoers().length == 0){
           endID = cy.nodes()[o].data("id")          
         }
       }
-    }    
+    }   
+      //checks how many paths need to be found
+    let nextBestCounter = cy.data("settingsOptimizationNumber");
+      //checks if there are enough paths
+    let boundaryCheck = this.createBoundary()
+    if(nextBestCounter > boundaryCheck) {
+      nextBestCounter = boundaryCheck
+    }
+    console.log("check", nextBestCounter)
       
       // "converts" start-nodes into sort-nodes
       // sort-nodes save NodeID, usedEdges (from start-node) and "needed" costs (from start)
