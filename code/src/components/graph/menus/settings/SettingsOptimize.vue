@@ -12,6 +12,7 @@
             <v-select
               class="pr-8"
               hide-details
+              @change="setOptimizeSettings()"
               v-model="optimizationOption"
               :items="optimizationOptionItems"
             ></v-select>
@@ -28,6 +29,7 @@
           <v-col sm="5">
             <v-select
               @focus="getNodeItemsID(); getNodeItemsName()"
+              @change="setOptimizeSettings()"
               class="pr-8"
               hide-details
               v-model="startSelect"
@@ -48,6 +50,7 @@
             <v-select
               class="pr-8"
               @focus="getNodeItemsID(); getNodeItemsName()"
+              @change="setOptimizeSettings()"
               hide-details
               v-model="endSelect"
               :items="itemsName"
@@ -66,7 +69,7 @@
           <v-col sm="5">
             <v-slider
               class="pr-8 mt-8"
-              @focus="getNodeItemsID(); getNodeItemsName()"
+              @change="setOptimizeSettings()"
               hide-details
               thumb-label="always"
               :thumb-size="24"
@@ -89,6 +92,12 @@
           <v-col sm="12">
             <v-card-text>
               <em>Um die alternativen Optimierungswege auswählen zu können muss zunächst optimiert werden</em>
+              <v-btn
+                class="mt-4"
+                color="green darken-1"
+                text
+                @click="startOptimization()"
+              >Optimierung starten</v-btn>
             </v-card-text>
           </v-col>
         </v-row>
@@ -209,6 +218,12 @@ export default {
       this.rankArray = [];
     },
 
+    startOptimization() {
+      console.log(
+        this.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$refs.graphInfo.startOptimizing()
+      );
+    },
+
     // get Settings
     getOptimizeSettings() {
       // get optimize option
@@ -293,6 +308,7 @@ export default {
 
       // remove optimization
       this.getGraph().removeOptimization();
+      this.rankArray = [];
     },
 
     getNodeItemsID() {
