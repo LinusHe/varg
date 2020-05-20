@@ -96,6 +96,7 @@ export default {
     },
     save() {
       this.$parent.$parent.$refs.exportMenu.setNewGraph(true);
+      this.$parent.$parent.$refs.exportMenu.setActiveTab(0);
       this.$parent.$parent.$refs.exportMenu.setdialog(true);
     },
     discard() {

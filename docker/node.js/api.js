@@ -12,7 +12,7 @@ const parser = require('./APIparser')
 const config = {
     // eheldt: 192.168.1.102
     // jhohlfel: 192.168.99.101
-    host: "192.168.99.101",
+    host: "192.168.1.102",
     user: "varg",
     password: "VarG2020",
     database: "vargdb"
@@ -75,7 +75,7 @@ router.route('/graph?')
     //post a graph
     .post(function(req,res) {
         console.log('Attempting to post a graph with filename:',req.body.filename);
-        let post = {fileID: -233086229,
+        let post = {fileID: req.body.fileId,
                     filename: req.body.filename, 
                     userName: req.body.user, 
                     graphObject: req.body.json};

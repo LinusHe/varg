@@ -96,7 +96,7 @@ INSERT INTO cytographs (fileId, fileName, userName, graphObject) VALUES (-233086
             "time": 1,
             "sucost": 2,
             "sutime": 10,
-            "label": "ab\\nKosten: 5 $ | Zeit: 1 Sekunden\\nRüstkosten: 2 € | Rüstzeit: 10 Sekunden"
+            "label": "ab\\nKosten: 5 $ | Zeit: 1 Sekunden\\nRuestkosten: 2 $ | Ruestzeit: 10 Sekunden"
           },
           "position": {
             "x": 0,

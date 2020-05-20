@@ -236,14 +236,14 @@ export default {
               'autor': el.userName,
               'fileId': el.fileId
             });
-            /* somehow load preview image like this
+            /* TODO somehow load preview image like this (not here but after "Show Image" button press on specific graph)
             let loadedGraph = cy.json(el);
             this.pngData = loadedGraph.png();*/
           }
         })
     },
+    // TODO rename methods properly
     axiosSave() {
-      //TODO make this method open ExportDatabase.vue and move all the axios.post & axios.put stuff there
       this.$parent.$parent.$parent.$parent.$parent.$parent.$refs.exportMenu.setActiveTab(1);
       this.$parent.$parent.$parent.$parent.$parent.$parent.$refs.exportMenu.setdialog(true);
     },
