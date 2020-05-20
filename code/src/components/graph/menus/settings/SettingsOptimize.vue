@@ -84,6 +84,16 @@
       </v-card>
 
       <v-card-subtitle class="mt-10 pb-0" id="alternatives">Alternative Optimierungswege</v-card-subtitle>
+      <v-card v-if="rankArray.length == 0" class="mt-3 ml-6 mr-6">
+        <v-row>
+          <v-col sm="12">
+            <v-card-text>
+              <em>Um die alternativen Optimierungswege auswählen zu können muss zunächst optimiert werden</em>
+            </v-card-text>
+          </v-col>
+        </v-row>
+      </v-card>
+
       <!-- <v-card class="mr-6 ml-6 mt-0"> -->
       <v-row class="ma-0">
         <v-col sm="12" class="ma-0 pa-0">
@@ -95,7 +105,7 @@
                     <v-radio color="primary" :value="i">
                       <template v-slot:label>
                         <v-card-text class="ma-0 pa-0 pt-1">
-                          {{i + 1}}. Platz | 
+                          {{i + 1}}. Platz |
                           <strong>Kosten:</strong>
                           {{rank.cost}} €,
                           <strong>Zeit:</strong>
@@ -193,6 +203,10 @@ export default {
         }
         this.rankArray.push(nextRank);
       }
+    },
+
+    clearRanking() {
+      this.rankArray = [];
     },
 
     // get Settings
