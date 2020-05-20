@@ -19,6 +19,7 @@
     }
 
     .settings-optimize {
+
         // Knoten
         .rank-way:nth-child(odd) {
             font-size: 20px;
@@ -27,12 +28,32 @@
             padding: 5px;
             border-radius: 5px;
             margin: 0 5px;
+            margin-bottom: 10px;
+            line-height: 45px;
         }
+
         // Kanten
         .rank-way:nth-child(even) {
             font-size: 15px;
-            border-bottom: dashed 1px grey;
-            padding: 0 10px;
+            border-bottom: solid 1.2px #262626;
+            padding-left: 10px;
+            margin-bottom: 10px;
+            line-height: 45px;
+            margin-right: 10px;
+            margin-left: 10px;
+        }
+
+        .rank-way:nth-child(even)::after {
+            content: '\F0054';
+            display: inline-block;
+            font: normal normal normal 24px/1 "Material Design Icons";
+            font-size: inherit;
+            text-rendering: auto;
+            line-height: inherit;
+            -webkit-font-smoothing: antialiased;
+            position: relative;
+            top: 10.5px;
+            left: 10px;
         }
     }
 }
