@@ -145,7 +145,9 @@ export default {
     // remove costs & time & show optimize button
     this.$parent.$parent.$refs["graphInfo"].setOptimized(false);
     // remove Ranking
-    this.$parent.$parent.$refs["settingsMenu"].$refs["settingsOptimize"].clearRanking();
+    if (typeof this.$parent.$parent.$refs["settingsMenu"].$refs["settingsOptimize"] !== "undefined") {
+      this.$parent.$parent.$refs["settingsMenu"].$refs["settingsOptimize"].clearRanking();
+    }
     // remove highlighting
     this.unmarkBestEdges();
   },
