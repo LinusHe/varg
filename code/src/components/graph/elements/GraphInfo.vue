@@ -31,21 +31,33 @@
                 :rules="[v => !!v || '', v => v.length <= 25 || '', v => v[0] != ' ' || '']"
               ></v-text-field>
             </v-form>
-            <v-icon
-              v-if="!isEditingName"
-              @click="editName()"
-              color="lightgrey"
-              class="ml-2 mb-1"
-              small
-            >mdi-pencil</v-icon>
-            <v-icon
-              v-else
-              @click="saveNewName()"
-              :disabled="!validName"
-              dark
-              color="success"
-              class="ml-2"
-            >mdi-check-bold</v-icon>
+            <v-tooltip bottom v-if="!isEditingName">
+              <template v-slot:activator="{ on }">
+                <v-icon
+                  v-if="!isEditingName"
+                  v-on="on"
+                  @click="editName();"
+                  color="lightgrey"
+                  class="ml-2 mb-1"
+                  small
+                >mdi-pencil</v-icon>
+              </template>
+              <span>Produktname bearbeiten</span>
+            </v-tooltip>
+            <v-tooltip bottom v-if="isEditingName">
+              <template v-slot:activator="{ on }">
+                <v-icon
+                  v-if="isEditingName"
+                  v-on="on"
+                  @click="saveNewName()"
+                  :disabled="!validName"
+                  dark
+                  color="success"
+                  class="ml-2"
+                >mdi-check-bold</v-icon>
+              </template>
+              <span>Speichern</span>
+            </v-tooltip>
           </v-card-title>
         </p>
       </v-row>
@@ -84,21 +96,33 @@
                 :rules="[v => !!v || '', v => v > 0 || '', v => v < 9999999999999999 || '', v => Number.isInteger(+v) || '']"
               ></v-text-field>
             </v-form>
-            <v-icon
-              v-if="!isEditingQuant"
-              @click="editQuant()"
-              color="lightgrey"
-              class="ml-2 mb-1"
-              small
-            >mdi-pencil</v-icon>
-            <v-icon
-              v-else
-              @click="saveNewQuant()"
-              :disabled="!validQuant"
-              dark
-              color="success"
-              class="ml-2"
-            >mdi-check-bold</v-icon>
+            <v-tooltip bottom v-if="!isEditingQuant">
+              <template v-slot:activator="{ on }">
+                <v-icon
+                  v-if="!isEditingQuant"
+                  @click="editQuant()"
+                  v-on="on"
+                  color="lightgrey"
+                  class="ml-2 mb-1"
+                  small
+                >mdi-pencil</v-icon>
+              </template>
+              <span>Stückzahl bearbeiten</span>
+            </v-tooltip>
+            <v-tooltip bottom v-if="isEditingQuant">
+              <template v-slot:activator="{ on }">
+                <v-icon
+                  v-if="isEditingQuant"
+                  @click="saveNewQuant()"
+                  v-on="on"
+                  :disabled="!validQuant"
+                  dark
+                  color="success"
+                  class="ml-2"
+                >mdi-check-bold</v-icon>
+              </template>
+              <span>Speichern</span>
+            </v-tooltip>
           </v-card-title>
         </p>
       </v-row>
@@ -113,14 +137,31 @@
         <p class="mb-0">
           <v-card-subtitle class="pb-0">
             Gesamtkosten:
-            <v-icon @click="openOptimize" color="#636364" class="ml-2 mb-1" small>mdi-cog</v-icon>
-            <v-icon
-              v-if="optimized"
-              @click="startOptimizing"
-              color="#636364"
-              class="ml-2 mb-1"
-              small
-            >mdi-refresh</v-icon>
+            <v-tooltip top>
+              <template v-slot:activator="{ on }">
+                <v-icon
+                  v-on="on"
+                  @click="openOptimize"
+                  color="#636364"
+                  class="ml-2 mb-1"
+                  small
+                >mdi-cog</v-icon>
+              </template>
+              <span>Optimieruns-Einstellungen öffnen</span>
+            </v-tooltip>
+            <v-tooltip top v-if="optimized">
+              <template v-slot:activator="{ on }">
+                <v-icon
+                  v-if="optimized"
+                  v-on="on"
+                  @click="startOptimizing"
+                  color="#636364"
+                  class="ml-2 mb-1"
+                  small
+                >mdi-refresh</v-icon>
+              </template>
+              <span>Erneut Optimieren</span>
+            </v-tooltip>
           </v-card-subtitle>
           <v-card-title v-if="optimized" class="pt-0 pb-0">{{costs}}</v-card-title>
           <v-btn
@@ -143,14 +184,31 @@
         <p class="mb-0">
           <v-card-subtitle class="pb-0">
             Gesamtzeit:
-            <v-icon @click="openOptimize" color="#636364" class="ml-2 mb-1" small>mdi-cog</v-icon>
-            <v-icon
-              v-if="optimized"
-              @click="startOptimizing"
-              color="#636364"
-              class="ml-2 mb-1"
-              small
-            >mdi-refresh</v-icon>
+            <v-tooltip top>
+              <template v-slot:activator="{ on }">
+                <v-icon
+                  v-on="on"
+                  @click="openOptimize"
+                  color="#636364"
+                  class="ml-2 mb-1"
+                  small
+                >mdi-cog</v-icon>
+              </template>
+              <span>Optimieruns-Einstellungen öffnen</span>
+            </v-tooltip>
+            <v-tooltip top v-if="optimized">
+              <template v-slot:activator="{ on }">
+                <v-icon
+                  v-on="on"
+                  v-if="optimized"
+                  @click="startOptimizing"
+                  color="#636364"
+                  class="ml-2 mb-1"
+                  small
+                >mdi-refresh</v-icon>
+              </template>
+              <span>Erneut Optimieren</span>
+            </v-tooltip>
           </v-card-subtitle>
           <v-card-title v-if="optimized" class="pt-0 pb-0">{{time}}</v-card-title>
           <v-btn
@@ -253,7 +311,7 @@ export default {
     openOptimize() {
       this.$parent.$parent.$refs.settingsMenu.setActiveTab(2);
       this.$parent.$parent.$refs.settingsMenu.openDialog();
-      this.$parent.$parent.$refs.settingsMenu.$refs.settingsOptimize.getNodeItemsName()
+      this.$parent.$parent.$refs.settingsMenu.$refs.settingsOptimize.getNodeItemsName();
     },
     scrollToAlternativeOptimizations() {
       this.$parent.$parent.$refs.settingsMenu.$refs.settingsOptimize.scrollToAlternatives();
@@ -262,62 +320,61 @@ export default {
       this.optimized = bool;
     },
 
-    runOptimization(){
-
+    runOptimization() {
       this.getGraph().optimizing();
 
-        // get best path
-        let bestPaths = this.getGraph()
+      // get best path
+      let bestPaths = this.getGraph()
+        .getCytoGraph(this.getGraph())
+        .data("bestPaths");
+
+      // map costs
+      this.costs =
+        this.getGraph().getTotalCost(bestPaths[0]) +
+        " " +
+        this.getGraph()
           .getCytoGraph(this.getGraph())
-          .data("bestPaths");
+          .data("settingsUnitCostSelection");
 
-        // map costs
-        this.costs =
-          this.getGraph().getTotalCost(bestPaths[0]) +
-          " " +
-          this.getGraph()
-            .getCytoGraph(this.getGraph())
-            .data("settingsUnitCostSelection");
+      // map time
+      this.time =
+        this.getGraph().getTotalTime(bestPaths[0]) +
+        " " +
+        this.getGraph()
+          .getCytoGraph(this.getGraph())
+          .data("settingsUnitTimeSelection");
 
-        // map time
-        this.time =
-          this.getGraph().getTotalTime(bestPaths[0]) +
-          " " +
-          this.getGraph()
-            .getCytoGraph(this.getGraph())
-            .data("settingsUnitTimeSelection");
+      // set optimized
+      this.optimized = true;
 
-        // set optimized
-        this.optimized = true;
-
-
-        // open dialog, if in settings enabled
-        if (
-          typeof this.$parent.$parent.$refs.settingsMenu.$refs
-            .settingsGeneral !== "undefined" &&
-          this.$parent.$parent.$refs.settingsMenu.$refs.settingsGeneral.getAlternativePopUp()
-        ) {
-          // open graph settings and scroll to alternative paths
-          this.openOptimize();
-          this.scrollToAlternativeOptimizations();
-        }
-
+      // open dialog, if in settings enabled
+      if (
+        typeof this.$parent.$parent.$refs.settingsMenu.$refs.settingsGeneral !==
+          "undefined" &&
+        this.$parent.$parent.$refs.settingsMenu.$refs.settingsGeneral.getAlternativePopUp()
+      ) {
+        // open graph settings and scroll to alternative paths
+        this.openOptimize();
+        this.scrollToAlternativeOptimizations();
+      }
     },
 
-
     startOptimizing() {
-
-      console.log("Länge der Startknoten: " + this.getGraph().getCytoGraph(this.getGraph()).data("settingsOptimizationStartNames").length)
+      console.log(
+        "Länge der Startknoten: " +
+          this.getGraph()
+            .getCytoGraph(this.getGraph())
+            .data("settingsOptimizationStartNames").length
+      );
 
       if (
-        (this.getGraph()
+        this.getGraph()
           .getCytoGraph(this.getGraph())
-          .data("settingsOptimizationStartNames").length != 0) &&
+          .data("settingsOptimizationStartNames").length != 0 &&
         this.getGraph()
           .getCytoGraph(this.getGraph())
           .data("settingsOptimizationEndID") != -1
       ) {
-
         this.runOptimization();
 
         // notify with dialog
@@ -327,36 +384,39 @@ export default {
             "<br>Öffne die <b>Optimierungs-Einstellungen</b> für weitere Wege!",
           8000
         );
-       
-     } 
-      else if( this.getGraph().getCytoGraph(this.getGraph()).data("settingsOptimizationStartNames") == 0 && this.getGraph().getCytoGraph(this.getGraph()).data("settingsOptimizationEndID") != -1 ) 
-          {
-          
-          this.runOptimization()
+      } else if (
+        this.getGraph()
+          .getCytoGraph(this.getGraph())
+          .data("settingsOptimizationStartNames") == 0 &&
+        this.getGraph()
+          .getCytoGraph(this.getGraph())
+          .data("settingsOptimizationEndID") != -1
+      ) {
+        this.runOptimization();
         dialogComponent.dialogWarning(
           "Die Startzustände wurden automatisch eingestellt. Wenn du sie ändern möchtest öffne die Optimierungseinstellungen!",
           6000
         );
-      }  
-
-      else if(this.getGraph().getCytoGraph(this.getGraph()).data("settingsOptimizationEndID") == -1 && this.getGraph().getCytoGraph(this.getGraph()).data("settingsOptimizationStartNames") != 0 ) {
-
-        this.runOptimization()
+      } else if (
+        this.getGraph()
+          .getCytoGraph(this.getGraph())
+          .data("settingsOptimizationEndID") == -1 &&
+        this.getGraph()
+          .getCytoGraph(this.getGraph())
+          .data("settingsOptimizationStartNames") != 0
+      ) {
+        this.runOptimization();
         dialogComponent.dialogWarning(
           "Der Endzustand wurde automatisch eingestellt. Wenn du ihn ändern möchtest öffne die Optimierungseinstellungen!",
           6000
         );
-
-      }
-
-      else {
-        this.runOptimization()
-         dialogComponent.dialogWarning(
+      } else {
+        this.runOptimization();
+        dialogComponent.dialogWarning(
           "Die Start- und Endzustände wurden automatisch eingestellt. Wenn du sie ändern möchtest öffne die Optimierungseinstellungen!",
           6000
         );
       }
-
     }
   }
 };
