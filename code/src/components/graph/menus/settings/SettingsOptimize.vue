@@ -106,7 +106,12 @@
       <!-- <v-card class="mr-6 ml-6 mt-0"> -->
       <v-row class="ma-0">
         <v-col sm="12" class="ma-0 pa-0">
-          <v-radio-group @change="changeHighlighting" v-model="optimizationSelection" :mandatory="false" class="ml-6 mr-6">
+          <v-radio-group
+            @change="changeHighlighting"
+            v-model="optimizationSelection"
+            :mandatory="false"
+            class="ml-6 mr-6"
+          >
             <template>
               <v-expansion-panels hover accordion>
                 <v-expansion-panel v-for="(rank, i) in rankArray" :key="i">
@@ -223,21 +228,25 @@ export default {
         .getCytoGraph(this)
         .data("bestPaths");
       this.getGraph().markBestEdges(bestPaths[this.optimizationSelection]);
-       
-      this.getGraph().getCytoGraph(this.getGraph())
+
+      this.getGraph()
+        .getCytoGraph(this.getGraph())
         .data("settingsOptimizationSelection", this.optimizationSelection);
 
-      if(this.optimizationSelection != 0) {
-        dialogComponent.dialogSuccess(this.optimizationSelection+1 +". alternative Optimierung wurde markiert")
+      if (this.optimizationSelection != 0) {
+        dialogComponent.dialogSuccess(
+          this.optimizationSelection +
+            1 +
+            ". alternative Optimierung wurde markiert"
+        );
       } else {
-        dialogComponent.dialogSuccess("Beste Optimierung wurde markiert")
+        dialogComponent.dialogSuccess("Beste Optimierung wurde markiert");
       }
     },
 
     startOptimization() {
-      console.log(
-        this.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$refs.graphInfo.startOptimizing()
-      );
+      this.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$refs.graphInfo.startOptimizing();
+      this.optimizationSelection = 0;
     },
 
     // get Settings
@@ -333,17 +342,34 @@ export default {
 
     getNodeItemsName() {
       this.itemsName = this.getGraph().getNodeName(this.getGraph());
-      this.startSelect= [""]
-     let selectNodes = this.getGraph().getCytoGraph().data("settingsOptimizationStartIDs")
-     for(let i = 0; i < selectNodes.length; i++){
-       console.log(this.getGraph().getCytoGraph().nodes("#" + selectNodes[i]).data("name"))
-       this.startSelect.push(this.getGraph().getCytoGraph().nodes("#" + selectNodes[i]).data("name"))
-     }
+      this.startSelect = [""];
+      let selectNodes = this.getGraph()
+        .getCytoGraph()
+        .data("settingsOptimizationStartIDs");
+      for (let i = 0; i < selectNodes.length; i++) {
+        console.log(
+          this.getGraph()
+            .getCytoGraph()
+            .nodes("#" + selectNodes[i])
+            .data("name")
+        );
+        this.startSelect.push(
+          this.getGraph()
+            .getCytoGraph()
+            .nodes("#" + selectNodes[i])
+            .data("name")
+        );
+      }
 
-     
-    this.endSelect= this.getGraph().getCytoGraph().nodes("#" + this.getGraph().getCytoGraph().data("settingsOptimizationEndID")).data("name")
-    
-
+      this.endSelect = this.getGraph()
+        .getCytoGraph()
+        .nodes(
+          "#" +
+            this.getGraph()
+              .getCytoGraph()
+              .data("settingsOptimizationEndID")
+        )
+        .data("name");
     }
   }
 };
