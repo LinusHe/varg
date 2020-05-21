@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import cyStore from "@/vargraph/graph/cyStore";
 import router from "@/router/index.js";
+import style from "@/vargraph/init/cytoscapeStyle.js";
 
 export function CreateJSon(graphComponent) {
   let cy = graphComponent.getCytoGraph();
@@ -34,6 +35,9 @@ export function LoadJSon(content, graphComponent, dialog) {
       node.style("background-color", "#" + node.data("color"));
       node.addClass("nodelabel");
     });
+
+    // apply cytoscape styling
+    cy.style(style);
   }  
 }
 
