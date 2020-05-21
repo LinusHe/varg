@@ -32,7 +32,6 @@ var options = {
 }
 
 this.darkmode = new Darkmode(options);
-//this.darkmode.showWidget();
   },
 
   methods: {

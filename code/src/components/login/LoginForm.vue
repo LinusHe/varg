@@ -14,7 +14,7 @@
         >
           <v-text-field
             v-model="input.email"
-            class="mt-8 mb-3 email-input"
+            class="mt-8 mb-3 email-input hueshift"
             id="email"
             label="E-Mail"
             placeholder="beispiel@htwk-leipzig.de"
@@ -30,7 +30,7 @@
             label="Passwort"
             placeholder="******"
             outlined
-            class="mb-3 password"
+            class="mb-3 password hueshift"
             :type="show ? 'text' : 'password'"
             :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
             @click:append="show = !show"

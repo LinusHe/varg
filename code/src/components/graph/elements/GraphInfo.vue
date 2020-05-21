@@ -5,7 +5,7 @@
         <v-card align="center" class="icon-card mt-2 ml-8 mb-2" width="60px" height="60px">
           <v-icon size="40px" class="mt-2 darkmode-ign" color="#2699FB">mdi-rocket</v-icon>
         </v-card>
-        <p class="mb-0">
+        <p class="mb-0 hueshift">
           <v-card-subtitle class="pb-0">Produktname:</v-card-subtitle>
           <v-card-title class="pt-0 pb-0" id="header-prodName">
             <span v-show="!isEditingName" @click="editName()">{{prodName}}</span>
@@ -35,7 +35,7 @@
               v-if="!isEditingName"
               @click="editName()"
               color="lightgrey"
-              class="ml-2 mb-1"
+              class="ml-2 mb-1 darkmode-ign"
               small
             >mdi-pencil</v-icon>
             <v-icon
@@ -44,7 +44,7 @@
               :disabled="!validName"
               dark
               color="success"
-              class="ml-2"
+              class="ml-2 darkmode-ign"
             >mdi-check-bold</v-icon>
           </v-card-title>
         </p>
@@ -57,7 +57,7 @@
         <v-card align="center" class="icon-card mt-2 ml-4" width="60px" height="60px">
           <v-icon size="40px" class="mt-2 darkmode-ign" color="#2699FB">mdi-counter</v-icon>
         </v-card>
-        <p class="mb-0">
+        <p class="mb-0 hueshift">
           <v-card-subtitle class="pb-0">Stückzahl:</v-card-subtitle>
           <v-card-title class="pt-0 pb-0" id="header-prodQuant">
             <span v-show="!isEditingQuant" @click="editQuant()">{{prodQuant}}</span>
@@ -97,7 +97,7 @@
               :disabled="!validQuant"
               dark
               color="success"
-              class="ml-2"
+              class="ml-2 darkmode-ign"
             >mdi-check-bold</v-icon>
           </v-card-title>
         </p>

@@ -13,6 +13,7 @@
         <v-row>
           <v-col sm="7">
             <v-text-field
+              class="hueshift"
               id="prodname"
               label="Produktname"
               v-model="prodname"
@@ -23,6 +24,7 @@
           </v-col>
           <v-col sm="5">
             <v-text-field
+              class="hueshift"
               id="prodquantity"
               v-model="prodquant"
               label="Stückzahl"
