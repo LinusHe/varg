@@ -5,19 +5,19 @@
         <h1>Einstellungen</h1>
       </v-card-title>
       <v-tabs centered v-model="activeTab">
-        <v-tab>
+        <v-tab id="settings-tab-graph">
           <v-icon class="rot-270" left>mdi-graph</v-icon>Graph
         </v-tab>
-        <v-tab>
+        <v-tab id="settings-tab-main">
           <v-icon left>mdi-cog</v-icon>Allgemein
         </v-tab>
-        <v-tab>
+        <v-tab id="settings-tab-optimize">
           <v-icon left>mdi-checkbox-multiple-marked-circle-outline</v-icon>Optimierung
         </v-tab>
-        <v-tab>
+        <v-tab id="settings-tab-account">
           <v-icon left>mdi-account</v-icon>Benutzer
         </v-tab>
-        <v-tab>
+        <v-tab id="settings-tab-help">
           <v-icon left>mdi-help</v-icon>Hilfe
         </v-tab>
 

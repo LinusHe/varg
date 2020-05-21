@@ -140,6 +140,7 @@
             <v-tooltip top>
               <template v-slot:activator="{ on }">
                 <v-icon
+                id="cost-open-optimize"
                   v-on="on"
                   @click="openOptimize"
                   color="#636364"
@@ -187,6 +188,7 @@
             <v-tooltip top>
               <template v-slot:activator="{ on }">
                 <v-icon
+                id="time-open-optimize"
                   v-on="on"
                   @click="openOptimize"
                   color="#636364"
