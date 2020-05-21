@@ -30,6 +30,16 @@ export default {
     };
   },
   methods: {
+    addToSnackbars(snackbar) {
+      if(this.snackbars.filter(s => s.dialogVisible).length >= 2) {
+        console.log("Reached maximum Dialogs")
+        // if more than 2 snackbars -> remove oldest
+        this.snackbars[this.snackbars.length-2].dialogVisible = false;
+        this.snackbars.filter(s => s.dialogVisible).shift();
+      }
+      // push to dialog queue
+      this.snackbars.push(snackbar);
+    },
     defaultDialog(dialog) {
       // default values:
       dialog.textColor = "#000"
@@ -58,7 +68,7 @@ export default {
       if (newtimeout != null) this.dialogTimeout = newtimeout;
 
       // push to dialog queue
-      this.snackbars.push(mySb);
+      this.addToSnackbars(mySb);
     },
     dialogWarning(text, newtimeout) {
       // set to default values
@@ -75,7 +85,7 @@ export default {
       if (newtimeout != null) this.dialogTimeout = newtimeout;
 
       // push to dialog-queue
-      this.snackbars.push(mySb);
+      this.addToSnackbars(mySb);
     },
     dialogSuccess(text, newtimeout) {
       // set to default values
@@ -92,7 +102,7 @@ export default {
       if (newtimeout != null) this.dialogTimeout = newtimeout;
 
       // push to dialog-queue
-      this.snackbars.push(mySb);
+      this.addToSnackbars(mySb);
     },
     dialogError(text, newtimeout) {
       // set to default values
@@ -109,26 +119,25 @@ export default {
       if (newtimeout != null) mySb.dialogTimeout = newtimeout;
 
       // push to dialog-queue
-      this.snackbars.push(mySb);
+      this.addToSnackbars(mySb);
     },
     calcHeight(index) {
       let heightString = "bottom: ";
-      // fallback value 
+      // fallback value
       let indexHeight = index * 80 + 8;
 
       let openDialogs = document.getElementsByClassName("v-snack");
-      if (typeof openDialogs[index] != "undefined") {
-        console.log(index, openDialogs[index].offsetHeight);
-        console.log(index, openDialogs[index].style.bottom);
-      }
 
       // style for first dialog
       if (index == 0) {
         return "bottom: 8px";
-      } 
+      }
       // style for next dialogs
       else {
-        indexHeight = parseInt(openDialogs[index-1].style.bottom) + openDialogs[index-1].offsetHeight + 18;
+        indexHeight =
+          parseInt(openDialogs[index - 1].style.bottom) +
+          openDialogs[index - 1].offsetHeight +
+          18;
       }
 
       heightString += indexHeight + "px";
