@@ -1,7 +1,7 @@
 <template>
   <div class="graph">
     <!-- Header -->
-    <div class="header-bg">
+    <div class="darkmode-ign header-bg">
       <v-row>
         <!-- Hamburger Btn to toggle Header -->
         <v-btn icon class="toggleHeader" @click="toggleHeader()">

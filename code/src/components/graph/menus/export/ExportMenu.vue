@@ -1,6 +1,6 @@
 <template>
   <v-dialog v-model="dialog" max-width="500">
-    <v-card class="export-dialog" id="export-menu">
+    <v-card class="export-dialog hueshift" id="export-menu">
       <v-card-title class="text-center justify-center mb-3 pt-8" color="primary">
         <h1>Exportieren</h1>
       </v-card-title>

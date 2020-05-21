@@ -9,28 +9,28 @@
         <v-btn
           outlined
           tile
-          color="#b9c5ff"
-          class="bora-l-10 bo-r-0"
+          color="#ececec"
+          class="bora-l-10 bo-r-0 blackbtn"
           id="newgraph-btn"
           @click="NewGraph"
         >
           <v-icon dark>mdi-plus</v-icon>Neuer Graph
         </v-btn>
-        <v-btn outlined tile color="#b9c5ff" class="bo-r-0" id="database-btn" @click="datenbank()">
+        <v-btn outlined tile color="#ececec" class="bo-r-0 blackbtn" id="database-btn" @click="datenbank()">
           <v-icon class="mr-1">mdi-database</v-icon>Datenbank
         </v-btn>
-        <v-btn outlined tile color="#b9c5ff" class="bo-r-0" @click="LoadJSon" id="ImportGraph">
+        <v-btn outlined tile color="#ececec" class="bo-r-0 blackbtn" @click="LoadJSon" id="ImportGraph">
           <input type="file" ref="file" accept=".json" style="display: none" />
           <v-icon class="mr-1">mdi-import</v-icon>Import
         </v-btn>
-        <v-btn outlined tile color="#b9c5ff" class="bo-r-0" @click="Download" id="download-btn">
+        <v-btn outlined tile color="#ececec" class="bo-r-0 blackbtn" @click="Download" id="download-btn">
           <v-icon class="mr-1">mdi-export</v-icon>Export
         </v-btn>
         <v-btn
           outlined
           tile
-          color="#b9c5ff"
-          class="bora-r-10"
+          color="#ececec"
+          class="bora-r-10 blackbtn"
           @click="openSettings"
           id="SettingsBtn"
         >

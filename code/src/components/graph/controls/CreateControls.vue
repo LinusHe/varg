@@ -14,7 +14,7 @@
         <template v-slot:activator>
           <v-tooltip left>
             <template v-slot:activator="{ on }">
-              <v-btn v-model="fab" v-on="on" color="primary" dark fab large>
+              <v-btn class="darkmode-ign blackbtngraph" v-model="fab" v-on="on" color="primary" dark fab large>
                 <v-icon v-if="fab">mdi-close</v-icon>
                 <v-icon v-else>mdi-plus</v-icon>
               </v-btn>
@@ -24,7 +24,7 @@
         </template>
         <v-tooltip left>
           <template v-slot:activator="{ on }">
-            <v-btn @click="openNodeGui" v-on="on" fab dark color="secondary" id="dial-add-node">
+            <v-btn @click="openNodeGui" v-on="on" fab dark color="secondary" id="dial-add-node" class="darkmode-ign">
               <v-icon>mdi-plus-circle-outline</v-icon>
             </v-btn>
           </template>
@@ -32,7 +32,7 @@
         </v-tooltip>
         <v-tooltip left>
           <template v-slot:activator="{ on }">
-            <v-btn @click="openEdgeGui" v-on="on" fab dark color="secondary" id="dial-add-edge">
+            <v-btn @click="openEdgeGui" v-on="on" fab dark color="secondary" id="dial-add-edge" class="darkmode-ign">
               <v-icon>mdi-link-variant-plus</v-icon>
             </v-btn>
           </template>
@@ -52,7 +52,7 @@
         >
           <!-- Colored Div -->
           <div
-            class="white--text align-end"
+            class="white--text align-end darkmode-ign"
             style="height: 150px"
             v-bind:style="{ background: '#'+nodeCreateColor }"
             v-ripple
@@ -87,7 +87,7 @@
             ref="formNodes"
             v-model="validNodes"
             lazy-validation
-            class="d-inline-block mr-5 ml-5 mb-4"
+            class="d-inline-block mr-5 ml-5 mb-4 hueshift"
             @submit="createNode()"
             onsubmit="return false;"
           >
@@ -95,7 +95,7 @@
             <v-row>
               <v-col sm="12">
                 <v-text-field
-                  class="mt-2"
+                  class="mt-2 "
                   id="nodeCreateName"
                   label="Bezeichnung"
                   v-model="nodeCreateName"
@@ -133,6 +133,7 @@
             <v-row justify="end">
               <v-col sm="4">
                 <v-btn
+                  class="darkmode-ign"
                   :disabled="!validNodes"
                   color="green darken-1"
                   text
@@ -164,7 +165,7 @@
 
           <!-- Colored Div -->
           <div
-            class="white--text align-end"
+            class="white--text align-end darkmode-ign"
             style="height: 100px; background: #2699FB; background-color: #2699FB"
           >
             <v-card-subtitle style="color: #ffffff" class="pb-0">Neuer Bearbeitungsschritt:</v-card-subtitle>
@@ -176,7 +177,7 @@
               ref="formEdges"
               v-model="validEdges"
               lazy-validation
-              class="d-inline-block mr-5 ml-5 mb-4"
+              class="d-inline-block mr-5 ml-5 mb-4 hueshift"
               @submit="createEdge()"
               onsubmit="return false;"
               style="max-height: 300px; overflow: scroll-y"
@@ -306,6 +307,7 @@
           <v-row class="mb-5" justify="end">
             <v-col sm="4">
               <v-btn
+                class="darkmode-ign"
                 :disabled="!validEdges"
                 color="green darken-1"
                 text

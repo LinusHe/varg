@@ -1,0 +1,53 @@
+.darkmode-layer,
+.darkmode-toggle {
+  z-index: 500;
+}
+
+.darkmode--activated .darkmode-ign {
+  mix-blend-mode: difference;
+  isolation: isolate;
+}
+
+.darkmode-ign {
+  transition: all 50s;
+}
+
+.darkmode--activated .hueshift{
+  filter: hue-rotate(170deg);
+}
+
+.darkmode--activated .blacktext{
+  color:#222222;
+  outline-color: @colorBlue;
+}
+
+.darkmode--activated button.blackbtn{
+  background-color: rgb(32, 118, 204) !important;
+  color:#eeeeee !important;
+}
+
+.darkmode--activated button.blackbtngraph{
+  background-color: rgb(32, 118, 204) !important;
+  color:#eeeeee !important;
+}
+
+.darkmode--activated .v-overlay__scrim{
+  background-color: rgb(221, 221, 221) !important;
+}
+
+.darkmode-layer, .darkmode-background{
+  //max-height: 0;
+  //max-width: 0;
+  //border-radius: 40px;
+  opacity: 0;
+  transition: all 50s;
+  
+}
+
+.darkmode--activated .darkmode-layer, .darkmode--activated .darkmode-background{
+  max-height: 100%;
+  max-width: 100%;
+  opacity: 100%;
+  transition: all 0.5s;
+  //border-radius: 0;
+}

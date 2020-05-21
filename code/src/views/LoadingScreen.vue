@@ -3,7 +3,7 @@
 <template>
   <div>
     <h1 class="ma-10 text-center" >
-      <v-progress-circular indeterminate color="primary"></v-progress-circular>
+      <v-progress-circular indeterminate color="primary" class="darkmode-ign"></v-progress-circular>
     </h1>
     <p class="ma-10">Bitte warte einen Moment.</p>
   </div>

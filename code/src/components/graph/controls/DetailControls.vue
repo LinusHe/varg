@@ -7,7 +7,7 @@
         <v-card class="detail-card" v-show="nodeGui" transition="scroll-y-transition">
           <!-- Colored Div  -->
           <div
-            class="white--text align-end"
+            class="white--text align-end darkmode-ign"
             style="height: 150px"
             v-bind:style="{ background: '#'+nodeColor }"
           >
@@ -42,7 +42,7 @@
             ref="formNodes"
             v-model="validNodes"
             lazy-validation
-            class="d-inline-block mr-5 ml-5 mb-4"
+            class="d-inline-block mr-5 ml-5 mb-4 hueshift"
             @submit="saveNode()"
             onsubmit="return false;"
           >
@@ -88,6 +88,7 @@
             <v-row justify="end">
               <v-col sm="4">
                 <v-btn
+                  class="darkmode-ign"
                   color="green darken-1"
                   text
                   :disabled="!validNodes"
@@ -95,7 +96,7 @@
                 >Speichern</v-btn>
               </v-col>
               <v-col sm="4">
-                <v-btn color="error" text @click="openNodeDeleteMenu()">Löschen</v-btn>
+                <v-btn class="darkmode-ign" color="error" text @click="openNodeDeleteMenu()">Löschen</v-btn>
               </v-col>
               <v-col sm="4">
                 <v-btn color="grey" text @click="cancel()">Abbrechen</v-btn>
@@ -141,7 +142,7 @@
 
           <!-- Colored Div -->
           <div
-            class="white--text align-end"
+            class="white--text align-end darkmode-ign"
             style="height: 100px; background: #2699FB; background-color: #2699FB"
           >
             <v-card-subtitle style="color: #ffffff" class="pb-0">Bearbeitungsschritt bearbeiten:</v-card-subtitle>
@@ -153,7 +154,7 @@
               ref="formEdges"
               v-model="validEdges"
               lazy-validation
-              class="d-inline-block mr-5 ml-5 mb-4"
+              class="d-inline-block mr-5 ml-5 mb-4 hueshift"
               @submit="saveEdge()"
               onsubmit="return false;"
               style="max-height: 300px; overflow: scroll-y"
@@ -283,6 +284,7 @@
           <v-row justify="end">
             <v-col sm="4">
               <v-btn
+                class="darkmode-ign"
                 color="green darken-1"
                 text
                 :disabled="!validEdges"
@@ -290,7 +292,7 @@
               >Speichern</v-btn>
             </v-col>
             <v-col sm="4">
-              <v-btn color="error" text @click="openEdgeDeleteMenu">Löschen</v-btn>
+              <v-btn class="darkmode-ign" color="error" text @click="openEdgeDeleteMenu">Löschen</v-btn>
             </v-col>
             <v-col sm="4">
               <v-btn color="grey" text @click="cancel">Abbrechen</v-btn>

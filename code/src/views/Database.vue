@@ -4,7 +4,7 @@
   <div class="database-page">
     <v-card class="settings-dialog" width="1000">
       <v-card-title class="text-center justify-center mb-3 pt-8" color="primary" >
-        <v-btn id="backbtn" large depressed color="blue" :value="true" @click="backBtn">
+        <v-btn id="backbtn" class="darkmode-ign " large depressed color="blue" :value="true" @click="backBtn">
                 <v-icon color="white">mdi-arrow-left</v-icon>
           </v-btn>
           <v-spacer></v-spacer>

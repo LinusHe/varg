@@ -1,13 +1,13 @@
 <template>
   <v-list-item three-line class="homemenu-container" align="center">
     <v-list-item-content>
-      <v-list-item-title align="center" class="login-pre-headline mt-5 mb-3">Variantengraph-Editor</v-list-item-title>
-      <v-list-item-title align="center" class="login-headline mb-1">VarG</v-list-item-title>
+      <v-list-item-title align="center" class="login-pre-headline mt-5 mb-3 darkmode-ign">Variantengraph-Editor</v-list-item-title>
+      <v-list-item-title align="center" class="login-headline mb-1 darkmode-ign">VarG</v-list-item-title>
       <v-row class="button-container">
         <v-col sm="4">
           <v-card outlined align="center">
             <router-link to="new" tag="button" id="newGraph">
-              <v-btn depressed fab color="primary" class="mt-4">
+              <v-btn depressed fab color="primary" class="mt-4 darkmode-ign">
                 <v-icon>mdi-plus</v-icon>
               </v-btn>
             </router-link>
@@ -17,7 +17,7 @@
 
         <v-col sm="4">
           <v-card outlined align="center">
-            <v-btn depressed fab :color="importBtnColor" @click="openFromFile()" class="mt-4">
+            <v-btn depressed fab :color="importBtnColor" @click="openFromFile()" class="mt-4 darkmode-ign">
               <v-icon>mdi-import</v-icon>
             </v-btn>
             <input type="file" ref="file" accept=".json" style="display: none" />
@@ -28,7 +28,7 @@
         <v-col sm="4">
           <v-card outlined align="center">
             <router-link to="database" tag="button" id="database">
-              <v-btn depressed fab color="primary" class="mt-4">
+              <v-btn depressed fab color="primary" class="mt-4 darkmode-ign">
                 <v-icon>mdi-database-export</v-icon>
               </v-btn>
             </router-link>

@@ -9,6 +9,7 @@
           <v-row justify="end">
             <v-col sm="4">
               <v-btn
+                class="darkmode-ign"
                 color="green darken-1"
                 text
                 id="newgraph-menu-save"
@@ -17,7 +18,7 @@
               >Speichern</v-btn>
             </v-col>
             <v-col sm="4">
-              <v-btn color="error" text id="newgraph-menu-discard" block @click="discard">Verwerfen</v-btn>
+              <v-btn class="darkmode-ign" color="error" text id="newgraph-menu-discard" block @click="discard">Verwerfen</v-btn>
             </v-col>
             <v-col sm="4">
               <v-btn
