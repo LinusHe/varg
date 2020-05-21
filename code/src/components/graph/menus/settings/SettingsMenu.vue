@@ -100,8 +100,8 @@ export default {
         console.log("updated graph Settings:", this.getGraph())
       }
       if (typeof this.$refs.settingsOptimize !== "undefined") {
-        this.$refs.settingsOptimize.setOptimizeSettings();
-        console.log("updated optimize Settings:", this.getGraph())
+        // this.$refs.settingsOptimize.setOptimizeSettings();
+        // console.log("updated optimize Settings:", this.getGraph())
       }
       // run update-settings function
       this.getGraph().applySettings(this.getGraph());

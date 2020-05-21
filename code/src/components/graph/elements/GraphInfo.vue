@@ -140,7 +140,7 @@
             <v-tooltip top>
               <template v-slot:activator="{ on }">
                 <v-icon
-                id="cost-open-optimize"
+                  id="cost-open-optimize"
                   v-on="on"
                   @click="openOptimize"
                   color="#636364"
@@ -188,7 +188,7 @@
             <v-tooltip top>
               <template v-slot:activator="{ on }">
                 <v-icon
-                id="time-open-optimize"
+                  id="time-open-optimize"
                   v-on="on"
                   @click="openOptimize"
                   color="#636364"
@@ -348,6 +348,19 @@ export default {
 
       // set optimized
       this.optimized = true;
+
+      // call ranking function in settingsOptimize.vue
+      if (
+        typeof this.$parent.$parent.$refs.settingsMenu.$refs
+          .settingsOptimize !== "undefined"
+      ) {
+        this.$parent.$parent.$refs.settingsMenu.$refs.settingsOptimize.applyRanking();
+      }
+
+      // select best way
+      this.getGraph()
+        .getCytoGraph(this.getGraph())
+        .data("settingsOptimizationSelection", 0);
 
       // open dialog, if in settings enabled
       if (

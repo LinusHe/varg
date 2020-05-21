@@ -133,7 +133,6 @@ export default {
   },
 
   markBestEdges(bestEdgesID) {
-   
     cyStore.data.cy.elements().removeClass("highlighted");
     let cy = cyStore.data.cy
     bestEdgesID.forEach(element => {
@@ -145,6 +144,8 @@ export default {
   removeOptimization() {
     // remove costs & time & show optimize button
     this.$parent.$parent.$refs["graphInfo"].setOptimized(false);
+    // remove Ranking
+    this.$parent.$parent.$refs["settingsMenu"].$refs["settingsOptimize"].clearRanking();
     // remove highlighting
     this.unmarkBestEdges();
   },
@@ -154,6 +155,56 @@ export default {
     for (let i = 0; i < edges.length; i++) {
       edges[i].removeClass("highlighted");
     }
+  },
+
+  createBoundary() {
+    let cy = this.getCytoGraph()
+    let startIDs= cy.data("settingsOptimizationStartIDs")
+      // gets ID's of start- and endnodes
+    let endID = cy.data("settingsOptimizationEndID");
+      //automatically initialize startnodes if no startnodes were selected
+    if(startIDs.length == 0 ){
+      for(let o = 0; o < cy.nodes().length; o++){
+        if(cy.nodes()[o].incomers().length == 0){
+          startIDs.push(cy.nodes()[o].data("id"))
+        }
+      }
+    }
+      //automatically initialize endnode if no endnode were selected
+    if(endID == undefined || endID == "" || endID == -1){
+      for(let o = 0; o < cy.nodes().length; o++){
+        if(cy.nodes()[o].outgoers().length == 0){
+          endID = cy.nodes()[o].data("id")          
+        }
+      }
+    } 
+
+    let pathCount = 0
+    for (let i = 0; i < startIDs.length; i++) {
+      if(pathCount < 7) {
+        pathCount = pathCount + this.calculateBoundary(startIDs[i], endID)
+      }
+    }
+    return pathCount
+  },
+
+  calculateBoundary(node, end) {
+    //rekursive counting of possible ways, stop at 7
+    let pathCount = 0
+    let cy = this.getCytoGraph()
+    let ways = cy.getElementById(node).outgoers('edge')
+    for(let i = 0; i < ways.length; i++) {
+      if(pathCount < 7) {
+        let target = ways[i].data("target")
+        if (target == end) {
+          pathCount ++
+        }
+        else {
+          pathCount = pathCount + this.calculateBoundary(target, end)
+        }
+      }
+    }
+    return pathCount
   },
 
   getTarget(edge) {
@@ -356,18 +407,13 @@ export default {
   
   optimizing() {
    
-    let cy = cyStore.data.cy
-  
+    let cy = this.getCytoGraph()
 
     let option = cy.data("settingsOptimizationOption");   // false = time, true = cost
-    let nextBestCounter = cy.data("settingsOptimizationNumber");
     let startIDs= cy.data("settingsOptimizationStartIDs")
-    let endID = cy.data("settingsOptimizationEndID");
-  
-    
       // gets ID's of start- and endnodes
-      
-    //automatically initialize startnodes if no startnodes were selected
+    let endID = cy.data("settingsOptimizationEndID");
+      //automatically initialize startnodes if no startnodes were selected
     if(startIDs.length == 0 ){
       for (let o = 0; o < this.getNodeArr(this).length; o++) {
         if (this.getNodeArr(this)[o].incomers().length == 0) {
@@ -375,14 +421,20 @@ export default {
         }
       }
     }
-    
-    //automatically initialize endnode if no endnode were selected
+      //automatically initialize endnode if no endnode were selected
     if(endID == undefined || endID == "" || endID == -1){
       for (let o = 0; o < this.getNodeArr(this).length; o++) {
         if (this.getNodeArr(this)[o].outgoers().length == 0) {
           endID = this.getNodeArr(this)[o].data("id");
         }
       }
+    }   
+      //checks how many paths need to be found
+    let nextBestCounter = cy.data("settingsOptimizationNumber");
+      //checks if there are enough paths
+    let boundaryCheck = this.createBoundary()
+    if(nextBestCounter > boundaryCheck) {
+      nextBestCounter = boundaryCheck
     }
 
 
@@ -461,6 +513,7 @@ export default {
   
     let bestPaths = []
    // let endID = cyStore.data.cy.data("settingsOptimizationEndID");
+   // let endID = this.getCytoGraph(this).data("settingsOptimizationEndID");
     
       //look for the end-node, first one found is the one with lowest cost
     let search = 0

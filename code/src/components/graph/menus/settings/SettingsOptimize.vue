@@ -1,5 +1,5 @@
 <template>
-  <v-card flat>
+  <v-card flat class="settings-optimize">
     <v-card-text id="scrollOpt" class="scrolling-container pb-10" style="max-height: 55vh">
       <v-card-subtitle>Grundeinstellungen</v-card-subtitle>
       <v-card class="ml-6 mr-6">
@@ -12,6 +12,7 @@
             <v-select
               class="pr-8"
               hide-details
+              @change="setOptimizeSettings()"
               v-model="optimizationOption"
               :items="optimizationOptionItems"
             ></v-select>
@@ -28,6 +29,7 @@
           <v-col sm="5">
             <v-select
               @focus="getNodeItemsID(); getNodeItemsName()"
+              @change="setOptimizeSettings()"
               class="pr-8"
               hide-details
               v-model="startSelect"
@@ -48,6 +50,7 @@
             <v-select
               class="pr-8"
               @focus="getNodeItemsID(); getNodeItemsName()"
+              @change="setOptimizeSettings()"
               hide-details
               v-model="endSelect"
               :items="itemsName"
@@ -66,7 +69,7 @@
           <v-col sm="5">
             <v-slider
               class="pr-8 mt-8"
-              @focus="getNodeItemsID(); getNodeItemsName()"
+              @change="setOptimizeSettings()"
               hide-details
               thumb-label="always"
               :thumb-size="24"
@@ -84,25 +87,46 @@
       </v-card>
 
       <v-card-subtitle class="mt-10 pb-0" id="alternatives">Alternative Optimierungswege</v-card-subtitle>
+      <v-card v-if="rankArray.length == 0" class="mt-3 ml-6 mr-6">
+        <v-row>
+          <v-col sm="12">
+            <v-card-text>
+              <em>Um die alternativen Optimierungswege auswählen zu können muss zunächst optimiert werden</em>
+              <v-btn
+                class="mt-4"
+                color="green darken-1"
+                text
+                @click="startOptimization()"
+              >Optimierung starten</v-btn>
+            </v-card-text>
+          </v-col>
+        </v-row>
+      </v-card>
+
       <!-- <v-card class="mr-6 ml-6 mt-0"> -->
       <v-row class="ma-0">
         <v-col sm="12" class="ma-0 pa-0">
-          <v-radio-group v-model="optimizationSelection" :mandatory="false" class="ml-6 mr-6">
+          <v-radio-group @change="changeHighlighting" v-model="optimizationSelection" :mandatory="false" class="ml-6 mr-6">
             <template>
               <v-expansion-panels hover accordion>
-                <v-expansion-panel v-for="(item,i) in optimizationNumber" :key="i">
+                <v-expansion-panel v-for="(rank, i) in rankArray" :key="i">
                   <v-expansion-panel-header>
                     <v-radio color="primary" :value="i">
                       <template v-slot:label>
                         <v-card-text class="ma-0 pa-0 pt-1">
-                          <strong>TODO! Kosten:</strong> 10€,
-                          <strong>Zeit:</strong> 10s
+                          {{i + 1}}. Platz |
+                          <strong>Kosten:</strong>
+                          {{rank.cost}} €,
+                          <strong>Zeit:</strong>
+                          {{rank.time}} s
                         </v-card-text>
                       </template>
                     </v-radio>
                   </v-expansion-panel-header>
                   <v-expansion-panel-content class="ml-8">
-                    <v-card-text>Weg: A - B - C - B - A</v-card-text>
+                    <v-card-text>
+                      <span v-for="(way, j) in rank.path" :key="j" class="rank-way">{{way}}</span>
+                    </v-card-text>
                   </v-expansion-panel-content>
                 </v-expansion-panel>
               </v-expansion-panels>
@@ -127,6 +151,7 @@ export default {
     dialogComponent = this.$parent.$parent.$parent.$parent.$parent.$parent
       .$parent.$parent.$parent.$parent.$parent.$parent.$refs["dialogs"];
     this.getOptimizeSettings();
+    this.applyRanking();
   },
   data: () => ({
     optimizationOption: "Zeit",
@@ -136,7 +161,8 @@ export default {
     startSelect: [""],
     endSelect: "",
     optimizationNumber: 4,
-    optimizationSelection: 0
+    optimizationSelection: 0,
+    rankArray: []
   }),
   methods: {
     getGraph() {
@@ -145,8 +171,73 @@ export default {
     },
 
     scrollToAlternatives() {
-      let scrollbox = document.getElementById("scrollOpt")
+      let scrollbox = document.getElementById("scrollOpt");
       scrollbox.scrollTo(0, 500);
+    },
+
+    applyRanking() {
+      this.rankArray = [];
+      let bestPaths = this.getGraph()
+        .getCytoGraph(this)
+        .data("bestPaths");
+
+      for (let i = 0; i < bestPaths.length; i++) {
+        let nextRank = {};
+        nextRank.cost = this.getGraph().getTotalCost(bestPaths[i]);
+        nextRank.time = this.getGraph().getTotalTime(bestPaths[i]);
+        nextRank.path = [];
+        for (let j = 0; j < bestPaths[i].length; j++) {
+          if (j == 0) {
+            nextRank.path.push(
+              this.getGraph()
+                .getCytoGraph(this)
+                .getElementById(bestPaths[i][j])
+                .source()
+                .data("name")
+            );
+          }
+          nextRank.path.push(
+            this.getGraph()
+              .getCytoGraph(this)
+              .getElementById(bestPaths[i][j])
+              .data("name")
+          );
+          nextRank.path.push(
+            this.getGraph()
+              .getCytoGraph(this)
+              .getElementById(bestPaths[i][j])
+              .target()
+              .data("name")
+          );
+        }
+        this.rankArray.push(nextRank);
+      }
+    },
+
+    clearRanking() {
+      this.rankArray = [];
+    },
+
+    changeHighlighting() {
+      let bestPaths = this.getGraph()
+        .getCytoGraph(this)
+        .data("bestPaths");
+      this.getGraph().markBestEdges(bestPaths[this.optimizationSelection]);
+       
+      this.getGraph().getCytoGraph(this.getGraph())
+        .data("settingsOptimizationSelection", this.optimizationSelection);
+
+      if(this.optimizationSelection != 0) {
+        dialogComponent.dialogSuccess(this.optimizationSelection+1 +". alternative Optimierung wurde markiert")
+      } else {
+        dialogComponent.dialogSuccess("Beste Optimierung wurde markiert")
+      }
+    },
+
+    startOptimization() {
+      console.log(
+        this.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$refs.graphInfo.startOptimizing()
+      );
     },
 
     // get Settings
@@ -213,10 +304,8 @@ export default {
       this.getGraph()
         .getCytoGraph()
         .data("settingsOptimizationStartIDs", startIDs);
-     
-     
-     // set endID for Optimization Algorithm
 
+      // set endID for Optimization Algorithm
 
       let indexEnd = this.itemsName.indexOf(this.endSelect);
       let endID = this.itemsID[indexEnd];
@@ -233,9 +322,9 @@ export default {
         .getCytoGraph(this.getGraph())
         .data("settingsOptimizationSelection", this.optimizationSelection);
 
-
       // remove optimization
       this.getGraph().removeOptimization();
+      this.rankArray = [];
     },
 
     getNodeItemsID() {
