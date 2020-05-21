@@ -400,7 +400,7 @@ export default {
   },
     getGraph() {
       return this.$parent.$parent.$refs["vargraph"];
-       
+
     },
     checkImg(url) {
       return url.match(/\.(jpeg|jpg|gif|png)$/) != null;
@@ -520,7 +520,7 @@ export default {
           newsutime
         );
         dialogComponent.dialogSuccess("Verknüpfung erfolgreich angelegt");
-        
+
         this.clearFields();
         this.edgeCreateGui = false;
         // remove optimization

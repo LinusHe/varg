@@ -29,7 +29,7 @@ export default {
         }else{
           //let content = this.$store.getters.getGraph;
       // content = JSON.parse(content);
-       cyStore.data.importedJson = this.$store.getters.getGraph;
+          cyStore.data.importedJson = this.$store.getters.getGraph;
           this.$router.replace("/graph");
 
         }
