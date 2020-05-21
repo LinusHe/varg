@@ -42,7 +42,7 @@
             ref="formNodes"
             v-model="validNodes"
             lazy-validation
-            class="d-inline-block mr-5 ml-5 mb-4"
+            class="d-inline-block mr-5 ml-5 mb-4 hueshift"
             @submit="saveNode()"
             onsubmit="return false;"
           >
@@ -154,7 +154,7 @@
               ref="formEdges"
               v-model="validEdges"
               lazy-validation
-              class="d-inline-block mr-5 ml-5 mb-4"
+              class="d-inline-block mr-5 ml-5 mb-4 hueshift"
               @submit="saveEdge()"
               onsubmit="return false;"
               style="max-height: 300px; overflow: scroll-y"

@@ -87,7 +87,7 @@
             ref="formNodes"
             v-model="validNodes"
             lazy-validation
-            class="d-inline-block mr-5 ml-5 mb-4"
+            class="d-inline-block mr-5 ml-5 mb-4 hueshift"
             @submit="createNode()"
             onsubmit="return false;"
           >
@@ -95,7 +95,7 @@
             <v-row>
               <v-col sm="12">
                 <v-text-field
-                  class="mt-2"
+                  class="mt-2 "
                   id="nodeCreateName"
                   label="Bezeichnung"
                   v-model="nodeCreateName"
@@ -177,7 +177,7 @@
               ref="formEdges"
               v-model="validEdges"
               lazy-validation
-              class="d-inline-block mr-5 ml-5 mb-4"
+              class="d-inline-block mr-5 ml-5 mb-4 hueshift"
               @submit="createEdge()"
               onsubmit="return false;"
               style="max-height: 300px; overflow: scroll-y"

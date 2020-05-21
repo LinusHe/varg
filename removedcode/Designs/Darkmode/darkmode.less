@@ -8,6 +8,10 @@
   isolation: isolate;
 }
 
+.darkmode-ign {
+  transition: all 50s;
+}
+
 .darkmode--activated .hueshift{
   filter: hue-rotate(170deg);
 }
@@ -28,5 +32,22 @@
 }
 
 .darkmode--activated .v-overlay__scrim{
-  background-color: rgb(179, 179, 179) !important;
+  background-color: rgb(221, 221, 221) !important;
+}
+
+.darkmode-layer, .darkmode-background{
+  //max-height: 0;
+  //max-width: 0;
+  //border-radius: 40px;
+  opacity: 0;
+  transition: all 50s;
+  
+}
+
+.darkmode--activated .darkmode-layer, .darkmode--activated .darkmode-background{
+  max-height: 100%;
+  max-width: 100%;
+  opacity: 100%;
+  transition: all 0.5s;
+  //border-radius: 0;
 }
