@@ -319,6 +319,7 @@
 </template>
 
 <script>
+import cyStore from "@/vargraph/graph/cyStore";
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
 /* eslint-disable standard/computed-property-even-spacing */
@@ -421,6 +422,9 @@ export default {
     };
   },
   methods: {
+    backupGraph() {
+    this.$store.commit('saveGraph', cyStore.data.cy.json());
+  },
     getGraph() {
       return this.$parent.$parent.$refs["vargraph"];
     },
@@ -562,6 +566,7 @@ export default {
         this.nodeGui = false;
         dialogComponent.dialogSuccess("Teil erfolgreich aktualisiert");
       }
+      this.backupGraph();
     },
     saveEdge() {
       if (this.$refs.formEdges.validate()) {
@@ -590,6 +595,7 @@ export default {
         // remove optimization
         this.getGraph().removeOptimization();
       }
+      this.backupGraph();
     },
     deleteEdge() {
       this.getGraph().removeEdge(this.getGraph(), this.id);
@@ -617,6 +623,7 @@ export default {
         );
         this.deleteInvEdges = true;
       }
+      this.backupGraph();
     },
     deleteNode() {
       this.getGraph().removeNode(this.getGraph(), this.id);
@@ -624,6 +631,7 @@ export default {
       this.nodeGui = false;
       this.deleteInvEdges = false;
       dialogComponent.dialogWarning("Teil erfolgreich gelöscht");
+      this.backupGraph();
     },
     cancel() {
       // this.clearFields();

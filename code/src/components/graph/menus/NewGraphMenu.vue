@@ -103,6 +103,8 @@ export default {
     discard() {
       router.push({ name: "menu" });
       this.$router.go();
+      this.$store.commit("ResetGraph");
+      //  this.$parent.$destroy();
     }
   }
 };

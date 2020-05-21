@@ -326,6 +326,7 @@
 </template>
 
 <script>
+import cyStore from "@/vargraph/graph/cyStore";
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
 /* eslint-disable standard/computed-property-even-spacing */
@@ -416,8 +417,13 @@ export default {
     };
   },
   methods: {
+      backupGraph() {
+    //let gra = cyStore.data.cy;
+    this.$store.commit('saveGraph', cyStore.data.cy.json());
+  },
     getGraph() {
       return this.$parent.$parent.$refs["vargraph"];
+
     },
     checkImg(url) {
       return url.match(/\.(jpeg|jpg|gif|png)$/) != null;
@@ -539,11 +545,14 @@ export default {
           newlotsize
         );
         dialogComponent.dialogSuccess("Verknüpfung erfolgreich angelegt");
+
         this.clearFields();
         this.edgeCreateGui = false;
         // remove optimization
         this.getGraph().removeOptimization();
       }
+      this.backupGraph();
+
     },
     setTarget(id) {},
     createNode() {
@@ -565,6 +574,7 @@ export default {
         this.nodeCreateGui = false;
         dialogComponent.dialogSuccess("Zustand erfolgreich angelegt");
       }
+      this.backupGraph();
     },
     cancel() {
       this.clearFields();
@@ -594,5 +604,7 @@ export default {
       this.$refs.endzustand.validate();
     }
   }
+
+
 };
 </script>

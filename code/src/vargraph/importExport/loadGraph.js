@@ -16,6 +16,7 @@ export default {
   //               (nodes first, edges second) and defining every data value by referencing the graph that is written
   //               in the database.
   Load(graphComponent, graph) {
+    alert("load start");
     // get cytoscape instance
     let cy = graphComponent.getCytoGraph();
 
@@ -31,6 +32,8 @@ export default {
         position: { x: node.position("x"), y: node.position("y") }
       });
     }
+
+
     for (let i = 0; i < graph.edges.length; i++) {
       let edge = graph.edges[i];
       cy.add({

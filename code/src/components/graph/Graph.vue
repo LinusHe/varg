@@ -54,6 +54,8 @@ import ExportMenu from "./menus/export/ExportMenu";
 import RightClickMenu from "./menus/RightClickMenu";
 import SettingsMenu from "./menus/settings/SettingsMenu";
 import DatabaseMenu from "./menus/DatabaseMenu";
+//import cyStore from "@/vargraph/graph/cyStore";
+//import loadGraph from "@/vargraph/importExport/loadGraph";
 
 export default {
   /* eslint-disable no-console */
@@ -84,6 +86,14 @@ export default {
     getHeader() {
       return this.header;
     }
-  }
+  }, /* dead code
+  mounted: function() {
+    alert("befor if");
+    if (this.$store.state.graph != null){
+      let content = this.$store.getters.getGraph;
+      // content = JSON.parse(content);
+       cyStore.data.importedJson = content;
+    }
+  }*/
 };
 </script>

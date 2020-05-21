@@ -10,20 +10,26 @@ export const store = new Vuex.Store({
     user: {
       name: "Gast",
       autehticated: false,
-      role: "guest"
+      role: "guest",
+      admin: false
     },
+    
     issued : Date.now(),
 
     //shows wheather an atempt to load from localStorage was made
     //Probably useless
     ready: false,
-    
+
     //old
     //kept for now to prevent everything from breaking
+    /*
     count: 0,
-    
+    */
     cyProdName: null,
-    cyProdQuant: null
+    cyProdQuant: null,
+    
+
+    graph: null
   },
   mutations: {
     //new
@@ -36,7 +42,11 @@ export const store = new Vuex.Store({
         //Delay is set to 30 sec for debugging purposes
         //alert("Old state has been retrieved.");
       }
-      state.ready = true;
+      //state.ready = true;
+    },
+
+    saveGraph(state, graphh) {
+      state.graph = graphh;
     },
     login(state) {
       state.user.autehticated = true;
@@ -55,14 +65,17 @@ export const store = new Vuex.Store({
     refreshIssued(state) {
       state.issued = Date.now();
     },
+    ResetGraph(state){
+      state.graph =null;
+    },
 
-    //old
+    /*old
     increment(state) {
       state.count++;
     },
     decrement(state) {
       state.count--;
-    },
+    },*/
 
     setCyProdName(state, newName) {
       state.cyProdName = newName;
@@ -77,8 +90,17 @@ export const store = new Vuex.Store({
     }
   },
   getters: {
+    getGraphName: state => {
+      return state.graph.data.prodName;
+    },
+    getGraphQuant: state => {
+      return state.graph.data.prodQuant;
+    },
     getAuth: state => {
       return state.user.autehticated;
+    },
+    getGraph: state => {
+      return state.graph;
     },
 
     getIssuedTime: state => {
