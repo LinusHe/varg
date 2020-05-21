@@ -1,3 +1,4 @@
+/* eslint-disable no-unexpected-multiline */
 /* eslint-disable no-console */
 
 // This file is part of the cytoscape graph
@@ -38,17 +39,44 @@ export default {
   // edgeBetweenNodes(node1, node2): returns whether an edge exists between two nodes
   edgeBetweenNodes(node1, node2) {
     for (let i = 0; i < node1.connectedEdges().length; i++) {
-      let edgeSid = node1.connectedEdges()[i].source().id();
-      let edgeTid = node1.connectedEdges()[i].target().id();
+      let edgeSid = node1
+        .connectedEdges()
+        [i].source()
+        .id();
+      let edgeTid = node1
+        .connectedEdges()
+        [i].target()
+        .id();
       let node2id = node2.id();
 
       // check if edge has node2 as source or target
       if (edgeSid === node2id || edgeTid === node2id) {
-        console.log("Edge between nodes");
         return true;
       }
     }
     return false;
+  },
+
+  // edgeBetweenNodes(node1, node2): returns an array with the edges between two nodes
+  edgeBetweenNodesArr(node1, node2) {
+    let edges = [];
+    for (let i = 0; i < node1.connectedEdges().length; i++) {
+      let edgeSid = node1
+        .connectedEdges()
+        [i].source()
+        .id();
+      let edgeTid = node1
+        .connectedEdges()
+        [i].target()
+        .id();
+      let node2id = node2.id();
+
+      // check if edge has node2 as source or target
+      if (edgeSid === node2id || edgeTid === node2id) {
+        edges.push(node1.connectedEdges()[i]);
+      }
+    }
+    return edges;
   },
 
   // createEdge(..): Adds an edge to the Cytograph with an automatic
@@ -100,14 +128,16 @@ export default {
 
     console.log("added edge: ", cy.getElementById(count));
 
-
     // move end-node position if conflict occurs
     let endNode = cy.getElementById(end);
-    this.moveNodesInConflict(graphComponent, endNode)
+    this.moveNodesInConflict(graphComponent, endNode);
 
     // increment id counter
     count++;
     cy.data("IDCount", count);
+
+    // remove optimization
+    this.removeOptimization();
   },
 
   // createEdgeWithID(..): DO NOT USE THIS FUNCTION BY DEFAULT!
@@ -151,6 +181,128 @@ export default {
 
     // reset counter to original count
     cy.data("IDCount", originalCount);
+  },
+
+  // createQuickEdge(..): creates an Edge, just with the start and end information
+  createQuickEdge(graphComponent, startNode, endNode) {
+    // get cytoscape instance
+    let cy = graphComponent.getCytoGraph();
+    // get id counter
+    let edgeID = cy.data("IDCount");
+
+    let edgeName = this.generateQuickEdgeName(
+      graphComponent,
+      startNode,
+      endNode
+    );
+    let edgeShort = this.generateQuickEdgeShort(
+      graphComponent,
+      startNode,
+      endNode
+    );
+
+    this.createEdge(
+      graphComponent,
+      edgeName,
+      edgeShort,
+      startNode,
+      endNode,
+      null,
+      null,
+      null,
+      null,
+      null
+    );
+
+    // get created edge and add dotted class
+    let edge = cy.getElementById(edgeID);
+    edge.addClass("quick-edge");
+  },
+
+  // generateQuickEdgeName(..):  generates Edge Name just with the startNode and endNode ID
+  //                             example: A -> B | 1
+  generateQuickEdgeName(graphComponent, startNode, endNode) {
+    // get cy from graphComponent
+    let cy = graphComponent.getCytoGraph();
+
+    // get node names
+    let startName = this.getNodeNameByID(graphComponent, startNode);
+    let endName = this.getNodeNameByID(graphComponent, endNode);
+    let number =
+      this.numberOfEdgesBetween(graphComponent, startNode, endNode) + 1;
+
+    // generate label
+    let nameString =
+      startName.charAt(0).toUpperCase() +
+      " - " +
+      endName.charAt(0).toUpperCase() +
+      " | " +
+      number;
+
+    // check if name already exists
+    let edges = this.edgeBetweenNodesArr(
+      cy.getElementById(startNode),
+      cy.getElementById(endNode)
+    );
+    for (let i = 0; i < edges.length; i++) {
+      if (nameString == edges[i].data("name")) {
+        number++;
+        // generate label
+        nameString =
+          startName.charAt(0).toUpperCase() +
+          " - " +
+          endName.charAt(0).toUpperCase() +
+          " | " +
+          number;
+      }
+    }
+
+    return nameString;
+  },
+
+  // generateQuickEdgeShort(..): generates Edge Short just with the startNode and endNode ID
+  //                             example: AB1
+  generateQuickEdgeShort(graphComponent, startNode, endNode) {
+    // get node names
+    let startName = this.getNodeNameByID(graphComponent, startNode);
+    let endName = this.getNodeNameByID(graphComponent, endNode);
+    let number =
+      this.numberOfEdgesBetween(graphComponent, startNode, endNode) + 1;
+
+    // generate label
+    let shortString =
+      startName.charAt(0).toUpperCase() +
+      endName.charAt(0).toUpperCase() +
+      number;
+    return shortString;
+  },
+
+  // numberOfEdgesBetween(..): returns number of edges between two nodes
+  numberOfEdgesBetween(graphComponent, startNode, endNode) {
+    // get cytoscape instance
+    let cy = graphComponent.getCytoGraph();
+    // get edge by id
+    let node1 = cy.getElementById(startNode);
+    let node2 = cy.getElementById(endNode);
+    let count = 0;
+    for (let i = 0; i < node1.connectedEdges().length; i++) {
+      let edgeSid = node1
+        .connectedEdges()
+        [i].source()
+        .id();
+      let edgeTid = node1
+        .connectedEdges()
+        [i].target()
+        .id();
+      let node2id = node2.id();
+
+      // check if edge has node2 as source or target
+      if (edgeSid === node2id || edgeTid === node2id) {
+        console.log("Edge between nodes");
+        count++;
+      }
+    }
+    return count;
   },
 
   // updateEdge(..): Updates an Edge by ID with the given arguments
@@ -219,6 +371,12 @@ export default {
     edge.data("lotsize", lotsize);
     edge.data("label", label);
 
+    // remove quick-edge class
+    if (edge.hasClass("quick-edge")) edge.removeClass("quick-edge");
+
+    // remove optimization
+    this.removeOptimization();
+
     console.log("after update: ", edge);
   },
 
@@ -233,5 +391,19 @@ export default {
     console.log("edge removed: ", edge);
 
     edge.remove();
+
+    // remove optimization
+    this.removeOptimization();
+  },
+
+  hasQuickEdges(graphComponent) {
+    // get cytoscape instance
+    let cy = graphComponent.getCytoGraph();
+
+    var edges = cy.edges();
+    for (let i = 0; i < edges.length; i++) {
+      if (edges[i].hasClass("quick-edge")) return true;
+    }
+    return false;
   }
 };

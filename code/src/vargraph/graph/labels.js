@@ -21,18 +21,18 @@ export default {
       else label = newShort;
 
       // Cost / Time Data
-      if (cy.data("settingsEdgeShowCost") || cy.data("settingsEdgeShowTime")) label += "\n";
-      if (cy.data("settingsEdgeShowCost")) label += "Kosten: " + newcost + " " + cy.data("settingsUnitCostSelection");
-      if (cy.data("settingsEdgeShowCost") && cy.data("settingsEdgeShowTime")) label += " | ";
-      if (cy.data("settingsEdgeShowTime")) label += "Zeit: " + newtime + " " + cy.data("settingsUnitTimeSelection");
+      if ((cy.data("settingsEdgeShowCost") && newcost != null) || (cy.data("settingsEdgeShowTime") && newtime != null)) label += "\n";
+      if (cy.data("settingsEdgeShowCost") && newcost != null) label += "Kosten: " + newcost + " " + cy.data("settingsUnitCostSelection");
+      if (cy.data("settingsEdgeShowCost") && cy.data("settingsEdgeShowTime") && newcost != null && newtime != null) label += " | ";
+      if (cy.data("settingsEdgeShowTime") && newtime != null) label += "Zeit: " + newtime + " " + cy.data("settingsUnitTimeSelection");
 
       // SuCost / SuTime Data, Lotsize Data
-      if (cy.data("settingsEdgeShowLotSize")) label += "\n";
-      if (cy.data("settingsEdgeShowLotSize")) label += "Losgröße: " + newlotsize + " " + "Stück";
-      if (cy.data("settingsEdgeShowSuCost") || cy.data("settingsEdgeShowSuTime")) label += "\n";
-      if (cy.data("settingsEdgeShowSuCost")) label += "Rüstkosten: " + newsucost + " " + cy.data("settingsUnitCostSelection");
-      if (cy.data("settingsEdgeShowSuCost") && cy.data("settingsEdgeShowSuTime")) label += " | ";
-      if (cy.data("settingsEdgeShowSuTime")) label += "Rüstzeit: " + newsutime + " " + cy.data("settingsUnitTimeSelection");
+      if (cy.data("settingsEdgeShowLotSize") && newlotsize != null) label += "\n";
+      if (cy.data("settingsEdgeShowLotSize") && newlotsize != null) label += "Losgröße: " + newlotsize + " " + "Stück";
+      if ((cy.data("settingsEdgeShowSuCost") && newsucost != null) || (cy.data("settingsEdgeShowSuTime") && newsutime != null)) label += "\n";
+      if (cy.data("settingsEdgeShowSuCost") && newsucost != null) label += "Rüstkosten: " + newsucost + " " + cy.data("settingsUnitCostSelection");
+      if (cy.data("settingsEdgeShowSuCost") && cy.data("settingsEdgeShowSuTime") && newsucost != null && newsutime != null) label += " | ";
+      if (cy.data("settingsEdgeShowSuTime") && newsutime != null) label += "Rüstzeit: " + newsutime + " " + cy.data("settingsUnitTimeSelection");
     }
 
 
@@ -72,7 +72,6 @@ export default {
       );
       edge.data("label", newlabel);
     });
-
   },
 
   updateNodeLabel(graphComponent) {
@@ -81,13 +80,13 @@ export default {
 
     cy.nodeHtmlLabel([
       {
-        query: "node", // cytoscape query selector
+        query: ".nodelabel", // cytoscape query selector
         halign: "center", // title vertical position. Can be 'left',''center, 'right'
         valign: "center", // title vertical position. Can be 'top',''center, 'bottom'
         halignBox: "center", // title vertical position. Can be 'left',''center, 'right'
         valignBox: "center", // title relative box vertical position. Can be 'top',''center, 'bottom'
         cssClass: "findme", // any classes will be as attribute of <div> container for every title
-        tpl: function (data) {
+        tpl: function(data) {
           if (data.imgUrl != null && data.imgUrl != "") {
             // Template for Image-Node
             return (

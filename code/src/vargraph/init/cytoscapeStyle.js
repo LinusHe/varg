@@ -52,6 +52,18 @@ const style = [
     }
   },
   {
+    selector: ".quick-edge",
+    style: {
+      "line-style": "dashed"
+    }
+  },
+  {
+    selector: ".eh-preview",
+    style: {
+      "line-style": "dashed"
+    }
+  },
+  {
     selector: ":selected",
     style: {
       "border-width": 5.5,
@@ -62,6 +74,28 @@ const style = [
       "target-arrow-color": "#00398b",
       "source-arrow-color": "black",
       "text-outline-color": "black"
+    }
+  },
+  // Edge Handle Classes
+  {
+    selector: ".eh-handle",
+    style: {
+      "background-color": "#ffffff",
+      "border-width": 2,
+      "border-color": "#aaaaaa",
+      "background-image":
+        "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4iICJodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQiPjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTEwLjYgMTMuNEExIDEgMCAwIDEgOS4yIDE0LjhBNC44IDQuOCAwIDAgMSA5LjIgNy44TDEyLjcgNC4yQTUuMSA1LjEgMCAwIDEgMTkuOCA0LjJBNS4xIDUuMSAwIDAgMSAxOS44IDExLjNMMTguMyAxMi44QTYuNCA2LjQgMCAwIDAgMTcuOSAxMC40TDE4LjQgOS45QTMuMiAzLjIgMCAwIDAgMTguNCA1LjZBMy4yIDMuMiAwIDAgMCAxNC4xIDUuNkwxMC42IDkuMkEyLjkgMi45IDAgMCAwIDEwLjYgMTMuNE0yMyAxOFYyMEgyMFYyM0gxOFYyMEgxNVYxOEgxOFYxNUgyMFYxOE0xNi4yIDEzLjdBNC44IDQuOCAwIDAgMCAxNC44IDkuMkExIDEgMCAwIDAgMTMuNCAxMC42QTIuOSAyLjkgMCAwIDEgMTMuNCAxNC44TDkuOSAxOC40QTMuMiAzLjIgMCAwIDEgNS42IDE4LjRBMy4yIDMuMiAwIDAgMSA1LjYgMTQuMUw2LjEgMTMuN0E3LjMgNy4zIDAgMCAxIDUuNyAxMS4yTDQuMiAxMi43QTUuMSA1LjEgMCAwIDAgNC4yIDE5LjhBNS4xIDUuMSAwIDAgMCAxMS4zIDE5LjhMMTMuMSAxOEE2IDYgMCAwIDEgMTYuMiAxMy43WiIgLz48L3N2Zz4=",
+      width: 50,
+      height: 50,
+      label: ""
+    }
+  },
+  {
+    selector: ".eh-ghost-edge",
+    style: {
+      "line-color": "#797979",
+      "target-arrow-color": "#797979",
+      "line-style": "dashed"
     }
   }
 ];

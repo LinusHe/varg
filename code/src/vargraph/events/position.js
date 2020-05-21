@@ -25,7 +25,7 @@ export default {
     let eventX = node.position().x;
     let eventY = node.position().y;
     // get all nodes
-    let nodes = graphComponent.getCytoGraph(graphComponent).nodes();
+    let nodes = graphComponent.getNodeArr(graphComponent);
     // nodes that are different to moved node
     let otherNodes = nodes.filter(n => n !== node);
     // get radius from node with + some extra space

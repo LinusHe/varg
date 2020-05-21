@@ -367,54 +367,60 @@ export default {
             .data("settingsOptimizationStartNames").length
       );
 
-      if (
-        this.getGraph()
-          .getCytoGraph(this.getGraph())
-          .data("settingsOptimizationStartNames").length != 0 &&
-        this.getGraph()
-          .getCytoGraph(this.getGraph())
-          .data("settingsOptimizationEndID") != -1
-      ) {
-        this.runOptimization();
+      if (!this.getGraph().hasQuickEdges(this.getGraph())) {
+        if (
+          this.getGraph()
+            .getCytoGraph(this.getGraph())
+            .data("settingsOptimizationStartNames").length != 0 &&
+          this.getGraph()
+            .getCytoGraph(this.getGraph())
+            .data("settingsOptimizationEndID") != -1
+        ) {
+          this.runOptimization();
 
-        // notify with dialog
-        dialogComponent.dialogSuccess(
-          "Graph wurde erfolgreich optimiert." +
-            "<br><em>Derzeit wird der beste Weg angezeigt.</em>" +
-            "<br>Öffne die <b>Optimierungs-Einstellungen</b> für weitere Wege!",
-          8000
-        );
-      } else if (
-        this.getGraph()
-          .getCytoGraph(this.getGraph())
-          .data("settingsOptimizationStartNames") == 0 &&
-        this.getGraph()
-          .getCytoGraph(this.getGraph())
-          .data("settingsOptimizationEndID") != -1
-      ) {
-        this.runOptimization();
-        dialogComponent.dialogWarning(
-          "Die Startzustände wurden automatisch eingestellt. Wenn du sie ändern möchtest öffne die Optimierungseinstellungen!",
-          6000
-        );
-      } else if (
-        this.getGraph()
-          .getCytoGraph(this.getGraph())
-          .data("settingsOptimizationEndID") == -1 &&
-        this.getGraph()
-          .getCytoGraph(this.getGraph())
-          .data("settingsOptimizationStartNames") != 0
-      ) {
-        this.runOptimization();
-        dialogComponent.dialogWarning(
-          "Der Endzustand wurde automatisch eingestellt. Wenn du ihn ändern möchtest öffne die Optimierungseinstellungen!",
-          6000
-        );
+          // notify with dialog
+          dialogComponent.dialogSuccess(
+            "Graph wurde erfolgreich optimiert." +
+              "<br><em>Derzeit wird der beste Weg angezeigt.</em>" +
+              "<br>Öffne die <b>Optimierungs-Einstellungen</b> für weitere Wege!",
+            8000
+          );
+        } else if (
+          this.getGraph()
+            .getCytoGraph(this.getGraph())
+            .data("settingsOptimizationStartNames") == 0 &&
+          this.getGraph()
+            .getCytoGraph(this.getGraph())
+            .data("settingsOptimizationEndID") != -1
+        ) {
+          this.runOptimization();
+          dialogComponent.dialogWarning(
+            "Die Startzustände wurden automatisch eingestellt. Wenn du sie ändern möchtest öffne die Optimierungseinstellungen!",
+            6000
+          );
+        } else if (
+          this.getGraph()
+            .getCytoGraph(this.getGraph())
+            .data("settingsOptimizationEndID") == -1 &&
+          this.getGraph()
+            .getCytoGraph(this.getGraph())
+            .data("settingsOptimizationStartNames") != 0
+        ) {
+          this.runOptimization();
+          dialogComponent.dialogWarning(
+            "Der Endzustand wurde automatisch eingestellt. Wenn du ihn ändern möchtest öffne die Optimierungseinstellungen!",
+            6000
+          );
+        } else {
+          this.runOptimization();
+          dialogComponent.dialogWarning(
+            "Die Start- und Endzustände wurden automatisch eingestellt. Wenn du sie ändern möchtest öffne die Optimierungseinstellungen!",
+            6000
+          );
+        }
       } else {
-        this.runOptimization();
-        dialogComponent.dialogWarning(
-          "Die Start- und Endzustände wurden automatisch eingestellt. Wenn du sie ändern möchtest öffne die Optimierungseinstellungen!",
-          6000
+        dialogComponent.dialogError(
+          "Dein Graph enthält noch Bearbeitungsschritte mit unvollständigen Angaben. Bitte gib Kosten und Zeiten bei den gestrichelten Bearbeitungsschritte an!"
         );
       }
     }

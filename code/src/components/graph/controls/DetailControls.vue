@@ -458,8 +458,10 @@ export default {
     handleDetails(target) {
       if (target === this.getGraph().getCytoGraph(this.getGraph())) {
         this.closeMenus();
-      } else if (target.group() == "nodes") {
+      } else if (target.group() == "nodes" && !target.hasClass("eh-handle")) {
         this.openNodeDetails(target);
+      } else if (target.group() == "nodes" && target.hasClass("eh-handle")) {
+        dialogComponent.dialogWarning("Halte die Maustaste gedrückt und ziehe zu einem anderen Knoten, um einen neuen Bearbeitungsschritt zu erstellen!")
       } else if (target.group() == "edges") {
         this.openEdgeDetails(target);
       }

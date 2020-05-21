@@ -11,16 +11,20 @@ export default {
     // get cytoscape instance
     let cy = graphComponent.getCytoGraph();
 
-    return cy.nodes();
+    let nodeArr=[];
+
+    cy.nodes().forEach(node => {
+      if (!node.hasClass("eh-handle")) {
+        nodeArr.push(node);
+      }
+    });
+
+    return nodeArr;
   },
 
   // getNodeID(): Returns an Array with all Node IDs of the Graph
   getNodeID(graphComponent) {
-    // get cytoscape instance
-    // console.log(this)
-    let cy = graphComponent.getCytoGraph();
-
-    var nodes = cy.nodes();
+    var nodes = graphComponent.getNodeArr(graphComponent);
     var nodesArray = [];
     for (let i = 0; i < nodes.length; i++) {
       nodesArray.push(nodes[i].data("id"));
@@ -30,10 +34,7 @@ export default {
 
   // getNodeName(): Returns an Array with all Node Names of the Graph
   getNodeName(graphComponent) {
-    // get cytoscape instance
-    let cy = graphComponent.getCytoGraph();
-
-    var nodes = cy.nodes();
+    var nodes = graphComponent.getNodeArr(graphComponent);
     var nodesArray = [];
     for (let i = 0; i < nodes.length; i++) {
       nodesArray.push(nodes[i].data("name"));
@@ -41,13 +42,19 @@ export default {
     return nodesArray;
   },
 
-  // getNodePositions(): returns Array with all Node Positions
-  // is used in position.js Event
-  getNodePositions(graphComponent) {
+  // getNodeNameByID(..): Returns Noode Name from Node ID
+  getNodeNameByID(graphComponent, nodeID) {
     // get cytoscape instance
     let cy = graphComponent.getCytoGraph();
 
-    let nodes = cy.nodes();
+    var node = cy.getElementById(nodeID);
+    return node.data("name");
+  },
+
+  // getNodePositions(): returns Array with all Node Positions
+  // is used in position.js Event
+  getNodePositions(graphComponent) {
+    let nodes = graphComponent.getNodeArr(graphComponent);
     let posArray = [];
     for (let i = 0; i < nodes.length; i++) {
       posArray.push(nodes[i].position());
@@ -89,6 +96,8 @@ export default {
 
     let node = cy.getElementById(count);
     console.log("added node: ", node);
+
+    node.addClass("nodelabel"); 
 
     // update position if conflict occurs
     this.moveNodesInConflict(graphComponent, node)

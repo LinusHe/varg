@@ -9,12 +9,12 @@
       :key="snackbar.dialogText + Math.random()"
       :style="calcHeight(index)"
     >
-      <v-icon v-show="snackbar.info" color="#ffffff" class="ml-2 mr-8">mdi-information</v-icon>
-      <v-icon v-show="snackbar.warning" color="#ffffff" class="ml-2 mr-8">mdi-exclamation</v-icon>
-      <v-icon v-show="snackbar.success" color="#ffffff" class="ml-2 mr-8">mdi-check-circle</v-icon>
-      <v-icon v-show="snackbar.error" color="#ffffff" class="ml-2 mr-8">mdi-alert</v-icon>
-      <p class="mt-4" style="color: #ffffff" v-html="snackbar.dialogText"></p>
-      <v-btn class="mr-2" color="#ffffff" text @click="snackbar.dialogVisible = false">Schließen</v-btn>
+      <v-icon v-show="snackbar.info" :color="snackbar.textColor" class="ml-2 mr-8">mdi-information</v-icon>
+      <v-icon v-show="snackbar.warning" :color="snackbar.textColor" class="ml-2 mr-8">mdi-exclamation</v-icon>
+      <v-icon v-show="snackbar.success" :color="snackbar.textColor" class="ml-2 mr-8">mdi-check-circle</v-icon>
+      <v-icon v-show="snackbar.error" :color="snackbar.textColor" class="ml-2 mr-8">mdi-alert</v-icon>
+      <p class="mt-4" :style="snackbar.textColorStyle" v-html="snackbar.dialogText"></p>
+      <v-btn class="mr-2" :color="snackbar.textColor" text @click="snackbar.dialogVisible = false">Schließen</v-btn>
     </v-snackbar>
   </div>
 </template>
@@ -32,6 +32,8 @@ export default {
   methods: {
     defaultDialog(dialog) {
       // default values:
+      dialog.textColor = "#000"
+      dialog.textColorStyle = "color: #000"
       dialog.dialogVisible = false;
       dialog.info = false;
       dialog.warning = false;
@@ -49,6 +51,8 @@ export default {
       // set own values
       mySb.info = true;
       mySb.color = "infoAlert";
+      mySb.textColor = "#ffffff";
+      mySb.textColorStyle = "color: #ffffff";
       mySb.dialogText = text;
       mySb.dialogVisible = true;
       if (newtimeout != null) this.dialogTimeout = newtimeout;
@@ -64,6 +68,8 @@ export default {
       // set own values
       mySb.warning = true;
       mySb.color = "warning";
+      mySb.textColor = "#000";
+      mySb.textColorStyle = "color: #000";
       mySb.dialogText = text;
       mySb.dialogVisible = true;
       if (newtimeout != null) this.dialogTimeout = newtimeout;
@@ -79,6 +85,8 @@ export default {
       // set own values
       mySb.success = true;
       mySb.color = "success";
+      mySb.textColor = "#ffffff";
+      mySb.textColorStyle = "color: #ffffff";
       mySb.dialogText = text;
       mySb.dialogVisible = true;
       if (newtimeout != null) this.dialogTimeout = newtimeout;
@@ -94,6 +102,8 @@ export default {
       // set own values
       mySb.error = true;
       mySb.color = "error";
+      mySb.textColor = "#ffffff";
+      mySb.textColorStyle = "color: #ffffff";
       mySb.dialogText = text;
       mySb.dialogVisible = true;
       if (newtimeout != null) mySb.dialogTimeout = newtimeout;

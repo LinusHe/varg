@@ -30,8 +30,9 @@ export function LoadJSon(content, graphComponent, dialog) {
     //builds graph specified by content
     cy.json(content);
     //apply node colors
-    cy.nodes().forEach(node => {
-    node.style("background-color", "#" + node.data("color"));
+    graphComponent.getNodeArr(graphComponent).forEach(node => {
+      node.style("background-color", "#" + node.data("color"));
+      node.addClass("nodelabel");
     });
   }  
 }

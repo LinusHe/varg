@@ -89,8 +89,6 @@ export default {
     dialogComponent = this.$parent.$parent.$parent.$parent.$refs[
       "dialogs"
     ];
-    console.log("Graph Component", this.getGraph());
-    console.log(dialogComponent);
   },
   name: "GraphHeader",
   methods: {
