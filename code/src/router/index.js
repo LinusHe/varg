@@ -9,7 +9,7 @@ import NewGraph from "../views/NewGraph.vue";
 //import Vuex from 'vuex'
 import { store } from "../store/store.js";
 import LoadingScreen from "../views/LoadingScreen.vue"
-import cyStore from "@/vargraph/graph/cyStore";
+//import cyStore from "@/vargraph/graph/cyStore";
 //var auth;
 Vue.use(VueRouter);
 
@@ -129,22 +129,22 @@ router.beforeEach((to, from, next) => {
     // Proceed to route
     next();
   }
-}),
+})/*,
 router.afterEach((to, from) => {
-  /*alert("From:"+from.name);
-  alert("To:"+to.name);*/
-    if (window.location.pathname === "/graph"/*&& store.getters.getGraph != null*/) {
+  alert("From:"+from.name);
+  alert("To:"+to.name);
+    if (window.location.pathname === "/graph"&& store.getters.getGraph != null) {
         alert("Reload!");
         alert(store.getters.getGraph);
         if (store.getters.getGraph != null){
           store.commit('saveGraph', cyStore.data.cy.json());
           //alert ("Not Empty!");
         }
-  } else if (from.name === "graph" /*&& to.name === "newGraph"*/) {
+  } else if (from.name === "graph" && to.name === "newGraph") {
         alert("Zurück wurde gedrückt!!");
         //this.$parent.$ref.newGraphMenu.setdialog(true);
         location.reload();
    }
-});
+})*/;
 
 export default router;
