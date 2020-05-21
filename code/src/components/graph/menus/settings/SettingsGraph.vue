@@ -92,6 +92,23 @@
           <v-col sm="10">
             <v-card-text
               v-bind:style="{ color: '#'+disabledColor }"
+            >Losgröße anzeigen</v-card-text>
+          </v-col>
+          <v-col sm="2">
+            <v-switch
+              v-model="lotsizeShow"
+              ref="lotsizeShow"
+              :disabled="edgeShowShortOnly"
+              hide-details
+              class="mt-3"
+            ></v-switch>
+          </v-col>
+        </v-row>
+        <v-divider></v-divider>
+        <v-row>
+          <v-col sm="10">
+            <v-card-text
+              v-bind:style="{ color: '#'+disabledColor }"
             >Rüstkosten in Verknüpfungen anzeigen</v-card-text>
           </v-col>
           <v-col sm="2">
@@ -148,6 +165,7 @@ export default {
     unitTimeSelection: "Sekunden",
     // Edge Settings
     edgeShowShortOnly: false,
+    lotsizeShow: true,
     edgeShowCost: true,
     edgeShowTime: true,
     edgeShowSuCost: true,
@@ -163,6 +181,7 @@ export default {
     changeShortOnly() {
       if (this.edgeShowShortOnly === true) {
         this.edgeTitleSelection = "Kürzel";
+        this.lotsizeShow = false;
         this.edgeShowCost = false;
         this.edgeShowTime = false;
         this.edgeShowSuCost = false;
@@ -190,6 +209,9 @@ export default {
       this.edgeShowShortOnly = this.getGraph()
         .getCytoGraph(this.getGraph())
         .data("settingsEdgeShowShortOnly");
+      this.lotsizeShow = this.getGraph()
+        .getCytoGraph(this.getGraph())
+        .data("settingsEdgeShowLotSize");
       this.edgeShowCost = this.getGraph()
         .getCytoGraph(this.getGraph())
         .data("settingsEdgeShowCost");
@@ -202,9 +224,6 @@ export default {
       this.edgeShowSuTime = this.getGraph()
         .getCytoGraph(this.getGraph())
         .data("settingsEdgeShowSuTime");
-      this.edgeShowLotSize = this.getGraph()
-        .getCytoGraph(this.getGraph())
-        .data("settingsEdgeShowLotSize");
       this.edgeTitleItems = this.getGraph()
         .getCytoGraph(this.getGraph())
         .data("settingsEdgeTitleItems");
@@ -241,6 +260,9 @@ export default {
         .data("settingsEdgeShowShortOnly", this.edgeShowShortOnly);
       this.getGraph()
         .getCytoGraph(this.getGraph())
+        .data("settingsEdgeShowLotSize", this.lotsizeShow);
+      this.getGraph()
+        .getCytoGraph(this.getGraph())
         .data("settingsEdgeShowCost", this.edgeShowCost);
       this.getGraph()
         .getCytoGraph(this.getGraph())
@@ -251,9 +273,6 @@ export default {
       this.getGraph()
         .getCytoGraph(this.getGraph())
         .data("settingsEdgeShowSuTime", this.edgeShowSuTime);
-      this.getGraph()
-        .getCytoGraph(this.getGraph())
-        .data("settingsEdgeShowLotSize", this.edgeShowLotSize);
       this.getGraph()
         .getCytoGraph(this.getGraph())
         .data("settingsEdgeTitleItems", this.edgeTitleItems);
