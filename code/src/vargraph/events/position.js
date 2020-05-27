@@ -35,86 +35,114 @@ export default {
         let otherX = otherNodes[i].position().x;
         let otherY = otherNodes[i].position().y;
         // increase radius if moving node and conflict node have a common edge
-        if (this.edgeBetweenNodes(node, otherNodes[i])) {
-          radius = radius + 250;
+        //if (this.edgeBetweenNodes(node, otherNodes[i])) {
+        //radius = radius + 250;
+        //}
+        if (((eventX-otherX)<radius)&&((otherY-eventY)<radius)&&((eventX<otherX)&&(eventY>otherY))){
+          console.log("case 1");
+          if ((eventX-otherX)<(eventY-otherY)){
+            this.moveup(node, eventX, eventY, otherX, otherY, radius)
+          }
+          else{
+            this.moveleft(node, eventX, eventY, otherX, otherY, radius)
+          }
         }
-        // conflict-node is on the right
-        if (
-          Math.abs(eventX - otherX) < radius &&
-          Math.abs(eventY - otherY) < radius &&
-          otherX > eventX &&
-          (eventX - otherX) < (eventY - otherY)
-        ) {
-          console.log(
-            "conflict with right node",
-            Math.abs(eventX - otherX)
-          );
-          // move dragged single node to the left
-          node.animate(
-            {
-              position: {x: otherX - radius, y: eventY},
-              easing: "ease"
-            },
-            {
-              duration: 200
-            }
-          );
+
+        else if (((eventX-otherX)<radius)&&((eventY-otherY)<radius)&&((eventX<otherX)&&(eventY<otherY))){
+          console.log("case 2");
+          if ((eventX-otherX)<(eventY-otherY)){
+            this.movedown(node, eventX, eventY, otherX, otherY, radius)
+          }
+          else{
+            this.moveleft(node, eventX, eventY, otherX, otherY, radius)
+          }
         }
-        // conflict node is on the left
-        else if (
-          Math.abs(otherX - eventX) < radius &&
-          Math.abs(otherY - eventY) < radius &&
-          otherX <= eventX &&
-          (eventX - otherX) >= (eventY - otherY)
-        ) {
-          // move dragged single node to the right
-          node.animate(
-            {
-              position: {x: otherX + radius, y: eventY},
-              easing: "ease"
-            },
-            {
-              duration: 200
-            }
-          );
+
+         else if (((otherX-eventX)<radius)&&((eventY-otherY)<radius)&&((eventX<otherX)&&(eventY<otherY))){
+          console.log("case 3");
+          if ((eventX-otherX)<(eventY-otherY)){
+            this.movedown(node, eventX, eventY, otherX, otherY, radius)
+          }
+          else{
+            this.moveright(node, eventX, eventY, otherX, otherY, radius)
+          }
         }
-        // conflict-node is below
-        else if (
-          Math.abs(otherX - eventX) < radius &&
-          Math.abs(otherY - eventY) < radius &&
-          otherY <= eventY &&
-          (eventX - otherX) < (eventY - otherY)
-        ) {
-          // move dragged single node up
-          node.animate(
-            {
-              position: {x: eventX , y: otherY + radius},
-              easing: "ease"
-            },
-            {
-              duration: 200
-            }
-          );
+
+         else if (((otherX-eventX)<radius)&&((otherY-eventY)<radius)&&((eventX>otherX)&&(eventY>otherY))){
+          console.log("case 4");
+          if ((eventX-otherX)<(eventY-otherY)){
+            this.moveup(node, eventX, eventY, otherX, otherY, radius)
+          }
+          else{
+            this.moveright(node, eventX, eventY, otherX, otherY, radius)
+          }
         }
-        // conflict-node is above
-        else if (
-          Math.abs(otherX - eventX) < radius &&
-          Math.abs(otherY - eventY) < radius &&
-          otherY > eventY &&
-          (eventX - otherX) >= (eventY - otherY)
-        ) {
-          // move dragged single node to the right down
-          node.animate(
-            {
-              position: {x: eventX , y: otherY - radius},
-              easing: "ease"
-            },
-            {
-              duration: 200
-            }
-          );
-        }
-      }
+      } 
     }
-  }
-};
+  },
+
+    moveup(node, eventX, eventY, otherX, otherY, radius) {
+      console.log(
+        "conflict with node below",
+        Math.abs(eventX - otherX)
+      )
+      node.animate(
+        {
+          position: {x: eventX , y: eventY + radius},
+          easing: "ease"
+        },
+        {
+          duration: 200
+        }
+      )
+    },
+
+    movedown(node, eventX, eventY, otherX, otherY, radius) {
+      console.log(
+        "conflict with upper node",
+        Math.abs(eventX - otherX)
+      )
+      node.animate(
+        {
+          position: {x: eventX , y: eventY - radius},
+          easing: "ease"
+        },
+        {
+          duration: 200
+        }
+      )
+    },
+
+    moveleft(node, eventX, eventY, otherX, otherY, radius) {
+      console.log(
+        "conflict with right node",
+        Math.abs(eventX - otherX)
+      );
+      // move dragged single node to the left
+      node.animate(
+        {
+          position: {x: otherX - radius, y: eventY},
+          easing: "ease"
+        },
+        {
+          duration: 200
+        }
+      )
+    },
+
+    moveright(node, eventX, eventY, otherX, otherY, radius) {
+      console.log(
+        "conflict with left node",
+        Math.abs(eventX - otherX)
+      );
+      node.animate(
+        {
+          position: {x: otherX + radius, y: eventY},
+          easing: "ease"
+        },
+        {
+          duration: 200
+        }
+      )
+    }
+}
