@@ -211,13 +211,20 @@ export default {
     }
   },
   methods: {
+    //for bug-fix of wrong page number
+    onChangePage(){
+      //Seemingly deleting the graph on page 2 led to a value of zero with ceil?
+      let val =Math.ceil(this.items.length/this.itemsPerPage);
+      if(val < 1) val=1;
+      this.page=val;
+    },
     getGraph() {
       return this.$parent.$parent.$parent.$parent.$parent.$parent.$refs["vargraph"];
     },
     loadItems() {
       this.items = [];
       axios
-        .get('http://192.168.1.102:1110/VarG/graph/meta', {
+        .get('http://192.168.99.101:1110/VarG/graph/meta', {
           params: {
             user:'eheldt'
           }
@@ -249,7 +256,7 @@ export default {
     },
     loadGraph(item) {
       if(confirm('Beim Laden wird der derzeitige Graph überschrieben. Wirklich den Graph "'+item.name+'" aus der Datenbank laden?')) {
-        const url = 'http://192.168.1.102:1110/VarG/graph/' + item.fileId;
+        const url = 'http://192.168.99.101:1110/VarG/graph/' + item.fileId;
         axios
           .get(url, {
             params: {
@@ -268,7 +275,7 @@ export default {
     },
     deleteGraph (item) {
       if(confirm('Wirklich den Graph "'+item.name+'" unwiderruflich aus der Datenbank löschen?')) {
-        const url = 'http://192.168.1.102:1110/VarG/graph/' + item.fileId;
+        const url = 'http://192.168.99.101:1110/VarG/graph/' + item.fileId;
         axios
           .delete(url, {
             params: {
@@ -278,6 +285,7 @@ export default {
           .then(response => {
             this.loadItems();
             dialogComponent.dialogSuccess('Graph erfolgreich von Datenbank gelöscht');
+            this.onChangePage();
           })
           .catch(error => {
             dialogComponent.dialogError('Löschen fehlgeschlagen');
