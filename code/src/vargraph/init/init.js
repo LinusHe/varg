@@ -105,7 +105,8 @@ export default {
     this.updateNodeLabel(graphComponent, cy);
 
     // sets edgeHandle Default Valuse
-    cy.edgehandles(this.getEdgeHandleDefaults());
+    let handler = cy.edgehandles(this.getEdgeHandleDefaults());
+    cyStore.data.edgeHandler = handler;
   },
 
   getDialogComponent(graphComponent) {

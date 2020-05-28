@@ -16,6 +16,11 @@ export default {
     // right click
     graphComponent.getCytoGraph().on("cxttap", event => this.rightClick(event));
 
+    // hover leaves nodes
+    graphComponent
+      .getCytoGraph()
+      .on("mouseout", event => this.mouseOutOfNode(event));
+
     graphComponent
       .getCytoGraph()
       .on("free", event => this.positionEvent(event));
