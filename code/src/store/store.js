@@ -5,6 +5,9 @@ Vue.use(Vuex);
 
 export const store = new Vuex.Store({
   state: {
+    /*
+    token: localStorage.getItem('user-token') || '',
+    status: '',*/
     //new
     //Placeholder for encrpted JWT or other alternative (Shiboleth)
     user: {
@@ -32,6 +35,20 @@ export const store = new Vuex.Store({
     graph: null
   },
   mutations: {
+
+
+    /*
+    [AUTH_REQUEST]: (state) => {
+      state.status = 'loading';
+    },
+    [AUTH_SUCCESS]: (state, token) => {
+      state.status = 'success';
+      state.token = token;
+    },
+    [AUTH_ERROR]: (state) => {
+      state.token = null;
+      state.status = 'error';
+    },*/
     //new
     //Checks if old state can be loaded and then does so
     retrieveStore(state) {
@@ -89,8 +106,38 @@ export const store = new Vuex.Store({
     getCounter: async context => {
       context.commit("increment");
     }
+
+    /**
+     * send post request to ROUTE2AUTHENTICATIONBACKEND.
+     * if user input is verified by backend token is saved into the store
+     * if user input cannot be verified the token will be removed from the store
+     */
+
+    /*
+    [AUTH_REQUEST]: ({commit, dispatch}, user) => {
+      return new Promise((resolve, reject) => { // The Promise used for router redirect in login
+        commit(AUTH_REQUEST);
+        axios({url: 'ROUTE2AUTHENTICATIONBACKEND', data: user, method: 'POST' })
+          .then(resp => {
+            const token = resp.data.token;
+            commit(AUTH_SUCCESS, token);
+            dispatch(USER_REQUEST);
+            resolve(resp):
+          })
+        .catch(err => {
+          commit(AUTH_ERROR, err);
+          reject(err);
+        })
+      })
+    } */
   },
   getters: {
+    /*
+    isAuthenticated: state => !!state.token,
+    authStatus: state => state.status,
+    */
+
+
     getGraphName: state => {
       return state.graph.data.prodName;
     },
