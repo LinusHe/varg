@@ -413,13 +413,13 @@ export default {
   optimizing() {
    
     let cy = this.getCytoGraph()
-
+    console.log(cy.data())
     let option = cy.data("settingsOptimizationOption");   // false = time, true = cost
     let startIDs= cy.data("settingsOptimizationStartIDs")
       // gets ID's of start- and endnodes
     let endID = cy.data("settingsOptimizationEndID");
       //automatically initialize startnodes if no startnodes were selected
-    if(startIDs.length == 0 ){
+    if(startIDs.length == 0 || startIDs[0] == undefined ){
       for (let o = 0; o < this.getNodeArr(this).length; o++) {
         if (this.getNodeArr(this)[o].incomers().length == 0) {
           startIDs.push(this.getNodeArr(this)[o].data("id"));
