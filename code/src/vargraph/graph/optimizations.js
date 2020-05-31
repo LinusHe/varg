@@ -434,6 +434,8 @@ export default {
         }
       }
     }   
+    cyStore.data.cy.data("settingsOptimizationStartIDs" , startIDs);
+    cyStore.data.cy.data("settingsOptimizationEndID" , endID);
       //checks how many paths need to be found
     let nextBestCounter = cy.data("settingsOptimizationNumber");
       //checks if there are enough paths
