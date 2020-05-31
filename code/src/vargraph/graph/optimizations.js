@@ -181,6 +181,9 @@ export default {
       }
     } 
 
+    cyStore.data.cy.data("settingsOptimizationStartIDs", startIDs)
+    cyStore.data.cy.data("settingsOptimizationEndID", endID)
+
     let pathCount = 0
     for (let i = 0; i < startIDs.length; i++) {
       if(pathCount < 7) {
