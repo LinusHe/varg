@@ -55,6 +55,7 @@ export const store = new Vuex.Store({
       state.user.autehticated = false;
       state.user.name = "Gast";
       state.user.role = "guest";
+      state.graph =null;
     },
     setName(state, name) {
       state.user.name = name;
