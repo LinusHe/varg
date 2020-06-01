@@ -2,7 +2,10 @@
   <div>
     <v-list-item three-line class="login-container">
       <v-list-item-content>
-        <v-list-item-title align="center" class="login-pre-headline mt-5 darkmode-ign">Variantengraph-Editor</v-list-item-title>
+        <v-list-item-title
+          align="center"
+          class="login-pre-headline mt-5 darkmode-ign"
+        >Variantengraph-Editor</v-list-item-title>
         <v-list-item-title align="center" class="login-headline mb-1 darkmode-ign">VarG</v-list-item-title>
         <v-form
           align="center"
@@ -56,7 +59,7 @@
         </p>
       </v-list-item-content>
     </v-list-item>
-  
+
     <!-- DEBUGGING
     <v-btn align="center" class="login-button" @click="getState()" large color="primary">get State</v-btn>
 
@@ -67,7 +70,7 @@
       large
       color="primary"
     >Remove localStorage</v-btn> 
- DEBUGGING -->
+    DEBUGGING-->
   </div>
 </template>
 
@@ -83,7 +86,7 @@ export default {
     dialogComponent = this.$parent.$parent.$parent.$parent.$parent.$refs[
       "dialogs"
     ];
-  }, 
+  },
   data() {
     return {
       input: {
@@ -97,19 +100,39 @@ export default {
   methods: {
     //For Debuging
     getState() {
-       alert("Authenticated: " + this.$store.state.user.autehticated +
-       "\nName: " + this.$store.state.user.name +
-       "\nRole: " + this.$store.state.user.role +
-       //"\nReady: " + this.$store.state.ready +
-       "\nIssued: " + this.$store.state.issued +
-       "\nNow: " + Date.now() +
-       "\nprodName: " + this.$store.getters.getProdName +
-       "\nprodQuant: " + this.$store.getters.getProdQuant
-       );
+      alert(
+        "Authenticated: " +
+          this.$store.state.user.autehticated +
+          "\nName: " +
+          this.$store.state.user.name +
+          "\nRole: " +
+          this.$store.state.user.role +
+          //"\nReady: " + this.$store.state.ready +
+          "\nIssued: " +
+          this.$store.state.issued +
+          "\nNow: " +
+          Date.now() +
+          "\nprodName: " +
+          this.$store.getters.getProdName +
+          "\nprodQuant: " +
+          this.$store.getters.getProdQuant
+      );
     },
     delLocal() {
       localStorage.removeItem("store");
     },
+
+    /**
+     * sends username and password to backend for verification and then redirects to loadingscreen where final route is determined 
+     */
+
+    /*
+    login: function () {
+     this.$store.dispatch(AUTH_REQUEST, { user: this.input.email, password: this.input.password }).then(() => {
+     this.$router.push('/')
+   })
+    },*/
+
     /**
      * Validates user input and on success redirects to home view.
      * @var authenticated can be used to verrify if a user has logged in succesfully.
@@ -127,9 +150,10 @@ export default {
           //this.$store.commit("increment");
 
           this.$router.replace("/home/menu");
-
-          
-        }else if (this.input.email === "GraV" && this.input.password === "0202") {
+        } else if (
+          this.input.email === "GraV" &&
+          this.input.password === "0202"
+        ) {
           //new
           this.$store.commit("refreshIssued");
           this.$store.commit("login");
@@ -138,7 +162,7 @@ export default {
 
           //old
           //this.$store.commit("increment");
-          
+
           //TODO: Create alternative Menu for administrative functionality
           this.$router.replace("/home/Menu");
         } else {
