@@ -74,7 +74,7 @@ export default {
         "Importiertes Produkt wird geladen..."
       );
       function onChange(event) {
-        fileManager.loadGraphFromJson(event, null, dialogComponent); 
+        fileManager.loadGraphFromJson(event, null, dialogComponent);
         dialogComponent.dialogSuccess("Graph erfolgreich geladen");
       }
     }
