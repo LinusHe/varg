@@ -8,7 +8,7 @@
             <b>in der Datenbank</b> gespeichert werden. Über das Menü 'Datenbank' kann er wieder geladen werden.
           </p>
         </v-row>
-        <v-row class="ml-2 mt-0 mr-2 mb-12">
+        <v-row class="ml-2 mt-n5 mr-2 mb-12">
           <v-col sm="12">
             <v-text-field
               class="mt-6"
@@ -27,7 +27,7 @@
               text
               :disabled="!validDB"
               id="save-menu-save"
-              @click="saveDB"
+              @click="uploadGraph()"
             >Speichern</v-btn>
           </v-col>
           <v-col sm="4">
@@ -105,7 +105,7 @@ export default {
         false
       );
     },
-    saveDB() {
+    uploadGraph() {
 
       // copy pasted hash generator (TODO remove when primary key is changed from fileId to userName+fileName)
       String.prototype.hashCode = function() {
@@ -126,7 +126,7 @@ export default {
         const CONTENT = ExJSon.CreateJSon(this.getGraph());
         this.hashkey = this.DataBaseName.hashCode();
         axios
-          .post('http://192.168.1.102:1110/VarG/graph', {
+          .post('http://192.168.1.103:1110/VarG/graph', {
             fileId: this.hashkey,
             filename: this.DataBaseName,
             user: 'eheldt', // TODO replace with actual login info
@@ -175,7 +175,7 @@ export default {
     },
     confirmOverwrite(fileId) {
       // get json
-      const URL = 'http://192.168.1.102:1110/VarG/graph/' + fileId;
+      const URL = 'http://192.168.1.103:1110/VarG/graph/' + fileId;
       const CONTENT = ExJSon.CreateJSon(this.getGraph());
       axios
         .put(URL, {

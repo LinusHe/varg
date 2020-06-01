@@ -85,8 +85,8 @@
             </v-row>
 
             <!-- Save & Delete Buttons -->
-            <v-row justify="end">
-              <v-col sm="4">
+            <v-row justify="space-around">
+              <v-col sm="3">
                 <v-btn
                   class="darkmode-ign"
                   color="green darken-1"
@@ -95,10 +95,10 @@
                   @click="saveNode()"
                 >Speichern</v-btn>
               </v-col>
-              <v-col sm="4">
+              <v-col sm="3">
                 <v-btn class="darkmode-ign" color="error" text @click="openNodeDeleteMenu()">Löschen</v-btn>
               </v-col>
-              <v-col sm="4">
+              <v-col sm="3">
                 <v-btn color="grey" text @click="cancel()">Abbrechen</v-btn>
               </v-col>
               <v-dialog v-model="nodeDeleteDialog" persistent max-width="400">
@@ -281,8 +281,8 @@
             </v-form>
           </div>
           <!-- Save & Delete Buttons -->
-          <v-row justify="end">
-            <v-col sm="4">
+          <v-row justify="space-around">
+            <v-col sm="3">
               <v-btn
                 class="darkmode-ign"
                 color="green darken-1"
@@ -291,10 +291,10 @@
                 @click="saveEdge()"
               >Speichern</v-btn>
             </v-col>
-            <v-col sm="4">
+            <v-col sm="3">
               <v-btn class="darkmode-ign" color="error" text @click="openEdgeDeleteMenu">Löschen</v-btn>
             </v-col>
-            <v-col sm="4">
+            <v-col sm="3">
               <v-btn color="grey" text @click="cancel">Abbrechen</v-btn>
             </v-col>
             <v-dialog v-model="edgeDeleteDialog" persistent max-width="400">
