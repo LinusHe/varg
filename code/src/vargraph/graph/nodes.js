@@ -78,7 +78,7 @@ export default {
 
     // get current id counter
     let count = cy.data("IDCount");
-
+    let doneonce = false;
     // add element
     cy.add({
       data: {
@@ -99,9 +99,11 @@ export default {
 
     node.addClass("nodelabel"); 
 
-    // update position if conflict occurs
-    this.moveNodesInConflict(graphComponent, node)
-
+    if (doneonce==false){
+      // update position if conflict occurs
+      this.moveNodesInConflict(graphComponent, node)
+      doneonce=true;
+    }
     // increment id counter
     count++;
     cy.data("IDCount", count);

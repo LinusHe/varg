@@ -34,61 +34,74 @@ export default {
       for (let i = 0; i < otherNodes.length; i++) {
         let otherX = otherNodes[i].position().x;
         let otherY = otherNodes[i].position().y;
-        // increase radius if moving node and conflict node have a common edge
-        //if (this.edgeBetweenNodes(node, otherNodes[i])) {
-        //radius = radius + 250;
-        //}
-        if (((eventX-otherX)<radius)&&((otherY-eventY)<radius)&&((eventX<otherX)&&(eventY>otherY))){
-          console.log("case 1");
-          if ((eventX-otherX)<(eventY-otherY)){
+        //if there is an overlap
+        if (Math.abs(eventX-otherX)<radius&&Math.abs(eventY-otherY)<radius){
+          //figure out in which quadrant the overlap is
+          if (((eventX-otherX)<radius)&&((otherY-eventY)<radius)&&((eventX<otherX)&&(eventY>otherY))){
+            console.log("case 1: conflcit in the lower left");
+            if (Math.abs(eventX-otherX)<Math.abs(eventY-otherY)){
+              console.log("case 1.1: node sent down");
+              //move the event node
+              this.movedown(node, eventX, eventY, otherX, otherY, radius);
+            }
+            else{
+              console.log("case 1.2: node sent left");
+              this.moveleft(node, eventX, eventY, otherX, otherY, radius);
+            }
+          }
+
+          else if (((eventX-otherX)<radius)&&((eventY-otherY)<radius)&&((eventX<otherX)&&(eventY<otherY))){
+            console.log("case 2: conflict in the upper left");
+            if (Math.abs(eventX-otherX)>Math.abs(eventY-otherY)){
+              console.log("case 2.1: node sent left");
+              this.moveleft(node, eventX, eventY, otherX, otherY, radius);
+            }
+            else{
+              console.log("case 2.2: node sent up");
+              this.moveup(node, eventX, eventY, otherX, otherY, radius);
+            }
+          }
+
+          else if (((otherX-eventX)<radius)&&((eventY-otherY)<radius)&&((eventX>otherX)&&(eventY>otherY))){
+            console.log("case 3: conflict in the lower right");
+            if (Math.abs(eventX-otherX)<Math.abs(eventY-otherY)){
+              console.log("case 3.1: node sent down");
+              this.movedown(node, eventX, eventY, otherX, otherY, radius);
+            }
+            else{
+              console.log("case 3.2: node sent right");
+              this.moveright(node, eventX, eventY, otherX, otherY, radius);
+            }
+          }
+
+          else if (((otherX-eventX)<radius)&&((otherY-eventY)<radius)&&((eventX>otherX)&&(eventY<otherY))){
+            console.log("case 4: conflict in the upper right");
+            if (Math.abs(eventX-otherX)<Math.abs(eventY-otherY)){
+              console.log("case 4.1: node sent up");
+              this.moveup(node, eventX, eventY, otherX, otherY, radius);
+            }
+            else{
+              console.log("case 4.2: node sent right");
+              this.moveright(node, eventX, eventY, otherX, otherY, radius);
+            }
+          }
+          else{
+            console.log("case 5: nodes exactly overlapping")
             this.moveup(node, eventX, eventY, otherX, otherY, radius)
           }
-          else{
-            this.moveleft(node, eventX, eventY, otherX, otherY, radius)
-          }
-        }
-
-        else if (((eventX-otherX)<radius)&&((eventY-otherY)<radius)&&((eventX<otherX)&&(eventY<otherY))){
-          console.log("case 2");
-          if ((eventX-otherX)<(eventY-otherY)){
-            this.movedown(node, eventX, eventY, otherX, otherY, radius)
-          }
-          else{
-            this.moveleft(node, eventX, eventY, otherX, otherY, radius)
-          }
-        }
-
-         else if (((otherX-eventX)<radius)&&((eventY-otherY)<radius)&&((eventX<otherX)&&(eventY<otherY))){
-          console.log("case 3");
-          if ((eventX-otherX)<(eventY-otherY)){
-            this.movedown(node, eventX, eventY, otherX, otherY, radius)
-          }
-          else{
-            this.moveright(node, eventX, eventY, otherX, otherY, radius)
-          }
-        }
-
-         else if (((otherX-eventX)<radius)&&((otherY-eventY)<radius)&&((eventX>otherX)&&(eventY>otherY))){
-          console.log("case 4");
-          if ((eventX-otherX)<(eventY-otherY)){
-            this.moveup(node, eventX, eventY, otherX, otherY, radius)
-          }
-          else{
-            this.moveright(node, eventX, eventY, otherX, otherY, radius)
-          }
-        }
-      } 
+        } 
+      }
     }
   },
 
-    moveup(node, eventX, eventY, otherX, otherY, radius) {
+    movedown(node, eventX, eventY, otherX, otherY, radius) {
       console.log(
         "conflict with node below",
         Math.abs(eventX - otherX)
       )
       node.animate(
         {
-          position: {x: eventX , y: eventY + radius},
+          position: {x: eventX , y: otherY + radius},
           easing: "ease"
         },
         {
@@ -97,14 +110,14 @@ export default {
       )
     },
 
-    movedown(node, eventX, eventY, otherX, otherY, radius) {
+    moveup(node, eventX, eventY, otherX, otherY, radius) {
       console.log(
         "conflict with upper node",
         Math.abs(eventX - otherX)
       )
       node.animate(
         {
-          position: {x: eventX , y: eventY - radius},
+          position: {x: eventX , y: otherY - radius},
           easing: "ease"
         },
         {
@@ -118,7 +131,6 @@ export default {
         "conflict with right node",
         Math.abs(eventX - otherX)
       );
-      // move dragged single node to the left
       node.animate(
         {
           position: {x: otherX - radius, y: eventY},
