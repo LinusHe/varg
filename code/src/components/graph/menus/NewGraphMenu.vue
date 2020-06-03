@@ -102,9 +102,10 @@ export default {
     },
     discard() {
       this.$store.commit("ResetGraph");
-      router.push({ name: "menu" });
-      this.$router.go();
+      //router.push({ name: "menu" });
+      //this.$router.go();
       //  this.$parent.$destroy();
+      location.reload();
     }
   }
 };
