@@ -13,9 +13,15 @@ import cyStore from "@/vargraph/graph/cyStore";
 
 export default {
   mouseOutOfNode(event) {
-    // See removedcode
+    try {
+      if (event.target.group() != "nodes") {
+        cyStore.data.edgeHandler.hide();
+      }
+    } catch (error) {
+      cyStore.data.edgeHandler.hide();
+    }
   },
   mouseInNode(event) {
-    // See removedcode
+    // nothing to see here 👀
   }
 };
