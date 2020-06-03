@@ -129,8 +129,8 @@ export default {
     console.log("added edge: ", cy.getElementById(count));
 
     // move end-node position if conflict occurs
-    let endNode = cy.getElementById(end);
-    this.moveNodesInConflict(graphComponent, endNode);
+    //let endNode = cy.getElementById(end);
+    //this.moveNodesInConflict(graphComponent, endNode);
 
     // increment id counter
     count++;
