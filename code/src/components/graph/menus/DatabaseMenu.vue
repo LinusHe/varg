@@ -31,6 +31,7 @@ export default {
         // TODO might need to create a loading animation while loading items
         // and show an error message when unable to connect
         // either way the DB window should always be at full size and not collapse when empty (looks better) 
+        this.$refs.databaseGUI.setType(1);
         this.$refs.databaseGUI.loadItems();
       });
     },

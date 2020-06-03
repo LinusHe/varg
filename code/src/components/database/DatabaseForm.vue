@@ -11,8 +11,8 @@
     >
       <template v-slot:header>
         <v-toolbar dark color="blue darken-3" class="mb-1 darkmode-ign">
-          <v-btn class="pl-1 pr-1" text @click="openExportDB()"><v-icon class="mr-1">mdi-database-import</v-icon>Hochladen</v-btn>
-          <v-divider class="ml-4 mr-5" vertical></v-divider>
+          <v-btn v-if="type === 1" class="pl-1 pr-1" text @click="openExportDB()"><v-icon class="mr-1">mdi-database-import</v-icon>Hochladen</v-btn>
+          <v-divider v-if="type === 1" class="ml-4 mr-5" vertical></v-divider>
           <v-text-field v-model="search" clearable flat solo-inverted hide-details label="Search"></v-text-field>
           <template v-if="$vuetify.breakpoint.mdAndUp">
             <v-spacer></v-spacer>
@@ -38,7 +38,11 @@
       </template>
 
       <template v-slot:default="props">
-        <div class="scrolling-container">
+        <div v-if="!props.items.length" style="min-height: 500px;">
+          TODO why is this not showing? (this is supposed to preserve the height of the Database window even when no items are loaded,
+          but for some reason this div never shows)
+        </div>
+        <div v-else class="scrolling-container">
           <!-- <div> -->
           <v-row class="ma-0">
             <v-col v-for="item in props.items" :key="item.name" cols="12" sm="6" md="6" lg="6">
@@ -100,7 +104,7 @@
       </template>
 
       <template v-slot:footer>
-        <v-row class="mt-4 mb-2  mr-8  ml-5" align="center" justify="center">
+        <v-row class="mt-4 mb-2 mr-8 ml-5" align="center" justify="center">
           <span class="grey--text">Graphen pro Seite</span>
           <v-menu offset-y>
             <template v-slot:activator="{ on }">
@@ -119,6 +123,13 @@
               </v-list-item>
             </v-list>
           </v-menu>
+
+          <v-spacer></v-spacer>
+
+          <span class="mr-2 grey--text">Neu laden</span>
+          <v-btn fab dark small color="primary" class="mr-1 darkmode-ign" @click="loadItems()">
+            <v-icon>mdi-database-refresh</v-icon>
+          </v-btn>
 
           <v-spacer></v-spacer>
 
@@ -146,10 +157,13 @@ let dialogComponent;
 
 export default {
   mounted () {
+    // eslint-disable-next-line no-console
+    console.log('MOUNTED');
     dialogComponent = this.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$refs["dialogs"];
   },
   data() {
     return {
+      type: -1,
       itemsPerPageArray: [4, 8, 12],
       search: "",
       filter: {},
@@ -251,9 +265,19 @@ export default {
   },
   methods: {
     getGraph() {
-      return this.$parent.$parent.$parent.$parent.$parent.$parent.$refs["vargraph"];
+      return this.$parent.$parent.$parent.$parent.$parent.$parent.$refs.vargraph;
+    },
+    setType (t) {
+      // sets the type of the Database GUI based on where it's called from
+      // t = 0: window (called from HomeMenu)
+      // t = 1: menu (called from GraphHeader)
+      this.type = t;
+      // eslint-disable-next-line no-console
+      console.log('TYPE SET TO',this.type)
     },
     loadItems() {
+      // eslint-disable-next-line no-console
+      console.log('LOADING ITEMS')
       this.items = [];
       axios
         .get('http://192.168.1.103:1110/VarG/graph/meta', {
