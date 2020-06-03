@@ -27,10 +27,10 @@
             <v-spacer></v-spacer>
             <v-btn-toggle v-model="sortDesc" mandatory>
               <v-btn large depressed color="blue" :value="false">
-                <v-icon>mdi-arrow-up</v-icon>
+                <v-icon>mdi-sort-ascending</v-icon>
               </v-btn>
               <v-btn large depressed color="blue" :value="true">
-                <v-icon>mdi-arrow-down</v-icon>
+                <v-icon>mdi-sort-descending</v-icon>
               </v-btn>
             </v-btn-toggle>
           </template>
@@ -44,6 +44,7 @@
             <v-col v-for="item in props.items" :key="item.name" cols="12" sm="6" md="6" lg="6">
               <v-card>
                 <v-card-title class="subheading font-weight-bold">{{ item.name }}</v-card-title>
+                <div id="image-render" style="display: none;"></div>
                 <v-img
                   v-if="item.image"
                   v-bind:src="item.image"
@@ -312,7 +313,7 @@ export default {
         .then(response => {
           let graph = JSON.parse(response.data[0].graphObject);
           // TODO change render container so graph doesn't load and show in graph window
-          let cy = cytoscape({container: document.getElementById("cy")});
+          let cy = cytoscape({container: document.getElementById("image-render")});
           cy.json(graph);
           FileManager.changeStyleForExport(cy);
           item.image = cy.png({full: true, scale: 1.5});
