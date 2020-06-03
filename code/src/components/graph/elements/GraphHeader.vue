@@ -125,7 +125,6 @@ export default {
         fileManager.loadGraphFromJson(event, graphComponent, dialogComponent);
         dialogComponent.dialogSuccess("Graph erfolgreich geladen");
       }
-        this.$store.commit('saveGraph', cyStore.data.cy.json());    //After Import, update Store with the new Graph
     },
     account() {
       this.$parent.$refs.settingsMenu.setActiveTab(3);
