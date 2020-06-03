@@ -192,9 +192,44 @@ XXX
 XXX
 
 \subsection{Überblick über Architektur}
-{\small Autor: xxx}
+{\small Autor: Linus Herterich}
 
-XXX
+VarG ist eine Web-App nach dem Client-Server Modell, wobei der Großteil der Berechnungen per JavaScript auf dem clientseitigen Browser
+durchgeführt werden.
+\\Serverseitig wird eine Datenbank (inkl API-Schnittstelle) zum persistenten speichern der erstellten Graphen angeboten.
+\\
+\\Die Architektur der Web-App basiert auf dem Javascript-Webframework ''Vue.js'', 
+mit dem Webanwendungen nach dem MVVM Muster (Model View ViewModel) realisiert werden können. Die gesamte App ist nach logischen
+Sites (Seiten, bei denen sich die URL ändert) und Components (wiederverwendbare, abgeschlossene Software-Schnipsel) aufgebaut.
+Jede Vue Component (.vue Dateien) enthält ein HTML-Template (GUI), sowie Daten, mit denen das Template befüllt wird. Zudem werden
+Funktionen definiert, die entweder zu bestimmten Laufzeitbedingungen der App oder durch Events und Trigger aufgerufen werden.
+Die Kommunikation zwischen Components wird über Vererbungen zu Eltern-/ Kind-Components realisiert.
+\\
+\\Die Datstellung (vuetify) | less
+\\
+\\VueX
+\\
+\\Für die Darstellung des Graphen (Knoten + Kanten und deren Beschriftung) haben wir das JavaScript Framework ''cytoscape.js'' verwendet.
+Das Framework hält alle Graph-Daten in einem JavaScript Objekt, auf das mit verschiedenen API-Funktionen zugegriffen werden kann.
+Die Darstellung des Graphen wird über ein Canvas HTML Element realisiert, in welches cytoscape die angelegten Knoten und Kanten zeichnet.
+Cytoscape.js bietet ebenfalls eine Hand voll Algorithmen zur analytischen Auswertung des Graphen. Da die Optimierung des Variantenfolgegraphen
+allerdings zusätzlicher Bedingungen und Parametern unterliegt, wurde ein eigener Variantenfolgegraph-Optimierungsalgorithmus entwickelt.
+\\
+\\Bei der Wahl der serverseitigen Architektur haben wir eine REST-Konforme (Representational State Transfer)
+Architektur eingesetzt, in dessen Mitte eine MySQL Datenbank zur Speicherung der cytoscape Objekte, sowie Authentifizierungsdaten
+steht. Auf die Daten der Datenbank greift eine API-Schnittstelle zu, welche mit Node.js umgesetzt ist (weitere Details zur Schnittstelle:
+siehe II.4 - Schnittstellen). Anfragen an die API werden mit dem ''axios'' Framework per ''Promise-based'' HTTP-Requests gestellt. Die HTTP-Requests
+folgen einem klaren Schema, welches vom serverseitigen Node.js interpretiert und an die Datenbank weitergeleitet wird.
+\\
+\\Um die Web-App großflächig zu testen haben wir uns zum einen für das Framework ''cypress'' entschieden, welches Integrationstests anhand der
+HTML-Elemente übernimmt. Cypress wertet aus, ob bestimmte Elemente unter bestimmten Bedingungen vorhanden sind, beziehungsweise spezielle 
+Eigenschaften aufweisen. Die Cypress Tests haben wir auch Erfolgreich an die ''CI / CD Pipeline'' von GitLab angeschlossen, sodass nach jedem
+push die Tests durchlaufen (Stichwort: Regressionstest).
+\\Zum anderen haben wir das Framework "jest" eingesetzt, mit dem einzelne Funktionen auf ihre Richtigkeit überprüft werden konnten. Vorallem
+für die Optimierungsalgorithmen sind isolierte Tests nötig gewesen.
+\\
+\\Docker
+
 
 \subsection{Definierte Schnittstellen}
 {\small Autor: xxx}
