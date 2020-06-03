@@ -126,7 +126,7 @@ export default {
         const CONTENT = ExJSon.CreateJSon(this.getGraph());
         this.hashkey = this.DataBaseName.hashCode();
         axios
-          .post('http://192.168.1.102:1110/VarG/graph', {
+          .post('http://192.168.99.101:1110/VarG/graph', {
             fileId: this.hashkey,
             filename: this.DataBaseName,
             user: 'eheldt', // TODO replace with actual login info

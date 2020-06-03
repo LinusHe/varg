@@ -12,7 +12,7 @@ const parser = require('./APIparser')
 const config = {
     // eheldt: 192.168.1.102
     // jhohlfel: 192.168.99.101
-    host: "192.168.1.102",
+    host: "192.168.99.101",
     user: "varg",
     password: "VarG2020",
     database: "vargdb"
