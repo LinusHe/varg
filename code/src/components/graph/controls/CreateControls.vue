@@ -301,24 +301,24 @@
                   ></v-text-field>
                 </v-col>
               </v-row>
+              <!-- Create Buttons -->
+              <v-row class="mb-4" justify="end">
+                <v-col sm="4">
+                  <v-btn
+                    class="darkmode-ign"
+                    :disabled="!validEdges"
+                    color="green darken-1"
+                    text
+                    id="btn-create-edge"
+                    @click="createEdge()"
+                  >Hinzufügen</v-btn>
+                </v-col>
+                <v-col sm="4">
+                  <v-btn color="grey" text id="btn-cancel-edge" @click="cancel()">Abbrechen</v-btn>
+                </v-col>
+              </v-row>
             </v-form>
           </div>
-          <!-- Create Buttons -->
-          <v-row class="mb-5" justify="end">
-            <v-col sm="4">
-              <v-btn
-                class="darkmode-ign"
-                :disabled="!validEdges"
-                color="green darken-1"
-                text
-                id="btn-create-edge"
-                @click="createEdge()"
-              >Hinzufügen</v-btn>
-            </v-col>
-            <v-col sm="4">
-              <v-btn color="grey" text id="btn-cancel-edge" @click="cancel()">Abbrechen</v-btn>
-            </v-col>
-          </v-row>
         </v-card>
       </v-slide-x-reverse-transition>
     </div>

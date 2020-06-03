@@ -1,0 +1,34 @@
+/* replaced TestDatabase with actual MySQL DB
+ * (extract from uploadGraph())
+
+// update cytoscape filename
+this.getGraph()
+  .getCytoGraph(this.getGraph())
+  .data("filename", this.DataBaseName);
+
+// get json
+let content = ExJSon.CreateJSon(this.getGraph());
+
+if (this.database.save(content, false)) {
+  this.closeDialog();
+  dialogComponent.dialogSuccess("Graph erfolgreich gespeichert");
+  this.checkNewGraph();
+} else {
+  // database.save(..) returns false if graph exists
+  this.overwriteDialog = true;
+}
+
+*/
+
+/* replaced TestDatabase with actual MySQL DB
+ * (extract from confirmOverwrite())
+
+// force overwrite
+this.database.save(content, true);
+
+this.closeDialog();
+dialogComponent.dialogSuccess("Graph erfolgreich überschrieben");
+
+this.checkNewGraph();
+
+*/

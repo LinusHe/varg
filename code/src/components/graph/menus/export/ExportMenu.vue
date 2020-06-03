@@ -6,10 +6,10 @@
       </v-card-title>
       <v-tabs centered v-model="activeTab">
         <v-tab id="tab-localExport">
-          <v-icon left>mdi-desktop-mac</v-icon>Lokal
+          <v-icon left>mdi-file-download</v-icon>Lokal
         </v-tab>
         <v-tab id="tab-dbExport">
-          <v-icon left>mdi-database</v-icon>Datenbank
+          <v-icon left>mdi-database-import</v-icon>Datenbank
         </v-tab>
 
         <v-tab-item>

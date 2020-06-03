@@ -11,7 +11,8 @@
     >
       <template v-slot:header>
         <v-toolbar dark color="blue darken-3" class="mb-1 darkmode-ign">
-          <v-btn @click="axiosSave()">Hochladen</v-btn>
+          <v-btn v-if="type === 1" class="pl-1 pr-1" text @click="openExportDB()"><v-icon class="mr-1">mdi-database-import</v-icon>Hochladen</v-btn>
+          <v-divider v-if="type === 1" class="ml-4 mr-5" vertical></v-divider>
           <v-text-field v-model="search" clearable flat solo-inverted hide-details label="Search"></v-text-field>
           <template v-if="$vuetify.breakpoint.mdAndUp">
             <v-spacer></v-spacer>
@@ -26,10 +27,10 @@
             <v-spacer></v-spacer>
             <v-btn-toggle v-model="sortDesc" mandatory>
               <v-btn large depressed color="blue" :value="false">
-                <v-icon>mdi-arrow-up</v-icon>
+                <v-icon>mdi-sort-ascending</v-icon>
               </v-btn>
               <v-btn large depressed color="blue" :value="true">
-                <v-icon>mdi-arrow-down</v-icon>
+                <v-icon>mdi-sort-descending</v-icon>
               </v-btn>
             </v-btn-toggle>
           </template>
@@ -37,17 +38,23 @@
       </template>
 
       <template v-slot:default="props">
-        <div class="scrolling-container">
+        <div v-if="!props.items.length" style="min-height: 500px;">
+          TODO why is this not showing? (this is supposed to preserve the height of the Database window even when no items are loaded,
+          but for some reason this div never shows)
+        </div>
+        <div v-else class="scrolling-container">
           <!-- <div> -->
           <v-row class="ma-0">
             <v-col v-for="item in props.items" :key="item.name" cols="12" sm="6" md="6" lg="6">
               <v-card>
-                <v-card-title class="subheading font-weight-bold">{{ item.name }}<v-btn @click="loadGraph(item)">Laden</v-btn><v-btn @click="deleteGraph(item)">Löschen</v-btn></v-card-title>
-                  <v-img
-                    src="https://d2slcw3kip6qmk.cloudfront.net/marketing/pages/chart/UML-state-diagram-tutorial/FeaturedImage.png"
-                  ></v-img>
-                <v-divider></v-divider>
-                <v-list dense>
+                <v-card-title class="subheading font-weight-bold">{{ item.name }}</v-card-title>
+                <div id="image-render" style="display: none;"></div>
+                <v-img
+                  v-if="item.image"
+                  v-bind:src="item.image"
+                  class="mx-5"
+                ></v-img>
+                <v-list v-else dense>
                   <v-list-item v-for="(key, index) in filteredKeys" :key="index">
                     <v-list-item-content :class="{ 'blue--text': sortBy === key }">{{ key }}:</v-list-item-content>
                     <v-list-item-content
@@ -56,6 +63,40 @@
                     >{{ item[key.toLowerCase()] }}</v-list-item-content>
                   </v-list-item>
                 </v-list>
+                <v-row justify="space-around">
+                  <v-col sm="3">
+                    <v-btn
+                      class="darkmode-ign"
+                      color="green darken-1"
+                      text
+                      @click="loadGraph(item)"
+                    >Laden</v-btn>
+                  </v-col>
+                  <v-col sm="3">
+                    <v-btn
+                      v-if="item.image"
+                      class="darkmode-ign"
+                      color="blue"
+                      text
+                      @click="item.image = null"
+                    >Nicht mehr anzeigen</v-btn>
+                    <v-btn
+                      v-else
+                      class="darkmode-ign"
+                      color="blue"
+                      text
+                      @click="loadImage(item)"
+                    >Anzeigen</v-btn>
+                  </v-col>
+                  <v-col sm="3">
+                    <v-btn
+                      class="darkmode-ign"
+                      color="error"
+                      text
+                      @click="deleteGraph(item)"
+                    >Löschen</v-btn>
+                  </v-col>
+                </v-row>
               </v-card>
             </v-col>
           </v-row>
@@ -63,7 +104,7 @@
       </template>
 
       <template v-slot:footer>
-        <v-row class="mt-4 mb-2  mr-8  ml-5" align="center" justify="center">
+        <v-row class="mt-4 mb-2 mr-8 ml-5" align="center" justify="center">
           <span class="grey--text">Graphen pro Seite</span>
           <v-menu offset-y>
             <template v-slot:activator="{ on }">
@@ -85,6 +126,13 @@
 
           <v-spacer></v-spacer>
 
+          <span class="mr-2 grey--text">Neu laden</span>
+          <v-btn fab dark small color="primary" class="mr-1 darkmode-ign" @click="loadItems()">
+            <v-icon>mdi-database-refresh</v-icon>
+          </v-btn>
+
+          <v-spacer></v-spacer>
+
           <span class="mr-4 grey--text">Seite <b>{{ page }}</b> von {{ numberOfPages }}</span>
           <v-btn fab dark small color="primary" class="mr-1 darkmode-ign" @click="formerPage">
             <v-icon>mdi-chevron-left</v-icon>
@@ -100,17 +148,22 @@
 
 <script>
 /* eslint-disable standard/computed-property-even-spacing */
+import cytoscape from "cytoscape";
 import axios from 'axios';
 import ExJSon from "@/vargraph/JSonPersistence.js";
+import FileManager from "@/vargraph/importExport/FileManager.js";
 
 let dialogComponent;
 
 export default {
   mounted () {
+    // eslint-disable-next-line no-console
+    console.log('MOUNTED');
     dialogComponent = this.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$refs["dialogs"];
   },
   data() {
     return {
+      type: -1,
       itemsPerPageArray: [4, 8, 12],
       search: "",
       filter: {},
@@ -219,12 +272,22 @@ export default {
       this.page=val;
     },
     getGraph() {
-      return this.$parent.$parent.$parent.$parent.$parent.$parent.$refs["vargraph"];
+      return this.$parent.$parent.$parent.$parent.$parent.$parent.$refs.vargraph;
+    },
+    setType (t) {
+      // sets the type of the Database GUI based on where it's called from
+      // t = 0: window (called from HomeMenu)
+      // t = 1: menu (called from GraphHeader)
+      this.type = t;
+      // eslint-disable-next-line no-console
+      console.log('TYPE SET TO',this.type)
     },
     loadItems() {
+      // eslint-disable-next-line no-console
+      console.log('LOADING ITEMS')
       this.items = [];
       axios
-        .get('http://192.168.99.101:1110/VarG/graph/meta', {
+        .get('http://192.168.1.103:1110/VarG/graph/meta', {
           params: {
             user:'eheldt'
           }
@@ -241,22 +304,19 @@ export default {
               'bearbeitungsschritte': md.IDCount,
               'teile': md.IDCount,
               'autor': el.userName,
+              'image': null,
               'fileId': el.fileId
             });
-            /* TODO somehow load preview image like this (not here but after "Show Image" button press on specific graph)
-            let loadedGraph = cy.json(el);
-            this.pngData = loadedGraph.png();*/
           }
         })
     },
-    // TODO rename methods properly
-    axiosSave() {
+    openExportDB() {
       this.$parent.$parent.$parent.$parent.$parent.$parent.$refs.exportMenu.setActiveTab(1);
       this.$parent.$parent.$parent.$parent.$parent.$parent.$refs.exportMenu.setdialog(true);
     },
     loadGraph(item) {
       if(confirm('Beim Laden wird der derzeitige Graph überschrieben. Wirklich den Graph "'+item.name+'" aus der Datenbank laden?')) {
-        const url = 'http://192.168.99.101:1110/VarG/graph/' + item.fileId;
+        const url = 'http://192.168.1.103:1110/VarG/graph/' + item.fileId;
         axios
           .get(url, {
             params: {
@@ -273,9 +333,29 @@ export default {
           });
       }
     },
+    loadImage (item) {
+      const url = 'http://192.168.1.103:1110/VarG/graph/' + item.fileId;
+      axios
+        .get(url, {
+          params: {
+            user: 'eheldt'
+          }
+        })
+        .then(response => {
+          let graph = JSON.parse(response.data[0].graphObject);
+          // TODO change render container so graph doesn't load and show in graph window
+          let cy = cytoscape({container: document.getElementById("image-render")});
+          cy.json(graph);
+          FileManager.changeStyleForExport(cy);
+          item.image = cy.png({full: true, scale: 1.5});
+        })
+        .catch(error => {
+          dialogComponent.dialogError('Laden des Bildes fehlgeschlagen');
+        });
+    },
     deleteGraph (item) {
       if(confirm('Wirklich den Graph "'+item.name+'" unwiderruflich aus der Datenbank löschen?')) {
-        const url = 'http://192.168.99.101:1110/VarG/graph/' + item.fileId;
+        const url = 'http://192.168.1.103:1110/VarG/graph/' + item.fileId;
         axios
           .delete(url, {
             params: {
