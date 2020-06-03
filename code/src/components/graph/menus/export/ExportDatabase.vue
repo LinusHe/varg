@@ -82,7 +82,6 @@ export default {
       ],
       validDB: true,
       DataBaseName: "",
-      database: this.getGraph().vars.testDatabase,
       overwriteDialog: false,
       hashkey: -1
     };
@@ -136,7 +135,7 @@ export default {
             this.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$refs.databaseMenu.$refs.databaseGUI.loadItems();
             this.closeDialog();
             dialogComponent.dialogSuccess('Graph erfolgreich in Datenbank hochgeladen');
-            this.checkNewGraph(); // TODO what does this do?
+            this.checkNewGraph();
           })
           .catch(error => {
             /* TODO to use these error distinctions, the API must return proper errors instead of ERR_EMPTY_RESPONSE
@@ -153,24 +152,6 @@ export default {
               dialogComponent.dialogError('Hochladen fehlgeschlagen: <b>Unbekannter Fehler</b>');
             }*/
           }); 
-          
-        /* TODO remove code for TestDatabase.js
-        // update cytoscape filename
-        this.getGraph()
-          .getCytoGraph(this.getGraph())
-          .data("filename", this.DataBaseName);
-
-        // get json
-        let content = ExJSon.CreateJSon(this.getGraph());
-
-        if (this.database.save(content, false)) {
-          this.closeDialog();
-          dialogComponent.dialogSuccess("Graph erfolgreich gespeichert");
-          this.checkNewGraph();
-        } else {
-          // database.save(..) returns false if graph exists
-          this.overwriteDialog = true;
-        }*/
       }
     },
     confirmOverwrite(fileId) {
@@ -186,20 +167,11 @@ export default {
           this.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$refs.databaseMenu.$refs.databaseGUI.loadItems();
           this.closeDialog();
           dialogComponent.dialogSuccess('Graph erfolgreich in der Datenbank überschrieben');
-          this.checkNewGraph(); // TODO what does this do?
+          this.checkNewGraph();
         })
         .catch(error => {
           dialogComponent.dialogError('Hochladen fehlgeschlagen: <b>Unbekannter Fehler</b>');
         });
-
-      /* TODO remove code for TestDatabase.js
-      // force overwrite
-      this.database.save(content, true);
-
-      this.closeDialog();
-      dialogComponent.dialogSuccess("Graph erfolgreich überschrieben");
-
-      this.checkNewGraph();*/
     },
     checkNewGraph() {
       // check dialog was opened by new Graph menu
