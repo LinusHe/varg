@@ -28,7 +28,7 @@
                 counter="25"
                 @submit="saveNewName()"
                 v-on:blur="saveNewName()"
-                :rules="[v => !!v || '', v => v.length <= 25 || '', v => v[0] != ' ' || '']"
+                :rules="[v => !!v || 'Bitte Produktnamen eingeben', v => (v || '').length <= 25 || 'Produktname ist zu lang', v => (v || '')[0] != ' ' || 'Produktname darf nicht mit Leerzeichen beginnen']"
               ></v-text-field>
             </v-form>
             <v-tooltip bottom v-if="!isEditingName">
@@ -93,7 +93,7 @@
                 type="number"
                 width="100px"
                 v-on:blur="saveNewQuant()"
-                :rules="[v => !!v || '', v => v > 0 || '', v => v < 9999999999999999 || '', v => Number.isInteger(+v) || '']"
+                :rules="[v => !!v || 'Bitte Stückzahl eingeben', v => v > 0 || 'Stückzahl ist zu klein', v => v < 9999999999999999 || 'Stückzahl ist zu groß', v => Number.isInteger(+v) || 'Stückzahl muss ganzzahlig sein']"
               ></v-text-field>
             </v-form>
             <v-tooltip bottom v-if="!isEditingQuant">

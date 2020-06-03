@@ -19,7 +19,7 @@
               v-model="prodname"
               counter="25"
               @keyup.enter="start()"
-              :rules="[v => !!v || 'Fehlender Name', v => (v || '').length <= 25  ||'Name ist zu lang']"
+              :rules="[v => !!v || 'Bitte Produktnamen eingeben', v => (v || '').length <= 25 || 'Produktname ist zu lang', v => (v || '')[0] != ' ' || 'Produktname darf nicht mit Leerzeichen beginnen']"
             ></v-text-field>
           </v-col>
           <v-col sm="5">
@@ -30,7 +30,7 @@
               label="Stückzahl"
               type="number"
               @keyup.enter="start()"
-              :rules="[v => !!v || 'Feld darf nicht leer sein', v => v > 0 ||'mindestens 1', v => v < 9999999999999999 ||'bist du wahnsinnig!?']"
+              :rules="[v => !!v || 'Bitte Stückzahl eingeben', v => v > 0 || 'Stückzahl ist zu klein', v => v < 9999999999999999 || 'Stückzahl ist zu groß', v => Number.isInteger(+v) || 'Stückzahl muss ganzzahlig sein']"
             ></v-text-field>
           </v-col>
         </v-row>
@@ -83,7 +83,7 @@ export default {
         
         // store name and quantity in store.js --> will be loaded in init.js
         this.$store.commit("setCyProdName", this.prodname);
-        this.$store.commit("setCyProdQuant", this.prodquant);
+        this.$store.commit("setCyProdQuant", +this.prodquant);
 
         // go to graph page
         this.$router.push({ name: "graph" });
