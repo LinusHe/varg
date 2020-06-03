@@ -77,16 +77,12 @@ export default {
   },
   data() {
     return {
-      dialog: false,
-      database: null
+      dialog: false
     };
   },
   methods: {
     getGraph() {
       return this.$parent.$parent.$refs["vargraph"];
-    },
-    setObject(DataBaseObject) {
-      this.database = DataBaseObject;
     },
     showSaveMenu() {
       this.$parent.$parent.$refs.exportMenu.setdialog(true);

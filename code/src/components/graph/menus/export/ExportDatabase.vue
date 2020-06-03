@@ -8,7 +8,7 @@
             <b>in der Datenbank</b> gespeichert werden. Über das Menü 'Datenbank' kann er wieder geladen werden.
           </p>
         </v-row>
-        <v-row class="ml-2 mt-0 mr-2 mb-12">
+        <v-row class="ml-2 mt-n5 mr-2 mb-12">
           <v-col sm="12">
             <v-text-field
               class="mt-6"
@@ -27,7 +27,7 @@
               text
               :disabled="!validDB"
               id="save-menu-save"
-              @click="saveDB"
+              @click="uploadGraph()"
             >Speichern</v-btn>
           </v-col>
           <v-col sm="4">
@@ -82,7 +82,6 @@ export default {
       ],
       validDB: true,
       DataBaseName: "",
-      database: this.getGraph().vars.testDatabase,
       overwriteDialog: false,
       hashkey: -1
     };
@@ -105,7 +104,7 @@ export default {
         false
       );
     },
-    saveDB() {
+    uploadGraph() {
 
       // copy pasted hash generator (TODO remove when primary key is changed from fileId to userName+fileName)
       String.prototype.hashCode = function() {
@@ -126,7 +125,7 @@ export default {
         const CONTENT = ExJSon.CreateJSon(this.getGraph());
         this.hashkey = this.DataBaseName.hashCode();
         axios
-          .post('http://192.168.1.102:1110/VarG/graph', {
+          .post('http://192.168.1.103:1110/VarG/graph', {
             fileId: this.hashkey,
             filename: this.DataBaseName,
             user: 'eheldt', // TODO replace with actual login info
@@ -136,7 +135,7 @@ export default {
             this.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$refs.databaseMenu.$refs.databaseGUI.loadItems();
             this.closeDialog();
             dialogComponent.dialogSuccess('Graph erfolgreich in Datenbank hochgeladen');
-            this.checkNewGraph(); // TODO what does this do?
+            this.checkNewGraph();
           })
           .catch(error => {
             /* TODO to use these error distinctions, the API must return proper errors instead of ERR_EMPTY_RESPONSE
@@ -153,29 +152,11 @@ export default {
               dialogComponent.dialogError('Hochladen fehlgeschlagen: <b>Unbekannter Fehler</b>');
             }*/
           }); 
-          
-        /* TODO remove code for TestDatabase.js
-        // update cytoscape filename
-        this.getGraph()
-          .getCytoGraph(this.getGraph())
-          .data("filename", this.DataBaseName);
-
-        // get json
-        let content = ExJSon.CreateJSon(this.getGraph());
-
-        if (this.database.save(content, false)) {
-          this.closeDialog();
-          dialogComponent.dialogSuccess("Graph erfolgreich gespeichert");
-          this.checkNewGraph();
-        } else {
-          // database.save(..) returns false if graph exists
-          this.overwriteDialog = true;
-        }*/
       }
     },
     confirmOverwrite(fileId) {
       // get json
-      const URL = 'http://192.168.1.102:1110/VarG/graph/' + fileId;
+      const URL = 'http://192.168.1.103:1110/VarG/graph/' + fileId;
       const CONTENT = ExJSon.CreateJSon(this.getGraph());
       axios
         .put(URL, {
@@ -186,20 +167,11 @@ export default {
           this.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$refs.databaseMenu.$refs.databaseGUI.loadItems();
           this.closeDialog();
           dialogComponent.dialogSuccess('Graph erfolgreich in der Datenbank überschrieben');
-          this.checkNewGraph(); // TODO what does this do?
+          this.checkNewGraph();
         })
         .catch(error => {
           dialogComponent.dialogError('Hochladen fehlgeschlagen: <b>Unbekannter Fehler</b>');
         });
-
-      /* TODO remove code for TestDatabase.js
-      // force overwrite
-      this.database.save(content, true);
-
-      this.closeDialog();
-      dialogComponent.dialogSuccess("Graph erfolgreich überschrieben");
-
-      this.checkNewGraph();*/
     },
     checkNewGraph() {
       // check dialog was opened by new Graph menu
