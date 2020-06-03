@@ -25,6 +25,9 @@ export function LoadJSon(content, graphComponent, dialog) {
   } else {
     let cy = graphComponent.getCytoGraph();
     console.log("Loading Graph per JSon");
+    //Removing old data
+    let info=graphComponent.$parent.$parent.$refs["graphInfo"];
+    info.optimized=false;
     //wipes every element of the current graph
     cy.elements("node").remove();
     cy.elements("edge").remove();
