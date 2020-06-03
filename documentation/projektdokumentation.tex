@@ -196,7 +196,7 @@ XXX
 
 VarG ist eine Web-App nach dem Client-Server Modell, wobei der Großteil der Berechnungen per JavaScript auf dem clientseitigen Browser
 durchgeführt werden.
-\\Serverseitig wird eine Datenbank (inkl API-Schnittstelle) zum persistenten speichern der erstellten Graphen angeboten.
+\\Serverseitig wird eine Datenbank (inkl API-Schnittstelle) zum persistenten Speichern der erstellten Graphen angeboten.
 \\
 \\Die Architektur der Web-App basiert auf dem Javascript-Webframework ''Vue.js'', 
 mit dem Webanwendungen nach dem MVVM Muster (Model View ViewModel) realisiert werden können. Die gesamte App ist nach logischen
@@ -243,9 +243,69 @@ einen Node.js-Webserver (API Schnittstelle) erzeugt.
 
 
 \subsection{Definierte Schnittstellen}
-{\small Autor: xxx}
+{\small Autor: Julius Hohlfeld}
 
-XXX
+VarGs Funktionalitäten erforden eine Datenbank um die erstellten Graphen speichern und wieder abrufen zu können.\\
+Um den Zugriff auf die Datenbank zu kontrollieren benötigen wir eine definierte Schnittstelle (bzw. API) zwischen Client,
+Webserver und Datenbank.\\
+\\
+Diese Schnittstelle ist RESTfull - d.h. sie folgt einigen der sog. REST-Constraints. Eine Übersicht inwiefern zu REST und welche \\
+Bedeutung es für das Projekt hat, findet sich im GitLab Wiki unter 'API Dokumentation'.\\
+Die Schnittstelle setzt sich wie folgt zusammen:
+\begin{itemize}
+\item \textbf{Vue}
+  \\\textit{Framework für Client + Axios Modul für asnychrone (promise-based) HTTP-Requests}
+\item  \textbf{Express}
+  \\\textit{Serverseitiges Node-Module für Webserver: hört angemeldete Ports auf Requests ab, die dem URI-Modell entsprechen}
+\item \textbf{Node.js}
+  \\\textit{Serverseitige Programmierung des Webservers mit mysqljs als Driver, um auf die Datenbank zuzugreifen}
+\item \textbf{DB}
+  \\\textit{MySQL-Datenbank auf extra Server}
+\end{itemize}
+
+Diese Struktur (kurz VenDB) entspricht einer Anpassung des sog. MEAN-Stacks auf das VarG-Projekt (MongoDB, Express, Angular, Node.js).\\
+Dabei erfolgt jeglicher Austausch der Graphdaten im JSON Format damit auf die cytoscape.js Funktion zum Laden des Graphen zugegriffen werden kann.\\
+\\
+\subsubsection{Client}
+
+Der Client enthält Trigger durch Events, welche Requests an den Webserver senden. Z.B.: das Aufrufen des Datenbankfenster löst eine Anfrage aus, welche alle Graphen des
+aktuellen Nutzers abfragt.\\
+Diese werden durch das Axios-Modul umgesetzt. Nachdem der Trigger ausgelöst wird, schickt der Client eine asynchrone Request. Diese wird vom Webserver verarbeitet, welcher\\
+dann eine Antwort schickt. Diese kann von Axios aufgefangen werden (axios."request"(url, {}).then(response => {}).catch(error => {})).
+
+subsubsection{Server}
+
+Der durch Express und mysqljs programmierte Webserver definiert folgende mögliche Zugriffstellen auf die Datenbank:
+\begin{itemize}
+\item \textbf{Get-Requests}
+  \begin{itemize}
+    \item \textbf{graph}
+      \\\textit{Fragt alle Graphen aus der Datenbank ab - für Admin reserviert.}
+    \item \textbf{graph/:id?}
+      \\\textit{Fragt einen spezifischen Graphen (entsprechend der ID) ab.}
+    \item \textbf{graph/meta}
+      \\\textit{Fragt Metadaten z.B.: Namen, Id, Stückzahl usw. ab für die Graphen des Nutzers ab.}
+  \end{itemize}
+\item  \textbf{Put-Requests}
+  \begin{itemize}
+    \item \textbf{graph/:id?}
+      \\\textit{Client schickt Server eine Repräsentation des Graphen in Json um einen bereits existierenden Graphen (entsprechend der ID) zu überschreiben.}
+  \end{itemize}
+\item \textbf{Post-Requests}
+  \begin{itemize}
+    \item \textbf{graph?}
+      \\\textit{Client schickt Server eine Repräsentation des Graphen in Json um einen neuen Eintrag für den Nutzer zu erzeugen.}
+  \end{itemize}
+\item \textbf{Delete-Request}
+  \begin{itemize}
+    \item \textbf{graph/:id?}
+      \\\textit{Spezifizierter Graph (entprechend der ID) wird aus der Datenbank gelöscht.}
+  \end{itemize}
+  \\\textit{Das '?' bedeutet, dass hier auf bestimmte URL Queries geachetet werden kann.\\
+      Das ist nützlich um z.B.: einen Nutzer nur auf seine eigenen Graphen zugreifen zu lassen.}
+\end{itemize}
+
+Diese werden dann in die entsprechenden Queries umgewandelt.\\
 
 \subsection{Liste der Architekturentscheidungen}
 {\small Autor: xxx}
