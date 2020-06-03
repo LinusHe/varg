@@ -7,7 +7,6 @@
 //uses express module 
 const express = require('express');
 const mysql_driver = require('mysql');
-const parser = require('./APIparser')
 
 const config = {
     // eheldt: 192.168.1.103
@@ -87,12 +86,14 @@ router.route('/graph?')
         });
     });
 
+//does it work ?
 //get metadata of all graphs from specified user
 router.route('/graph/meta')
     .get(function (req, res) {
         console.log('Sending all metadata of user:',req.query.user);
-        con.query('SELECT JSON_EXTRACT(graphObject,"$.data") AS "metadata", fileId, fileName, userName FROM cytographs WHERE userName = "' + req.query.user + '"',
-        function(err, result) {
+        let userName= req.query.user;
+        con.query('SELECT JSON_EXTRACT(graphObject,"$.data") AS "metadata", fileId, fileName, userName FROM cytographs WHERE userName = ?', [userName],
+        function(err, result, fields) {
             if (err) throw err;
             console.log("Query was successful !");
             res.send(result);
@@ -103,9 +104,10 @@ router.route('/graph/meta')
 
 router.param('graph_id', function(req, res, next, id)   {
     //check if Graph with id exists within database
-    let username=req.query.user;
+    let userName=req.query.user;
     console.log("Checking Database for Graph");
-    con.query("SELECT graphObject FROM cytographs WHERE fileID="+ id + " AND userName=" + '"' + username + '"', function(err, result) {
+    con.query("SELECT graphObject FROM cytographs WHERE fileID= ? AND userName = ?", [id, userName], 
+    function(err, result, fields) {
         if (err) {
             console.log("Graph may not exist.");
             throw err;
@@ -120,13 +122,13 @@ router.param('graph_id', function(req, res, next, id)   {
 router.route('/graph/:graph_id?')
     //get a single graph identified by id
     .get(function(req, res) {
-        //the query should still involve some check if the user "owns" the graph
+        //the query should involve some check if the user "owns" the graph
         //example: SELECT graphObject FROM cytographs WHERE fileID=1 AND user=jdeo
-        //let username = req.query.user;
         let id=req.params.graph_id;
-        let username=req.query.user;
-        console.log('Sending Graph with id:',id,', username:',username);
-        con.query("SELECT graphObject FROM cytographs WHERE fileID="+ id + " AND userName=" + '"' + username + '"', function(err, result) {
+        let userName=req.query.user;
+        console.log('Sending Graph with id:',id,', username:',userName);
+        con.query("SELECT graphObject FROM cytographs WHERE fileID= ? AND userName = ?", [id, userName], 
+        function(err, result, fields) { 
             if (err) throw err;
             console.log("Get-Query was successful!");
             res.send(result);
@@ -134,11 +136,13 @@ router.route('/graph/:graph_id?')
     })
     //update a single graph identified by id
     .put(function(req, res) {
-        let id = req.params.graph_id;
-        let username=req.body.user;
         console.log('Updating Graph');
         /* req.params.json is not yet implemented*/
-        con.query("UPDATE cytographs SET graphObject='" + req.body.json + "' WHERE fileID="+ id + " AND userName=" + '"' + username + '"', function(err, result) {
+        let put = {graphObject: req.body.json,
+            fileID: req.body.fileId, 
+            userName: req.body.user};
+        con.query("UPDATE cytographs SET graphObject= ? WHERE fileID= ? AND userName= ? ", put,
+        function(err, result, fields) {
             if (err) throw err;
             console.log("Update-Query succesfull");
             res.sendStatus(200);
@@ -147,9 +151,10 @@ router.route('/graph/:graph_id?')
     //delete a single graph identified by id
     .delete(function(req, res) {
         let id = req.params.graph_id;
-        let username=req.query.user;
+        let userName=req.query.user;
         console.log('Deleting Graph');
-        con.query("DELETE FROM cytographs WHERE fileID="+ id + " AND userName=" + '"' + username + '"', function(err, result)   {
+        con.query("DELETE FROM cytographs WHERE fileID= ? AND userName= ?", [id, userName],
+        function(err, result,fields)   {
             if (err) throw err;
             console.log("Delete-Query succesfull");
             res.send(result);
@@ -160,7 +165,7 @@ router.route('/graph/:graph_id?')
 router.route('/test')
 
     .get(function(req, res) {
-        res.send(parser.ParseRequest());
+        
     })
     .post(function(req, res) {
 
