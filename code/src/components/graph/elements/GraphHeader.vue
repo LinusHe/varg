@@ -122,7 +122,7 @@ export default {
 
       function onChange(event) {
         console.log(dialogComponent);
-        fileManager.loadGraphFromJson(event, graphComponent, dialogComponent); 
+        fileManager.loadGraphFromJson(event, graphComponent, dialogComponent);
         dialogComponent.dialogSuccess("Graph erfolgreich geladen");
       }
     },
@@ -132,7 +132,8 @@ export default {
     },
     logout() {
       this.$store.commit("logout");
-      this.$router.push({ name: "login" });
+      //this.$router.push({ name: "login" });
+      location.reload();
     },
     datenbank() {
       this.$parent.$refs.databaseMenu.openDialog();
