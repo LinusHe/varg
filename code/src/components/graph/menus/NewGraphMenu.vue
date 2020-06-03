@@ -101,9 +101,9 @@ export default {
       this.$parent.$parent.$refs.exportMenu.setdialog(true);
     },
     discard() {
+      this.$store.commit("ResetGraph");
       router.push({ name: "menu" });
       this.$router.go();
-      this.$store.commit("ResetGraph");
       //  this.$parent.$destroy();
     }
   }
