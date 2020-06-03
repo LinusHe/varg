@@ -29,7 +29,7 @@
               @change="toggleDarkmodeSetting"
               ref="toggleDarkmodeSetting"
               hide-details
-              class="mt-3"
+              class="mt-3 darkmodetoggle"
             ></v-switch>
           </v-col>
         </v-row>
