@@ -75,7 +75,7 @@
 /* eslint-disable standard/computed-property-even-spacing */
 import fileManager from "../../../vargraph/importExport/FileManager.js";
 import TestDatabase from "../../../vargraph/TestDatabase.js";
-
+import cyStore from "@/vargraph/graph/cyStore";
 let dialogComponent;
 
 export default {
@@ -125,6 +125,7 @@ export default {
         fileManager.loadGraphFromJson(event, graphComponent, dialogComponent);
         dialogComponent.dialogSuccess("Graph erfolgreich geladen");
       }
+        this.$store.commit('saveGraph', cyStore.data.cy.json());    //After Import, update Store with the new Graph
     },
     account() {
       this.$parent.$refs.settingsMenu.setActiveTab(3);
