@@ -249,7 +249,7 @@ VarGs Funktionalitäten erforden eine Datenbank um die erstellten Graphen speich
 Um den Zugriff auf die Datenbank zu kontrollieren benötigen wir eine definierte Schnittstelle (bzw. API) zwischen Client,
 Webserver und Datenbank.\\
 \\
-Diese Schnittstelle ist RESTfull - d.h. sie folgt einigen der sog. REST-Constraints. Eine Übersicht inwiefern zu REST und welche \\
+Diese Schnittstelle ist RESTfull - d.h. sie folgt einigen der sog. REST-Constraints. Eine Übersicht inwiefern zu REST und welche
 Bedeutung es für das Projekt hat, findet sich im GitLab Wiki unter 'API Dokumentation'.\\
 Die Schnittstelle setzt sich wie folgt zusammen:
 \begin{itemize}
@@ -268,12 +268,10 @@ Dabei erfolgt jeglicher Austausch der Graphdaten im JSON Format damit auf die cy
 \\
 \subsubsection{Client}
 
-Der Client enthält Trigger durch Events, welche Requests an den Webserver senden. Z.B.: das Aufrufen des Datenbankfenster löst eine Anfrage aus, welche alle Graphen des
-aktuellen Nutzers abfragt.\\
-Diese werden durch das Axios-Modul umgesetzt. Nachdem der Trigger ausgelöst wird, schickt der Client eine asynchrone Request. Diese wird vom Webserver verarbeitet, welcher\\
-dann eine Antwort schickt. Diese kann von Axios aufgefangen werden (axios."request"(url, {}).then(response => {}).catch(error => {})).
+Der Client enthält Trigger durch Events, welche Requests an den Webserver senden. Z.B.: das Aufrufen des Datenbankfenster löst eine Anfrage aus, welche alle Graphen des aktuellen Nutzers abfragt.
+Diese werden durch das Axios-Modul umgesetzt. Nachdem der Trigger ausgelöst wird, schickt der Client eine asynchrone Request. Diese wird vom Webserver verarbeitet, welcher dann eine Antwort schickt. Diese kann von Axios aufgefangen werden (axios."request"(url, {}).then(response => {}).catch(error => {})). 
 
-subsubsection{Server}
+\subsubsection{Server}
 
 Der durch Express und mysqljs programmierte Webserver definiert folgende mögliche Zugriffstellen auf die Datenbank:
 \begin{itemize}
@@ -301,10 +299,10 @@ Der durch Express und mysqljs programmierte Webserver definiert folgende möglic
     \item \textbf{graph/:id?}
       \\\textit{Spezifizierter Graph (entprechend der ID) wird aus der Datenbank gelöscht.}
   \end{itemize}
-  \\\textit{Das '?' bedeutet, dass hier auf bestimmte URL Queries geachetet werden kann.\\
-      Das ist nützlich um z.B.: einen Nutzer nur auf seine eigenen Graphen zugreifen zu lassen.}
 \end{itemize}
 
+Das '?' bedeutet, dass hier auf bestimmte URL Queries geachetet werden kann.
+Das ist nützlich um z.B.: einen Nutzer nur auf seine eigenen Graphen zugreifen zu lassen.
 Diese werden dann in die entsprechenden Queries umgewandelt.\\
 
 \subsection{Liste der Architekturentscheidungen}
