@@ -149,8 +149,18 @@ Diese erleichtert die einheitliche Erstellung, Bearbeitung, Optimierung sowie Im
 
 
 \subsection{Liste der funktionalen Anforderungen}
+{\small Autor: Erik Heldt}
 
-XXX
+\begin{itemize}
+	\item Erstellen von Zuständen mit Namen \& Kürzel
+	\item Erstellen von Arbeitsschritten mit Namen \& Kürzel zwischen je 2 Zuständen
+	\item Zuweisen von (Rüst-)Zeitkosten, (Rüst-)Geldkosten \& Losgröße zu Arbeitsschritt
+	\item Anzeigen des günstigsten Weges im Graph, berechnet nach der angegebenen Kostenart
+	\item Lokaler Export als Bilddatei oder importierbarer JSON \& Lokaler Import als JSON
+	\item Hochladen in online gehostete Datenbank \& Laden aus online gehosteter Datenbank
+	\item Login-Management für Zugriffskontrolle auf Anwendung
+	\item Rollen-Management (Student, Professor) für Zugriffsrechte auf Datenbank
+\end{itemize}
 
 %
 % soll der Inhalt dieser Subsection in einer separaten Datei
@@ -160,18 +170,35 @@ XXX
 % \input{listefunktional}
 
 \subsection{Liste der nicht-funktionalen Anforderungen}
-{\small Autor: xxx}
+{\small Autor: Erik Heldt}
 
-XXX
+\begin{itemize}
+	\item Schnelle Einarbeitung in die Anwendungsumgebung
+	\item Einfacher \& intuitiver Umgang mit den Programmkomponenten und -funktionen
+	\item Stabiler \& konsistenter Programmablauf, keine Abstürze oder Verluste von Dateien
+	\item Kompatibilität mit so vielen modernen Browsern wie möglich
+	\item Sicherheit \& korrekte Funktionalität des Login-Algorithmus und des DB-Rollenmanagements
+	\item Datenschutz bei Login-Sessions einhalten
+\end{itemize}
 
 \subsection{Weitere Zuarbeiten zum Produktvisions-Workshop}
+{\small Autor: Erik Heldt}
 
-XXX
+Für den Produktvisions-Workshop wurden 4 Dokumente erstellt, welche unterschiedliche Aspekte des Anwendungsentwurfs behandeln.
 
-\subsubsection{Zuarbeit von Autor X}
-XXX
-\subsubsection{Zuarbeit von Autor Y}
-XXX
+Die erste Ausarbeitung zeigt Ideen zur Darstellung der GUI, die Zweite ist ein Epic bzw. eine Zusammenfassung vieler User-Stories zu allgemeinen Anforderungen an die Funktionalität. Das dritte Dokument geht genauer auf spezifische Kernfunktionen ein und das vierte umfasst die Datenmodellierung des Programms.
+
+\subsubsection{Zuarbeit von Linus Herterich, Jonas Gwozdz, Julius Hohlfeld}
+INCLUDE GUI
+
+\subsubsection{Zuarbeit von Erik Heldt, Alaa Aldin Karkoutli}
+INCLUDE Epic
+
+\subsubsection{Zuarbeit von Lennart Buchmann, Nils Buxel, Matthias Berger}
+INCLUDE Kernfunktionalität
+
+\subsubsection{Zuarbeit von Tim Henning, David Koch}
+INCLUDE Datenmodell
 
 \subsection{Liste der Kundengespräche mit Ergebnissen}
 {\small Autor: xxx}
@@ -183,13 +210,42 @@ XXX
 \section{Architektur und Entwurf}
 
 \subsection{Zuarbeiten der Teammitglieder}
+{\small Autor: Erik Heldt}
 
-XXX
+Für die Technologierecherche informierte sich das Team über verschiedene Technologien, mit denen die Anwendung entwickelt werden kann. Außerdem fassten wir erste Ideen zur Graphenanordnung zusammen, legten Coding Conventions fest und erstellten einen interaktiven GUI-Prototyp mit Adobe XD. Die Ausarbeitungen wurden in den nachfolgenden Dokumenten festgehalten.
+
+\subsubsection{Zuarbeit von Tim Henning}
+INCLUDE DjangoPython
+
+\subsubsection{Zuarbeit von Erik Heldt}
+INCLUDE RailsLang,RailsKurz,Graphenanordnung
+
+\subsubsection{Zuarbeit von David Koch}
+INCLUDE JavaCanvas,RechercheDB
+
+\subsubsection{Zuarbeit von Matthias Berger, Nils Buxel}
+INCLUDE CodingGuidelines
+
+\subsubsection{Zuarbeit von Nils Buxel}
+INCLUDE CodingConventionsCSS
+
+\subsubsection{Zuarbeit von Julius Hohlfeld}
+INCLUDE Angular
+
+\subsubsection{Zuarbeit von Lennart Buchmann, Alaa Aldin Karkoutli, Jonas Gwozdz, Linus Herterich}
+INCLUDE OpenSource
+
+\subsubsection{Zuarbeit von Linus Herterich, Jonas Gwozdz}
+INCLUDE AdobeXD
 
 \subsection{Entscheidungen des Technologieworkshops}
-{\small Autor: xxx}
+{\small Autor: Erik Heldt}
 
-XXX
+Nach ausgiebigen Recherchen über verschiedenste Programmiersprachen, Frameworks und Bibliotheken entschieden wir uns für eine Webanwendung auf Basis von HTML/CSS/JavaScript.
+
+Wir haben uns weiterhin auf das JS-Framework Vue.js geeinigt, da es viele Vorteile für die Front-End-Entwicklung mit sich bringt und von den vielen untersuchten Frameworks am intuitivsten erschien. Außerdem haben wir nach einer JS-Bibliothek zur Graphdarstellung recherchiert und unter verschiedenen Kandidaten stach Cytoscape mit seinen vielen Funktionen zur Graphenerstellung und -editierung am meisten heraus, was wir somit auch in unsere Architektur integrierten.
+
+Bei der Programmierumgebung waren wir uns schnell einig, dass Visual Studio Code am besten für unsere Ansprüche geeignet ist. Wir installierten die IDE zusammen mit dem Plugin ESLint zur Unterstützung der Einhaltung standardmäßiger Coding Conventions.
 
 \subsection{Überblick über Architektur}
 {\small Autor: Linus Herterich}
@@ -315,9 +371,26 @@ XXX (bewusste und unbewusste Entscheidungen mit zeitlicher Einordnung)
 \section{Prozess- und Implementationsvorgaben}
 
 \subsection{Definition of Done}
-{\small Autor: xxx}
+{\small Autor: Tim Henning}
+\\
+Im Allgemeinen wurde in dem Projekt die Definition von "doneness"\ nicht all zu umfangreich 
+gestaltet, da es für viele Teammitglieder eines der ersten Softwareprojekte war. So wurden als Defintion of Done folgende
+Punkte für alle Userstories aufgestellt:
+\begin{itemize}
+  \item >50\% Testabdeckung
+  \item Technische Kommentare im Code
+  \item Einhaltung der festgelegten Code Konventionen
+\end{itemize}
+\\
+Das Team hatte an sich zu den meisten Zeitpunkten eine klare Vorstellung was einen "fertigen Entwurf"\ kennzeichnet und wurde so auch in den Reviews untereinander kommuniziert. 
+Dies wiederum führte zu einer klaren Transparenz im Team, was die Qualität des Produktes erhöhte und das Zusammenarbeiten erleichterte.
+Größtenteils wurde sich
+an die allgemeinen Akzeptanzkritieren gehalten und viele Backlog-Einträge als "done"\ erklärt. Zu fast jeder Komponente wurde 
+getestet und zu den Methoden der einzelnen Komponenten wurden erklärende sinnvolle Codekommentare geschrieben. 
+Außerdem wurde im Team umfangreich kommuniziert und die Kriterien angepasst, wenn die Fertigstellung einer Userstorie doch mal nicht gänzlich klar war.
+So wurde es ermöglicht nach der Hälfte des Projektes, am Ende jedes Sprints einen fertigen Productionbuild dem Kunden zu liefern.
+  
 
-XXX
 
 \subsection{Coding Style}
 {\small Autor: xxx}
@@ -370,9 +443,11 @@ XXX
 XXX
 
 \subsection{Installationsanleitung}
-{\small Autor: xxx}
+{\small Autor: Erik Heldt}
 
-XXX
+VarG ist eine plattformunabhängige Webanwendung, das heißt man muss nichts lokal auf seinem PC installieren, um sie zu benutzen. Alles was man benötigt, ist ein moderner Web-Browser und eine Internetverbindung (Browser-Empfehlung: Google Chrome oder Firefox). Öffne den Browser und gib in der URL-Leiste www.TODO-sampledomain.de ein. Nun befindest du dich im Home-Menü von VarG und kannst loslegen!
+
+TODO: Installation der Datenbank dokumentieren sobald diese auf den HTWK-Server umgezogen ist.
 
 \subsection{Software-Lizenz}
 {\small Autor: xxx}
