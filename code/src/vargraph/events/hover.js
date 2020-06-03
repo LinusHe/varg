@@ -13,17 +13,9 @@ import cyStore from "@/vargraph/graph/cyStore";
 
 export default {
   mouseOutOfNode(event) {
-    // let handlerBounds =
-    //   cyStore.data.edgeHandler.handleNode[0]._private.bodyBounds;
-    // if (
-    //   (event.target.group() == "nodes" &&
-    //     !event.target.hasClass("eh-handle") &&
-    //       (event.position.x < handlerBounds.x1 - 20 ||
-    //         event.position.y > handlerBounds.y2 ||
-    //         event.position.y < handlerBounds.y1)) ||
-    //   event.target.hasClass("eh-handle")
-    // ) {
-    //   cyStore.data.edgeHandler.hide();
-    // }
+    // See removedcode
+  },
+  mouseInNode(event) {
+    // See removedcode
   }
 };
