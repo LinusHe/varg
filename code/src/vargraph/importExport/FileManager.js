@@ -42,7 +42,7 @@ export function saveGraphAsJpg(graph, name) {
   resetStyle(graph);
 }
 
-function changeStyleForExport(graph) {
+export function changeStyleForExport(graph) {
   // Show built in Labels for export
   graph
     .style()
@@ -72,5 +72,6 @@ export default {
   saveGraphAsJson,
   loadGraphFromJson,
   saveGraphAsPng,
-  saveGraphAsJpg
+  saveGraphAsJpg,
+  changeStyleForExport
 };

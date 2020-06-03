@@ -74,17 +74,10 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable standard/computed-property-even-spacing */
 import fileManager from "../../../vargraph/importExport/FileManager.js";
-import TestDatabase from "../../../vargraph/TestDatabase.js";
 
 let dialogComponent;
 
 export default {
-  created() {
-    this.vars = {
-      // initializes new instance of TestDatabase when Toolbar is loaded for the first time
-      testDatabase: new TestDatabase()
-    };
-  },
   mounted: function() {
     dialogComponent = this.$parent.$parent.$parent.$parent.$refs[
       "dialogs"
@@ -96,7 +89,6 @@ export default {
       return this.$parent.$refs["vargraph"];
     },
     NewGraph() {
-      this.$parent.$refs.newGraphMenu.setObject(this.testDatabase);
       this.$parent.$refs.newGraphMenu.setdialog(true);
     },
     Download: function() {
