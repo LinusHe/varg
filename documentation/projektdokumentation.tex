@@ -204,10 +204,19 @@ Sites (Seiten, bei denen sich die URL ändert) und Components (wiederverwendbare
 Jede Vue Component (.vue Dateien) enthält ein HTML-Template (GUI), sowie Daten, mit denen das Template befüllt wird. Zudem werden
 Funktionen definiert, die entweder zu bestimmten Laufzeitbedingungen der App oder durch Events und Trigger aufgerufen werden.
 Die Kommunikation zwischen Components wird über Vererbungen zu Eltern-/ Kind-Components realisiert.
+\\Die Web-App besteht im Entwicklungszustand aus vielen hunderten Dateien, welche vom Framework verwaltet werden. Sobald
+die App in den Produktionsstatus wechselt, muss das Projekt kompiliert werden. Dies übernimmt ebenfalls das Framework, welches
+hierfür Technologien wie ''WebPack'' einsetzt. So bleiben lediglich wenige HTML, CSS und JavaScript Dateien übrig, die anschließend
+auf einem Web-Server (z.B. Apache) zur Verfügung gestellt werden müssen.
 \\
-\\Die Datstellung (vuetify) | less
+\\Um die Darstellung einheitlich zu halten, haben wir die UI-Bibliothek ''vuetify'' genutzt. Diese hält sich an den Industriestandard
+''Material Design'' von Google. Damit konnten wir alle unsere im Vorfeld erstellten Design-Konzepte umsetzen. Um an den ''vuetify'' Elementen
+weitere optische Anpassungen vorzunehmen haben wir die CSS-Language-Extension ''less'' verwendet. Mit dieser war es möglich übersichtliche und
+einheitliche Style-Vorgaben die Design-Komponenten anzuwenden. 
 \\
-\\VueX
+\\Damit Alle Daten Component-Übergreifend auf einen gemeinsamen Datenstamm zugreifen können und die Daten auch nach einer Session persistent
+gespeichert werden können, haben wir die vue.js-Erweiterung ''vuex'' eingesetzt. Diese bietet eine zentralisierte Speichermöglichkeit
+für alle Daten, die übergreifend verwendet werden müssen (beispielsweise Log-In Daten oder der Zustand des Variantenfolgegraphen).
 \\
 \\Für die Darstellung des Graphen (Knoten + Kanten und deren Beschriftung) haben wir das JavaScript Framework ''cytoscape.js'' verwendet.
 Das Framework hält alle Graph-Daten in einem JavaScript Objekt, auf das mit verschiedenen API-Funktionen zugegriffen werden kann.
@@ -223,12 +232,14 @@ folgen einem klaren Schema, welches vom serverseitigen Node.js interpretiert und
 \\
 \\Um die Web-App großflächig zu testen haben wir uns zum einen für das Framework ''cypress'' entschieden, welches Integrationstests anhand der
 HTML-Elemente übernimmt. Cypress wertet aus, ob bestimmte Elemente unter bestimmten Bedingungen vorhanden sind, beziehungsweise spezielle 
-Eigenschaften aufweisen. Die Cypress Tests haben wir auch Erfolgreich an die ''CI / CD Pipeline'' von GitLab angeschlossen, sodass nach jedem
+Eigenschaften aufweisen. Die Cypress Tests haben wir auch erfolgreich an die ''CI / CD Pipeline'' von GitLab angeschlossen, sodass nach jedem
 push die Tests durchlaufen (Stichwort: Regressionstest).
 \\Zum anderen haben wir das Framework "jest" eingesetzt, mit dem einzelne Funktionen auf ihre Richtigkeit überprüft werden konnten. Vorallem
 für die Optimierungsalgorithmen sind isolierte Tests nötig gewesen.
 \\
-\\Docker
+\\Um eine Client-Server Architektur zu simulieren haben wir ''Docker'' eingesetzt. Dieses Tool erlaubt es virtuelle Maschinen zu erstellen,
+welche untereinander kommunizieren können. Für Entwicklungszwecke haben wir einen Docker-Container für eine MySQL Datenbank und 
+einen Node.js-Webserver (API Schnittstelle) erzeugt.
 
 
 \subsection{Definierte Schnittstellen}
