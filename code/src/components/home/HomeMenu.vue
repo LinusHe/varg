@@ -51,7 +51,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable standard/computed-property-even-spacing */
 import fileManager from "../../vargraph/importExport/FileManager";
-
+import cyStore from "@/vargraph/graph/cyStore";
 let dialogComponent;
 
 export default {
@@ -74,9 +74,11 @@ export default {
         "Importiertes Produkt wird geladen..."
       );
       function onChange(event) {
-        fileManager.loadGraphFromJson(event, null, dialogComponent); 
+        fileManager.loadGraphFromJson(event, null, dialogComponent);
         dialogComponent.dialogSuccess("Graph erfolgreich geladen");
       }
+
+      this.$store.commit('saveGraph', cyStore.data.cy.json());
     }
   }
 };
