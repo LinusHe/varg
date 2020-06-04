@@ -67,7 +67,10 @@ router.route('/login?')
         console.log("Sending Log-In data.");
         let user = req.params.user;
         console.log(user + ", willkommen in der Matrix.");
-        res.send("Tocken: 420 69");
+        let data = {
+            tocken = 42069
+        }
+        res.send(data);
     });
 
 
