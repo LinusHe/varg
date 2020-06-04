@@ -60,6 +60,15 @@ let bodyParser = require('body-parser');
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
 
+//login
+router.route('/login')
+    //get login data
+    .get(function (req, res) {
+        console.log("Sending Log-In data.");
+        let userName = req.body.userName;
+    });
+
+
 //(graph)
 router.route('/graph?')
     //get all graphs - should probably be reserved to higher authority roles
