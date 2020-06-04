@@ -71,7 +71,7 @@ export default {
 
     // cy pre config
     this.preConfig(cytoscape);
-
+    this.adjustUI();
     // cy config
     cyStore.data.cy = cytoscape({
       container: document.getElementById("cy"), // container to render in
