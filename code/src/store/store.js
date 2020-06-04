@@ -36,6 +36,8 @@ export const store = new Vuex.Store({
   },
   mutations: {
 
+    //test
+
 
     /*
     [AUTH_REQUEST]: (state) => {
