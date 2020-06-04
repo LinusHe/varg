@@ -61,11 +61,12 @@ router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
 
 //login
-router.route('/login')
+router.route('/login?')
     //get login data
     .get(function (req, res) {
         console.log("Sending Log-In data.");
-        let userName = req.body.userName;
+        let user = req.params.user;
+        console.log(user + ", willkommen in der Matrix.")
     });
 
 
