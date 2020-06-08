@@ -97,7 +97,7 @@ export default {
     let node = cy.getElementById(count);
     console.log("added node: ", node);
 
-    node.addClass("nodelabel"); 
+    node.addClass("nodelabel");
 
     if (doneonce==false){
       // update position if conflict occurs

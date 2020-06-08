@@ -431,12 +431,15 @@ export default {
     setNodePos(x, y) {
       this.clickX = x;
       this.clickY = y;
+      this.backupGraph();
     },
     setStart(start) {
       this.startSelect = start;
+      this.backupGraph();
     },
     setEnd(end) {
       this.endSelect = end;
+      this.backupGraph();
     },
     generateNodeShort() {
       if (this.nodeCreateName != null) {
@@ -598,6 +601,7 @@ export default {
       this.$refs.formNodes.reset();
       this.$refs.formEdges.reset();
       this.$refs.scrollingContainer.scrollTop = 0;
+      this.backupGraph();
     },
     validateStartEnd() {
       this.$refs.startzustand.validate();

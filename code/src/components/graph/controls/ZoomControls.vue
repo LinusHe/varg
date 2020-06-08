@@ -54,6 +54,7 @@
 </template>
 
 <script>
+import cyStore from "@/vargraph/graph/cyStore";
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
 /* eslint-disable standard/computed-property-even-spacing */
@@ -81,6 +82,7 @@ export default {
       } else {
         let CurrentZoom = this.getGraph().getZoom(this.getGraph()) + 0.1;
         this.getGraph().setZoom(this.getGraph(), CurrentZoom);
+        this.$store.commit('saveGraph', cyStore.data.cy.json()); // Save Zoom in Store to load it
       }
     },
 
@@ -97,13 +99,16 @@ export default {
         let CurrentZoom = this.getGraph().getZoom(this.getGraph());
         CurrentZoom -= 0.1;
         this.getGraph().setZoom(this.getGraph(), CurrentZoom);
+        this.$store.commit('saveGraph', cyStore.data.cy.json()); // Save Zoom in Store to load it
       }
     },
 
     ZoomOut() {
       this.getGraph().ZoomOut(this.getGraph());
       dialogComponent.dialogInfo("Graph wurde zentriert", 2000);
+      this.$store.commit('saveGraph', cyStore.data.cy.json()); // Save Zoom in Store to load it
     }
   }
 };
 </script>
+

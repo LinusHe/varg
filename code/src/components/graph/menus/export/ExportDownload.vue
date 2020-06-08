@@ -148,9 +148,11 @@ export default {
         this.$parent.$parent.$parent.$parent.$parent.$parent.$parent.getNewGraph()
       ) {
         // continue with newGraph function
-        this.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$refs[
+      /*this.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$refs[
           "newGraphMenu"
-        ].discard();
+        ].discard();*/
+        this.$store.commit("ResetGraph");  // After Download Graph will be reseted
+        location.reload();                //Loadingscreen will take us to home/menu
       }
     }
   }

@@ -8,7 +8,7 @@
 // more info about handling events: https://rcarcasses.github.io/vue-cytoscape/api.html#cytoscape
 
 // Event for new node positions
-
+import cyStore from "@/vargraph/graph/cyStore";
 export default {
   positionEvent(event) {
     console.log("Position Event fired: ", event);
@@ -16,6 +16,7 @@ export default {
       let node = event.target;
       this.moveNodesInConflict(this, node);
     }
+    this.$store.commit('saveGraph', cyStore.data.cy.json());
   },
 
   // moveNodesInConflict(node): checks whether a node has conflicts with
