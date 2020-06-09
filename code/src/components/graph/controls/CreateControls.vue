@@ -194,29 +194,45 @@
           >
             <v-card-subtitle style="color: #ffffff" class="pb-0">Neuer Bearbeitungsschritt:</v-card-subtitle>
             <v-card-title class="pt-12">{{showEdgeTitle}}</v-card-title>
-            <v-row>
+            <v-row class="mr-2 ml-2">
               <v-col sm="6" class="pt-0 pb-0">
-                <v-btn v-show="edgeFormStep==1" depressed tile block color="#ffffff">Allgemein</v-btn>
                 <v-btn
+                  style="border-radius: 15px 15px 0 0"
+                  v-show="edgeFormStep==1"
+                  depressed
+                  tile
+                  block
+                  color="#ffffff"
+                >Allgemein</v-btn>
+                <v-btn
+                  style="border-radius: 15px 15px 0 0"
                   v-show="edgeFormStep==2"
                   depressed
                   tile
                   block
-                  color="primary"
+                  color="primary darken-1"
                   @click="changeEdgeFormStep(1)"
                 >Allgemein</v-btn>
               </v-col>
               <v-col sm="6" class="pt-0 pb-0">
                 <v-btn
+                  style="border-radius: 15px 15px 0 0"
                   v-show="edgeFormStep==1"
                   depressed
                   tile
                   block
-                  color="primary"
+                  color="primary darken-1"
                   @click="changeEdgeFormStep(2)"
                   :disabled="!validEdges1"
                 >Zeit & Kosten</v-btn>
-                <v-btn v-show="edgeFormStep==2" depressed tile block color="#ffffff">Zeit & Kosten</v-btn>
+                <v-btn
+                  style="border-radius: 15px 15px 0 0"
+                  v-show="edgeFormStep==2"
+                  depressed
+                  tile
+                  block
+                  color="#ffffff"
+                >Zeit & Kosten</v-btn>
               </v-col>
             </v-row>
           </div>
