@@ -14,7 +14,15 @@
         <template v-slot:activator>
           <v-tooltip left>
             <template v-slot:activator="{ on }">
-              <v-btn class="darkmode-ign blackbtngraph" v-model="fab" v-on="on" color="primary" dark fab large>
+              <v-btn
+                class="darkmode-ign blackbtngraph"
+                v-model="fab"
+                v-on="on"
+                color="primary"
+                dark
+                fab
+                large
+              >
                 <v-icon v-if="fab">mdi-close</v-icon>
                 <v-icon v-else>mdi-plus</v-icon>
               </v-btn>
@@ -24,7 +32,15 @@
         </template>
         <v-tooltip left>
           <template v-slot:activator="{ on }">
-            <v-btn @click="openNodeGui" v-on="on" fab dark color="secondary" id="dial-add-node" class="darkmode-ign">
+            <v-btn
+              @click="openNodeGui"
+              v-on="on"
+              fab
+              dark
+              color="secondary"
+              id="dial-add-node"
+              class="darkmode-ign"
+            >
               <v-icon>mdi-plus-circle-outline</v-icon>
             </v-btn>
           </template>
@@ -32,7 +48,15 @@
         </v-tooltip>
         <v-tooltip left>
           <template v-slot:activator="{ on }">
-            <v-btn @click="openEdgeGui" v-on="on" fab dark color="secondary" id="dial-add-edge" class="darkmode-ign">
+            <v-btn
+              @click="openEdgeGui"
+              v-on="on"
+              fab
+              dark
+              color="secondary"
+              id="dial-add-edge"
+              class="darkmode-ign"
+            >
               <v-icon>mdi-link-variant-plus</v-icon>
             </v-btn>
           </template>
@@ -95,7 +119,7 @@
             <v-row>
               <v-col sm="12">
                 <v-text-field
-                  class="mt-2 "
+                  class="mt-2"
                   id="nodeCreateName"
                   label="Bezeichnung"
                   v-model="nodeCreateName"
@@ -166,159 +190,215 @@
           <!-- Colored Div -->
           <div
             class="white--text align-end darkmode-ign"
-            style="height: 100px; background: #2699FB; background-color: #2699FB"
+            style="background: #2699FB; background-color: #2699FB"
           >
             <v-card-subtitle style="color: #ffffff" class="pb-0">Neuer Bearbeitungsschritt:</v-card-subtitle>
             <v-card-title class="pt-12">{{showEdgeTitle}}</v-card-title>
+            <v-row>
+              <v-col sm="6" class="pt-0 pb-0">
+                <v-btn v-show="edgeFormStep==1" depressed tile block color="#ffffff">Allgemein</v-btn>
+                <v-btn
+                  v-show="edgeFormStep==2"
+                  depressed
+                  tile
+                  block
+                  color="primary"
+                  @click="changeEdgeFormStep(1)"
+                >Allgemein</v-btn>
+              </v-col>
+              <v-col sm="6" class="pt-0 pb-0">
+                <v-btn
+                  v-show="edgeFormStep==1"
+                  depressed
+                  tile
+                  block
+                  color="primary"
+                  @click="changeEdgeFormStep(2)"
+                  :disabled="!validEdges1"
+                >Zeit & Kosten</v-btn>
+                <v-btn v-show="edgeFormStep==2" depressed tile block color="#ffffff">Zeit & Kosten</v-btn>
+              </v-col>
+            </v-row>
           </div>
 
-          <div class="scrolling-container" ref="scrollingContainer">
-            <v-form
-              ref="formEdges"
-              v-model="validEdges"
-              lazy-validation
-              class="d-inline-block mr-5 ml-5 mb-4 hueshift"
-              @submit="createEdge()"
-              onsubmit="return false;"
-              style="max-height: 300px; overflow: scroll-y"
-            >
-              <!-- Name Selection -->
-              <v-row>
-                <v-col sm="9">
-                  <v-text-field
-                    class="mt-2"
-                    id="edgeCreateName"
-                    label="Bezeichnung"
-                    v-model="edgeCreateName"
-                    :rules="nameEdgeRules"
-                    @input="generateEdgeShort()"
-                    @keyup.enter="createEdge()"
-                    @focus="getEdgeItemsName()"
-                  ></v-text-field>
-                </v-col>
-                <v-col sm="3">
-                  <v-text-field
-                    class="mt-2"
-                    id="edgeCreateShort"
-                    label="Kürzel"
-                    v-model="edgeCreateShort"
-                    :rules="shortRules"
-                    @keyup.enter="createEdge()"
-                  ></v-text-field>
-                </v-col>
-              </v-row>
+          <div style="min-height: 305px">
+            <v-slide-x-reverse-transition>
+              <div v-show="edgeFormStep == 1" ref="scrollingContainer">
+                <v-form
+                  ref="formEdges1"
+                  v-model="validEdges1"
+                  lazy-validation
+                  class="d-inline-block mr-5 ml-5 mb-4 hueshift"
+                  @submit="createEdge()"
+                  onsubmit="return false;"
+                  style="max-height: 300px; overflow: scroll-y"
+                >
+                  <!-- Name Selection -->
+                  <v-row>
+                    <v-col sm="9">
+                      <v-text-field
+                        class="mt-2"
+                        id="edgeCreateName"
+                        label="Bezeichnung"
+                        v-model="edgeCreateName"
+                        :rules="nameEdgeRules"
+                        @input="generateEdgeShort()"
+                        @keyup.enter="createEdge()"
+                        @focus="getEdgeItemsName()"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col sm="3">
+                      <v-text-field
+                        class="mt-2"
+                        id="edgeCreateShort"
+                        label="Kürzel"
+                        v-model="edgeCreateShort"
+                        :rules="shortRules"
+                        @keyup.enter="createEdge()"
+                      ></v-text-field>
+                    </v-col>
+                  </v-row>
 
-              <!-- Start und Endzustand -->
-              <v-row>
-                <v-col sm="12">
-                  <v-select
-                    @focus="getNodeItemsID(); getNodeItemsName()"
-                    @change="validateStartEnd()"
-                    v-model="startSelect"
-                    id="Startzustand"
-                    ref="startzustand"
-                    :items="itemsName"
-                    :rules="startRules"
-                    label="Startzustand"
-                  ></v-select>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col sm="12">
-                  <v-select
-                    @focus="getNodeItemsID(); getNodeItemsName()"
-                    @change="validateStartEnd()"
-                    v-model="endSelect"
-                    id="Endzustand"
-                    ref="endzustand"
-                    :items="itemsName"
-                    :rules="endRules"
-                    label="Endzustand"
-                  ></v-select>
-                </v-col>
-              </v-row>
-
-              <!-- Time & Costs  -->
-              <v-row>
-                <v-col sm="6">
-                  <v-text-field
-                    id="edgeCreateCosts"
-                    label="Kosten / Stück"
-                    :suffix="unitCost"
-                    type="number"
-                    v-model="edgeCreateCosts"
-                    :rules="costRules"
-                    @keyup.enter="createEdge()"
-                  ></v-text-field>
-                </v-col>
-                <v-col sm="6">
-                  <v-text-field
-                    id="edgeCreateTime"
-                    label="Zeit / Stück"
-                    :suffix="unitTime"
-                    type="number"
-                    v-model="edgeCreateTime"
-                    :rules="timeRules"
-                    @keyup.enter="createEdge()"
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col sm="6">
-                  <v-text-field
-                    id="edgeCreatesuCosts"
-                    label="Kosten / Rüst"
-                    :suffix="unitCost"
-                    type="number"
-                    v-model="edgeCreatesuCosts"
-                    :rules="suCostRules"
-                    @keyup.enter="createEdge()"
-                  ></v-text-field>
-                </v-col>
-                <v-col sm="6">
-                  <v-text-field
-                    id="edgeCreatesuTime"
-                    label="Zeit / Rüst"
-                    :suffix="unitTime"
-                    type="number"
-                    v-model="edgeCreatesuTime"
-                    :rules="suTimeRules"
-                    @keyup.enter="createEdge()"
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-              <!-- LotSize  -->
-              <v-row>
-                <v-col sm="6">
-                  <v-text-field
-                    id="edgeCreateLotSize"
-                    label="Losgröße"
-                    type="number"
-                    suffix="Stück"
-                    v-model="edgeCreateLotSize"
-                    @keyup.enter="createEdge()"
-                    :rules="lotSizeRules"
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-              <!-- Create Buttons -->
-              <v-row class="mb-4" justify="end">
-                <v-col sm="4">
-                  <v-btn
-                    class="darkmode-ign"
-                    :disabled="!validEdges"
-                    color="green darken-1"
-                    text
-                    id="btn-create-edge"
-                    @click="createEdge()"
-                  >Hinzufügen</v-btn>
-                </v-col>
-                <v-col sm="4">
-                  <v-btn color="grey" text id="btn-cancel-edge" @click="cancel()">Abbrechen</v-btn>
-                </v-col>
-              </v-row>
-            </v-form>
+                  <!-- Start und Endzustand -->
+                  <v-row>
+                    <v-col sm="12">
+                      <v-select
+                        @focus="getNodeItemsID(); getNodeItemsName()"
+                        @change="validateStartEnd()"
+                        v-model="startSelect"
+                        id="Startzustand"
+                        ref="startzustand"
+                        :items="itemsName"
+                        :rules="startRules"
+                        label="Startzustand"
+                      ></v-select>
+                    </v-col>
+                  </v-row>
+                  <v-row>
+                    <v-col sm="12">
+                      <v-select
+                        @focus="getNodeItemsID(); getNodeItemsName()"
+                        @change="validateStartEnd()"
+                        v-model="endSelect"
+                        id="Endzustand"
+                        ref="endzustand"
+                        :items="itemsName"
+                        :rules="endRules"
+                        label="Endzustand"
+                      ></v-select>
+                    </v-col>
+                  </v-row>
+                </v-form>
+              </div>
+            </v-slide-x-reverse-transition>
+            <v-slide-x-transition>
+              <div
+                style="position: absolute; top: 136px"
+                v-show="edgeFormStep == 2"
+                ref="scrollingContainer"
+              >
+                <v-form
+                  ref="formEdges2"
+                  v-model="validEdges2"
+                  lazy-validation
+                  class="d-inline-block mr-5 ml-5 mb-4 hueshift"
+                  @submit="createEdge()"
+                  onsubmit="return false;"
+                  style="max-height: 300px; overflow: scroll-y"
+                >
+                  <!-- Time & Costs  -->
+                  <v-row>
+                    <v-col sm="6">
+                      <v-text-field
+                        id="edgeCreateCosts"
+                        label="Kosten / Stück"
+                        :suffix="unitCost"
+                        type="number"
+                        v-model="edgeCreateCosts"
+                        :rules="costRules"
+                        @keyup.enter="createEdge()"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col sm="6">
+                      <v-text-field
+                        id="edgeCreateTime"
+                        label="Zeit / Stück"
+                        :suffix="unitTime"
+                        type="number"
+                        v-model="edgeCreateTime"
+                        :rules="timeRules"
+                        @keyup.enter="createEdge()"
+                      ></v-text-field>
+                    </v-col>
+                  </v-row>
+                  <v-row>
+                    <v-col sm="6">
+                      <v-text-field
+                        id="edgeCreatesuCosts"
+                        label="Rüstkosten"
+                        :suffix="unitCost"
+                        type="number"
+                        v-model="edgeCreatesuCosts"
+                        :rules="suCostRules"
+                        @keyup.enter="createEdge()"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col sm="6">
+                      <v-text-field
+                        id="edgeCreatesuTime"
+                        label="Rüstzeit"
+                        :suffix="unitTime"
+                        type="number"
+                        v-model="edgeCreatesuTime"
+                        :rules="suTimeRules"
+                        @keyup.enter="createEdge()"
+                      ></v-text-field>
+                    </v-col>
+                  </v-row>
+                  <!-- LotSize  -->
+                  <v-row>
+                    <v-col sm="6">
+                      <v-text-field
+                        id="edgeCreateLotSize"
+                        label="Losgröße"
+                        type="number"
+                        suffix="Stück"
+                        v-model="edgeCreateLotSize"
+                        @keyup.enter="createEdge()"
+                        :rules="lotSizeRules"
+                      ></v-text-field>
+                    </v-col>
+                  </v-row>
+                </v-form>
+              </div>
+            </v-slide-x-transition>
           </div>
+          <!-- Create Buttons -->
+          <v-row class="mb-4" justify="end">
+            <v-col v-show="edgeFormStep == 1" sm="4">
+              <v-btn
+                class="darkmode-ign"
+                :disabled="!validEdges1"
+                color="green darken-1"
+                text
+                id="btn-create-edge"
+                @click="changeEdgeFormStep(2)"
+              >Weiter</v-btn>
+            </v-col>
+            <v-col v-show="edgeFormStep == 2" sm="4">
+              <v-btn
+                class="darkmode-ign"
+                :disabled="!validEdges2"
+                color="green darken-1"
+                text
+                id="btn-create-edge"
+                @click="createEdge()"
+              >Hinzufügen</v-btn>
+            </v-col>
+            <v-col sm="4">
+              <v-btn color="grey" text id="btn-cancel-edge" @click="cancel()">Abbrechen</v-btn>
+            </v-col>
+          </v-row>
         </v-card>
       </v-slide-x-reverse-transition>
     </div>
@@ -347,6 +427,7 @@ export default {
       nodeCreateImgPath: "",
       nodeCreateColor: "2699FB",
       edgeCreateGui: false,
+      edgeFormStep: 1,
       edgeCreateName: "",
       edgeCreateShort: "",
       edgeCreateCosts: "",
@@ -365,7 +446,8 @@ export default {
       showNodeTitle: "Erstelle einen Zustand",
       showEdgeTitle: "Erstelle eine Verknüpfung",
       validNodes: false,
-      validEdges: false,
+      validEdges1: false,
+      validEdges2: false,
       clickX: 500,
       clickY: 300,
       nameNodeRules: [
@@ -390,15 +472,15 @@ export default {
         v => v >= 0 || "Darf nicht negativ sein"
       ],
       timeRules: [
-        v => !!v || "Kosten werden benötigt",
+        v => !!v || "Zeit werden benötigt",
         v => v >= 0 || "Darf nicht negativ sein"
       ],
       suCostRules: [
-        v => !!v || "Kosten werden benötigt",
+        v => !!v || "Rüstkosten werden benötigt",
         v => v >= 0 || "Darf nicht negativ sein"
       ],
       suTimeRules: [
-        v => !!v || "Kosten werden benötigt",
+        v => !!v || "Rüstzeit werden benötigt",
         v => v >= 0 || "Darf nicht negativ sein"
       ],
       startRules: [v => !!v || "Startzustand wird benötigt"],
@@ -417,13 +499,12 @@ export default {
     };
   },
   methods: {
-      backupGraph() {
-    //let gra = cyStore.data.cy;
-    this.$store.commit('saveGraph', cyStore.data.cy.json());
-  },
+    backupGraph() {
+      //let gra = cyStore.data.cy;
+      this.$store.commit("saveGraph", cyStore.data.cy.json());
+    },
     getGraph() {
       return this.$parent.$parent.$refs["vargraph"];
-
     },
     checkImg(url) {
       return url.match(/\.(jpeg|jpg|gif|png)$/) != null;
@@ -486,6 +567,17 @@ export default {
       this.edgeCreateGui = false;
       this.fab = false;
     },
+    changeEdgeFormStep(step) {
+      if (this.edgeFormStep == 1) {
+        // validate form step 1
+        if (this.$refs.formEdges1.validate()) {
+          this.edgeFormStep = step;
+        }
+      } else if (this.edgeFormStep == 2) {
+        // step 2 need no validation
+        this.edgeFormStep = step;
+      }
+    },
     openNodeGui() {
       this.$parent.$parent.$refs.detailControls.deactivateGui();
       this.nodeCreateGui = true;
@@ -518,7 +610,7 @@ export default {
       this.edgeNames = this.getGraph().getEdgeName(this.getGraph());
     },
     createEdge() {
-      if (this.$refs.formEdges.validate()) {
+      if (this.$refs.formEdges2.validate()) {
         let newcost = parseFloat(this.edgeCreateCosts);
         let newtime = parseFloat(this.edgeCreateTime);
         let newsucost = parseFloat(this.edgeCreatesuCosts);
@@ -555,7 +647,6 @@ export default {
         this.getGraph().removeOptimization();
       }
       this.backupGraph();
-
     },
     setTarget(id) {},
     createNode() {
@@ -599,7 +690,8 @@ export default {
       this.showNodeTitle = "Erstelle einen Zustand";
       this.showEdgeTitle = "Erstelle eine Verknüpfung";
       this.$refs.formNodes.reset();
-      this.$refs.formEdges.reset();
+      this.$refs.formEdges1.reset();
+      this.$refs.formEdges2.reset();
       this.$refs.scrollingContainer.scrollTop = 0;
       this.backupGraph();
     },
@@ -608,7 +700,5 @@ export default {
       this.$refs.endzustand.validate();
     }
   }
-
-
 };
 </script>
