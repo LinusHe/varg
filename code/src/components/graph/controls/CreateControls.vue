@@ -566,6 +566,7 @@ export default {
       this.nodeCreateGui = false;
       this.edgeCreateGui = false;
       this.fab = false;
+      this.edgeFormStep = 1;
     },
     changeEdgeFormStep(step) {
       if (this.edgeFormStep == 1) {
@@ -643,6 +644,7 @@ export default {
 
         this.clearFields();
         this.edgeCreateGui = false;
+        this.edgeFormStep = 1;
         // remove optimization
         this.getGraph().removeOptimization();
       }
