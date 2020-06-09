@@ -156,7 +156,7 @@
                   tile
                   block
                   color="primary"
-                  @click="edgeFormStep = 1"
+                  @click="changeEdgeFormStep(1)"
                 >Allgemein</v-btn>
               </v-col>
               <v-col sm="6" class="pt-0 pb-0">
@@ -166,7 +166,8 @@
                   tile
                   block
                   color="primary"
-                  @click="edgeFormStep = 2"
+                  @click="changeEdgeFormStep(2)"
+                  :disabled="!validEdges1"
                 >Zeit & Kosten</v-btn>
                 <v-btn v-show="edgeFormStep==2" depressed tile block color="#ffffff">Zeit & Kosten</v-btn>
               </v-col>
@@ -181,8 +182,8 @@
                 v-show="edgeFormStep == 1"
               >
                 <v-form
-                  ref="formEdges"
-                  v-model="validEdges"
+                  ref="formEdges1"
+                  v-model="validEdges1"
                   lazy-validation
                   class="d-inline-block mr-5 ml-5 mb-4 hueshift"
                   @submit="saveEdge()"
@@ -200,7 +201,6 @@
                         :rules="nameEdgeRules"
                         @input="generateEdgeShort()"
                         @keyup.enter="saveEdge()"
-                        @focus="getEdgeItemsName()"
                       ></v-text-field>
                     </v-col>
                     <v-col sm="3">
@@ -255,8 +255,8 @@
                 v-show="edgeFormStep == 2"
               >
                 <v-form
-                  ref="formEdges"
-                  v-model="validEdges"
+                  ref="formEdges2"
+                  v-model="validEdges2"
                   lazy-validation
                   class="d-inline-block mr-5 ml-5 mb-4 hueshift"
                   @submit="saveEdge()"
@@ -292,7 +292,7 @@
                     <v-col sm="6">
                       <v-text-field
                         id="edgesuCosts"
-                        label="Kosten / Rüst"
+                        label="Rüstkosten"
                         :suffix="unitCost"
                         type="number"
                         v-model="edgesuCosts"
@@ -303,7 +303,7 @@
                     <v-col sm="6">
                       <v-text-field
                         id="edgesuTime"
-                        label="Zeit / Rüst"
+                        label="Rüstzeit"
                         :suffix="unitTime"
                         v-model="edgesuTime"
                         type="number"
@@ -337,8 +337,8 @@
                 class="darkmode-ign"
                 color="green darken-1"
                 text
-                :disabled="!validEdges"
-                @click="edgeFormStep =2"
+                :disabled="!validEdges1"
+                @click="changeEdgeFormStep(2)"
               >Weiter</v-btn>
             </v-col>
             <v-col sm="3" v-show="edgeFormStep == 2">
@@ -346,7 +346,7 @@
                 class="darkmode-ign"
                 color="green darken-1"
                 text
-                :disabled="!validEdges"
+                :disabled="!validEdges2"
                 @click="saveEdge()"
               >Speichern</v-btn>
             </v-col>
@@ -425,7 +425,8 @@ export default {
       showNodeTitle: "Erstelle ein Teil",
       showEdgeTitle: "Erstelle einen Bearbeitungsschritt",
       validNodes: false,
-      validEdges: false,
+      validEdges1: false,
+      validEdges2: false,
       nameNodeRules: [
         v => !!v || "Name für Teil wird benötigt",
         v => (v && v.length <= 18) || "Name ist zu lang",
@@ -534,6 +535,13 @@ export default {
       } else if (target.group() == "edges") {
         this.openEdgeDetails(target);
       }
+
+      if(target === this.getGraph().getCytoGraph(this.getGraph())) {
+        // 👀
+      }
+      else if(target.group() == "edges" && target.hasClass("quick-edge")) {
+        this.edgeFormStep = 2;
+      }
     },
     closeMenus() {
       this.deactivateGui();
@@ -586,7 +594,10 @@ export default {
       this.itemsName = this.getGraph().getNodeName(this.getGraph());
     },
     getEdgeItemsName() {
-      this.edgeNames = this.getGraph().getEdgeName(this.getGraph());
+      this.edgeNames = this.getGraph()
+        .getEdgeName(this.getGraph())
+        .filter(name => name != this.edgeName);
+      console.log("edgeNames", this.edgeNames);
     },
     openNodeDetails(node) {
       this.loadNodeData(node);
@@ -597,6 +608,7 @@ export default {
     },
     openEdgeDetails(edge) {
       this.loadEdgeData(edge);
+      this.getEdgeItemsName();
       this.$parent.$parent.$refs.createControls.deactivateGui();
       this.nodeGui = false;
       this.edgeGui = true;
@@ -616,6 +628,17 @@ export default {
       this.edgeGui = false;
       this.edgeFormStep = 1;
     },
+    changeEdgeFormStep(step) {
+      if (this.edgeFormStep == 1) {
+        // validate form step 1
+        if (this.$refs.formEdges1.validate()) {
+          this.edgeFormStep = step;
+        }
+      } else if (this.edgeFormStep == 2) {
+        // step 2 need no validation
+        this.edgeFormStep = step;
+      }
+    },
     saveNode() {
       if (this.$refs.formNodes.validate()) {
         this.getGraph().updateNode(
@@ -633,7 +656,10 @@ export default {
       this.backupGraph();
     },
     saveEdge() {
-      if (this.$refs.formEdges.validate()) {
+      if (
+        this.$refs.formEdges1.validate() &&
+        this.$refs.formEdges2.validate()
+      ) {
         let indexStart = this.itemsName.indexOf(this.startSelect);
         let startID = this.itemsID[indexStart];
         let indexEnd = this.itemsName.indexOf(this.endSelect);
@@ -653,6 +679,7 @@ export default {
           parseFloat(this.edgeLotSize)
         );
         this.edgeGui = false;
+        this.edgeFormStep = 1;
         dialogComponent.dialogSuccess(
           "Bearbeitungsschritt erfolgreich aktualisiert"
         );
