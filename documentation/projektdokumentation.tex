@@ -113,11 +113,26 @@
 \section{Anforderungsspezifikation}
 
 \subsection{Initiale Kundenvorgaben}
-{\small Autor: xxx}
+{\small Autor: Jonas Gwozdz}
 
-Maecenas sed ultricies felis. Sed imperdiet dictum arcu a egestas.
-In sapien ante, ultricies quis pellentesque ut, fringilla id sem. Proin justo libero, dapibus consequat auctor at, euismod et erat. Sed ut ipsum erat, iaculis vehicula lorem. Cras non dolor id libero blandit ornare. Pellentesque luctus fermentum eros ut posuere. Suspendisse rutrum suscipit massa sit amet molestie. Donec suscipit lacinia diam, eu posuere libero rutrum sed. Nam blandit lorem sit amet dolor vestibulum in lacinia purus varius. Ut tortor massa, rhoncus ut auctor eget, vestibulum ut justo.
+\vspace{\baselineskip}
+\noindent Die Vorgaben unseres Kunden, Prof. Gürtler, ließen uns viele Freiheiten in der Gestaltung des Programms. \par
 
+\noindent Die gegebenen Vorgaben legten das Folgende fest: \par
+\begin{itemize}
+  \item Für die Herstellung eines Werkstücks gibt es in der Regel mehrere Alternativen.
+  Ausgehend von einem Rohteil folgen verschiedene   Bearbeitungsschritte, die zum Fertigteil führen. 
+  Die einzelnen   Bearbeitungsschritte sollen mit einer Bearbeitungszeit und Kosten belegt werden. \par
+
+  \item Im Tool soll der entsprechende Graph angelegt werden und Kostenfunktionen sowie Bearbeitungszeiten 
+  für die einzelnen Schritte und eine Losgröße   eingegeben werden können. \par
+
+  \item Kosten fallen pro Bearbeitungsschritt einmalig, pro Zeiteinheit (z.B. Lohn) 
+  und pro Werkstück an. AN jeder Maschine werden Rüstzeiten (pro Los) und Bearbeitungszeiten (pro Werkstück) verbraucht. \par
+
+  \item Das Tool soll bei Vorgabe all dieser Größen die günstigsten Varianten (nach Kosten, Zeit oder einer Kombination der beiden) 
+  in Abhängigkeit von einer vorgegebenen Losgröße berechnen.
+\end{itemize}
 
 \subsection{Produktvision}
 {\small Autor: Alex Hofmann}
@@ -393,9 +408,144 @@ So wurde es ermöglicht nach der Hälfte des Projektes, am Ende jedes Sprints ei
 
 
 \subsection{Coding Style}
-{\small Autor: xxx}
+{\small Autor: Jonas Gwozdz}
 
-XXX
+\vspace{\baselineskip}
+\noindent Beim Schreiben unseres Programmcodes haben wir uns an folgende Coding Conventions gehalten.\par
+
+\begin{itemize}
+	\item Zeilenlänge: maximal 80 Zeichen\par
+
+	\item Kommentare und Dokumentation\par
+
+\begin{itemize}
+	\item Kommentare auf Englisch\par
+
+	\item Klassen und Methoden in kurzen, prägnanten Sätzen beschreiben\par
+
+	\item Unnötige Kommentare vermeiden\par
+
+	\item Kommentare aktuell halten\par
+
+
+\end{itemize}
+	\item Einrückung und Zeilenumbrüche\par
+
+\begin{itemize}
+	\item 2 Leerzeichen statt Tabulator\par
+
+	\item ‚$ \{ $ ‘ hinter Methodendeklaration\par
+
+	\item ‚$ \} $ ‘ in neuer Zeile auf gleiche Einrückungsebene\par
+
+	\item Optionale Zeilenumbrüche für Übersichtlichkeit\par
+
+	\item Nur ein Import pro Zeile\par
+
+
+\end{itemize}
+	\item Leerzeichen\par
+
+\begin{itemize}
+	\item Vor und nach binären Operationen\par
+
+\begin{itemize}
+	\item Ausnahme nur im Fall von Verdeutlichung unterschiedlicher Prioritäten\par
+
+
+\end{itemize}
+	\item Keine Leerzeichen vor und nach Klammern\par
+
+	\item Keine Leerzeichen vor Kommata und Semikolon\par
+
+	\item Leerzeichen nach Kommata\par
+
+	\item Keine Leerzeichen am Zeilenende\par
+
+
+\end{itemize}
+	\item Konsistentes Benennungsschema\par
+
+\begin{itemize}
+	\item Deskriptive Namen verwenden\par
+
+	\item mixedCase für Variablen\par
+
+	\item GROßSCHREIBUNG für Konstanten\par
+
+	\item Keine Umlaute\par
+
+	\item Reservierte Schlüsselwörter beachten\par
+
+	\item Immer auf Englisch\par
+
+	\item Bezeichner von Booleanwerte sollen Zustand beschreiben, der wahr oder falsch sein kann\par
+
+	\item Hilfsvariablen möglichst gleich benennen\par
+
+	\item Übergabe von Attributen an Konstruktoren\par
+
+\begin{itemize}
+	\item ‚length‘ als Attribut, ‚\_length‘ als Argument\par
+
+
+\end{itemize}
+\end{itemize}
+	\item Textcodierung UTF-8
+\end{itemize}\par
+\textbf{Best Practice}\par
+
+\begin{itemize}
+	\item Allgemeines\par
+
+\begin{itemize}
+	\item Kein ‚language‘ Tag verwenden\par
+
+	\item Wiederholungen Vermeiden\par
+
+	\item Dopplungen vermeiden\par
+
+
+\end{itemize}
+\end{itemize}
+\begin{itemize}
+	\item Variablen und Objekte\par
+
+\begin{itemize}
+	\item Keine globalen Variablen
+
+	\item Lokale Variablen, auch Zahlenvariablen zu Beginn deklarieren und initialisieren\par
+
+	\item Deklaration mehrerer Variablen können zusammengefasst werden\par
+
+	\item Datentyp wird über die Initialisierung zugewiesen\par
+
+	\item Kapselung mittels Namespace\par
+
+	\item Keine Deklaration mittels ‚new $ \ldots $ ()‘\par
+
+\end{itemize}
+\end{itemize}
+\begin{itemize}
+	\item Funktionen\par
+
+\begin{itemize}
+	\item Vergleiche mittels ‚===‘
+
+	\item Unter keinen Umständen ‚eval()‘ benutzen\par
+
+	\item Keine ‚with‘ Statements\par
+
+	\item Keine ‚for ($ \ldots $  in $ \ldots $ )‘ Loops\par
+
+	\item Jeder ‚switch‘ hate einen ‚default‘ Case\par
+
+	\item Vorsicht bei Verwendung von ‚typeof()‘\par
+
+	\item Nicht erhaltene Argumente gelten als ‚undefined‘
+\end{itemize}\par
+\end{itemize}
+
 
 \subsection{Zu nutzende Werkzeuge}
 {\small Autor: Linus Herterich}
