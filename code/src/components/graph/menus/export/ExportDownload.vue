@@ -152,7 +152,8 @@ export default {
           "newGraphMenu"
         ].discard();*/
         this.$store.commit("ResetGraph");  // After Download Graph will be reseted
-        location.reload();                //Loadingscreen will take us to home/menu
+        this.$router.replace("/");        //Loadingscreen will take us to home/menu
+        //location.reload();
       }
     }
   }
