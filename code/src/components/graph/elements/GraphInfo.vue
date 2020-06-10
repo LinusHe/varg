@@ -132,7 +132,7 @@
       <v-row>
         <v-divider class="mx-4" vertical></v-divider>
         <v-card align="center" class="icon-card mt-2 ml-4" width="60px" height="60px">
-          <v-icon size="40px" class="mt-2 darkmode-ign" color="#2699FB">mdi-cash</v-icon>
+          <v-icon v-if="option" size="40px" class="mt-2 darkmode-ign" color="#2699FB">mdi-cash</v-icon>
         </v-card>
         <p class="mb-0">
           <v-card-subtitle class="pb-0">
@@ -155,7 +155,7 @@
                 <v-icon
                   v-if="optimized"
                   v-on="on"
-                  @click="startOptimizing"
+                  @click="runOptC"
                   color="#636364"
                   class="ml-2 mb-1"
                   small
@@ -167,7 +167,7 @@
           <v-card-title v-if="optimized" class="pt-0 pb-0">{{costs}}</v-card-title>
           <v-btn
             v-if="!optimized"
-            @click="startOptimizing"
+            @click="runOptC"
             class="ml-4 pa-0 darkmode-ign"
             text
             color="#2699FB"
@@ -180,7 +180,7 @@
       <v-row>
         <v-divider class="mx-4" vertical></v-divider>
         <v-card align="center" class="icon-card mt-2 ml-4" width="60px" height="60px">
-          <v-icon size="40px" class="mt-2 darkmode-ign" color="#2699FB">mdi-clock-outline</v-icon>
+          <v-icon v-if="!option" size="40px" class="mt-2 darkmode-ign" color="#2699FB">mdi-clock-outline</v-icon>
         </v-card>
         <p class="mb-0">
           <v-card-subtitle class="pb-0">
@@ -203,7 +203,7 @@
                 <v-icon
                   v-on="on"
                   v-if="optimized"
-                  @click="startOptimizing"
+                  @click="runOptT"
                   color="#636364"
                   class="ml-2 mb-1"
                   small
@@ -215,7 +215,7 @@
           <v-card-title v-if="optimized" class="pt-0 pb-0">{{time}}</v-card-title>
           <v-btn
             v-if="!optimized"
-            @click="startOptimizing"
+            @click="runOptT"
             class="ml-4 pa-0 darkmode-ign"
             text
             color="#2699FB"
@@ -321,9 +321,32 @@ export default {
     setOptimized(bool) {
       this.optimized = bool;
     },
+    runOptC() {
+      this.getGraph()
+        .getCytoGraph(this.getGraph())
+        .data("settingsOptimizationOption", "optionCost")
+
+      this.startOptimizing()
+    },
+    runOptT() {
+      this.getGraph()
+        .getCytoGraph(this.getGraph())
+        .data("settingsOptimizationOption", "optionTime")
+
+      this.startOptimizing()
+    },
 
     runOptimization() {
       this.getGraph().optimizing();
+      let option = this.getGraph()
+        .getCytoGraph(this.getGraph())
+        .data("settingsOptimizationOption")
+      if(option == 'optionCost') {
+        this.option = true
+      }
+      else {
+        this.option = false
+      }
 
       // get best path
       let bestPaths = this.getGraph()
