@@ -128,7 +128,7 @@ export default {
 
     
     login: function () {
-     this.$store.dispatch(AUTH_REQUEST, { user: this.input.email, password: this.input.password }).then(() => {
+     this.$store.dispatch(this.$store.AUTH_REQUEST, { user: this.input.email, password: this.input.password }).then(() => {
      this.$router.push('/')
    })
     },

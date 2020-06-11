@@ -9,9 +9,9 @@ const express = require('express');
 const mysql_driver = require('mysql');
 
 const config = {
-    // eheldt: 192.168.1.102
+    // eheldt: 192.168.99.101
     // jhohlfel: 192.168.99.101
-    host: "192.168.1.102",
+    host: "192.168.99.101",
     user: "varg",
     password: "VarG2020",
     database: "vargdb"
@@ -65,12 +65,19 @@ router.route('/login?')
     //get login data
     .get(function (req, res) {
         console.log("Sending Log-In data.");
-        let user = req.params.user;
-        console.log(user + ", willkommen in der Matrix.");
-        let data = {
-            tocken = 42069
+        let userName = req.params.user;
+        let password = req.params.password;
+        if (userName === "VarG" && password === "2020"){
+            console.log(user + ", willkommen in der Matrix.");
+            let user = {
+                name: userName,
+                role: 'student',
+                issued: Date.now(),
+                authenticated: true
+            }
+            res.send(user);
         }
-        res.send(data);
+        else res.sendStatus(403);
     });
 
 

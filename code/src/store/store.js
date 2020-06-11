@@ -1,3 +1,4 @@
+import axios from 'axios';
 import Vue from "vue";
 import Vuex from "vuex";
 
@@ -35,16 +36,14 @@ export const store = new Vuex.Store({
   },
   mutations: {
 
-
-  
-    [AUTH_REQUEST]: (state) => {
+   AUTH_REQUEST: (state) => {
       state.status = 'loading';
     },
-    [AUTH_SUCCESS]: (state, user) => {
+    AUTH_SUCCESS: (state, user) => {
       state.status = 'success';
       state.user = user;
     },
-    [AUTH_ERROR]: (state) => {
+    AUTH_ERROR: (state) => {
       //state.user = null;
       state.status = 'error';
     },
@@ -112,19 +111,26 @@ export const store = new Vuex.Store({
      * if user input cannot be verified the token will be removed from the store
      */
 
-
-    [AUTH_REQUEST]: ({commit, dispatch}, user) => {
+    AUTH_REQUEST: ({commit, dispatch}, data) => {
       return new Promise((resolve, reject) => { // The Promise used for router redirect in login
-        commit(AUTH_REQUEST);
-        axios({url: 'ROUTE2AUTHENTICATIONBACKEND', data: user, method: 'POST' })
+        commit(this.actions.AUTH_REQUEST);
+        // eslint-disable-next-line standard/object-curly-even-spacing
+        const url = 'http://192.168.99.101:1110/VarG/login';
+        //url: data: user
+        axios
+          .get(url, {
+              params: {
+                user: data.user,
+                password: data.password
+              }
+            })
           .then(resp => {
             const user = resp;
-            commit(AUTH_SUCCESS, user);
-            dispatch(USER_REQUEST);
+            commit(this.mutations.AUTH_SUCCESS, user);
             resolve(resp);
           })
         .catch(err => {
-          commit(AUTH_ERROR, err);
+          commit(this.mutations.AUTH_ERROR, err);
           reject(err);
         })
       })
