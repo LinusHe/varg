@@ -13,7 +13,6 @@ const data = {
   settingsUnitCostItems: ["cent", "€", "$", "£"],
   settingsUnitCostSelection: "€",
   settingsUnitTimeItems: [
-    "Millisekunden",
     "Sekunden",
     "Minuten",
     "Stunden",

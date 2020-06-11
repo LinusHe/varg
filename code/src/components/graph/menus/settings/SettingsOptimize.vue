@@ -334,6 +334,7 @@ export default {
       // remove optimization
       this.getGraph().removeOptimization();
       this.rankArray = [];
+      
     },
 
     getNodeItemsID() {
@@ -341,18 +342,25 @@ export default {
     },
 
     getNodeItemsName() {
+      //get the nodeNames to show in settings
+      
       this.itemsName = this.getGraph().getNodeName(this.getGraph());
-      this.startSelect = [""];
+
+
+      this.startSelect = []
+
+      //get the StartID's when they were selected automatically
+      
+      
       let selectNodes = this.getGraph()
         .getCytoGraph()
         .data("settingsOptimizationStartIDs");
+
+
+  
+        
       for (let i = 0; i < selectNodes.length; i++) {
-        console.log(
-          this.getGraph()
-            .getCytoGraph()
-            .nodes("#" + selectNodes[i])
-            .data("name")
-        );
+        
         this.startSelect.push(
           this.getGraph()
             .getCytoGraph()
@@ -370,6 +378,8 @@ export default {
               .data("settingsOptimizationEndID")
         )
         .data("name");
+
+        console.log("startSelect: " + this.startSelect)
     }
   }
 };
