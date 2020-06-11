@@ -1,0 +1,127 @@
+\subsection{Ziel des Sprints}
+{\small Autor: Tim Henning}
+
+Der vierte Sprint des VarG-Projektes lief vom 13.04.20 bis zum 23.04.20.
+Ziel des Sprints war zum einem, dass die nicht vollendeten Aufgaben aus Sprint 4 nachgeholt werden, und das sich um die Schnittstelle zwischen Frontend und Backend gekümmert wird. Weiterhin wurde geäußert viel Recherche zum Thema Datenbanken, Shibboleth Anbindung und bereitstellen eines Servers des IT-Servicezentrums der HTWK, zu betreiben. Außerdem sollten zum vorhandenen Optimierungsalgorithmus noch einige Besserungen vorgenommen werden.
+
+\subsection{User-Stories des Sprint-Backlogs}
+{\small Autor: Tim Henning}
+
+\textbf{Datenbank, Initiale Aufgaben zur Bereitstellung}
+Als Nutzer möchte ich gerne auf eine, mit dem Rest der App, konsistente Oberfläche zugreifen können, damit ich mich einfacher zurecht finde. Zudem möchte ich gerne einen Überblick über die vorhandenen Elemente (Bearbeitungsmaschinen) anzeigen lassen und in meinen Graphen übernehmen können, damit ich die Eigenschaften dieses Elements nicht jedes mal neu heraussuchen muss.
+
+\textbf{Entwurf der Schnittstelle zwischen Backend und Frontend}
+Als Nutzer möchte ich Daten aus der Datenbank abrufen/anzeigen lassen können, damit der Graph schneller erstellt werden kann.
+
+\textbf{Login}
+Nach dem Login, in die Applikation sollen meine Anmeldedaten gespeichert werden, damit ich mich beim erneuten laden der Seite nicht neu einloggen muss.
+
+\textbf{Optimierung}
+Als Benutzer möchte ich optimale Wege des erstellten Graphen anzeigen lassen können, damit ich eine bessere Auswahl zwischen den einzelnen Bearbeitungsschritten treffen kann.
+
+
+\subsection{Liste der durchgeführten Meetings}
+{\small Autor: Tim Henning}
+
+\begin{itemize}
+	\item Planning - 13.04.2020
+	\item Weekly Scrum 1 - 16.04.2020
+	\item Weekly Scrum 2 - 20.04.2020
+	\item Review - 23.04.2020
+	\item Retrospektive - 23.04.2020
+\end{itemize}
+
+\subsection{Ergebnisse des Planning-Meetings}
+{\small Autor: Tim Henning}
+
+Anwesend: Jonas G., Erik H. Linus H., Lennart B., Tim H., David K., Matthias B., Alaa Aldin K., Manuel E., Julius J., Alex H.\\
+\\
+
+Neben der Aufgabenverteilung wurden noch einige zusätzliche Punkte besprochen, die nicht in den User Stories aufgetaucht sind. So zum Beispiel sollte nach jedem Sprint ein Production Build angelegt werden, der auf einem Server liegt, damit der Kunde regelmäßig das Produkt testen kann. Weiterhin wurde gefordert die neue Testumgebung Cypress in die Git-Pipeline einzubinden. Außerdem sollte am IT-Servicezentrum nachgefragt werden, ob es möglich ist eine Shibboleth Anbindung zu bekommen und ob die HTWK einen Server bereitstelle, auf dem der Production Build später gehostet werden kann.
+
+\subsection{Aufgewendete Arbeitszeit pro Person$+$Arbeitspaket}
+{\small Autor: Tim Henning}
+
+\begin{longtable}{|p{4cm}|p{2cm}|p{1.2cm}|p{1.2cm}|p{0.7cm}|p{3.8cm}|}
+        \hline
+	Arbeitspaket & Person & Start & Ende & h & Artefakt\\
+        \hline
+	UI: Login & Beger, Matthias & 13.04.20 & 13.04.20 & 2,5 & Recherche, Konzeption\\ \hline
+	UI:Login & Buchmann, Lennart & 23.04.20 & 23.04.20 & 5 & Recherche, Konzeption\\ \hline
+UI: Datenbank; Initiale Aufgaben zur Bereitstellung & Gwozdz, Jonas  & 13.04.20 & 23.04.20 & 15 & Datenbankfenster Redesign, Responsiveness der Datenbankseite, Button Platzierungen \\ \hline
+ Task: Sprint 4 Dokumentation & Gwozdz, Jonas  & 13.04.20  & 13.04.20 & 5 & Sprint4.tex \\ \hline
+UI: Entwurf der SChnittstelle Backend <-> Frontend & Heldt, Erik  & 18.04.20 & 18.04.20  & 1,5 & SaveMenu.vue, TestDataBase.js \\ \hline
+Task: Recherche Zusammenspiel Vue + Datenbank & Heldt, Erik  & 15.04.20  & 16.04.20  & 2 & Installation Axios, HTTP Requests \\ \hline
+Task: Button UI/UX Änderungen und Validierung bei Erstellung von Kanten & Heldt, Erik  & 17.04.20 &23.04.20 & 7 & CreateControl.vue, DetailControls.vue\\ \hline
+Task: Gesamkosten und /-zeit einschließlich der Produktanzahl & Henning, Tim  & 15.04.20  & 16.04.20  & 4 & optimization.js \\ \hline
+Task: Alten Optimierungsalgorithmus umbauen & Henning,  Tim  & 17.04.20 & 23.04.20  & 11 & optimization.js\\ \hline
+Task: Sprint 5 Dokumentation & Henning,Tim  & 23.04.20  & 23.04.20  & 3 & Sprint5.tex \\ \hline
+UI: Datenbank; Initiale Aufgaben zur Bereitstellung &  Herterich, Linus  & 15.04.20  & 15.04.20 &  2,5 & Datenbankseite nun als Component \\ \hline
+Sprint 2 Dokumentation  &  Herterich, Linus& 13.04.20 & 13.04.20 & 3,5 & Sprint2.tex \\ \hline
+Task: Erstellung Production Build auf Server & Herterich, Linus  & 14.04.20  & 14.04.20 & 3 & läuft auf varg.nfl-server.de \\ \hline
+Task: Cypress Test in die Gitlab Pipeline & Herterich, Linus  & 16.04.20 & 16.04.20 & 4,5 & .gitlab-ci.yml\\ \hline
+Task: Kaputte Tests reparieren & Herterich, Linus  & 17.04.20  & 17.04.20  & 2 &  code/cypress/integration/.. \\ \hline
+Task:Graph aus Hauptmenü importieren & Herterich, Linus  & 17.04.20  & 17.04.20  & 2 & Importieren aus Hauptmenü umgesetzt  \\ \hline
+Task: Redesign Graphen Seite(Navigation Drawer) & Herterich, Linus  & 16.04.20  & 23.04.20 & 11 & 2 neue Designkonzepte \\ \hline
+UI: Entwurf der Schnittstelle Backend <-> Frontend & Hohlfeld, Julius  & 13.04.20  & 22.04.20 & 6,5 & Dokumentation der API-Recherche und erste Entwürfe, API Dokumentation im Git Wiki \\ \hline
+Task: Auswahl von Endzustand ohne Startzustand & Karkoutli, Alaa Aldin  &  17.04.20 & 22.04.20  & 14 & ausgewählte Startzustände aus Liste der Endzustände entfernt, OptimizeControls.vue  \\ \hline
+Task: Auslagern der Optimize Controlls & Koch, David & 16.04.20   & 16.04.20 &  2 & OptimizeControls.vue \\ \hline
+Task: Neuer Optimierungsalgorithmus & Koch, David & 17.04.20 & 23.04.20 & 10 & Beginn eines neuen Algorithmus \\ \hline
+
+      \end{longtable}
+
+\subsection{Konkrete Code-Qualität im Sprint}
+{\small Autor: Tim Henning}
+
+Die Codequalität hat sich zum vorherigen Sprint nicht entscheidend geändert. Durch den Umbau des Optimierungsalgorithmus hat man nun aber eine etwas höhere Speicherplatz- und Laufzeitkomplexität. Dies soll im nächsten Sprint angegangen und verbessert werden. Durch das Redesign ist die Website im allgemeinen ästhetischer geworden.
+
+
+\subsection{Konkrete Test-Überdeckung im Sprint}
+{\small Autor: Tim Henning}
+
+Durch das Hinzufügen der Cypress Tests in die Pipeline des Git-Repository ist nun eine relativ gutes Feedback für den jeweiligen Entwickler und Tester vorhanden. Dieser bekommt nach durchführen der Pipeline eine E-mail, falls der Test fehlschlägt. Für den Optimierungsalgorithmus hingegen fehlen noch ein paar Tests.
+
+\subsection{Ergebnisse des Reviews}
+{\small Autor: Tim Henning}
+
+Anwesend: Jonas G., Erik H. Linus H., Lennart B., Tim H., David K., Alaa Aldin K., Manuel E., Julius J., Alex H.\\
+
+
+Im Review hat wie gehabt, jeder seine erledigten und angefangen Aufgaben vorgestellt und bewertet. So wurde bei der Optimierung die Stückzahl in den Algorithmus integriert, die Endzustände ohne Startzustände werden nun angezeigt und es wurde parallel an zwei neuen Algorithmen gearbeitet, die es ermöglichen die k-besten Pfade auszugeben, und nicht nur den optimalsten Pfad. Dabei wurde einer fertig gestellt, der die Pfade in der Konsole ausgeben kann. Dieser hat aber eine recht hohe Laufzeit- und Speicherplatzkomplexität. Daher wurde ein weitere Algorithmus angefangen, welcher im nächsten Sprint weiterentwickelt und angepasst wird. Zur Userstory der Datenbank und den Initalen Aufgaben zur Bereitstellung wurden erste HTTP Requests angefangen und ausprobiert sowie Axios installiert. Da aber die Datenbank nocht nicht konkret fest stand und noch kein Server von der HTWK zur Verfügung war, wurde sich primär um Bugfixing, Testing und Valiedierungen von Eingaben gekümmert. Die Buttons werden nun nach Windows Standard rechts unten angezeit und sind im Text-only Stil. Desweiteren wurde der Datenbankscreen angepasst und hat nun eine übersichtlichere Darstellung der Elemente, die später einmal aus der Datenbank geladen werden. Zur Userstory der Schnittstelle zwischen Frontend und Backend wurde viel Recherche betrieben. Dabei wurde ein Dokument erstellt, welches alle wichtigen und relevanten Informationen zum Thema API zusammen trägt. Dieses ist im Git- Wiki zu finden. Im Login Team wurde sich damit beschäftigt ein Rollenmanagement einzuführen und die Anbindung an das Shibboleth zu bekommen. Dies wird im nächsten Sprint weitergeführt. Ebenfalls wurde bei dem IT-Servicentrum der HTWK ein Server bestellt mit folgenden Spezifikationen:
+\begin{itemize}
+	\item 64 Bit, Debian
+	\item 4GB Ram, 30GB Festplatte
+	\item Anzahl der CPU's: 1
+	\item Name der VM: Varg
+	\item Netz: DMZ-VM-Fak
+	\item Verwendungszweck: Softwareprojekt
+	\item Verantwortlicher Prof.: Prof. Dr. Martin Gürtler
+	\item Bemerkungen: Anfragen ob ITSZ Apache ausrollt\newline
+\end{itemize}
+
+
+Als letzter Punkt wurde im Sprint ein neues Design angefangen. Dort wurden auch schon die meisten Funktionen und Menüs implementiert und zum Ende des nächsten Sprints fertig gestellt. Das Projekt wird zum testen für den Kunden auf dem privaten Server eines Teammitgliedes gehostet.
+
+
+\subsection{Ergebnisse der Retrospektive}
+{\small Autor: Tim Henning}
+
+Anwesend: Jonas G., Erik H. Linus H., Lennart B., Tim H., David K., Alaa Aldin K., Manuel E., Julius J., Alex H.\\
+\\
+
+Die Retrospektive fand in diesem Sprint online nach dem KALM Prinzip (Keep, Add, Less, More) statt und es wurden wie gewohnt Punkte die das Team ändern muss, aber auch welche die positiv waren und beibehalten werden sollen, angesprochen. So wurde die zahlreiche Teilnahme an den Meetings, sowie die Motivation in diesem Sprint als sehr positiv gewertet. Was im nächsten Sprint hinzu kommen sollte wäre u.a. eine weitere Person für das Team welches sich um das Zusammenspiel zwischen Frontend und Backend kümmert. Auch sollen die Testdokumentationen im Wiki ergänzt und ausgefüllt werden, um nach zu vollziehen welche Components bereits getestet wurden. Desweitern war ein wichtiger Punkt die zeitliche Absprache über das mergen der Branches und das aufräumen im Git Repository. Als Anmerkung unter dem Punkt "Less" , wurde zum einen das hinzufügen neuer Features genannt. Das Team will sich in den nächsten Sprints um Robustheit und Testing des vorhanden Codes kümmern und nicht all zu viele neue Features hinzufügen. Außerdem wurde noch angemerkt das die einzelnen Mitglieder YouTrack konsequenter nutzen sollen, um eine bessere Übersicht über den Workflow zu bekommen. Zum Schluss wurde noch erwähnt das der Sprint sehr positiv bewertet wurde, da viele Ziele erreicht wurden und viele neue Erkenntnisse zustande kamen, sowie das sich viele Teammitglieder an dem Sprint beteiligt haben.
+
+\subsection{Abschließende Einschätzung des Product-Owners}
+{\small Autor: xxx}
+
+XXX
+
+\subsection{Abschließende Einschätzung des Software-Architekten}
+{\small Autor: xxx}
+
+XXX
+
+\subsection{Abschließende Einschätzung des Team-Managers}
+{\small Autor: Alex Hofmann}
+
+\noindent Mit Beginn des neuen Semesters und der damit verbundenen Wiederaufnahme der (Online-) Präsenzveranstaltungen nahm auch die Teilnahme am Projekt wieder zu. Bis auf die beiden Aussteiger haben alle Teammitglieder mitgewirkt. Diese Motivation gilt es auch in den kommenden Wochen aufrecht zu erhalten.
