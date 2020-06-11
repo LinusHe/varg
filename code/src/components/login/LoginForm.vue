@@ -53,9 +53,9 @@
 
         <a align="center" class="font-italic mt-6" color="error">Passwort vergessen?</a>
         <p align="center" class="login-bottom-links mt-10" color="lightgrey">
-          <a>Backend</a> |
-          <a>Impressum</a> |
-          <a>Datenschutz</a>
+          <a class="not-underlined" href="https://www.htwk-leipzig.de/hochschule/kontakt/" target="_blank">Backend</a> |
+          <a class="not-underlined" href="https://www.htwk-leipzig.de/hochschule/kontakt/impressum/" target="_blank">Impressum</a> |
+          <a class="not-underlined" href="https://www.htwk-leipzig.de/de/hochschule/kontakt/datenschutzerklaerung/" target="_blank">Datenschutz</a>
         </p>
       </v-list-item-content>
     </v-list-item>
