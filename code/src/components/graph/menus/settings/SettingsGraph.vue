@@ -161,7 +161,7 @@ export default {
     // Unit Settings
     unitCostItems: ["cent", "€", "$", "£"],
     unitCostSelection: "€",
-    unitTimeItems: ["Millisekunden", "Sekunden", "Minuten", "Stunden", "Tage"],
+    unitTimeItems: ["Sekunden", "Minuten", "Stunden", "Tage"],
     unitTimeSelection: "Sekunden",
     // Edge Settings
     edgeShowShortOnly: false,
