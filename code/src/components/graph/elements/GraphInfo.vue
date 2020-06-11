@@ -132,7 +132,7 @@
       <v-row>
         <v-divider class="mx-4" vertical></v-divider>
         <v-card align="center" class="icon-card mt-2 ml-4" width="60px" height="60px">
-          <v-icon v-if="option" size="40px" class="mt-2 darkmode-ign" color="#2699FB">mdi-cash</v-icon>
+          <v-icon v-if="option || !optimized" size="40px" class="mt-2 darkmode-ign" color="#2699FB">mdi-cash</v-icon>
         </v-card>
         <p class="mb-0">
           <v-card-subtitle class="pb-0">
@@ -180,7 +180,7 @@
       <v-row>
         <v-divider class="mx-4" vertical></v-divider>
         <v-card align="center" class="icon-card mt-2 ml-4" width="60px" height="60px">
-          <v-icon v-if="!option" size="40px" class="mt-2 darkmode-ign" color="#2699FB">mdi-clock-outline</v-icon>
+          <v-icon v-if="!option || !optimized" size="40px" class="mt-2 darkmode-ign" color="#2699FB">mdi-clock-outline</v-icon>
         </v-card>
         <p class="mb-0">
           <v-card-subtitle class="pb-0">
