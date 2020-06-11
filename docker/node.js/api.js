@@ -63,12 +63,13 @@ router.use(bodyParser.urlencoded({ extended: true }));
 //login
 router.route('/login?')
     //get login data
-    .get(function (req, res) {
+    .post(function (req, res) {
         console.log("Sending Log-In data.");
-        let userName = req.params.user;
-        let password = req.params.password;
+        let userName = req.body.user;
+        let password = req.body.password;
+        console.log(userName + ", " + password);
         if (userName === "VarG" && password === "2020"){
-            console.log(user + ", willkommen in der Matrix.");
+            console.log(userName + ", willkommen in der Matrix.");
             let user = {
                 name: userName,
                 role: 'student',

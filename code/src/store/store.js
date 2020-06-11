@@ -112,25 +112,24 @@ export const store = new Vuex.Store({
      */
 
     AUTH_REQUEST: ({commit, dispatch}, data) => {
+      // eslint-disable-next-line no-console
       return new Promise((resolve, reject) => { // The Promise used for router redirect in login
-        commit(this.actions.AUTH_REQUEST);
+        commit("AUTH_REQUEST");
         // eslint-disable-next-line standard/object-curly-even-spacing
         const url = 'http://192.168.99.101:1110/VarG/login';
         //url: data: user
         axios
-          .get(url, {
-              params: {
-                user: data.user,
-                password: data.password
-              }
-            })
+          .post(url, {
+            user: data.user,
+            password: data.password
+          })
           .then(resp => {
             const user = resp;
-            commit(this.mutations.AUTH_SUCCESS, user);
+            commit("AUTH_SUCCESS", user);
             resolve(resp);
           })
         .catch(err => {
-          commit(this.mutations.AUTH_ERROR, err);
+          commit("AUTH_ERROR", err);
           reject(err);
         })
       })
