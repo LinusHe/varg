@@ -102,14 +102,14 @@ export default {
     getState() {
       alert(
         "Authenticated: " +
-          this.$store.state.user.autehticated +
+          this.$store.state.user.authenticated +
           "\nName: " +
           this.$store.state.user.name +
           "\nRole: " +
           this.$store.state.user.role +
           //"\nReady: " + this.$store.state.ready +
           "\nIssued: " +
-          this.$store.state.issued +
+          this.$store.state.user.issued +
           "\nNow: " +
           Date.now() +
           "\nprodName: " +
@@ -126,17 +126,18 @@ export default {
      * sends username and password to backend for verification and then redirects to loadingscreen where final route is determined 
      */
 
-    /*
+    
     login: function () {
      this.$store.dispatch(AUTH_REQUEST, { user: this.input.email, password: this.input.password }).then(() => {
      this.$router.push('/')
    })
-    },*/
+    },
 
     /**
      * Validates user input and on success redirects to home view.
      * @var authenticated can be used to verrify if a user has logged in succesfully.
      */
+    /*
     login() {
       if (this.$refs.form.validate()) {
         if (this.input.email === "VarG" && this.input.password === "2020") {
@@ -171,7 +172,7 @@ export default {
           );
         }
       }
-    },
+    },*/
 
     /**
      * Clears previous error messages
