@@ -304,9 +304,14 @@ export default {
         .data("settingsOptimizationStartEndName", this.endSelect);
 
       // set StartIDs for Optimization Algorithm
+      console.log("wurde aufgerufeb")
+      console.log("hier startselect")
       let startIDs = [];
+      this.getNodeItemsID()
       for (let i = 0; i < this.startSelect.length; i++) {
+    
         let indexStart = this.itemsName.indexOf(this.startSelect[i]);
+       
         startIDs.push(this.itemsID[indexStart]);
       }
 
@@ -347,24 +352,36 @@ export default {
       this.itemsName = this.getGraph().getNodeName(this.getGraph());
 
 
-      this.startSelect = []
+      let start = []
 
       //get the StartID's when they were selected automatically
-      
+      console.log("startids: " +this.getGraph()
+        .getCytoGraph()
+        .data("settingsOptimizationStartIDs"))
       
       let selectNodes = this.getGraph()
         .getCytoGraph()
         .data("settingsOptimizationStartIDs");
 
+      let nodes = []
 
+
+    
+      for(let i = 0; i < selectNodes.length; i++){
+        
+        if(selectNodes[i] != "" && selectNodes[i] != undefined){
+          
+          nodes.push(selectNodes[i])
+        }
+      }
   
+      console.log("nodes" + nodes)
+      for (let i = 0; i < nodes.length; i++) {
         
-      for (let i = 0; i < selectNodes.length; i++) {
-        
-        this.startSelect.push(
+        start.push(
           this.getGraph()
             .getCytoGraph()
-            .nodes("#" + selectNodes[i])
+            .nodes("#" + nodes[i])
             .data("name")
         );
       }
@@ -379,8 +396,13 @@ export default {
         )
         .data("name");
 
+        this.startSelect = start;
         console.log("startSelect: " + this.startSelect)
+
+     
     }
+    
   }
+
 };
 </script>

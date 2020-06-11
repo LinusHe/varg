@@ -413,11 +413,13 @@ return dDisplay + hDisplay + mDisplay + sDisplay;
 
     startOptimizing() {
       console.log(
-        "Länge der Startknoten: " +
+        "Startknoten: " +
           this.getGraph()
             .getCytoGraph(this.getGraph())
-            .data("settingsOptimizationStartNames").length
+            .data("settingsOptimizationStartNames")
       );
+
+    
 
       if (!this.getGraph().hasQuickEdges(this.getGraph())) {
         if (
