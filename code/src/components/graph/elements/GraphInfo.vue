@@ -346,6 +346,32 @@ export default {
           .getCytoGraph(this.getGraph())
           .data("settingsUnitTimeSelection");
 
+
+
+      switch(this.getGraph()
+          .getCytoGraph(this.getGraph())
+          .data("settingsUnitTimeSelection")){
+
+          case "Millisekunden" :
+            this.time = this.toHHMMSS(parseInt(this.time))
+            break;
+          case "Sekunden" :
+             this.time = this.toHHMMSS(parseInt(this.time) *1000)
+            break;
+          case "Minuten" :
+           this.time = this.toHHMMSS(parseInt(this.time) *1000 * 60)
+            break;
+          case "Stunden" :
+             this.time = this.toHHMMSS(parseInt(this.time) * 1000 * 60 *60)
+            break;
+          case "Tage" :
+             this.time = this.toHHMMSS(parseInt(this.time) * 1000 * 60 *60 * 24 )
+            break;
+          default:
+            this.time = "etwas ist schief gelaufen"
+      }
+
+    
       // set optimized
       this.optimized = true;
 
@@ -373,6 +399,23 @@ export default {
         this.scrollToAlternativeOptimizations();
       }
     },
+
+    toHHMMSS( ms ) {
+    
+   var sec_num = parseInt(ms/ 1000); 
+   ms = ms % 1000
+   console.log(ms)
+  var hours   = Math.floor(sec_num / 3600);
+  var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
+  var seconds = sec_num - (hours * 3600) - (minutes * 60);
+
+  if (hours   < 10) {hours   = "0"+hours;}
+  if (minutes < 10) {minutes = "0"+minutes;}
+  if (seconds < 10) {seconds = "0"+seconds;}
+  if( ms < 10) {ms = "00"+ms}
+  else if(ms <100) {ms = "0"+ms}
+  return hours + ':' + minutes + ':' + seconds + ":" +ms;
+},
 
     startOptimizing() {
       console.log(
