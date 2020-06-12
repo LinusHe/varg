@@ -11,7 +11,7 @@ const mysql_driver = require('mysql');
 const config = {
     // eheldt: 192.168.1.103
     // jhohlfel: 192.168.99.101
-    host: "192.168.1.103",
+    host: "192.168.99.101",
     user: "varg",
     password: "VarG2020",
     database: "vargdb"
@@ -141,7 +141,8 @@ router.route('/graph/:graph_id?')
         let put = {graphObject: req.body.json,
             fileID: req.body.fileId, 
             userName: req.body.user};
-        con.query("UPDATE cytographs SET graphObject= ? WHERE fileID= ? AND userName= ? ", put,
+        con.query("UPDATE cytographs SET graphObject= ? WHERE fileID= ? AND userName= ? ", 
+                                                [put.graphObject, put.fileID, put.userName],
         function(err, result, fields) {
             if (err) throw err;
             console.log("Update-Query succesfull");
