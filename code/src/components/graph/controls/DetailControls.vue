@@ -552,6 +552,14 @@ export default {
         this.saveStep1Edge();
         this.saveEdge();
       }
+      if(this.$parent.$parent.$refs.createControls.getNodeCreateGui()) {
+        // Quick Create Node
+        this.$parent.$parent.$refs.createControls.createNode();
+      }
+      if(this.$parent.$parent.$refs.createControls.getEdgeCreateGui()) {
+        // Quick Create Edge
+        this.$parent.$parent.$refs.createControls.createEdge();
+      }
 
       if (target === this.getGraph().getCytoGraph(this.getGraph())) {
         this.closeMenus();

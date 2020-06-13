@@ -529,6 +529,12 @@ export default {
     getGraph() {
       return this.$parent.$parent.$refs["vargraph"];
     },
+    getNodeCreateGui() {
+      return this.nodeCreateGui;
+    },
+    getEdgeCreateGui() {
+      return this.edgeCreateGui;
+    },
     checkImg(url) {
       return url.match(/\.(jpeg|jpg|gif|png)$/) != null;
     },
@@ -671,7 +677,40 @@ export default {
         // remove optimization
         this.getGraph().removeOptimization();
       }
+
+      // QuickEdge
+      this.createQuickEdge();
+
       this.backupGraph();
+    },
+    createQuickEdge(){
+      if (this.$refs.formEdges1.validate()) {
+        let indexStart = this.itemsName.indexOf(this.startSelect);
+        let startID = this.itemsID[indexStart];
+        let indexEnd = this.itemsName.indexOf(this.endSelect);
+        let endID = this.itemsID[indexEnd];
+
+        this.getGraph().createEdge(
+          this.getGraph(),
+          this.edgeCreateName,
+          this.edgeCreateShort,
+          startID,
+          endID,
+          null,
+          null,
+          null,
+          null,
+          null
+        );
+
+        // add QuickEdge Class
+        let id = this.getGraph().getCytoGraph(this.getGraph).data("IDCount") -1;
+        this.getGraph().getCytoGraph(this.getGraph).getElementById(id).addClass("quick-edge");
+
+        // remove optimization
+        this.getGraph().removeOptimization();
+
+      }
     },
     setTarget(id) {},
     createNode() {
