@@ -191,6 +191,7 @@
           </div>
 
           <div style="min-height: 305px">
+            <!-- STEP - 1 PAGE -->
             <v-slide-x-reverse-transition>
               <div
                 ref="scrollingContainer"
@@ -263,6 +264,7 @@
                 </v-form>
               </div>
             </v-slide-x-reverse-transition>
+            <!-- STEP - 2 PAGE -->
             <v-slide-x-transition>
               <div
                 style="position: absolute; top: 136px"
@@ -540,6 +542,17 @@ export default {
       this.showEdgeTitle = this.edgeName;
     },
     handleDetails(target) {
+      // QuickSave Functionality
+      if (this.nodeGui) {
+        // Quick Save Node
+        this.saveNode();
+      }
+      if (this.edgeGui) {
+        // Quick Save Edge
+        this.saveStep1Edge();
+        this.saveEdge();
+      }
+
       if (target === this.getGraph().getCytoGraph(this.getGraph())) {
         this.closeMenus();
       } else if (target.group() == "nodes" && !target.hasClass("eh-handle")) {
@@ -648,6 +661,7 @@ export default {
         // validate form step 1
         if (this.$refs.formEdges1.validate()) {
           this.edgeFormStep = step;
+          this.saveStep1Edge();
         }
       } else if (this.edgeFormStep == 2) {
         // step 2 need no validation
@@ -667,6 +681,33 @@ export default {
 
         this.nodeGui = false;
         dialogComponent.dialogSuccess("Teil erfolgreich aktualisiert");
+      }
+      this.backupGraph();
+    },
+    saveStep1Edge() {
+      if (
+        this.$refs.formEdges1.validate()
+      ) {
+        let indexStart = this.itemsName.indexOf(this.startSelect);
+        let startID = this.itemsID[indexStart];
+        let indexEnd = this.itemsName.indexOf(this.endSelect);
+        let endID = this.itemsID[indexEnd];
+
+        this.getGraph().updateEdge(
+          this.getGraph(),
+          this.id,
+          this.edgeName,
+          this.edgeShort,
+          startID,
+          endID,
+          null,
+          null,
+          null,
+          null,
+          null,
+        );
+        // remove optimization
+        this.getGraph().removeOptimization();
       }
       this.backupGraph();
     },

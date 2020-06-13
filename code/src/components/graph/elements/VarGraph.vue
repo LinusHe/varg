@@ -78,6 +78,9 @@ export default {
     // cy after config
     this.afterCreated(cyStore.data.cy);
   },
+  destroyed: function() {
+    cyStore.data.edgeHandler.hide();
+  },
   methods // see -> code\src\vargraph Files
 };
 </script>

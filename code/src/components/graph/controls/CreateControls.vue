@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 <template>
   <div class="create-controls-container">
-    <!-- Selection Hover-Button -->
+    <!-- Selection-Button -->
     <div class="create-controls">
       <v-speed-dial
         v-model="fab"
@@ -65,6 +65,7 @@
       </v-speed-dial>
     </div>
 
+    <!-- CREATE NODE - CONTROLS -->
     <div ref="createNodes" @keyup.esc="deactivateGui()" tabindex="0">
       <!-- Create-Zustand Controls -->
       <v-slide-x-reverse-transition>
@@ -174,6 +175,7 @@
       </v-slide-x-reverse-transition>
     </div>
 
+    <!-- CREATE EDGE - CONTROLS -->
     <div ref="createEdges" @keyup.esc="deactivateGui()" tabindex="0">
       <!-- Create-Edge Controls -->
       <v-slide-x-reverse-transition>
@@ -238,6 +240,8 @@
           </div>
 
           <div style="min-height: 305px">
+
+            <!-- STEP 1 - PAGE -->
             <v-slide-x-reverse-transition>
               <div v-show="edgeFormStep == 1" ref="scrollingContainer">
                 <v-form
@@ -307,6 +311,8 @@
                 </v-form>
               </div>
             </v-slide-x-reverse-transition>
+
+            <!-- EDGE-STEP 2 - PAGE -->
             <v-slide-x-transition>
               <div
                 style="position: absolute; top: 136px"
@@ -389,6 +395,7 @@
               </div>
             </v-slide-x-transition>
           </div>
+
           <!-- Create Buttons -->
           <v-row class="mb-4" justify="end">
             <v-col v-show="edgeFormStep == 1" sm="4">
