@@ -26,6 +26,11 @@ export default {
   components: {
     datenbank
   },
+  mounted () {
+    //TODO why is this undefined?
+    this.$refs.datenbank.setType(0);
+    this.$refs.datenbank.loadItems();
+  },
   methods: {
     backBtn() {
       this.$router.replace("/home/menu");

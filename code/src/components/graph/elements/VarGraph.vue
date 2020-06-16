@@ -6,7 +6,6 @@
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
 /* eslint-disable standard/computed-property-even-spacing */
-import TestDatabase from "@/vargraph/TestDatabase.js";
 
 import style from "@/vargraph/init/cytoscapeStyle.js";
 import elements from "@/vargraph/init/exampleElements.js";
@@ -59,12 +58,6 @@ const methods = Object.assign(
 
 export default {
   name: "VarGraph",
-  created() {
-    this.vars = {
-      // initializes new instance of TestDatabase when Toolbar is loaded for the first time
-      testDatabase: new TestDatabase()
-    };
-  },
   mounted: function() {
     // ui adjustments
     this.adjustUI();
@@ -84,6 +77,9 @@ export default {
 
     // cy after config
     this.afterCreated(cyStore.data.cy);
+  },
+  destroyed: function() {
+    cyStore.data.edgeHandler.hide();
   },
   methods // see -> code\src\vargraph Files
 };

@@ -18,7 +18,7 @@ export default {
   mounted: function() {
 
     if (Date.now() > this.$store.getters.getIssuedTime + 3000000000000) {
-      alert("Date überprüft");
+      alert("TIMEOUT");
       localStorage.removeItem("store"); //To do: dont remove store, only user
       this.$store.commit("logout");
       this.$router.replace("/home/login");

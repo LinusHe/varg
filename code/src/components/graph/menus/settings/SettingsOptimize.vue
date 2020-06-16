@@ -304,9 +304,14 @@ export default {
         .data("settingsOptimizationStartEndName", this.endSelect);
 
       // set StartIDs for Optimization Algorithm
+      console.log("wurde aufgerufeb")
+      console.log("hier startselect")
       let startIDs = [];
+      this.getNodeItemsID()
       for (let i = 0; i < this.startSelect.length; i++) {
+    
         let indexStart = this.itemsName.indexOf(this.startSelect[i]);
+       
         startIDs.push(this.itemsID[indexStart]);
       }
 
@@ -334,6 +339,7 @@ export default {
       // remove optimization
       this.getGraph().removeOptimization();
       this.rankArray = [];
+      
     },
 
     getNodeItemsID() {
@@ -341,22 +347,41 @@ export default {
     },
 
     getNodeItemsName() {
+      //get the nodeNames to show in settings
+      
       this.itemsName = this.getGraph().getNodeName(this.getGraph());
-      this.startSelect = [""];
+
+
+      let start = []
+
+      //get the StartID's when they were selected automatically
+      console.log("startids: " +this.getGraph()
+        .getCytoGraph()
+        .data("settingsOptimizationStartIDs"))
+      
       let selectNodes = this.getGraph()
         .getCytoGraph()
         .data("settingsOptimizationStartIDs");
-      for (let i = 0; i < selectNodes.length; i++) {
-        console.log(
+
+      let nodes = []
+
+
+    
+      for(let i = 0; i < selectNodes.length; i++){
+        
+        if(selectNodes[i] != "" && selectNodes[i] != undefined){
+          
+          nodes.push(selectNodes[i])
+        }
+      }
+  
+      console.log("nodes" + nodes)
+      for (let i = 0; i < nodes.length; i++) {
+        
+        start.push(
           this.getGraph()
             .getCytoGraph()
-            .nodes("#" + selectNodes[i])
-            .data("name")
-        );
-        this.startSelect.push(
-          this.getGraph()
-            .getCytoGraph()
-            .nodes("#" + selectNodes[i])
+            .nodes("#" + nodes[i])
             .data("name")
         );
       }
@@ -370,7 +395,14 @@ export default {
               .data("settingsOptimizationEndID")
         )
         .data("name");
+
+        this.startSelect = start;
+        console.log("startSelect: " + this.startSelect)
+
+     
     }
+    
   }
+
 };
 </script>
