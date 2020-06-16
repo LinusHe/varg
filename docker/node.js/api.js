@@ -137,7 +137,6 @@ router.route('/graph/:graph_id?')
     //update a single graph identified by id
     .put(function(req, res) {
         console.log('Updating Graph');
-        //doesn't work
         let put = {
             graphObject: req.body.json,
             fileID: req.params.graph_id,
