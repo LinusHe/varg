@@ -5,7 +5,7 @@ import cyStore from "@/vargraph/graph/cyStore";
 // This file is part of the cytoscape graph
 // The holding component is code\src\components\graph\elements\VarGraph.vue
 
-import nodeHtmlLabel from "cytoscape-node-html-label";
+import nodeHtmlLabel from "../plugins/cytoscape-node-html-label";
 import klay from "cytoscape-klay";
 import defaultData from "@/vargraph/init/cytoscapeDefaultData.js";
 import edgehandles from "cytoscape-edgehandles";
