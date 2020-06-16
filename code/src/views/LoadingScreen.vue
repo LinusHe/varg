@@ -16,14 +16,13 @@ import cyStore from "@/vargraph/graph/cyStore";
 export default {
   name: "LoadingScreen",
   mounted: function() {
-    alert(this.$store.state.user.data.authenticated);
     if (Date.now() > this.$store.getters.getIssuedTime + 3000000000000) {
       alert("TIMEOUT");
       localStorage.removeItem("store"); //To do: dont remove store, only user
       this.$store.commit("logout");
       this.$router.replace("/home/login");
       //TODO: improve getter !
-    }else if (this.$store.state.user.data.authenticated){   //Token ist gültig!
+    }else if (this.$store.state.user.authenticated){   //Token ist gültig!
       if(window.history.length > 1){   // Waren wir da !
         if(this.$store.getters.getGraph === null) {
           this.$router.replace("/home/menu");
