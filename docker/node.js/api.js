@@ -4,7 +4,7 @@
 //cd to code
 //node api.js
 
-//uses express module 
+//uses express module and mysqljs 
 const express = require('express');
 const mysql_driver = require('mysql');
 
@@ -137,15 +137,17 @@ router.route('/graph/:graph_id?')
     //update a single graph identified by id
     .put(function(req, res) {
         console.log('Updating Graph');
-        /* req.params.json is not yet implemented*/
-        let put = {graphObject: req.body.json,
-            fileID: req.body.fileId, 
-            userName: req.body.user};
-        con.query("UPDATE cytographs SET graphObject= ? WHERE fileID= ? AND userName= ? ", 
-                                                [put.graphObject, put.fileID, put.userName],
+        //doesn't work
+        let put = {
+            graphObject: req.body.json,
+            fileID: req.params.graph_id,
+            userName: req.body.user
+        }
+        con.query("UPDATE cytographs SET graphObject = ? WHERE fileID = ? AND userName = ?",
+            [put.graphObject, put.fileID, put.userName],
         function(err, result, fields) {
             if (err) throw err;
-            console.log("Update-Query succesfull");
+            console.log(result.affectedRows + " record(s) updated");
             res.sendStatus(200);
         });
     })
