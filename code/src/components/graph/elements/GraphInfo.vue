@@ -313,7 +313,9 @@ export default {
     openOptimize() {
       this.$parent.$parent.$refs.settingsMenu.setActiveTab(2);
       this.$parent.$parent.$refs.settingsMenu.openDialog();
-      this.$nextTick(() => {this.$parent.$parent.$refs.settingsMenu.$refs.settingsOptimize.getNodeItemsName()})
+      this.$nextTick(() => {
+        this.$parent.$parent.$refs.settingsMenu.$refs.settingsOptimize.getNodeItemsName()
+        this.$parent.$parent.$refs.settingsMenu.$refs.settingsOptimize.getOption() })
     },
     scrollToAlternativeOptimizations() {
       this.$parent.$parent.$refs.settingsMenu.$refs.settingsOptimize.scrollToAlternatives();

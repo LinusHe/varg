@@ -370,6 +370,15 @@ export default {
               .data("settingsOptimizationEndID")
         )
         .data("name");
+    },
+
+    getOption() {
+      if(this.getGraph().getCytoGraph().data("settingsOptimizationOption") == "optionTime") {
+        this.optimizationOption = 'Zeit';
+      }
+      else {
+        this.optimizationOption = 'Kosten';
+      }
     }
   }
 };
