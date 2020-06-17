@@ -218,7 +218,7 @@ export default {
       axios
         .get('http://192.168.99.101:1110/VarG/graph/meta', {
           params: {
-            user:'eheldt'
+            user: this.$store.state.user.name
           }
         })
         .then(response => {
@@ -253,7 +253,7 @@ export default {
           axios
             .get(url, {
               params: {
-                user: 'eheldt'
+                user: this.$store.state.user.name
               }
             })
             .then(response => {
@@ -272,7 +272,7 @@ export default {
           axios
             .get(url, {
               params: {
-                user: 'eheldt'
+                user: this.$store.state.user.name
               }
             })
             .then(response => {
@@ -290,7 +290,7 @@ export default {
       axios
         .get(url, {
           params: {
-            user: 'eheldt'
+            user: this.$store.state.user.name
           }
         })
         .then(response => {
@@ -311,7 +311,7 @@ export default {
         axios
           .delete(url, {
             params: {
-              user: 'eheldt'
+              user: this.$store.state.user.name
             }
           })
           .then(response => {

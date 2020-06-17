@@ -128,7 +128,7 @@ export default {
           .post('http://192.168.99.101:1110/VarG/graph', {
             fileId: this.hashkey,
             filename: this.DataBaseName,
-            user: 'eheldt', // TODO replace with actual login info
+            user: this.$store.state.user.name,
             json: JSON.stringify(CONTENT)
           })
           .then(response => {
@@ -160,7 +160,7 @@ export default {
       const CONTENT = ExJSon.CreateJSon(this.getGraph());
       axios
         .put(URL, {
-          user: 'eheldt', // TODO replace with actual login info
+          user: this.$store.state.user.name,
           json: JSON.stringify(CONTENT)
         })
         .then(response => {
