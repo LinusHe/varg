@@ -143,151 +143,228 @@
           <!-- Colored Div -->
           <div
             class="white--text align-end darkmode-ign"
-            style="height: 100px; background: #2699FB; background-color: #2699FB"
+            style="background: #2699FB; background-color: #2699FB"
           >
             <v-card-subtitle style="color: #ffffff" class="pb-0">Bearbeitungsschritt bearbeiten:</v-card-subtitle>
             <v-card-title class="pt-12">{{showEdgeTitle}}</v-card-title>
+            <v-row class="mr-2 ml-2">
+              <v-col sm="6" class="pt-0 pb-0">
+                <v-btn
+                  v-show="edgeFormStep==1"
+                  style="border-radius: 15px 15px 0 0"
+                  depressed
+                  tile
+                  block
+                  color="#ffffff"
+                >Allgemein</v-btn>
+                <v-btn
+                  v-show="edgeFormStep==2"
+                  depressed
+                  style="border-radius: 15px 15px 0 0"
+                  tile
+                  block
+                  color="primary darken-1"
+                  @click="changeEdgeFormStep(1)"
+                >Allgemein</v-btn>
+              </v-col>
+              <v-col sm="6" class="pt-0 pb-0">
+                <v-btn
+                  v-show="edgeFormStep==1"
+                  depressed
+                  style="border-radius: 15px 15px 0 0"
+                  tile
+                  block
+                  color="primary darken-1"
+                  @click="changeEdgeFormStep(2)"
+                  :disabled="!validEdges1"
+                >Zeit & Kosten</v-btn>
+                <v-btn
+                  v-show="edgeFormStep==2"
+                  style="border-radius: 15px 15px 0 0"
+                  depressed
+                  tile
+                  block
+                  color="#ffffff"
+                >Zeit & Kosten</v-btn>
+              </v-col>
+            </v-row>
           </div>
 
-          <div class="scrolling-container" ref="scrollingContainer">
-            <v-form
-              ref="formEdges"
-              v-model="validEdges"
-              lazy-validation
-              class="d-inline-block mr-5 ml-5 mb-4 hueshift"
-              @submit="saveEdge()"
-              onsubmit="return false;"
-              style="max-height: 300px; overflow: scroll-y"
-            >
-              <!-- Name Selection -->
-              <v-row>
-                <v-col sm="9">
-                  <v-text-field
-                    class="mt-2"
-                    id="edgeName"
-                    label="Bezeichnung"
-                    v-model="edgeName"
-                    :rules="nameEdgeRules"
-                    @input="generateEdgeShort()"
-                    @keyup.enter="saveEdge()"
-                    @focus="getEdgeItemsName()"
-                  ></v-text-field>
-                </v-col>
-                <v-col sm="3">
-                  <v-text-field
-                    class="mt-2"
-                    id="edgeShort"
-                    label="Kürzel"
-                    v-model="edgeShort"
-                    :rules="shortRules"
-                    @keyup.enter="saveEdge()"
-                  ></v-text-field>
-                </v-col>
-              </v-row>
+          <div style="min-height: 305px">
+            <!-- STEP - 1 PAGE -->
+            <v-slide-x-reverse-transition>
+              <div
+                ref="scrollingContainer"
+                transition="slide-x-transition"
+                v-show="edgeFormStep == 1"
+              >
+                <v-form
+                  ref="formEdges1"
+                  v-model="validEdges1"
+                  lazy-validation
+                  class="d-inline-block mr-5 ml-5 mb-4 hueshift"
+                  @submit="saveEdge()"
+                  onsubmit="return false;"
+                  style="max-height: 300px; overflow: scroll-y"
+                >
+                  <!-- Name Selection -->
+                  <v-row>
+                    <v-col sm="9">
+                      <v-text-field
+                        class="mt-2"
+                        id="edgeName"
+                        label="Bezeichnung"
+                        v-model="edgeName"
+                        :rules="nameEdgeRules"
+                        @input="generateEdgeShort()"
+                        @keyup.enter="saveEdge()"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col sm="3">
+                      <v-text-field
+                        class="mt-2"
+                        id="edgeShort"
+                        label="Kürzel"
+                        v-model="edgeShort"
+                        :rules="shortRules"
+                        @keyup.enter="saveEdge()"
+                      ></v-text-field>
+                    </v-col>
+                  </v-row>
 
-              <!-- Start und Endzustand -->
-              <v-row>
-                <v-col sm="12">
-                  <v-select
-                    @focus="getNodeItemsName(); getNodeItemsID();"
-                    @change="validateStartEnd()"
-                    v-model="startSelect"
-                    :items="itemsName"
-                    id="detailStartzustand"
-                    ref="detailStartzustand"
-                    label="Startzustand"
-                    :rules="startRules"
-                  ></v-select>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col sm="12">
-                  <v-select
-                    @focus="getNodeItemsName(); getNodeItemsID()"
-                    @change="validateStartEnd()"
-                    v-model="endSelect"
-                    :items="itemsName"
-                    id="detailEndzustand"
-                    ref="detailEndzustand"
-                    label="Endzustand"
-                    :rules="endRules"
-                  ></v-select>
-                </v-col>
-              </v-row>
-
-              <!-- Time & Costs  -->
-              <v-row>
-                <v-col sm="6">
-                  <v-text-field
-                    id="edgeCosts"
-                    label="Kosten / Stück"
-                    :suffix="unitCost"
-                    type="number"
-                    v-model="edgeCosts"
-                    :rules="costRules"
-                    @keyup.enter="saveEdge()"
-                  ></v-text-field>
-                </v-col>
-                <v-col sm="6">
-                  <v-text-field
-                    id="edgeTime"
-                    label="Zeit / Stück"
-                    :suffix="unitTime"
-                    v-model="edgeTime"
-                    type="number"
-                    :rules="timeRules"
-                    @keyup.enter="saveEdge()"
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col sm="6">
-                  <v-text-field
-                    id="edgesuCosts"
-                    label="Kosten / Rüst"
-                    :suffix="unitCost"
-                    type="number"
-                    v-model="edgesuCosts"
-                    :rules="suCostRules"
-                    @keyup.enter="saveEdge()"
-                  ></v-text-field>
-                </v-col>
-                <v-col sm="6">
-                  <v-text-field
-                    id="edgesuTime"
-                    label="Zeit / Rüst"
-                    :suffix="unitTime"
-                    v-model="edgesuTime"
-                    type="number"
-                    :rules="suTimeRules"
-                    @keyup.enter="saveEdge()"
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-              <!-- LotSize  -->
-              <v-row>
-                <v-col sm="6">
-                  <v-text-field
-                    id="edgeLotSize"
-                    label="Losgröße"
-                    type="number"
-                    suffix="Stück"
-                    v-model="edgeLotSize"
-                    @keyup.enter="saveEdge()"
-                    :rules="lotSizeRules"
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-            </v-form>
+                  <!-- Start und Endzustand -->
+                  <v-row>
+                    <v-col sm="12">
+                      <v-select
+                        @focus="getNodeItemsName(); getNodeItemsID();"
+                        @change="validateStartEnd()"
+                        v-model="startSelect"
+                        :items="itemsName"
+                        id="detailStartzustand"
+                        ref="detailStartzustand"
+                        label="Startzustand"
+                        :rules="startRules"
+                      ></v-select>
+                    </v-col>
+                  </v-row>
+                  <v-row>
+                    <v-col sm="12">
+                      <v-select
+                        @focus="getNodeItemsName(); getNodeItemsID()"
+                        @change="validateStartEnd()"
+                        v-model="endSelect"
+                        :items="itemsName"
+                        id="detailEndzustand"
+                        ref="detailEndzustand"
+                        label="Endzustand"
+                        :rules="endRules"
+                      ></v-select>
+                    </v-col>
+                  </v-row>
+                </v-form>
+              </div>
+            </v-slide-x-reverse-transition>
+            <!-- STEP - 2 PAGE -->
+            <v-slide-x-transition>
+              <div
+                style="position: absolute; top: 136px"
+                ref="scrollingContainer"
+                transition="slide-x-transition"
+                v-show="edgeFormStep == 2"
+              >
+                <v-form
+                  ref="formEdges2"
+                  v-model="validEdges2"
+                  lazy-validation
+                  class="d-inline-block mr-5 ml-5 mb-4 hueshift"
+                  @submit="saveEdge()"
+                  onsubmit="return false;"
+                  style="max-height: 300px; overflow: scroll-y"
+                >
+                  <!-- Time & Costs  -->
+                  <v-row>
+                    <v-col sm="6">
+                      <v-text-field
+                        id="edgeCosts"
+                        label="Kosten / Stück"
+                        :suffix="unitCost"
+                        type="number"
+                        v-model="edgeCosts"
+                        :rules="costRules"
+                        @keyup.enter="saveEdge()"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col sm="6">
+                      <v-text-field
+                        id="edgeTime"
+                        label="Zeit / Stück"
+                        :suffix="unitTime"
+                        v-model="edgeTime"
+                        type="number"
+                        :rules="timeRules"
+                        @keyup.enter="saveEdge()"
+                      ></v-text-field>
+                    </v-col>
+                  </v-row>
+                  <v-row>
+                    <v-col sm="6">
+                      <v-text-field
+                        id="edgesuCosts"
+                        label="Rüstkosten"
+                        :suffix="unitCost"
+                        type="number"
+                        v-model="edgesuCosts"
+                        :rules="suCostRules"
+                        @keyup.enter="saveEdge()"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col sm="6">
+                      <v-text-field
+                        id="edgesuTime"
+                        label="Rüstzeit"
+                        :suffix="unitTime"
+                        v-model="edgesuTime"
+                        type="number"
+                        :rules="suTimeRules"
+                        @keyup.enter="saveEdge()"
+                      ></v-text-field>
+                    </v-col>
+                  </v-row>
+                  <!-- LotSize  -->
+                  <v-row>
+                    <v-col sm="6">
+                      <v-text-field
+                        id="edgeLotSize"
+                        label="Losgröße"
+                        type="number"
+                        suffix="Stück"
+                        v-model="edgeLotSize"
+                        @keyup.enter="saveEdge()"
+                        :rules="lotSizeRules"
+                      ></v-text-field>
+                    </v-col>
+                  </v-row>
+                </v-form>
+              </div>
+            </v-slide-x-transition>
           </div>
           <!-- Save & Delete Buttons -->
           <v-row justify="space-around">
-            <v-col sm="3">
+            <v-col sm="3" v-show="edgeFormStep == 1">
               <v-btn
                 class="darkmode-ign"
                 color="green darken-1"
                 text
-                :disabled="!validEdges"
+                :disabled="!validEdges1"
+                @click="changeEdgeFormStep(2)"
+              >Weiter</v-btn>
+            </v-col>
+            <v-col sm="3" v-show="edgeFormStep == 2">
+              <v-btn
+                class="darkmode-ign"
+                color="green darken-1"
+                text
+                :disabled="!validEdges2"
                 @click="saveEdge()"
               >Speichern</v-btn>
             </v-col>
@@ -297,6 +374,7 @@
             <v-col sm="3">
               <v-btn color="grey" text @click="cancel">Abbrechen</v-btn>
             </v-col>
+            <!-- Delete Dialog -->
             <v-dialog v-model="edgeDeleteDialog" persistent max-width="400">
               <v-card>
                 <v-card-title class="headline">Verbindung löschen</v-card-title>
@@ -345,6 +423,7 @@ export default {
       nodeImgPath: "",
       nodeColor: "",
       edgeGui: false,
+      edgeFormStep: 1,
       edgeName: "",
       edgeShort: "",
       edgeCosts: "",
@@ -364,7 +443,8 @@ export default {
       showNodeTitle: "Erstelle ein Teil",
       showEdgeTitle: "Erstelle einen Bearbeitungsschritt",
       validNodes: false,
-      validEdges: false,
+      validEdges1: false,
+      validEdges2: false,
       nameNodeRules: [
         v => !!v || "Name für Teil wird benötigt",
         v => (v && v.length <= 18) || "Name ist zu lang",
@@ -423,8 +503,8 @@ export default {
   },
   methods: {
     backupGraph() {
-    this.$store.commit('saveGraph', cyStore.data.cy.json());
-  },
+      this.$store.commit("saveGraph", cyStore.data.cy.json());
+    },
     getGraph() {
       return this.$parent.$parent.$refs["vargraph"];
     },
@@ -462,14 +542,41 @@ export default {
       this.showEdgeTitle = this.edgeName;
     },
     handleDetails(target) {
+      // QuickSave Functionality
+      if (this.nodeGui) {
+        // Quick Save Node
+        this.saveNode();
+      }
+      if (this.edgeGui) {
+        // Quick Save Edge
+        this.saveStep1Edge();
+        this.saveEdge();
+      }
+      if(this.$parent.$parent.$refs.createControls.getNodeCreateGui()) {
+        // Quick Create Node
+        this.$parent.$parent.$refs.createControls.createNode();
+      }
+      if(this.$parent.$parent.$refs.createControls.getEdgeCreateGui()) {
+        // Quick Create Edge
+        this.$parent.$parent.$refs.createControls.createEdge();
+      }
+
       if (target === this.getGraph().getCytoGraph(this.getGraph())) {
         this.closeMenus();
       } else if (target.group() == "nodes" && !target.hasClass("eh-handle")) {
         this.openNodeDetails(target);
       } else if (target.group() == "nodes" && target.hasClass("eh-handle")) {
-        dialogComponent.dialogWarning("Halte die Maustaste gedrückt und ziehe zu einem anderen Knoten, um einen neuen Bearbeitungsschritt zu erstellen!")
+        dialogComponent.dialogWarning(
+          "Halte die Maustaste gedrückt und ziehe zu einem anderen Knoten, um einen neuen Bearbeitungsschritt zu erstellen!"
+        );
       } else if (target.group() == "edges") {
         this.openEdgeDetails(target);
+      }
+
+      if (target === this.getGraph().getCytoGraph(this.getGraph())) {
+        // 👀
+      } else if (target.group() == "edges" && target.hasClass("quick-edge")) {
+        this.edgeFormStep = 2;
       }
     },
     closeMenus() {
@@ -523,7 +630,10 @@ export default {
       this.itemsName = this.getGraph().getNodeName(this.getGraph());
     },
     getEdgeItemsName() {
-      this.edgeNames = this.getGraph().getEdgeName(this.getGraph());
+      this.edgeNames = this.getGraph()
+        .getEdgeName(this.getGraph())
+        .filter(name => name != this.edgeName);
+      console.log("edgeNames", this.edgeNames);
     },
     openNodeDetails(node) {
       this.loadNodeData(node);
@@ -534,6 +644,7 @@ export default {
     },
     openEdgeDetails(edge) {
       this.loadEdgeData(edge);
+      this.getEdgeItemsName();
       this.$parent.$parent.$refs.createControls.deactivateGui();
       this.nodeGui = false;
       this.edgeGui = true;
@@ -551,6 +662,19 @@ export default {
     deactivateGui() {
       this.nodeGui = false;
       this.edgeGui = false;
+      this.edgeFormStep = 1;
+    },
+    changeEdgeFormStep(step) {
+      if (this.edgeFormStep == 1) {
+        // validate form step 1
+        if (this.$refs.formEdges1.validate()) {
+          this.edgeFormStep = step;
+          this.saveStep1Edge();
+        }
+      } else if (this.edgeFormStep == 2) {
+        // step 2 need no validation
+        this.edgeFormStep = step;
+      }
     },
     saveNode() {
       if (this.$refs.formNodes.validate()) {
@@ -568,8 +692,38 @@ export default {
       }
       this.backupGraph();
     },
+    saveStep1Edge() {
+      if (
+        this.$refs.formEdges1.validate()
+      ) {
+        let indexStart = this.itemsName.indexOf(this.startSelect);
+        let startID = this.itemsID[indexStart];
+        let indexEnd = this.itemsName.indexOf(this.endSelect);
+        let endID = this.itemsID[indexEnd];
+
+        this.getGraph().updateEdge(
+          this.getGraph(),
+          this.id,
+          this.edgeName,
+          this.edgeShort,
+          startID,
+          endID,
+          null,
+          null,
+          null,
+          null,
+          null,
+        );
+        // remove optimization
+        this.getGraph().removeOptimization();
+      }
+      this.backupGraph();
+    },
     saveEdge() {
-      if (this.$refs.formEdges.validate()) {
+      if (
+        this.$refs.formEdges1.validate() &&
+        this.$refs.formEdges2.validate()
+      ) {
         let indexStart = this.itemsName.indexOf(this.startSelect);
         let startID = this.itemsID[indexStart];
         let indexEnd = this.itemsName.indexOf(this.endSelect);
@@ -589,6 +743,7 @@ export default {
           parseFloat(this.edgeLotSize)
         );
         this.edgeGui = false;
+        this.edgeFormStep = 1;
         dialogComponent.dialogSuccess(
           "Bearbeitungsschritt erfolgreich aktualisiert"
         );

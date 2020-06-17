@@ -328,6 +328,17 @@ export default {
     console.log("updating edge...");
     console.log("before update: ", edge);
 
+    // set to old values, if values are null
+    if (newName == null) newName = edge.data("name");
+    if (newShort == null) newShort = edge.data("short");
+    if (newSource == null) newSource = edge.data("source");
+    if (newTarget == null) newTarget = edge.data("target");
+    if (newCost == null) newCost = edge.data("cost");
+    if (newTime == null) newTime = edge.data("time");
+    if (newsucost == null) newsucost = edge.data("sucost");
+    if (newsutime == null) newsutime = edge.data("sutime");
+    if (lotsize == null) lotsize = edge.data("lotsize");
+
     // generate new label
     let label = this.generateEdgeLabel(
       graphComponent,
@@ -372,7 +383,15 @@ export default {
     edge.data("label", label);
 
     // remove quick-edge class
-    if (edge.hasClass("quick-edge")) edge.removeClass("quick-edge");
+    if (
+      edge.hasClass("quick-edge") &&
+      newCost != null &&
+      newTime != null &&
+      newsucost != null &&
+      newsutime != null &&
+      lotsize != null
+    )
+      edge.removeClass("quick-edge");
 
     // remove optimization
     this.removeOptimization();

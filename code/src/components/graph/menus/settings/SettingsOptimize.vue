@@ -400,6 +400,15 @@ export default {
         console.log("startSelect: " + this.startSelect)
 
      
+    },
+
+    getOption() {
+      if(this.getGraph().getCytoGraph().data("settingsOptimizationOption") == "optionTime") {
+        this.optimizationOption = 'Zeit';
+      }
+      else {
+        this.optimizationOption = 'Kosten';
+      }
     }
     
   }
