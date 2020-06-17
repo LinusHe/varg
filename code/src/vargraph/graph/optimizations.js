@@ -411,7 +411,7 @@ export default {
   },
   
   optimizing() {
-   
+  
     let cy = this.getCytoGraph()
     console.log(cy.data("settingsOptimizationStartIDs"))
 

@@ -157,9 +157,11 @@ let dialogComponent;
 
 export default {
   mounted () {
-    // eslint-disable-next-line no-console
-    console.log('MOUNTED');
-    dialogComponent = this.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$refs["dialogs"];
+    try {
+      dialogComponent = this.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$refs.dialogs;
+    } catch (e) {
+      dialogComponent = this.$parent.$parent.$parent.$parent.$parent.$parent.$refs.dialogs;
+    }
   },
   data() {
     return {
@@ -179,80 +181,7 @@ export default {
         "Teile",
         "Autor"
       ],
-      items: [
-        {
-          name: "Beispiel1",
-          stückzahl: "45",
-          startzustand: "Roheisen",
-          endprodukt: "Stahlbolzen",
-          bearbeitungsschritte: "16",
-          teile: "12",
-          autor: "Prof. Mustermann"
-        },
-        {
-          name: "Beispiel2",
-          stückzahl: "24",
-          startzustand: "Roheisen",
-          endprodukt: "Stahlbolzen",
-          bearbeitungsschritte: "5",
-          teile: "6",
-          autor: "Prof. Mustermann"
-        },
-        {
-          name: "Beispiel3",
-          stückzahl: "9",
-          startzustand: "Roheisen",
-          endprodukt: "Stahlbolzen",
-          bearbeitungsschritte: "1",
-          teile: "2",
-          autor: "Prof. Mustermann"
-        },
-        {
-          name: "Beispiel4",
-          stückzahl: "574",
-          startzustand: "Roheisen",
-          endprodukt: "Stahlbolzen",
-          bearbeitungsschritte: "75",
-          teile: "56",
-          autor: "Prof. Mustermann"
-        },
-        {
-          name: "Beispiel5",
-          stückzahl: "1000",
-          startzustand: "Roheisen",
-          endprodukt: "Stahlbolzen",
-          bearbeitungsschritte: "7",
-          teile: "5",
-          autor: "Prof. Mustermann"
-        },
-        {
-          name: "Beispiel6",
-          stückzahl: "7527",
-          startzustand: "Roheisen",
-          endprodukt: "Stahlbolzen",
-          bearbeitungsschritte: "757",
-          teile: "254",
-          autor: "Prof. Mustermann"
-        },
-        {
-          name: "Beispiel7",
-          stückzahl: "2772",
-          startzustand: "Roheisen",
-          endprodukt: "Stahlbolzen",
-          bearbeitungsschritte: "8",
-          teile: "6",
-          autor: "Prof. Mustermann"
-        },
-        {
-          name: "Beispiel8",
-          stückzahl: "75",
-          startzustand: "Roheisen",
-          endprodukt: "Stahlbolzen",
-          bearbeitungsschritte: "3",
-          teile: "4",
-          autor: "Prof. Mustermann"
-        }
-      ]
+      items: []
     };
   },
   computed: {
@@ -309,28 +238,51 @@ export default {
             });
           }
         })
+        .catch(error => {
+          dialogComponent.dialogError('Laden der Datenbank fehlgeschlagen')
+        });
     },
     openExportDB() {
       this.$parent.$parent.$parent.$parent.$parent.$parent.$refs.exportMenu.setActiveTab(1);
       this.$parent.$parent.$parent.$parent.$parent.$parent.$refs.exportMenu.setdialog(true);
     },
     loadGraph(item) {
-      if(confirm('Beim Laden wird der derzeitige Graph überschrieben. Wirklich den Graph "'+item.name+'" aus der Datenbank laden?')) {
-        const url = 'http://192.168.99.101:1110/VarG/graph/' + item.fileId;
-        axios
-          .get(url, {
-            params: {
-              user: 'eheldt'
-            }
-          })
-          .then(response => {
-            ExJSon.LoadJSon(response.data[0].graphObject, this.getGraph());
-            this.$parent.$parent.$parent.$parent.closeDialog();
-            dialogComponent.dialogSuccess('Graph erfolgreich aus Datenbank geladen');
-          })
-          .catch(error => {
-            dialogComponent.dialogError('Laden fehlgeschlagen');
-          });
+      if (this.type === 1) {
+        if(confirm('Beim Laden wird der derzeitige Graph überschrieben. Wirklich den Graph "'+item.name+'" aus der Datenbank laden?')) {
+          const url = 'http://192.168.99.101:1110/VarG/graph/' + item.fileId;
+          axios
+            .get(url, {
+              params: {
+                user: 'eheldt'
+              }
+            })
+            .then(response => {
+              ExJSon.LoadJSon(response.data[0].graphObject, this.getGraph(), dialogComponent);
+              this.$parent.$parent.$parent.$parent.closeDialog();
+              dialogComponent.dialogSuccess('Graph erfolgreich aus Datenbank geladen');
+            })
+            .catch(error => {
+              dialogComponent.dialogError('Laden des Graphen fehlgeschlagen');
+            });
+        }
+      }
+      else if (this.type === 0) {
+        if(confirm('Den Graph "'+item.name+'" aus der Datenbank laden?')) {
+          const url = 'http://192.168.1.103:1110/VarG/graph/' + item.fileId;
+          axios
+            .get(url, {
+              params: {
+                user: 'eheldt'
+              }
+            })
+            .then(response => {
+              ExJSon.LoadJSon(response.data[0].graphObject, null, dialogComponent);
+              dialogComponent.dialogSuccess('Graph erfolgreich aus Datenbank geladen');
+            })
+            .catch(error => {
+              dialogComponent.dialogError('Laden des Graphen fehlgeschlagen');
+            });
+        }
       }
     },
     loadImage (item) {

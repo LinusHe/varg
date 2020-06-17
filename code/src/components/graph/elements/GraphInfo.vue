@@ -132,7 +132,7 @@
       <v-row>
         <v-divider class="mx-4" vertical></v-divider>
         <v-card align="center" class="icon-card mt-2 ml-4" width="60px" height="60px">
-          <v-icon size="40px" class="mt-2 darkmode-ign" color="#2699FB">mdi-cash</v-icon>
+          <v-icon size="40px" class="mt-2 darkmode-ign" v-bind:style="{ color: '#'+iconColorCost }">mdi-cash</v-icon>
         </v-card>
         <p class="mb-0">
           <v-card-subtitle class="pb-0">
@@ -155,7 +155,7 @@
                 <v-icon
                   v-if="optimized"
                   v-on="on"
-                  @click="startOptimizing"
+                  @click="runOptC"
                   color="#636364"
                   class="ml-2 mb-1"
                   small
@@ -167,7 +167,7 @@
           <v-card-title v-if="optimized" class="pt-0 pb-0">{{costs}}</v-card-title>
           <v-btn
             v-if="!optimized"
-            @click="startOptimizing"
+            @click="runOptC"
             class="ml-4 pa-0 darkmode-ign"
             text
             color="#2699FB"
@@ -179,8 +179,8 @@
     <v-col sm="3">
       <v-row>
         <v-divider class="mx-4" vertical></v-divider>
-        <v-card align="center" class="icon-card mt-2 ml-4" width="60px" height="60px">
-          <v-icon size="40px" class="mt-2 darkmode-ign" color="#2699FB">mdi-clock-outline</v-icon>
+        <v-card align="center" class="icon-card mt-2 ml-4" width="60px" height="60px" >
+          <v-icon size="40px" class="mt-2 darkmode-ign" v-bind:style="{ color: '#'+iconColorTime }">mdi-clock-outline</v-icon>
         </v-card>
         <p class="mb-0">
           <v-card-subtitle class="pb-0">
@@ -203,7 +203,7 @@
                 <v-icon
                   v-on="on"
                   v-if="optimized"
-                  @click="startOptimizing"
+                  @click="runOptT"
                   color="#636364"
                   class="ml-2 mb-1"
                   small
@@ -215,7 +215,7 @@
           <v-card-title v-if="optimized" class="pt-0 pb-0">{{time}}</v-card-title>
           <v-btn
             v-if="!optimized"
-            @click="startOptimizing"
+            @click="runOptT"
             class="ml-4 pa-0 darkmode-ign"
             text
             color="#2699FB"
@@ -249,7 +249,8 @@ export default {
       validName: false,
       optimized: false,
       costs: "",
-      time: ""
+      iconColorCost: "2699FB",
+      iconColorTime: "2699FB"
     };
   },
   methods: {
@@ -313,7 +314,9 @@ export default {
     openOptimize() {
       this.$parent.$parent.$refs.settingsMenu.setActiveTab(2);
       this.$parent.$parent.$refs.settingsMenu.openDialog();
-      this.$nextTick(() => {this.$parent.$parent.$refs.settingsMenu.$refs.settingsOptimize.getNodeItemsName()})
+      this.$nextTick(() => {
+        this.$parent.$parent.$refs.settingsMenu.$refs.settingsOptimize.getNodeItemsName()
+        this.$parent.$parent.$refs.settingsMenu.$refs.settingsOptimize.getOption() })
     },
     scrollToAlternativeOptimizations() {
       this.$parent.$parent.$refs.settingsMenu.$refs.settingsOptimize.scrollToAlternatives();
@@ -321,9 +324,41 @@ export default {
     setOptimized(bool) {
       this.optimized = bool;
     },
+    runOptC() {
+      this.getGraph()
+        .getCytoGraph(this.getGraph())
+        .data("settingsOptimizationOption", "optionCost")
 
+      this.startOptimizing()
+    },
+    runOptT() {
+      this.getGraph()
+        .getCytoGraph(this.getGraph())
+        .data("settingsOptimizationOption", "optionTime")
+
+      this.startOptimizing()
+    },
+    markOption() {
+      if(this.getGraph().getCytoGraph(this.getGraph()).data("settingsOptimizationOption") == 'optionCost') {
+        this.iconColorCost = "FF7675"        
+        this.iconColorTime = "2699FB"
+      }
+      else {
+        this.iconColorTime = "FF7675"        
+        this.iconColorCost = "2699FB"
+      }
+    },
     runOptimization() {
       this.getGraph().optimizing();
+      let option = this.getGraph()
+        .getCytoGraph(this.getGraph())
+        .data("settingsOptimizationOption")
+      if(option == 'optionCost') {
+        this.option = true
+      }
+      else {
+        this.option = false
+      }
 
       // get best path
       let bestPaths = this.getGraph()
@@ -412,6 +447,8 @@ return dDisplay + hDisplay + mDisplay + sDisplay;
 },
 
     startOptimizing() {
+      this.markOption()
+
       console.log(
         "Startknoten: " +
           this.getGraph()

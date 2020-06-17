@@ -19,7 +19,7 @@ export function LoadJSon(content, graphComponent, dialog) {
     return false;
   }
   console.log("Json: ", content);
-  if (router.currentRoute.path == "/home/menu") {
+  if (router.currentRoute.path == "/home/menu" || router.currentRoute.path == "/home/database") {
     cyStore.data.importedJson = content;
     router.push({ name: "graph" });
   } else {
