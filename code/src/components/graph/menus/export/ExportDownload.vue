@@ -151,7 +151,7 @@ export default {
       /*this.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$refs[
           "newGraphMenu"
         ].discard();*/
-        this.$store.commit("ResetGraph");  // After Download Graph will be reseted
+        this.$store.commit("resetGraph");  // After Download Graph will be reseted
         location.reload();                //Loadingscreen will take us to home/menu
       }
     }
