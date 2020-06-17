@@ -9,7 +9,7 @@ const express = require('express');
 const mysql_driver = require('mysql');
 
 const config = {
-    // eheldt: 192.168.99.101
+    // eheldt: 192.168.1.103
     // jhohlfel: 192.168.99.101
     host: "192.168.99.101",
     user: "varg",
