@@ -2,10 +2,7 @@
   <div>
     <v-list-item three-line class="login-container">
       <v-list-item-content>
-        <v-list-item-title
-          align="center"
-          class="login-pre-headline mt-5 darkmode-ign"
-        >Variantengraph-Editor</v-list-item-title>
+        <v-list-item-title align="center" class="login-pre-headline mt-5 mb-3 darkmode-ign">Variantengraph-Editor</v-list-item-title>
         <v-list-item-title align="center" class="login-headline mb-1 darkmode-ign">VarG</v-list-item-title>
         <v-form
           align="center"
