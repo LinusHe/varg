@@ -62,6 +62,10 @@ export default {
     };
   },
   mounted: function() {
+    if (this.$store.getters.getDownload === 1) {
+      this.$store.commit("setDownload",0);
+      location.reload();
+    }
     dialogComponent = this.$parent.$parent.$parent.$parent.$parent.$refs["dialogs"];
   },
   methods: {

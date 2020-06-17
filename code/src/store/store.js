@@ -16,7 +16,7 @@ export const store = new Vuex.Store({
       role: "guest",
       admin: false
     },
-    
+
     issued : Date.now(),
 
     //shows wheather an atempt to load from localStorage was made
@@ -30,9 +30,10 @@ export const store = new Vuex.Store({
     */
     cyProdName: null,
     cyProdQuant: null,
-    
 
-    graph: null
+
+    graph: null,
+    wert: 0
   },
   mutations: {
 
@@ -87,6 +88,9 @@ export const store = new Vuex.Store({
     },
     ResetGraph(state){
       state.graph =null;
+    },
+    setDownload(state ,wert){
+      state.wert = wert;
     },
 
     /*old
@@ -165,6 +169,9 @@ export const store = new Vuex.Store({
     },
     getCyProdQuant: state => {
       return state.cyProdQuant;
+    },
+    getDownload: state => {
+      return state.wert;
     }
   }
 });

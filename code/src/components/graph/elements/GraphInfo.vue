@@ -277,6 +277,7 @@ export default {
           .getCytoGraph(this.getGraph())
           .data("prodName", this.prodName);
         dialogComponent.dialogSuccess("Produktname erfolgreich geändert");
+        this.$store.commit("setCyProdName", this.prodName);
       } else if (this.prodName.length > 25) {
         dialogComponent.dialogError(
           "Produktname nicht geändert: <b>Bitte Namen mit maximal 25 Zeichen eingeben</b>"
@@ -301,6 +302,7 @@ export default {
         dialogComponent.dialogSuccess("Stückzahl erfolgreich geändert");
         // remove optimization
         this.getGraph().removeOptimization();
+        this.$store.commit("setCyProdQuant", this.prodQuant);
       } else if (this.prodQuant.length == 0) {
         dialogComponent.dialogError(
           "Stückzahl nicht geändert: <b>Bitte Stückzahl eingeben</b>"
@@ -340,11 +342,11 @@ export default {
     },
     markOption() {
       if(this.getGraph().getCytoGraph(this.getGraph()).data("settingsOptimizationOption") == 'optionCost') {
-        this.iconColorCost = "FF7675"        
+        this.iconColorCost = "FF7675"
         this.iconColorTime = "2699FB"
       }
       else {
-        this.iconColorTime = "FF7675"        
+        this.iconColorTime = "FF7675"
         this.iconColorCost = "2699FB"
       }
     },
@@ -387,7 +389,7 @@ export default {
           .getCytoGraph(this.getGraph())
           .data("settingsUnitTimeSelection")){
 
-        
+
           case "Sekunden" :
              this.time = this.toHHMMSS(parseInt(this.time) )
             break;
@@ -404,7 +406,7 @@ export default {
             this.time = "etwas ist schief gelaufen"
       }
 
-    
+
       // set optimized
       this.optimized = true;
 
@@ -456,7 +458,7 @@ return dDisplay + hDisplay + mDisplay + sDisplay;
             .data("settingsOptimizationStartNames")
       );
 
-    
+
 
       if (!this.getGraph().hasQuickEdges(this.getGraph())) {
         if (
