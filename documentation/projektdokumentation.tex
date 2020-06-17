@@ -384,11 +384,23 @@ Das ist nützlich um z.B.: einen Nutzer nur auf seine eigenen Graphen zugreifen 
 Diese werden dann in die entsprechenden Queries umgewandelt.\\
 
 \subsection{Liste der Architekturentscheidungen}
-{\small Autor: xxx}
+{\small Autor: Alaa Aldin Karkoutli}\newline
 
-XXX (bewusste und unbewusste Entscheidungen mit zeitlicher Einordnung)
-
-
+\textbf{JavaScript} ist die grundlegende Programmiersprache, auf der diese App basiert ist. Sonst wurde es für die folgenden Architekturen entschieden:
+\begin{description}
+    \item [I) Vue.js]: wurde als das JavaScript-Webframework der Web-App eingesetzt. 
+    \item [II) Vuetify]: ist die UI-Bibliothek, für die entschieden wurde.  
+    \item [III) CSS-Language-Extenion]: wurde eingesetzt, um die optischen Dinge anzupassen.
+    \item [IV) Vuex]: ist eine 'Vue.js-Erweiterung', die als Speicher der Daten benutzt wird.
+    \item [V) Cytoscape.js]: ist die JavaScript-Bibliothek, für die entschieden wurde, um die Graphen zu erstellen.
+    \item [VI) Cypress]: ist ein Framework zum Testen der HTML-Elemente.
+    \item [VII) jest]: ist das Framework zum Testen der Richtigkeit einzelner Funktionen.
+    \item [VIII) REST-Konforme] (Representational State Transfer): ist die Architektur zur Kommunikation der DB und Authentifizierungsdaten mit der App.
+    \item [IX) Node.js]: ist die ausgewählte Schnittstelle, um auf die Daten der DB zuzugreifen.
+    \item [X) Axios 'Promise-based' HTTP-Request]: ist das eingesetzte Framework, um die Abfragen zu stellen. 
+    \item [XI) Docker]: ist die Client-Server Architektur, für die entschieden wurde.
+    \item [XII) MySQL]: ist das DB-System, für das im Docker-Container entschieden wurde.  
+\end{description}
 
 \section{Prozess- und Implementationsvorgaben}
 
