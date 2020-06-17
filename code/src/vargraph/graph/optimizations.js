@@ -411,10 +411,9 @@ export default {
   },
   
   optimizing() {
-   
+  
     let cy = this.getCytoGraph()
-    console.log(cy.data())
-    let option = cy.data("settingsOptimizationOption");   // false = time, true = cost
+    
     let startIDs= cy.data("settingsOptimizationStartIDs")
       // gets ID's of start- and endnodes
     let endID = cy.data("settingsOptimizationEndID");

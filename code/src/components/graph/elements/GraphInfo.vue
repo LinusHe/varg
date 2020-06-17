@@ -132,7 +132,7 @@
       <v-row>
         <v-divider class="mx-4" vertical></v-divider>
         <v-card align="center" class="icon-card mt-2 ml-4" width="60px" height="60px">
-          <v-icon v-if="option || !optimized" size="40px" class="mt-2 darkmode-ign" color="#2699FB">mdi-cash</v-icon>
+          <v-icon size="40px" class="mt-2 darkmode-ign" v-bind:style="{ color: '#'+iconColorCost }">mdi-cash</v-icon>
         </v-card>
         <p class="mb-0">
           <v-card-subtitle class="pb-0">
@@ -179,8 +179,8 @@
     <v-col sm="3">
       <v-row>
         <v-divider class="mx-4" vertical></v-divider>
-        <v-card align="center" class="icon-card mt-2 ml-4" width="60px" height="60px">
-          <v-icon v-if="!option || !optimized" size="40px" class="mt-2 darkmode-ign" color="#2699FB">mdi-clock-outline</v-icon>
+        <v-card align="center" class="icon-card mt-2 ml-4" width="60px" height="60px" >
+          <v-icon size="40px" class="mt-2 darkmode-ign" v-bind:style="{ color: '#'+iconColorTime }">mdi-clock-outline</v-icon>
         </v-card>
         <p class="mb-0">
           <v-card-subtitle class="pb-0">
@@ -249,7 +249,8 @@ export default {
       validName: false,
       optimized: false,
       costs: "",
-      time: ""
+      iconColorCost: "2699FB",
+      iconColorTime: "2699FB"
     };
   },
   methods: {
@@ -337,7 +338,16 @@ export default {
 
       this.startOptimizing()
     },
-
+    markOption() {
+      if(this.getGraph().getCytoGraph(this.getGraph()).data("settingsOptimizationOption") == 'optionCost') {
+        this.iconColorCost = "FF7675"        
+        this.iconColorTime = "2699FB"
+      }
+      else {
+        this.iconColorTime = "FF7675"        
+        this.iconColorCost = "2699FB"
+      }
+    },
     runOptimization() {
       this.getGraph().optimizing();
       let option = this.getGraph()
@@ -400,6 +410,8 @@ export default {
     },
 
     startOptimizing() {
+      this.markOption()
+
       console.log(
         "Länge der Startknoten: " +
           this.getGraph()
