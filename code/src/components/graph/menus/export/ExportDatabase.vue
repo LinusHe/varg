@@ -48,7 +48,7 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="error" id="overwriteOK" text @click="confirmOverwrite(hashkey)">Überschreiben</v-btn>
+          <v-btn color="error" id="overwriteOK" text @click="confirmOverwrite(DataBaseName)">Überschreiben</v-btn>
           <v-btn color="grey" id="overwriteCancel" text @click="clearFields()">Abbrechen</v-btn>
         </v-card-actions>
       </v-card>
@@ -82,8 +82,7 @@ export default {
       ],
       validDB: true,
       DataBaseName: "",
-      overwriteDialog: false,
-      hashkey: -1
+      overwriteDialog: false
     };
   },
 
@@ -105,29 +104,12 @@ export default {
       );
     },
     uploadGraph() {
-
-      // copy pasted hash generator (TODO remove when primary key is changed from fileId to userName+fileName)
-      String.prototype.hashCode = function() {
-        var hash = 0;
-        if (this.length == 0) {
-          return hash;
-        }
-        for (var i = 0; i < this.length; i++) {
-          var char = this.charCodeAt(i);
-          hash = ((hash<<5)-hash)+char;
-          hash = hash & hash; // Convert to 32bit integer
-        }
-        return hash;
-      }
-
       // Checks if menu formular was filled in correctly, then makes an axios.post request
       if (this.$refs.formDB.validate()) {
         const CONTENT = ExJSon.CreateJSon(this.getGraph());
-        this.hashkey = this.DataBaseName.hashCode();
         axios
           .post('http://192.168.99.101:1110/VarG/graph', {
-            fileId: this.hashkey,
-            filename: this.DataBaseName,
+            name: this.DataBaseName,
             user: this.$store.state.user.name,
             json: JSON.stringify(CONTENT)
           })
@@ -142,7 +124,7 @@ export default {
 
             if (error.response) {
               console.log(error.response)*/
-              this.overwriteDialog = true;  // TODO check if error.response actually says duplicate key error, if not then show varg-dialog with "Hochladen fehlgeschlagen"
+              this.overwriteDialog = true;  // TODO check if error.response actually says duplicate key error, if not then show varg-dialog with "Hochladen fehlgeschlagen: Datenbankfehler"
             /*}
             else if (error.request) {
               console.log(error.request)
@@ -154,9 +136,9 @@ export default {
           }); 
       }
     },
-    confirmOverwrite(fileId) {
+    confirmOverwrite(fileName) {
       // get json
-      const URL = 'http://192.168.99.101:1110/VarG/graph/' + fileId;
+      const URL = 'http://192.168.99.101:1110/VarG/graph/' + fileName;
       const CONTENT = ExJSon.CreateJSon(this.getGraph());
       axios
         .put(URL, {

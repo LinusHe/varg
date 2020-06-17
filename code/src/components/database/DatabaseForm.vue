@@ -233,8 +233,7 @@ export default {
               'bearbeitungsschritte': md.IDCount,
               'teile': md.IDCount,
               'autor': el.userName,
-              'image': null,
-              'fileId': el.fileId
+              'image': null
             });
           }
         })
@@ -249,7 +248,7 @@ export default {
     loadGraph(item) {
       if (this.type === 1) {
         if(confirm('Beim Laden wird der derzeitige Graph überschrieben. Wirklich den Graph "'+item.name+'" aus der Datenbank laden?')) {
-          const url = 'http://192.168.99.101:1110/VarG/graph/' + item.fileId;
+          const url = 'http://192.168.99.101:1110/VarG/graph/' + item.name;
           axios
             .get(url, {
               params: {
@@ -268,7 +267,7 @@ export default {
       }
       else if (this.type === 0) {
         if(confirm('Den Graph "'+item.name+'" aus der Datenbank laden?')) {
-          const url = 'http://192.168.1.103:1110/VarG/graph/' + item.fileId;
+          const url = 'http://192.168.1.103:1110/VarG/graph/' + item.name;
           axios
             .get(url, {
               params: {
@@ -286,7 +285,7 @@ export default {
       }
     },
     loadImage (item) {
-      const url = 'http://192.168.99.101:1110/VarG/graph/' + item.fileId;
+      const url = 'http://192.168.99.101:1110/VarG/graph/' + item.name;
       axios
         .get(url, {
           params: {
@@ -307,7 +306,7 @@ export default {
     },
     deleteGraph (item) {
       if(confirm('Wirklich den Graph "'+item.name+'" unwiderruflich aus der Datenbank löschen?')) {
-        const url = 'http://192.168.99.101:1110/VarG/graph/' + item.fileId;
+        const url = 'http://192.168.99.101:1110/VarG/graph/' + item.name;
         axios
           .delete(url, {
             params: {
