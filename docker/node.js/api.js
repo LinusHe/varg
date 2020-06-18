@@ -42,7 +42,7 @@ router.use(function(req,res,next) {
     console.log("middleware could happen here");
     //TODO: Serverside Verification could happen here with req.query.user 
     //this will allow to (only) access the resources from the specified address
-    res.header("Access-Control-Allow-Origin", "http://localhost:8080");
+    res.header("Access-Control-Allow-Origin", "https://sam.imn.htwk-leipzig.de");
     res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next(); //continue past middleware
@@ -188,7 +188,7 @@ api.use('/VarG', router);
 
 //START the server
 
-//8080 is the port number -> probably needs to change
-api.listen(8080, () => {
-    console.log('API listens to 8080');
+//443 is the port number -> probably needs to change
+api.listen(443, () => {
+  console.log("API listens to 443");
 });
