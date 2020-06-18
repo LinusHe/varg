@@ -200,8 +200,8 @@ api.use("/VarG", router);
 https
   .createServer(
     {
-      key: fs.readFileSync("./key.pem"),
-      cert: fs.readFileSync("./cert.pem"),
+      key: fs.readFileSync("/etc/letsencrypt/live/sam.imn.htwk-leipzig.de/privkey.pem"),
+      cert: fs.readFileSync("/etc/letsencrypt/live/sam.imn.htwk-leipzig.de/cert.pem"),
     },
     api
   )
