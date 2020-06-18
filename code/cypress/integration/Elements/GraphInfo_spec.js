@@ -79,7 +79,6 @@ describe('GraphHeader', () => {
     });
   });
 
-  // TODO: update tests for new UI design (disabled buttons, number field for quantity)
   it('should disable prodName submit button and show UI alert when trying to save invalid form value', () => {
     // invalid case 1: prodName = empty
     cy.get('#header-prodName > i[class~="mdi-pencil"]').click();
@@ -125,7 +124,6 @@ describe('GraphHeader', () => {
         case '-999999999999999999999999': i1 = '-1'; break;
         case '-1': i1 = '-0'; break;
         case '-0': i1 = '0'; break;
-        //case '000012': i1 = '0'; break; //starting zeros are currently being accepted but probably shouldn't be allowed
         case '0': i1 = 'end'; break;
       }
     } while (i1 !== 'end');
@@ -137,10 +135,9 @@ describe('GraphHeader', () => {
       cy.get('#header-prodQuant > i[class~="mdi-check-bold"]:not([class~="v-icon--disabled"])').should('not.be.visible');
       cy.get('#header-prodQuant > i[class~="mdi-check-bold"][class~="v-icon--disabled"]').should('be.visible');
       cy.get('#header-prodQuant > form input').type('{enter}');
-      /* no varg-dialog for this yet
-      cy.get('#varg-dialog > div > div > div > p').contains('Stückzahl nicht geändert: Es sind nur positive Stückzahlen erlaubt');
+      cy.get('#varg-dialog > div > div > div > p').contains('Stückzahl nicht geändert: Stückzahl ist zu groß');
       cy.get('#varg-dialog > div > div > div > button > span').contains('Schließen').click();
-      cy.get('#varg-dialog').should('not.be.visible');*/
+      cy.get('#varg-dialog').should('not.be.visible');
       switch (i2) {
         case '9999999999999999': i2 = '10000000000000000'; break;
         case '10000000000000000': i2 = '76457923742587283462956877684'; break;
@@ -155,8 +152,23 @@ describe('GraphHeader', () => {
     cy.get('#header-prodQuant > form input').type('--23');
     cy.get('#header-prodQuant > i[class~="mdi-check-bold"]:not([class~="v-icon--disabled"])').should('not.be.visible');
     cy.get('#header-prodQuant > i[class~="mdi-check-bold"][class~="v-icon--disabled"]').should('be.visible');
+    // invalid case 5: prodQuant = float
     cy.get('#header-prodQuant > form input').clear();
-    // allow decimals? (e.g. '4.1' or '4,1')
+    cy.get('#header-prodQuant > form input').type('1.2');
+    cy.get('#header-prodQuant > i[class~="mdi-check-bold"]:not([class~="v-icon--disabled"])').should('not.be.visible');
+    cy.get('#header-prodQuant > i[class~="mdi-check-bold"][class~="v-icon--disabled"]').should('be.visible');
+    cy.get('#header-prodQuant > form input').type('{enter}');
+    cy.get('#varg-dialog > div > div > div > p').contains('Stückzahl nicht geändert: Stückzahl muss ganzzahlig sein');
+    cy.get('#varg-dialog > div > div > div > button > span').contains('Schließen').click();
+    cy.get('#varg-dialog').should('not.be.visible');
+    cy.get('#header-prodQuant > form input').clear();
+    cy.get('#header-prodQuant > form input').type('3563,927');
+    cy.get('#header-prodQuant > i[class~="mdi-check-bold"]:not([class~="v-icon--disabled"])').should('not.be.visible');
+    cy.get('#header-prodQuant > i[class~="mdi-check-bold"][class~="v-icon--disabled"]').should('be.visible');
+    cy.get('#header-prodQuant > form input').type('{enter}');
+    cy.get('#varg-dialog > div > div > div > p').contains('Stückzahl nicht geändert: Stückzahl muss ganzzahlig sein');
+    cy.get('#varg-dialog > div > div > div > button > span').contains('Schließen').click();
+    cy.get('#varg-dialog').should('not.be.visible');
   });
 
   it('should save permitted prodName form value and update spans and button state back to !isEditing', () => {
@@ -178,7 +190,7 @@ describe('GraphHeader', () => {
   });
 
   it('should save permitted prodQuant form value and update spans and button state back to !isEditing', () => {
-    const prodQuantInput = '464250';
+    let prodQuantInput = '464250';
     cy.get('#header-prodQuant > i[class~="mdi-pencil"]').click();
     cy.get('#header-prodQuant > form input').clear().type(prodQuantInput);
     cy.get('#header-prodQuant > i[class~="mdi-check-bold"]').click();
@@ -191,6 +203,22 @@ describe('GraphHeader', () => {
 
     cy.get('#header-prodQuant > form input').should('not.be.visible');
     cy.get('#header-prodQuant > span').contains(prodQuantInput);
+    cy.get('#header-prodQuant > i[class~="mdi-check-bold"]').should('not.be.visible');
+    cy.get('#header-prodQuant > i[class~="mdi-pencil"]').should('be.visible');
+
+    prodQuantInput = '00023';
+    cy.get('#header-prodQuant > i[class~="mdi-pencil"]').click();
+    cy.get('#header-prodQuant > form input').clear().type(prodQuantInput);
+    cy.get('#header-prodQuant > i[class~="mdi-check-bold"]').click();
+
+    // catching target.is error -> must fix in source code
+    cy.on("uncaught:exception", (err, runnable) => {
+      expect(err.message).to.include("target.is is not a function");
+      return false;
+    });
+
+    cy.get('#header-prodQuant > form input').should('not.be.visible');
+    cy.get('#header-prodQuant > span').contains(+prodQuantInput);
     cy.get('#header-prodQuant > i[class~="mdi-check-bold"]').should('not.be.visible');
     cy.get('#header-prodQuant > i[class~="mdi-pencil"]').should('be.visible');
   });

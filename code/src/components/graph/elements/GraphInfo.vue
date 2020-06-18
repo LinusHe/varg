@@ -270,7 +270,7 @@ export default {
       this.$nextTick(() => this.$refs.nameInput.focus());
     },
     saveNewName() {
-      //Checks if menu formular was filled in correctly
+      // Checks if menu formular was filled in correctly
       if (this.$refs.formName.validate()) {
         this.isEditingName = false;
         this.getGraph()
@@ -284,6 +284,10 @@ export default {
       } else if (this.prodName.length == 0) {
         dialogComponent.dialogError(
           "Produktname nicht geändert: <b>Bitte Namen eingeben</b>"
+        );
+      } else if ((this.prodName || '')[0] == ' ') {
+        dialogComponent.dialogError(
+          "Produktname nicht geändert: <b>Name darf nicht mit Leerzeichen beginnen</b>"
         );
       }
     },
@@ -309,7 +313,15 @@ export default {
         dialogComponent.dialogError(
           "Stückzahl nicht geändert: <b>Es sind nur positive Stückzahlen erlaubt</b>"
         );
-      }
+      } else if (this.prodQuant > 9999999999999998) {
+        dialogComponent.dialogError(
+          "Stückzahl nicht geändert: <b>Stückzahl ist zu groß</b>"
+        );
+      } else if (!Number.isInteger(+this.prodQuant)) {
+        dialogComponent.dialogError(
+          "Stückzahl nicht geändert: <b>Stückzahl muss ganzzahlig sein</b>"
+        );
+      } 
     },
     openOptimize() {
       this.$parent.$parent.$refs.settingsMenu.setActiveTab(2);
