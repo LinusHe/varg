@@ -11,8 +11,8 @@ const mysql_driver = require('mysql');
 const config = {
     // eheldt: 192.168.1.103
     // jhohlfel: 192.168.99.101
-    host: "172.18.0.2",
-    user: "varg",
+    host: "localhost",
+    user: "root",
     password: "VarG2020",
     database: "vargdb"
 };
@@ -189,6 +189,6 @@ api.use('/VarG', router);
 //START the server
 
 //443 is the port number -> probably needs to change
-api.listen(443, () => {
-  console.log("API listens to 443");
+api.listen(7070, () => {
+  console.log("API listens to 7070");
 });
