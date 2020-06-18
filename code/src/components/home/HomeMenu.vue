@@ -46,7 +46,16 @@
         </v-col>
       </v-row>
 
-      <p align="center" class="login-bottom-links mt-10" color="lightgrey">
+      <v-divider
+        class="mx-4 mt-10"
+        :inset="inset"
+        horizontal
+      ></v-divider>
+      <em align="center" class="login-bottom-links mt-5 mb-5" color="lightgrey">
+        Mit freundlicher Unterstützung des
+        <a target="_blank" href="https://fsrim.htwk-leipzig.de/der-fachschaftsrat/">Fachschaftsrat Informatik & Medien</a>
+      </em>
+      <p align="center" class="login-bottom-links" color="lightgrey">
         <a
           class="not-underlined"
           href="https://sam.imn.htwk-leipzig.de/adminer.php"
@@ -83,6 +92,10 @@ export default {
     };
   },
   mounted: function() {
+    if (this.$store.getters.getDownload === 1) {
+      this.$store.commit("setDownload", 0);
+      location.reload();
+    }
     dialogComponent = this.$parent.$parent.$parent.$parent.$parent.$refs[
       "dialogs"
     ];

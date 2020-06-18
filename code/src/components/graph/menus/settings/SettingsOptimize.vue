@@ -121,9 +121,9 @@
                         <v-card-text class="ma-0 pa-0 pt-1">
                           {{i + 1}}. Platz |
                           <strong>Kosten:</strong>
-                          {{rank.cost}} €,
+                          {{rank.cost.toFixed(2)}} €,
                           <strong>Zeit:</strong>
-                          {{rank.time}} s
+                          {{rank.time}}
                         </v-card-text>
                       </template>
                     </v-radio>
@@ -180,6 +180,12 @@ export default {
       scrollbox.scrollTo(0, 500);
     },
 
+    convertTime( sec){
+
+      return this.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$refs.graphInfo.toHHMMSS(sec)
+
+    },
+
     applyRanking() {
       this.rankArray = [];
       let bestPaths = this.getGraph()
@@ -190,6 +196,31 @@ export default {
         let nextRank = {};
         nextRank.cost = this.getGraph().getTotalCost(bestPaths[i]);
         nextRank.time = this.getGraph().getTotalTime(bestPaths[i]);
+
+
+        switch(this.getGraph()
+          .getCytoGraph(this.getGraph())
+          .data("settingsUnitTimeSelection")){
+
+        
+          case "Sekunden" :
+             nextRank.time = this.convertTime(parseInt(nextRank.time) )
+            break;
+          case "Minuten" :
+           nextRank.time = this.convertTime(parseInt(nextRank.time) * 60)
+            break;
+          case "Stunden" :
+             nextRank.time = this.convertTime(parseInt(nextRank.time)* 60 *60)
+            break;
+          case "Tage" :
+             nextRank.time = this.convertTime(parseInt(nextRank.time) * 60 *60 * 24 )
+            break;
+          default:
+            nextRank.time = "etwas ist schief gelaufen"
+      }
+
+
+
         nextRank.path = [];
         for (let j = 0; j < bestPaths[i].length; j++) {
           if (j == 0) {
@@ -304,7 +335,7 @@ export default {
         .data("settingsOptimizationStartEndName", this.endSelect);
 
       // set StartIDs for Optimization Algorithm
-      console.log("wurde aufgerufeb")
+      console.log("wurde aufgerufen")
       console.log("hier startselect")
       let startIDs = [];
       this.getNodeItemsID()
@@ -400,6 +431,15 @@ export default {
         console.log("startSelect: " + this.startSelect)
 
      
+    },
+
+    getOption() {
+      if(this.getGraph().getCytoGraph().data("settingsOptimizationOption") == "optionTime") {
+        this.optimizationOption = 'Zeit';
+      }
+      else {
+        this.optimizationOption = 'Kosten';
+      }
     }
     
   }

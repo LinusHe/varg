@@ -11,15 +11,14 @@ INSERT INTO userreg VALUES ('jhohlfel', 'admin');
 INSERT INTO userreg VALUES ('eheldt', 'admin');
 
 CREATE TABLE cytographs (
-    fileId INT NOT NULL,
     fileName VARCHAR(25),
     userName VARCHAR(10),
     graphObject JSON,
-    PRIMARY KEY (fileId)
+    PRIMARY KEY (fileName, userName)
 );
 
 # TODO remove unused params from metadata (in cy.data as well)
-INSERT INTO cytographs (fileId, fileName, userName, graphObject) VALUES (-233086227,'sampleGraph1', 'eheldt','
+INSERT INTO cytographs (fileName, userName, graphObject) VALUES ('sampleGraph1', 'eheldt','
   {
     "elements": {
       "nodes": [
@@ -252,7 +251,7 @@ INSERT INTO cytographs (fileId, fileName, userName, graphObject) VALUES (-233086
     }
   }
 ');
-INSERT INTO cytographs (fileId, fileName, userName, graphObject) VALUES (-233086226,'sampleGraph2', 'jhohlfel','
+INSERT INTO cytographs (fileName, userName, graphObject) VALUES ('sampleGraph2', 'jhohlfel','
   {
     "elements": {
       "nodes": [
@@ -485,7 +484,7 @@ INSERT INTO cytographs (fileId, fileName, userName, graphObject) VALUES (-233086
     }
   }
 ');
-INSERT INTO cytographs (fileId, fileName, userName, graphObject) VALUES (-233086225,'sampleGraph3', 'eheldt','
+INSERT INTO cytographs (fileName, userName, graphObject) VALUES ('sampleGraph3', 'eheldt','
   {
     "elements": {
       "nodes": [

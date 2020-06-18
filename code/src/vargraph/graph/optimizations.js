@@ -160,7 +160,7 @@ export default {
   },
 
   createBoundary() {
-    let cy = this.getCytoGraph()
+    let cy = cyStore.data.cy
     let startIDs= cy.data("settingsOptimizationStartIDs")
       // gets ID's of start- and endnodes
     let endID = cy.data("settingsOptimizationEndID");
@@ -196,7 +196,7 @@ export default {
   calculateBoundary(node, end) {
     //rekursive counting of possible ways, stop at 7
     let pathCount = 0
-    let cy = this.getCytoGraph()
+    let cy = cyStore.data.cy
     let ways = cy.getElementById(node).outgoers('edge')
     for(let i = 0; i < ways.length; i++) {
       if(pathCount < 7) {
@@ -411,11 +411,10 @@ export default {
   },
   
   optimizing() {
-   
-    let cy = this.getCytoGraph()
-    console.log(cy.data("settingsOptimizationStartIDs"))
 
-    console.log(cy.data())
+    let cy = cyStore.data.cy
+
+   
     let option = cy.data("settingsOptimizationOption");   // false = time, true = cost
     let startIDs= cy.data("settingsOptimizationStartIDs")
       // gets ID's of start- and endnodes
@@ -559,11 +558,7 @@ export default {
   
     this.markBestEdges(bestPaths[0])
 
-    for(let ranking = 0; ranking < bestPaths.length; ranking ++) {
-      console.log(bestPaths[ranking])
-      console.log(this.getTotalCost(bestPaths[ranking]))
-      console.log(this.getTotalTime(bestPaths[ranking]))
-    }
+  
 
   }
 

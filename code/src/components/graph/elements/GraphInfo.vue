@@ -132,7 +132,7 @@
       <v-row>
         <v-divider class="mx-4" vertical></v-divider>
         <v-card align="center" class="icon-card mt-2 ml-4" width="60px" height="60px">
-          <v-icon size="40px" class="mt-2 darkmode-ign" color="#2699FB">mdi-cash</v-icon>
+          <v-icon size="40px" class="mt-2 darkmode-ign" v-bind:style="{ color: '#'+iconColorCost }">mdi-cash</v-icon>
         </v-card>
         <p class="mb-0">
           <v-card-subtitle class="pb-0">
@@ -155,7 +155,7 @@
                 <v-icon
                   v-if="optimized"
                   v-on="on"
-                  @click="startOptimizing"
+                  @click="runOptC"
                   color="#636364"
                   class="ml-2 mb-1"
                   small
@@ -167,7 +167,7 @@
           <v-card-title v-if="optimized" class="pt-0 pb-0">{{costs}}</v-card-title>
           <v-btn
             v-if="!optimized"
-            @click="startOptimizing"
+            @click="runOptC"
             class="ml-4 pa-0 darkmode-ign"
             text
             color="#2699FB"
@@ -179,8 +179,8 @@
     <v-col sm="3">
       <v-row>
         <v-divider class="mx-4" vertical></v-divider>
-        <v-card align="center" class="icon-card mt-2 ml-4" width="60px" height="60px">
-          <v-icon size="40px" class="mt-2 darkmode-ign" color="#2699FB">mdi-clock-outline</v-icon>
+        <v-card align="center" class="icon-card mt-2 ml-4" width="60px" height="60px" >
+          <v-icon size="40px" class="mt-2 darkmode-ign" v-bind:style="{ color: '#'+iconColorTime }">mdi-clock-outline</v-icon>
         </v-card>
         <p class="mb-0">
           <v-card-subtitle class="pb-0">
@@ -203,7 +203,7 @@
                 <v-icon
                   v-on="on"
                   v-if="optimized"
-                  @click="startOptimizing"
+                  @click="runOptT"
                   color="#636364"
                   class="ml-2 mb-1"
                   small
@@ -215,7 +215,7 @@
           <v-card-title v-if="optimized" class="pt-0 pb-0">{{time}}</v-card-title>
           <v-btn
             v-if="!optimized"
-            @click="startOptimizing"
+            @click="runOptT"
             class="ml-4 pa-0 darkmode-ign"
             text
             color="#2699FB"
@@ -249,7 +249,8 @@ export default {
       validName: false,
       optimized: false,
       costs: "",
-      time: ""
+      iconColorCost: "2699FB",
+      iconColorTime: "2699FB"
     };
   },
   methods: {
@@ -269,13 +270,14 @@ export default {
       this.$nextTick(() => this.$refs.nameInput.focus());
     },
     saveNewName() {
-      //Checks if menu formular was filled in correctly
+      // Checks if menu formular was filled in correctly
       if (this.$refs.formName.validate()) {
         this.isEditingName = false;
         this.getGraph()
           .getCytoGraph(this.getGraph())
           .data("prodName", this.prodName);
         dialogComponent.dialogSuccess("Produktname erfolgreich geändert");
+        this.$store.commit("setCyProdName", this.prodName);
       } else if (this.prodName.length > 25) {
         dialogComponent.dialogError(
           "Produktname nicht geändert: <b>Bitte Namen mit maximal 25 Zeichen eingeben</b>"
@@ -283,6 +285,10 @@ export default {
       } else if (this.prodName.length == 0) {
         dialogComponent.dialogError(
           "Produktname nicht geändert: <b>Bitte Namen eingeben</b>"
+        );
+      } else if ((this.prodName || '')[0] == ' ') {
+        dialogComponent.dialogError(
+          "Produktname nicht geändert: <b>Name darf nicht mit Leerzeichen beginnen</b>"
         );
       }
     },
@@ -300,6 +306,7 @@ export default {
         dialogComponent.dialogSuccess("Stückzahl erfolgreich geändert");
         // remove optimization
         this.getGraph().removeOptimization();
+        this.$store.commit("setCyProdQuant", this.prodQuant);
       } else if (this.prodQuant.length == 0) {
         dialogComponent.dialogError(
           "Stückzahl nicht geändert: <b>Bitte Stückzahl eingeben</b>"
@@ -308,12 +315,22 @@ export default {
         dialogComponent.dialogError(
           "Stückzahl nicht geändert: <b>Es sind nur positive Stückzahlen erlaubt</b>"
         );
-      }
+      } else if (this.prodQuant > 9999999999999998) {
+        dialogComponent.dialogError(
+          "Stückzahl nicht geändert: <b>Stückzahl ist zu groß</b>"
+        );
+      } else if (!Number.isInteger(+this.prodQuant)) {
+        dialogComponent.dialogError(
+          "Stückzahl nicht geändert: <b>Stückzahl muss ganzzahlig sein</b>"
+        );
+      } 
     },
     openOptimize() {
       this.$parent.$parent.$refs.settingsMenu.setActiveTab(2);
       this.$parent.$parent.$refs.settingsMenu.openDialog();
-      this.$nextTick(() => {this.$parent.$parent.$refs.settingsMenu.$refs.settingsOptimize.getNodeItemsName()})
+      this.$nextTick(() => {
+        this.$parent.$parent.$refs.settingsMenu.$refs.settingsOptimize.getNodeItemsName()
+        this.$parent.$parent.$refs.settingsMenu.$refs.settingsOptimize.getOption() })
     },
     scrollToAlternativeOptimizations() {
       this.$parent.$parent.$refs.settingsMenu.$refs.settingsOptimize.scrollToAlternatives();
@@ -321,9 +338,41 @@ export default {
     setOptimized(bool) {
       this.optimized = bool;
     },
+    runOptC() {
+      this.getGraph()
+        .getCytoGraph(this.getGraph())
+        .data("settingsOptimizationOption", "optionCost")
 
+      this.startOptimizing()
+    },
+    runOptT() {
+      this.getGraph()
+        .getCytoGraph(this.getGraph())
+        .data("settingsOptimizationOption", "optionTime")
+
+      this.startOptimizing()
+    },
+    markOption() {
+      if(this.getGraph().getCytoGraph(this.getGraph()).data("settingsOptimizationOption") == 'optionCost') {
+        this.iconColorCost = "FF7675"
+        this.iconColorTime = "2699FB"
+      }
+      else {
+        this.iconColorTime = "FF7675"
+        this.iconColorCost = "2699FB"
+      }
+    },
     runOptimization() {
       this.getGraph().optimizing();
+      let option = this.getGraph()
+        .getCytoGraph(this.getGraph())
+        .data("settingsOptimizationOption")
+      if(option == 'optionCost') {
+        this.option = true
+      }
+      else {
+        this.option = false
+      }
 
       // get best path
       let bestPaths = this.getGraph()
@@ -332,11 +381,11 @@ export default {
 
       // map costs
       this.costs =
-        this.getGraph().getTotalCost(bestPaths[0]) +
+        this.getGraph().getTotalCost(bestPaths[0]).toFixed(2) +
         " " +
         this.getGraph()
           .getCytoGraph(this.getGraph())
-          .data("settingsUnitCostSelection");
+          .data("settingsUnitCostSelection")
 
       // map time
       this.time =
@@ -352,7 +401,7 @@ export default {
           .getCytoGraph(this.getGraph())
           .data("settingsUnitTimeSelection")){
 
-        
+
           case "Sekunden" :
              this.time = this.toHHMMSS(parseInt(this.time) )
             break;
@@ -369,7 +418,7 @@ export default {
             this.time = "etwas ist schief gelaufen"
       }
 
-    
+
       // set optimized
       this.optimized = true;
 
@@ -399,19 +448,21 @@ export default {
     },
 
     toHHMMSS( seconds ) {seconds = Number(seconds);
-var d = Math.floor(seconds / (3600*24));
-var h = Math.floor(seconds % (3600*24) / 3600);
-var m = Math.floor(seconds % 3600 / 60);
-var s = Math.floor(seconds % 60);
+        var d = Math.floor(seconds / (3600*24));
+        var h = Math.floor(seconds % (3600*24) / 3600);
+        var m = Math.floor(seconds % 3600 / 60);
+        var s = Math.floor(seconds % 60);
 
-var dDisplay = d > 0 ? d + "d " : "";
-var hDisplay = h > 0 ? h + "h " : "";
-var mDisplay = m > 0 ? m + "m ": "";
-var sDisplay = s > 0 ? s +  "s ": "";
-return dDisplay + hDisplay + mDisplay + sDisplay;
+        var dDisplay = d > 0 ? d + "d " : "";
+        var hDisplay = h > 0 ? h + "h " : "";
+        var mDisplay = m > 0 ? m + "m ": "";
+        var sDisplay = s > 0 ? s +  "s ": "";
+    return dDisplay + hDisplay + mDisplay + sDisplay;
 },
 
     startOptimizing() {
+      this.markOption()
+
       console.log(
         "Startknoten: " +
           this.getGraph()
@@ -419,7 +470,7 @@ return dDisplay + hDisplay + mDisplay + sDisplay;
             .data("settingsOptimizationStartNames")
       );
 
-    
+
 
       if (!this.getGraph().hasQuickEdges(this.getGraph())) {
         if (

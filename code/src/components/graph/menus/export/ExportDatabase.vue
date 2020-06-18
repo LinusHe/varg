@@ -48,12 +48,7 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn
-            color="error"
-            id="overwriteOK"
-            text
-            @click="confirmOverwrite(hashkey)"
-          >Überschreiben</v-btn>
+          <v-btn color="error" id="overwriteOK" text @click="confirmOverwrite(DataBaseName)">Überschreiben</v-btn>
           <v-btn color="grey" id="overwriteCancel" text @click="clearFields()">Abbrechen</v-btn>
         </v-card-actions>
       </v-card>
@@ -86,8 +81,7 @@ export default {
       ],
       validDB: true,
       DataBaseName: "",
-      overwriteDialog: false,
-      hashkey: -1
+      overwriteDialog: false
     };
   },
 
@@ -108,46 +102,33 @@ export default {
         false
       );
     },
+    // requesting to post a graph to the DB
     uploadGraph() {
-      // copy pasted hash generator (TODO remove when primary key is changed from fileId to userName+fileName)
-      String.prototype.hashCode = function() {
-        var hash = 0;
-        if (this.length == 0) {
-          return hash;
-        }
-        for (var i = 0; i < this.length; i++) {
-          var char = this.charCodeAt(i);
-          hash = (hash << 5) - hash + char;
-          hash = hash & hash; // Convert to 32bit integer
-        }
-        return hash;
-      };
-
-      // Checks if menu formular was filled in correctly, then makes an axios.post request
+      // Checks if menu formular was filled in correctly
       if (this.$refs.formDB.validate()) {
-        const CONTENT = ExJSon.CreateJSon(this.getGraph());
-        this.hashkey = this.DataBaseName.hashCode();
-        axios
-          .post("https://sam.imn.htwk-leipzig.de:7070/VarG/graph", {
-            fileId: this.hashkey,
-            filename: this.DataBaseName,
-            user: "eheldt", // TODO replace with actual login info
-            json: JSON.stringify(CONTENT)
+        const CONTENT = ExJSon.CreateJSon(this.getGraph()); // creating a json object containing the current cytoscape instance with JSonPersistence.js
+        axios // axios.post request
+          .post('https://sam.imn.htwk-leipzig.de:7070/VarG/graph', {
+            // appending different data to save in the DB
+            name: this.DataBaseName,  // name aka fileName in the DB
+            user: this.$store.state.user.name,  // user aka userName
+            json: JSON.stringify(CONTENT) // json aka graphObject
           })
           .then(response => {
-            this.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$refs.databaseMenu.$refs.databaseGUI.loadItems();
-            this.closeDialog();
-            dialogComponent.dialogSuccess(
-              "Graph erfolgreich in Datenbank hochgeladen"
-            );
-            this.checkNewGraph();
+            this.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$refs.databaseMenu.$refs.databaseGUI.loadItems();  // refreshing the graph-items array to add the posted graph to the list
+            this.closeDialog(); // closing the DB menu
+            dialogComponent.dialogSuccess('Graph erfolgreich in Datenbank hochgeladen');
+            this.checkNewGraph(); // check if the upload menu was opened from the newgraph menu
           })
+          // currently, if any error occurs the overwrite menu opens, which should only happen if the error is a duplicate key error that the DB sent with the response.
+          // however with the current functionality of the API we only get errors with empty response bodies, which makes it impossible to distinguish different error types,
+          // thus the TODO comments below
           .catch(error => {
             /* TODO to use these error distinctions, the API must return proper errors instead of ERR_EMPTY_RESPONSE
 
             if (error.response) {
               console.log(error.response)*/
-            this.overwriteDialog = true; // TODO check if error.response actually says duplicate key error, if not then show varg-dialog with "Hochladen fehlgeschlagen"
+              this.overwriteDialog = true;  // TODO check if error.response actually says duplicate key error, if not then don't open overwrite menu and show varg-dialog with "Hochladen fehlgeschlagen: Datenbankfehler"
             /*}
             else if (error.request) {
               console.log(error.request)
@@ -159,13 +140,13 @@ export default {
           });
       }
     },
-    confirmOverwrite(fileId) {
-      // get json
-      const URL = "https://sam.imn.htwk-leipzig.de:7070/VarG/graph/" + fileId;
+    // requesting to overwrite the graph with the given name in the DB
+    confirmOverwrite(fileName) {
+      const URL = 'https://sam.imn.htwk-leipzig.de:7070/VarG/graph/' + fileName;
       const CONTENT = ExJSon.CreateJSon(this.getGraph());
-      axios
+      axios // axios.put request
         .put(URL, {
-          user: "eheldt", // TODO replace with actual login info
+          user: this.$store.state.user.name,
           json: JSON.stringify(CONTENT)
         })
         .then(response => {
@@ -183,7 +164,7 @@ export default {
         });
     },
     checkNewGraph() {
-      // check dialog was opened by new Graph menu
+      // check if dialog was opened from newgraph menu
       if (
         this.$parent.$parent.$parent.$parent.$parent.$parent.$parent.getNewGraph()
       ) {
