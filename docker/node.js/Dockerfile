@@ -8,4 +8,4 @@ COPY . /usr/src/app
 # run api
 CMD ["node", "api.js"]
 HEALTHCHECK --interval=5m --timeout=3s \
-  CMD curl -f http://172.18.0.4:1110/ || exit 1
+  CMD curl -f http://sam.imn.htwk-leipzig.de:7070/ || exit 1

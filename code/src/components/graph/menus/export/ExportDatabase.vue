@@ -125,7 +125,7 @@ export default {
         const CONTENT = ExJSon.CreateJSon(this.getGraph());
         this.hashkey = this.DataBaseName.hashCode();
         axios
-          .post('https://172.18.0.4:1110/VarG/graph', {
+          .post('http://sam.imn.htwk-leipzig.de:7070/VarG/graph', {
             fileId: this.hashkey,
             filename: this.DataBaseName,
             user: 'eheldt', // TODO replace with actual login info
@@ -156,7 +156,7 @@ export default {
     },
     confirmOverwrite(fileId) {
       // get json
-      const URL = 'https://172.18.0.4:1110/VarG/graph/' + fileId;
+      const URL = 'http://sam.imn.htwk-leipzig.de:7070/VarG/graph/' + fileId;
       const CONTENT = ExJSon.CreateJSon(this.getGraph());
       axios
         .put(URL, {
