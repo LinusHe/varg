@@ -287,7 +287,7 @@ export default {
       console.log('LOADING ITEMS')
       this.items = [];
       axios
-        .get('http://192.168.1.103:1110/VarG/graph/meta', {
+        .get('http://172.18.0.4:1110/VarG/graph/meta', {
           params: {
             user:'eheldt'
           }
@@ -316,7 +316,7 @@ export default {
     },
     loadGraph(item) {
       if(confirm('Beim Laden wird der derzeitige Graph überschrieben. Wirklich den Graph "'+item.name+'" aus der Datenbank laden?')) {
-        const url = 'http://192.168.1.103:1110/VarG/graph/' + item.fileId;
+        const url = 'http://172.18.0.4:1110/VarG/graph/' + item.fileId;
         axios
           .get(url, {
             params: {
@@ -334,7 +334,7 @@ export default {
       }
     },
     loadImage (item) {
-      const url = 'http://192.168.1.103:1110/VarG/graph/' + item.fileId;
+      const url = 'http://172.18.0.4:1110/VarG/graph/' + item.fileId;
       axios
         .get(url, {
           params: {
@@ -355,7 +355,7 @@ export default {
     },
     deleteGraph (item) {
       if(confirm('Wirklich den Graph "'+item.name+'" unwiderruflich aus der Datenbank löschen?')) {
-        const url = 'http://192.168.1.103:1110/VarG/graph/' + item.fileId;
+        const url = 'http://172.18.0.4:1110/VarG/graph/' + item.fileId;
         axios
           .delete(url, {
             params: {

@@ -11,7 +11,7 @@ const mysql_driver = require('mysql');
 const config = {
     // eheldt: 192.168.1.103
     // jhohlfel: 192.168.99.101
-    host: "192.168.1.103",
+    host: "172.18.0.2",
     user: "varg",
     password: "VarG2020",
     database: "vargdb"
