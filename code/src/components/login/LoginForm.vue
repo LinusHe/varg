@@ -38,6 +38,7 @@
             @focus="clearError()"
             @keyup.enter="login()"
           ></v-text-field>
+          <p align="center">
           <v-btn
             align="center"
             class="login-button darkmode-ign"
@@ -46,6 +47,7 @@
             color="primary"
             :disabled="!valid"
           >Login</v-btn>
+          </p>
         </v-form>
 
         <a align="center" class="font-italic mt-6" color="error">Passwort vergessen?</a>
@@ -55,14 +57,28 @@
         :inset="inset"
         horizontal
       ></v-divider>
-      <em align="center" class="login-bottom-links mt-5 mb-5" color="lightgrey">
+      <p align="center" class="login-bottom-links mt-5 mb-5" color="lightgrey">
+      <em >
         Mit freundlicher Unterstützung des <br><br>
         <a target="_blank" href="https://fsrim.htwk-leipzig.de/der-fachschaftsrat/">Fachschaftsrat Informatik & Medien</a>
       </em>
+      </p>
       <p align="center" class="login-bottom-links mt-5" color="lightgrey">
-          <a>Backend</a> |
-          <a>Impressum</a> |
-          <a>Datenschutz</a>
+          <a
+            class="not-underlined"
+            href="https://sam.imn.htwk-leipzig.de/adminer.php"
+            target="_blank"
+          >Backend</a> |
+          <a
+            class="not-underlined"
+            href="https://www.htwk-leipzig.de/hochschule/kontakt/impressum/"
+            target="_blank"
+          >Impressum</a> |
+          <a
+            class="not-underlined"
+            href="https://www.htwk-leipzig.de/de/hochschule/kontakt/datenschutzerklaerung/"
+            target="_blank"
+          >Datenschutz</a>
         </p>
       </v-list-item-content>
     </v-list-item>
