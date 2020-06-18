@@ -53,9 +53,21 @@
 
         <a align="center" class="font-italic mt-6" color="error">Passwort vergessen?</a>
         <p align="center" class="login-bottom-links mt-10" color="lightgrey">
-          <a class="not-underlined" href="https://www.htwk-leipzig.de/hochschule/kontakt/" target="_blank">Backend</a> |
-          <a class="not-underlined" href="https://www.htwk-leipzig.de/hochschule/kontakt/impressum/" target="_blank">Impressum</a> |
-          <a class="not-underlined" href="https://www.htwk-leipzig.de/de/hochschule/kontakt/datenschutzerklaerung/" target="_blank">Datenschutz</a>
+          <a
+            class="not-underlined"
+            href="https://sam.imn.htwk-leipzig.de/adminer.php"
+            target="_blank"
+          >Backend</a> |
+          <a
+            class="not-underlined"
+            href="https://www.htwk-leipzig.de/hochschule/kontakt/impressum/"
+            target="_blank"
+          >Impressum</a> |
+          <a
+            class="not-underlined"
+            href="https://www.htwk-leipzig.de/de/hochschule/kontakt/datenschutzerklaerung/"
+            target="_blank"
+          >Datenschutz</a>
         </p>
       </v-list-item-content>
     </v-list-item>
@@ -123,7 +135,7 @@ export default {
     },
 
     /**
-     * sends username and password to backend for verification and then redirects to loadingscreen where final route is determined 
+     * sends username and password to backend for verification and then redirects to loadingscreen where final route is determined
      */
 
     /*

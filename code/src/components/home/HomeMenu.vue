@@ -1,7 +1,10 @@
 <template>
   <v-list-item three-line class="homemenu-container" align="center">
     <v-list-item-content>
-      <v-list-item-title align="center" class="login-pre-headline mt-5 mb-3 darkmode-ign">Variantengraph-Editor</v-list-item-title>
+      <v-list-item-title
+        align="center"
+        class="login-pre-headline mt-5 mb-3 darkmode-ign"
+      >Variantengraph-Editor</v-list-item-title>
       <v-list-item-title align="center" class="login-headline mb-1 darkmode-ign">VarG</v-list-item-title>
       <v-row class="button-container">
         <v-col sm="4">
@@ -17,7 +20,13 @@
 
         <v-col sm="4">
           <v-card outlined align="center">
-            <v-btn depressed fab :color="importBtnColor" @click="openFromFile()" class="mt-4 darkmode-ign">
+            <v-btn
+              depressed
+              fab
+              :color="importBtnColor"
+              @click="openFromFile()"
+              class="mt-4 darkmode-ign"
+            >
               <v-icon>mdi-import</v-icon>
             </v-btn>
             <input type="file" ref="file" accept=".json" style="display: none" />
@@ -38,9 +47,21 @@
       </v-row>
 
       <p align="center" class="login-bottom-links mt-10" color="lightgrey">
-        <a class="not-underlined" href="https://www.htwk-leipzig.de/hochschule/kontakt/" target="_blank">Backend</a> |
-        <a class="not-underlined" href="https://www.htwk-leipzig.de/hochschule/kontakt/impressum/" target="_blank">Impressum</a> |
-        <a class="not-underlined" href="https://www.htwk-leipzig.de/de/hochschule/kontakt/datenschutzerklaerung/" target="_blank">Datenschutz</a>
+        <a
+          class="not-underlined"
+          href="https://sam.imn.htwk-leipzig.de/adminer.php"
+          target="_blank"
+        >Backend</a> |
+        <a
+          class="not-underlined"
+          href="https://www.htwk-leipzig.de/hochschule/kontakt/impressum/"
+          target="_blank"
+        >Impressum</a> |
+        <a
+          class="not-underlined"
+          href="https://www.htwk-leipzig.de/de/hochschule/kontakt/datenschutzerklaerung/"
+          target="_blank"
+        >Datenschutz</a>
       </p>
     </v-list-item-content>
   </v-list-item>
@@ -58,11 +79,13 @@ export default {
   name: "Menu",
   data() {
     return {
-      importBtnColor: "primary",
+      importBtnColor: "primary"
     };
   },
   mounted: function() {
-    dialogComponent = this.$parent.$parent.$parent.$parent.$parent.$refs["dialogs"];
+    dialogComponent = this.$parent.$parent.$parent.$parent.$parent.$refs[
+      "dialogs"
+    ];
   },
   methods: {
     openFromFile() {
@@ -78,7 +101,7 @@ export default {
         dialogComponent.dialogSuccess("Graph erfolgreich geladen");
       }
 
-      this.$store.commit('saveGraph', cyStore.data.cy.json());
+      this.$store.commit("saveGraph", cyStore.data.cy.json());
     }
   }
 };
