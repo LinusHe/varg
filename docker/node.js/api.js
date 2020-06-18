@@ -44,7 +44,7 @@ router.use(function (req, res, next) {
   console.log("middleware could happen here");
   //TODO: Serverside Verification could happen here with req.query.user
   //this will allow to (only) access the resources from the specified address
-  res.header("Access-Control-Allow-Origin", "https://sam.imn.htwk-leipzig.de/");
+  res.header("Access-Control-Allow-Origin", "https://sam.imn.htwk-leipzig.de");
   res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next(); //continue past middleware
