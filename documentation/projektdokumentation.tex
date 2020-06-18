@@ -323,16 +323,15 @@ Tool ist es möglich, die MySQL-Datenbank komfortabel anzuzeigen und SQL-Zugriff
 \subsection{Definierte Schnittstellen}
 {\small Autor: Julius Hohlfeld}
 
-VarGs Funktionalitäten erforden eine Datenbank um die erstellten Graphen speichern und wieder abrufen zu können.\\
+VarGs Funktionalitäten erfordern eine Datenbank, um die erstellten Graphen speichern und wieder abrufen zu können.\\
 Um den Zugriff auf die Datenbank zu kontrollieren benötigen wir eine definierte Schnittstelle (bzw. API) zwischen Client,
 Webserver und Datenbank.\\
 \\
-Diese Schnittstelle ist RESTfull - d.h. sie folgt einigen der sog. REST-Constraints. Eine Übersicht inwiefern zu REST und welche
-Bedeutung es für das Projekt hat, findet sich im GitLab Wiki unter 'API Dokumentation'.\\
+Diese Schnittstelle ist RESTful - d.h. sie folgt einigen der sog. REST-Constraints. Eine Übersicht zu REST und dessen Bedeutung für das Projekt findet sich im GitLab Wiki unter ''API Dokumentation''.\\
 Die Schnittstelle setzt sich wie folgt zusammen:
 \begin{itemize}
   \item \textbf{Vue}
-        \\\textit{Framework für Client + Axios Modul für asnychrone (promise-based) HTTP-Requests}
+        \\\textit{Framework für Client + Axios-Module für asnychrone (promise-based) HTTP-Requests}
   \item  \textbf{Express}
         \\\textit{Serverseitiges Node-Module für Webserver: hört angemeldete Ports auf Requests ab, die dem URI-Modell entsprechen}
   \item \textbf{Node.js}
@@ -342,7 +341,7 @@ Die Schnittstelle setzt sich wie folgt zusammen:
 \end{itemize}
 
 Diese Struktur (kurz VenDB) entspricht einer Anpassung des sog. MEAN-Stacks auf das VarG-Projekt (MongoDB, Express, Angular, Node.js).\\
-Dabei erfolgt jeglicher Austausch der Graphdaten im JSON Format damit auf die cytoscape.js Funktion zum Laden des Graphen zugegriffen werden kann.\\
+Dabei erfolgt jeglicher Austausch der Graphdaten im JSON-Format, damit auf die Cytoscape-Funktion zum Laden des Graphen zugegriffen werden kann.\\
 \\
 \subsubsection{Client}
 
