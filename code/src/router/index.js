@@ -6,12 +6,8 @@ import Graph from "../views/Graph.vue";
 import Database from "../views/Database.vue";
 import Menu from "../views/Menu.vue";
 import NewGraph from "../views/NewGraph.vue";
-//import Vuex from 'vuex'
 import { store } from "../store/store.js";
 import LoadingScreen from "../views/LoadingScreen.vue";
-//import cyStore from "@/vargraph/graph/cyStore";
-//import GraphHeader from "../components/graph/elements/GraphHeader.vue";
-//var auth;
 Vue.use(VueRouter);
 
 const routes = [
@@ -71,8 +67,8 @@ const routes = [
     component: Graph,
     meta: {
       requiresAuth: true,
-      //declared for unnecessary! (for now) greetings LoginTeam ;)
-      //requiresGraph: true,
+      // Declared for unnecessary! (for now) greetings LoginTeam ;)
+      // equiresGraph: true,
       title: "Varg - Graph Editor"
     }
   }
@@ -96,12 +92,9 @@ router.beforeEach((to, from, next) => {
 
   // Check for requiresAuth guard
   if (to.matched.some(record => record.meta.requiresAuth)) {
-      if(store.getters.getAuth) {
-        //proceed to rout
-        //Role management could take place here
+      if(store.getters.getAuth) { // Check if user is authenticated
         next();
       } else {
-        //Go to Login
         next({
           path: "/home/loading",
           query: {
@@ -113,7 +106,10 @@ router.beforeEach((to, from, next) => {
     next();
   }
 
+  // !OUTDATED!
+  // Functionality was taken over by ../views/Loadingscreen.vue
   // Check wether Graph is created
+  /*
   if (to.matched.some(record => record.meta.requiresGraph)) {
     // Check if Graph has no Name
     if (store.getters.getCyProdName === null) {
@@ -129,18 +125,12 @@ router.beforeEach((to, from, next) => {
   } else {
     // Proceed to route
     next();
-  }
+  }*/
 }),
 router.afterEach((to, from) => {
-  //alert("From:"+from.name);
-  //alert("To:"+to.name);
-    //if (window.location.pathname === "/graph"&& store.getters.getGraph != null) {
     if (from.name === "graph" && (to.name === "newGraph" || to.name === "menu")) {
-        //alert("Zurück!");
-        //alert(store.getters.getGraph);
         if (store.getters.getGraph != null){
-        //alert ("Not Empty! Mach was!");
-        store.commit("ResetGraph");
+        store.commit("resetGraph");
         }
         router.replace("/graph");
         location.reload();

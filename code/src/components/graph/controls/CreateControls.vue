@@ -522,8 +522,12 @@ export default {
     };
   },
   methods: {
-    backupGraph() {
-      //let gra = cyStore.data.cy;
+    /**
+     * Another approach might have been to convert ../vargraph/graph/cyStore.js to a vuex store and use subscribe() to monitor changes.
+     * Unfortunately this would need many changes throughout our code and at this point success cannot be guaranteed.
+     * Godspeed!
+     */
+    backupGraph() { //saves current graph to store
       this.$store.commit("saveGraph", cyStore.data.cy.json());
     },
     getGraph() {

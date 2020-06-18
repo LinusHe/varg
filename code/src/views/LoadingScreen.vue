@@ -2,7 +2,7 @@
 
 <template>
   <div>
-    <h1 class="ma-10 text-center" >
+    <h1 class="ma-10 text-center">
       <v-progress-circular indeterminate color="primary" class="darkmode-ign"></v-progress-circular>
     </h1>
     <p class="ma-10">Bitte warte einen Moment.</p>
@@ -12,48 +12,31 @@
 
 <script>
 import cyStore from "@/vargraph/graph/cyStore";
-//import LoginForm from "@/components/login/LoginForm";
 export default {
   name: "LoadingScreen",
-  mounted: function() {
 
-    if (Date.now() > this.$store.getters.getIssuedTime + 3000000000000) {
-      alert("TIMEOUT");
-      localStorage.removeItem("store"); //To do: dont remove store, only user
+  /**
+   * Checks users state and decides where to redirect in case regular
+   * routing process was left e.g because of pagereload
+   */
+  mounted: function() {
+    if (Date.now() > this.$store.getters.getIssuedTime + 3000000000000) { // Checks, if login time is older than 3000000000000 ms. Should be adjusted to more realistic value
+      alert("TIMEOUT"); // Redirect to logout page would be better
       this.$store.commit("logout");
       this.$router.replace("/home/login");
-    }else if (this.$store.getters.getAuth){   //Token ist gültig!
-      if(window.history.length > 1){   // Waren wir da !
-        if(this.$store.getters.getGraph === null) {
+      // TODO: improve getter !
+    } else if (this.$store.state.user.authenticated) { // User is logged in
+      if (window.history.length > 1) { // User has history on page
+        if (this.$store.getters.getGraph === null) { // No graph was created by user
           this.$router.replace("/home/menu");
-        }else{
-          //let content = this.$store.getters.getGraph;
-      // content = JSON.parse(content);
+        } else { // User has created graph in the past, graph is loaded and user is redirected to graph editor
           cyStore.data.importedJson = this.$store.getters.getGraph;
           this.$router.replace("/graph");
-
         }
-      }else{
-        this.$router.replace("/home/login");
+      } else {
+        this.$router.replace("/home/login"); // TODO: redirect to /menu (?)
       }
-    }
-    /* else if (this.$store.getters.getAuth && window.history.length > 1 && this.$store.getters.getGraph === null) {
-      alert("Nicht Initial betreten");
-      alert(window.history.length);
-      alert(this.$route.query.redirect);
-      this.$router.replace(this.$route.query.redirect);
-    } else if (this.$store.getters.getAuth && window.history.length > 1 && !(this.$store.getters.getGraph === null)) {
-      alert("Reload");
-      //To do: check if graph exists in storage and redirect correctly
-
-      if(this.$store.getters.getGraph === null){
-       alert("Kein Graphen");
-        this.$router.replace("/home/menu");
-      }else{
-        alert("Graph gefunden");
-        this.$router.replace("/graph");
-      }
-    }*/ else {
+    } else { // User was not logged in, but tried to enter restricted path. Redirect to /login
       this.$router.replace("/home/login");
     }
   }

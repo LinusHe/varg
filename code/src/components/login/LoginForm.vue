@@ -2,10 +2,7 @@
   <div>
     <v-list-item three-line class="login-container">
       <v-list-item-content>
-        <v-list-item-title
-          align="center"
-          class="login-pre-headline mt-5 darkmode-ign"
-        >Variantengraph-Editor</v-list-item-title>
+        <v-list-item-title align="center" class="login-pre-headline mt-5 mb-3 darkmode-ign">Variantengraph-Editor</v-list-item-title>
         <v-list-item-title align="center" class="login-headline mb-1 darkmode-ign">VarG</v-list-item-title>
         <v-form
           align="center"
@@ -70,7 +67,7 @@
       </v-list-item-content>
     </v-list-item>
 
-    <!-- DEBUGGING
+    <!-- Buttons for debugging. Regard functions in <script>
     <v-btn align="center" class="login-button" @click="getState()" large color="primary">get State</v-btn>
 
     <v-btn
@@ -80,7 +77,7 @@
       large
       color="primary"
     >Remove localStorage</v-btn> 
-    DEBUGGING-->
+    Buttons for debugging. Regard functions in <script> -->
   </div>
 </template>
 
@@ -108,18 +105,17 @@ export default {
     };
   },
   methods: {
-    //For Debuging
-    getState() {
+    // For Debuging. See buttons above
+    getState() { // Returns given values from store
       alert(
         "Authenticated: " +
-          this.$store.state.user.autehticated +
+          this.$store.state.user.authenticated +
           "\nName: " +
           this.$store.state.user.name +
           "\nRole: " +
           this.$store.state.user.role +
-          //"\nReady: " + this.$store.state.ready +
           "\nIssued: " +
-          this.$store.state.issued +
+          this.$store.state.user.issued +
           "\nNow: " +
           Date.now() +
           "\nprodName: " +
@@ -128,25 +124,28 @@ export default {
           this.$store.getters.getProdQuant
       );
     },
-    delLocal() {
+    delLocal() { // Removes localStorage
       localStorage.removeItem("store");
     },
 
     /**
-     * sends username and password to backend for verification and then redirects to loadingscreen where final route is determined 
+     * Sends username and password to backend for verification and then redirects to /menu if login was successfull
+     * Validation of user input is missing. See outdated login() function
+     */
+    login: function () {
+     this.$store.dispatch("AUTH_REQUEST", { user: this.input.email, password: this.input.password }).then(() => {
+     this.$router.replace("/home/menu");
+   })
+    },
+
+    /**
+     * !OUTDATED!
+     * Validates user input and on success redirects to home view.
+     * @var authenticated can be used to verrify if a user has logged in succesfully.
+     * Prototype of an security issue
      */
 
     /*
-    login: function () {
-     this.$store.dispatch(AUTH_REQUEST, { user: this.input.email, password: this.input.password }).then(() => {
-     this.$router.push('/')
-   })
-    },*/
-
-    /**
-     * Validates user input and on success redirects to home view.
-     * @var authenticated can be used to verrify if a user has logged in succesfully.
-     */
     login() {
       if (this.$refs.form.validate()) {
         if (this.input.email === "VarG" && this.input.password === "2020") {
@@ -181,7 +180,7 @@ export default {
           );
         }
       }
-    },
+    },*/
 
     /**
      * Clears previous error messages

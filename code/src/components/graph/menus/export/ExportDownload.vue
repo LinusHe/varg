@@ -154,7 +154,6 @@ export default {
         this.$store.commit("setDownload",1);
         this.$store.commit("ResetGraph");  // After Download Graph will be reseted
         this.$router.replace("/");        //Loadingscreen will take us to home/menu
-        //location.reload();
       }
     }
   }
