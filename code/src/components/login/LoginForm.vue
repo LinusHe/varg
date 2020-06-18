@@ -52,7 +52,17 @@
         </v-form>
 
         <a align="center" class="font-italic mt-6" color="error">Passwort vergessen?</a>
-        <p align="center" class="login-bottom-links mt-10" color="lightgrey">
+        
+        <v-divider
+        class="mx-4 mt-10"
+        :inset="inset"
+        horizontal
+      ></v-divider>
+      <em align="center" class="login-bottom-links mt-5 mb-5" color="lightgrey">
+        Mit freundlicher Unterstützung des <br><br>
+        <a target="_blank" href="https://fsrim.htwk-leipzig.de/der-fachschaftsrat/">Fachschaftsrat Informatik & Medien</a>
+      </em>
+      <p align="center" class="login-bottom-links mt-5" color="lightgrey">
           <a>Backend</a> |
           <a>Impressum</a> |
           <a>Datenschutz</a>

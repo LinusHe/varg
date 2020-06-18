@@ -1,7 +1,10 @@
 <template>
   <v-list-item three-line class="homemenu-container" align="center">
     <v-list-item-content>
-      <v-list-item-title align="center" class="login-pre-headline mt-5 mb-3 darkmode-ign">Variantengraph-Editor</v-list-item-title>
+      <v-list-item-title
+        align="center"
+        class="login-pre-headline mt-5 mb-3 darkmode-ign"
+      >Variantengraph-Editor</v-list-item-title>
       <v-list-item-title align="center" class="login-headline mb-1 darkmode-ign">VarG</v-list-item-title>
       <v-row class="button-container">
         <v-col sm="4">
@@ -17,7 +20,13 @@
 
         <v-col sm="4">
           <v-card outlined align="center">
-            <v-btn depressed fab :color="importBtnColor" @click="openFromFile()" class="mt-4 darkmode-ign">
+            <v-btn
+              depressed
+              fab
+              :color="importBtnColor"
+              @click="openFromFile()"
+              class="mt-4 darkmode-ign"
+            >
               <v-icon>mdi-import</v-icon>
             </v-btn>
             <input type="file" ref="file" accept=".json" style="display: none" />
@@ -37,7 +46,17 @@
         </v-col>
       </v-row>
 
-      <p align="center" class="login-bottom-links mt-10" color="lightgrey">
+      
+       <v-divider
+        class="mx-4 mt-10"
+        :inset="inset"
+        horizontal
+      ></v-divider>
+      <em align="center" class="login-bottom-links mt-5 mb-5" color="lightgrey">
+        Mit freundlicher Unterstützung des
+        <a target="_blank" href="https://fsrim.htwk-leipzig.de/der-fachschaftsrat/">Fachschaftsrat Informatik & Medien</a>
+      </em>
+      <p align="center" class="login-bottom-links" color="lightgrey">
         <a>Backend</a> |
         <a>Impressum</a> |
         <a>Datenschutz</a>
@@ -58,15 +77,17 @@ export default {
   name: "Menu",
   data() {
     return {
-      importBtnColor: "primary",
+      importBtnColor: "primary"
     };
   },
   mounted: function() {
     if (this.$store.getters.getDownload === 1) {
-      this.$store.commit("setDownload",0);
+      this.$store.commit("setDownload", 0);
       location.reload();
     }
-    dialogComponent = this.$parent.$parent.$parent.$parent.$parent.$refs["dialogs"];
+    dialogComponent = this.$parent.$parent.$parent.$parent.$parent.$refs[
+      "dialogs"
+    ];
   },
   methods: {
     openFromFile() {
@@ -82,7 +103,7 @@ export default {
         dialogComponent.dialogSuccess("Graph erfolgreich geladen");
       }
 
-      this.$store.commit('saveGraph', cyStore.data.cy.json());
+      this.$store.commit("saveGraph", cyStore.data.cy.json());
     }
   }
 };
