@@ -103,28 +103,33 @@ export default {
         false
       );
     },
+    // requesting to post a graph to the DB
     uploadGraph() {
-      // Checks if menu formular was filled in correctly, then makes an axios.post request
+      // Checks if menu formular was filled in correctly
       if (this.$refs.formDB.validate()) {
-        const CONTENT = ExJSon.CreateJSon(this.getGraph());
-        axios
-          .post('http://192.168.99.101:1110/VarG/graph', {
-            name: this.DataBaseName,
-            user: this.$store.state.user.name,
-            json: JSON.stringify(CONTENT)
+        const CONTENT = ExJSon.CreateJSon(this.getGraph()); // creating a json object containing the current cytoscape instance with JSonPersistence.js
+        axios // axios.post request
+          .post('http://192.168.1.103:1110/VarG/graph', {
+            // appending different data to save in the DB
+            name: this.DataBaseName,  // name aka fileName in the DB
+            user: this.$store.state.user.name,  // user aka userName
+            json: JSON.stringify(CONTENT) // json aka graphObject
           })
           .then(response => {
-            this.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$refs.databaseMenu.$refs.databaseGUI.loadItems();
-            this.closeDialog();
+            this.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$refs.databaseMenu.$refs.databaseGUI.loadItems();  // refreshing the graph-items array to add the posted graph to the list
+            this.closeDialog(); // closing the DB menu
             dialogComponent.dialogSuccess('Graph erfolgreich in Datenbank hochgeladen');
-            this.checkNewGraph();
+            this.checkNewGraph(); // check if the upload menu was opened from the newgraph menu
           })
+          // currently, if any error occurs the overwrite menu opens, which should only happen if the error is a duplicate key error that the DB sent with the response.
+          // however with the current functionality of the API we only get errors with empty response bodies, which makes it impossible to distinguish different error types,
+          // thus the TODO comments below
           .catch(error => {
             /* TODO to use these error distinctions, the API must return proper errors instead of ERR_EMPTY_RESPONSE
 
             if (error.response) {
               console.log(error.response)*/
-              this.overwriteDialog = true;  // TODO check if error.response actually says duplicate key error, if not then show varg-dialog with "Hochladen fehlgeschlagen: Datenbankfehler"
+              this.overwriteDialog = true;  // TODO check if error.response actually says duplicate key error, if not then don't open overwrite menu and show varg-dialog with "Hochladen fehlgeschlagen: Datenbankfehler"
             /*}
             else if (error.request) {
               console.log(error.request)
@@ -136,11 +141,11 @@ export default {
           }); 
       }
     },
+    // requesting to overwrite the graph with the given name in the DB
     confirmOverwrite(fileName) {
-      // get json
-      const URL = 'http://192.168.99.101:1110/VarG/graph/' + fileName;
+      const URL = 'http://192.168.1.103:1110/VarG/graph/' + fileName;
       const CONTENT = ExJSon.CreateJSon(this.getGraph());
-      axios
+      axios // axios.put request
         .put(URL, {
           user: this.$store.state.user.name,
           json: JSON.stringify(CONTENT)
@@ -156,7 +161,7 @@ export default {
         });
     },
     checkNewGraph() {
-      // check dialog was opened by new Graph menu
+      // check if dialog was opened from newgraph menu
       if (
         this.$parent.$parent.$parent.$parent.$parent.$parent.$parent.getNewGraph()
       ) {
