@@ -182,9 +182,8 @@ api.listen(7071, () => {
 https
   .createServer(
     {
-      key: fs.readFileSync("./key.pem"),
-      cert: fs.readFileSync("./cert.pem"),
-      passphrase: "CKfFBXW53AGgUesm",
+      key: fs.readFileSync("/etc/letsencrypt/live/sam.imn.htwk-leipzig.de/privkey.pem"),
+      cert: fs.readFileSync("/etc/letsencrypt/live/sam.imn.htwk-leipzig.de/cert.pem"),
     },
     api
   )

@@ -48,7 +48,12 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="error" id="overwriteOK" text @click="confirmOverwrite(hashkey)">Überschreiben</v-btn>
+          <v-btn
+            color="error"
+            id="overwriteOK"
+            text
+            @click="confirmOverwrite(hashkey)"
+          >Überschreiben</v-btn>
           <v-btn color="grey" id="overwriteCancel" text @click="clearFields()">Abbrechen</v-btn>
         </v-card-actions>
       </v-card>
@@ -62,7 +67,7 @@
 /* eslint-disable standard/computed-property-even-spacing */
 import fileManager from "../../../../vargraph/importExport/FileManager.js";
 import ExJSon from "../../../../vargraph/JSonPersistence.js";
-import axios from 'axios';
+import axios from "axios";
 
 let dialogComponent;
 
@@ -77,8 +82,7 @@ export default {
       nameRules: [
         v => !!v || "Dateiname ist erforderlich",
         v =>
-          (v && v.length <= 25) ||
-          "Dateiname darf maximal 25 Zeichen lang sein"
+          (v && v.length <= 25) || "Dateiname darf maximal 25 Zeichen lang sein"
       ],
       validDB: true,
       DataBaseName: "",
@@ -105,7 +109,6 @@ export default {
       );
     },
     uploadGraph() {
-
       // copy pasted hash generator (TODO remove when primary key is changed from fileId to userName+fileName)
       String.prototype.hashCode = function() {
         var hash = 0;
@@ -114,27 +117,29 @@ export default {
         }
         for (var i = 0; i < this.length; i++) {
           var char = this.charCodeAt(i);
-          hash = ((hash<<5)-hash)+char;
+          hash = (hash << 5) - hash + char;
           hash = hash & hash; // Convert to 32bit integer
         }
         return hash;
-      }
+      };
 
       // Checks if menu formular was filled in correctly, then makes an axios.post request
       if (this.$refs.formDB.validate()) {
         const CONTENT = ExJSon.CreateJSon(this.getGraph());
         this.hashkey = this.DataBaseName.hashCode();
         axios
-          .post('http://sam.imn.htwk-leipzig.de:7070/VarG/graph', {
+          .post("https://sam.imn.htwk-leipzig.de:7070/VarG/graph", {
             fileId: this.hashkey,
             filename: this.DataBaseName,
-            user: 'eheldt', // TODO replace with actual login info
+            user: "eheldt", // TODO replace with actual login info
             json: JSON.stringify(CONTENT)
           })
           .then(response => {
             this.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$refs.databaseMenu.$refs.databaseGUI.loadItems();
             this.closeDialog();
-            dialogComponent.dialogSuccess('Graph erfolgreich in Datenbank hochgeladen');
+            dialogComponent.dialogSuccess(
+              "Graph erfolgreich in Datenbank hochgeladen"
+            );
             this.checkNewGraph();
           })
           .catch(error => {
@@ -142,7 +147,7 @@ export default {
 
             if (error.response) {
               console.log(error.response)*/
-              this.overwriteDialog = true;  // TODO check if error.response actually says duplicate key error, if not then show varg-dialog with "Hochladen fehlgeschlagen"
+            this.overwriteDialog = true; // TODO check if error.response actually says duplicate key error, if not then show varg-dialog with "Hochladen fehlgeschlagen"
             /*}
             else if (error.request) {
               console.log(error.request)
@@ -151,26 +156,30 @@ export default {
             else {
               dialogComponent.dialogError('Hochladen fehlgeschlagen: <b>Unbekannter Fehler</b>');
             }*/
-          }); 
+          });
       }
     },
     confirmOverwrite(fileId) {
       // get json
-      const URL = 'http://sam.imn.htwk-leipzig.de:7070/VarG/graph/' + fileId;
+      const URL = "https://sam.imn.htwk-leipzig.de:7070/VarG/graph/" + fileId;
       const CONTENT = ExJSon.CreateJSon(this.getGraph());
       axios
         .put(URL, {
-          user: 'eheldt', // TODO replace with actual login info
+          user: "eheldt", // TODO replace with actual login info
           json: JSON.stringify(CONTENT)
         })
         .then(response => {
           this.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$refs.databaseMenu.$refs.databaseGUI.loadItems();
           this.closeDialog();
-          dialogComponent.dialogSuccess('Graph erfolgreich in der Datenbank überschrieben');
+          dialogComponent.dialogSuccess(
+            "Graph erfolgreich in der Datenbank überschrieben"
+          );
           this.checkNewGraph();
         })
         .catch(error => {
-          dialogComponent.dialogError('Hochladen fehlgeschlagen: <b>Unbekannter Fehler</b>');
+          dialogComponent.dialogError(
+            "Hochladen fehlgeschlagen: <b>Unbekannter Fehler</b>"
+          );
         });
     },
     checkNewGraph() {

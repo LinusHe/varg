@@ -11,7 +11,9 @@
     >
       <template v-slot:header>
         <v-toolbar dark color="blue darken-3" class="mb-1 darkmode-ign">
-          <v-btn v-if="type === 1" class="pl-1 pr-1" text @click="openExportDB()"><v-icon class="mr-1">mdi-database-import</v-icon>Hochladen</v-btn>
+          <v-btn v-if="type === 1" class="pl-1 pr-1" text @click="openExportDB()">
+            <v-icon class="mr-1">mdi-database-import</v-icon>Hochladen
+          </v-btn>
           <v-divider v-if="type === 1" class="ml-4 mr-5" vertical></v-divider>
           <v-text-field v-model="search" clearable flat solo-inverted hide-details label="Search"></v-text-field>
           <template v-if="$vuetify.breakpoint.mdAndUp">
@@ -49,11 +51,7 @@
               <v-card>
                 <v-card-title class="subheading font-weight-bold">{{ item.name }}</v-card-title>
                 <div id="image-render" style="display: none;"></div>
-                <v-img
-                  v-if="item.image"
-                  v-bind:src="item.image"
-                  class="mx-5"
-                ></v-img>
+                <v-img v-if="item.image" v-bind:src="item.image" class="mx-5"></v-img>
                 <v-list v-else dense>
                   <v-list-item v-for="(key, index) in filteredKeys" :key="index">
                     <v-list-item-content :class="{ 'blue--text': sortBy === key }">{{ key }}:</v-list-item-content>
@@ -133,7 +131,11 @@
 
           <v-spacer></v-spacer>
 
-          <span class="mr-4 grey--text">Seite <b>{{ page }}</b> von {{ numberOfPages }}</span>
+          <span class="mr-4 grey--text">
+            Seite
+            <b>{{ page }}</b>
+            von {{ numberOfPages }}
+          </span>
           <v-btn fab dark small color="primary" class="mr-1 darkmode-ign" @click="formerPage">
             <v-icon>mdi-chevron-left</v-icon>
           </v-btn>
@@ -149,17 +151,18 @@
 <script>
 /* eslint-disable standard/computed-property-even-spacing */
 import cytoscape from "cytoscape";
-import axios from 'axios';
+import axios from "axios";
 import ExJSon from "@/vargraph/JSonPersistence.js";
 import FileManager from "@/vargraph/importExport/FileManager.js";
 
 let dialogComponent;
 
 export default {
-  mounted () {
+  mounted() {
     // eslint-disable-next-line no-console
-    console.log('MOUNTED');
-    dialogComponent = this.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$refs["dialogs"];
+    console.log("MOUNTED");
+    dialogComponent = this.$parent.$parent.$parent.$parent.$parent.$parent
+      .$parent.$parent.$parent.$refs["dialogs"];
   },
   data() {
     return {
@@ -265,31 +268,32 @@ export default {
   },
   methods: {
     //for bug-fix of wrong page number
-    onChangePage(){
+    onChangePage() {
       //Seemingly deleting the graph on page 2 led to a value of zero with ceil?
-      let val =Math.ceil(this.items.length/this.itemsPerPage);
-      if(val < 1) val=1;
-      this.page=val;
+      let val = Math.ceil(this.items.length / this.itemsPerPage);
+      if (val < 1) val = 1;
+      this.page = val;
     },
     getGraph() {
-      return this.$parent.$parent.$parent.$parent.$parent.$parent.$refs.vargraph;
+      return this.$parent.$parent.$parent.$parent.$parent.$parent.$refs
+        .vargraph;
     },
-    setType (t) {
+    setType(t) {
       // sets the type of the Database GUI based on where it's called from
       // t = 0: window (called from HomeMenu)
       // t = 1: menu (called from GraphHeader)
       this.type = t;
       // eslint-disable-next-line no-console
-      console.log('TYPE SET TO',this.type)
+      console.log("TYPE SET TO", this.type);
     },
     loadItems() {
       // eslint-disable-next-line no-console
-      console.log('LOADING ITEMS')
+      console.log("LOADING ITEMS");
       this.items = [];
       axios
-        .get('http://sam.imn.htwk-leipzig.de:7070/VarG/graph/meta', {
+        .get("https://sam.imn.htwk-leipzig.de:7070/VarG/graph/meta", {
           params: {
-            user:'eheldt'
+            user: "eheldt"
           }
         })
         .then(response => {
@@ -297,78 +301,103 @@ export default {
             const el = response.data[i];
             const md = JSON.parse(el.metadata);
             this.items.push({
-              'name': el.fileName,
-              'stückzahl': md.prodQuant,
-              'startzustand': md.start,
-              'endprodukt': md.end,
-              'bearbeitungsschritte': md.IDCount,
-              'teile': md.IDCount,
-              'autor': el.userName,
-              'image': null,
-              'fileId': el.fileId
+              name: el.fileName,
+              stückzahl: md.prodQuant,
+              startzustand: md.start,
+              endprodukt: md.end,
+              bearbeitungsschritte: md.IDCount,
+              teile: md.IDCount,
+              autor: el.userName,
+              image: null,
+              fileId: el.fileId
             });
           }
-        })
+        });
     },
     openExportDB() {
-      this.$parent.$parent.$parent.$parent.$parent.$parent.$refs.exportMenu.setActiveTab(1);
-      this.$parent.$parent.$parent.$parent.$parent.$parent.$refs.exportMenu.setdialog(true);
+      this.$parent.$parent.$parent.$parent.$parent.$parent.$refs.exportMenu.setActiveTab(
+        1
+      );
+      this.$parent.$parent.$parent.$parent.$parent.$parent.$refs.exportMenu.setdialog(
+        true
+      );
     },
     loadGraph(item) {
-      if(confirm('Beim Laden wird der derzeitige Graph überschrieben. Wirklich den Graph "'+item.name+'" aus der Datenbank laden?')) {
-        const url = 'http://sam.imn.htwk-leipzig.de:7070/VarG/graph/' + item.fileId;
+      if (
+        confirm(
+          'Beim Laden wird der derzeitige Graph überschrieben. Wirklich den Graph "' +
+            item.name +
+            '" aus der Datenbank laden?'
+        )
+      ) {
+        const url =
+          "https://sam.imn.htwk-leipzig.de:7070/VarG/graph/" + item.fileId;
         axios
           .get(url, {
             params: {
-              user: 'eheldt'
+              user: "eheldt"
             }
           })
           .then(response => {
             ExJSon.LoadJSon(response.data[0].graphObject, this.getGraph());
             this.$parent.$parent.$parent.$parent.closeDialog();
-            dialogComponent.dialogSuccess('Graph erfolgreich aus Datenbank geladen');
+            dialogComponent.dialogSuccess(
+              "Graph erfolgreich aus Datenbank geladen"
+            );
           })
           .catch(error => {
-            dialogComponent.dialogError('Laden fehlgeschlagen');
+            dialogComponent.dialogError("Laden fehlgeschlagen");
           });
       }
     },
-    loadImage (item) {
-      const url = 'http://sam.imn.htwk-leipzig.de:7070/VarG/graph/' + item.fileId;
+    loadImage(item) {
+      const url =
+        "https://sam.imn.htwk-leipzig.de:7070/VarG/graph/" + item.fileId;
       axios
         .get(url, {
           params: {
-            user: 'eheldt'
+            user: "eheldt"
           }
         })
         .then(response => {
           let graph = JSON.parse(response.data[0].graphObject);
           // TODO change render container so graph doesn't load and show in graph window
-          let cy = cytoscape({container: document.getElementById("image-render")});
+          let cy = cytoscape({
+            container: document.getElementById("image-render")
+          });
           cy.json(graph);
           FileManager.changeStyleForExport(cy);
-          item.image = cy.png({full: true, scale: 1.5});
+          item.image = cy.png({ full: true, scale: 1.5 });
         })
         .catch(error => {
-          dialogComponent.dialogError('Laden des Bildes fehlgeschlagen');
+          dialogComponent.dialogError("Laden des Bildes fehlgeschlagen");
         });
     },
-    deleteGraph (item) {
-      if(confirm('Wirklich den Graph "'+item.name+'" unwiderruflich aus der Datenbank löschen?')) {
-        const url = 'http://sam.imn.htwk-leipzig.de:7070/VarG/graph/' + item.fileId;
+    deleteGraph(item) {
+      if (
+        confirm(
+          'Wirklich den Graph "' +
+            item.name +
+            '" unwiderruflich aus der Datenbank löschen?'
+        )
+      ) {
+        const url =
+          "https://sam.imn.htwk-leipzig.de:7070/VarG/graph/" + item.fileId;
         axios
           .delete(url, {
             params: {
-              user: 'eheldt'
+              user: "eheldt"
             }
           })
           .then(response => {
             this.loadItems();
-            dialogComponent.dialogSuccess('Graph erfolgreich von Datenbank gelöscht');
+            dialogComponent.dialogSuccess(
+              "Graph erfolgreich von Datenbank gelöscht"
+            );
             this.onChangePage();
           })
           .catch(error => {
-            dialogComponent.dialogError('Löschen fehlgeschlagen');
+            dialogComponent.dialogError("Löschen fehlgeschlagen");
           });
       }
     },
@@ -381,9 +410,7 @@ export default {
     updateItemsPerPage(number) {
       this.itemsPerPage = number;
     },
-    backBtn(number) {
-      
-    }
+    backBtn(number) {}
   }
 };
 </script>
