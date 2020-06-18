@@ -369,11 +369,11 @@ export default {
 
       // map costs
       this.costs =
-        this.getGraph().getTotalCost(bestPaths[0]) +
+        this.getGraph().getTotalCost(bestPaths[0]).toFixed(2) +
         " " +
         this.getGraph()
           .getCytoGraph(this.getGraph())
-          .data("settingsUnitCostSelection");
+          .data("settingsUnitCostSelection")
 
       // map time
       this.time =

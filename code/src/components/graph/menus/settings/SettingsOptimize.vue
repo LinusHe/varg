@@ -121,7 +121,7 @@
                         <v-card-text class="ma-0 pa-0 pt-1">
                           {{i + 1}}. Platz |
                           <strong>Kosten:</strong>
-                          {{rank.cost}} €,
+                          {{rank.cost.toFixed(2)}} €,
                           <strong>Zeit:</strong>
                           {{rank.time}}
                         </v-card-text>
