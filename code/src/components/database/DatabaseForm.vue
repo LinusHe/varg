@@ -13,7 +13,7 @@
         <v-toolbar dark color="blue darken-3" class="mb-1 darkmode-ign">
           <v-btn v-if="type === 1" class="pl-1 pr-1" text @click="openExportDB()"><v-icon class="mr-1">mdi-database-import</v-icon>Hochladen</v-btn>
           <v-divider v-if="type === 1" class="ml-4 mr-5" vertical></v-divider>
-          <v-text-field v-model="search" clearable flat solo-inverted hide-details label="Search"></v-text-field>
+          <v-text-field v-model="search" clearable flat solo-inverted hide-details label="Suchen"></v-text-field>
           <template v-if="$vuetify.breakpoint.mdAndUp">
             <v-spacer></v-spacer>
             <v-select
@@ -22,7 +22,7 @@
               solo-inverted
               hide-details
               :items="keys"
-              label="Sort by"
+              label="Sortieren nach"
             ></v-select>
             <v-spacer></v-spacer>
             <v-btn-toggle v-model="sortDesc" mandatory>
@@ -45,9 +45,9 @@
         <div v-else class="scrolling-container">
           <!-- <div> -->
           <v-row class="ma-0">
-            <v-col v-for="item in props.items" :key="item.name" cols="12" sm="6" md="6" lg="6">
+            <v-col v-for="item in props.items" :key="item.graphname" cols="12" sm="6" md="6" lg="6">
               <v-card>
-                <v-card-title class="subheading font-weight-bold">{{ item.name }}</v-card-title>
+                <v-card-title class="subheading font-weight-bold" :class="{ 'blue--text': sortBy === 'Graphname' }">{{ item.graphname }}</v-card-title>
                 <div id="image-render" style="display: none;"></div>
                 <v-img
                   v-if="item.image"
@@ -157,10 +157,11 @@ let dialogComponent;
 
 export default {
   mounted () {
+    // dialogComponent has to be called differently based on if the DB GUI was opened from HomeMenu or GraphHeader
     try {
-      dialogComponent = this.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$refs.dialogs;
+      dialogComponent = this.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$refs.dialogs; // opened from GraphHeader
     } catch (e) {
-      dialogComponent = this.$parent.$parent.$parent.$parent.$parent.$parent.$refs.dialogs;
+      dialogComponent = this.$parent.$parent.$parent.$parent.$parent.$parent.$refs.dialogs; // opened from HomeMenu
     }
   },
   data() {
@@ -172,13 +173,16 @@ export default {
       sortDesc: false,
       page: 1,
       itemsPerPage: 4,
-      sortBy: "name",
+      sortBy: '',
       keys: [
+        "Graphname",
+        "Produktname",
         "Stückzahl",
-        "Startzustand",
-        "Endprodukt",
-        "Bearbeitungsschritte",
-        "Teile",
+        // the following values are possible metadata to show and sort by, but are not being saved in the graph.json yet
+        //"Startzustand",
+        //"Endprodukt",
+        //"Bearbeitungsschritte",
+        //"Teile",
         "Autor"
       ],
       items: []
@@ -189,7 +193,7 @@ export default {
       return Math.ceil(this.items.length / this.itemsPerPage);
     },
     filteredKeys() {
-      return this.keys.filter(key => key !== `Name`);
+      return this.keys.filter(key => key !== `Graphname`);
     }
   },
   methods: {
@@ -200,55 +204,60 @@ export default {
       if(val < 1) val=1;
       this.page=val;
     },
+    // get the current cytoscape graph instance
     getGraph() {
       return this.$parent.$parent.$parent.$parent.$parent.$parent.$refs.vargraph;
     },
+    // sets the type of the Database GUI based on where it's called from
     setType (t) {
-      // sets the type of the Database GUI based on where it's called from
       // t = 0: window (called from HomeMenu)
       // t = 1: menu (called from GraphHeader)
       this.type = t;
-      // eslint-disable-next-line no-console
-      console.log('TYPE SET TO',this.type)
     },
+    // requesting metadata from all graphs of a given user to list in the DB GUI
     loadItems() {
-      // eslint-disable-next-line no-console
-      console.log('LOADING ITEMS')
-      this.items = [];
-      axios
-        .get('http://192.168.99.101:1110/VarG/graph/meta', {
+      this.items = []; // emptying the graph-items array so we can simply push incoming data to the end of it
+      axios // axios.get HTTP request to our webserver API (see docker/node.js/api.js)
+        .get('http://192.168.1.103:1110/VarG/graph/meta', {
           params: {
-            user: this.$store.state.user.name
+            user: this.$store.state.user.name // appending login session data for DB access control
           }
         })
+        // if request was succesfull and we got a response, we will then process the response here
         .then(response => {
+          // looping through the response array and pushing the different data of each entry on the graph-items array
           for (let i = 0; i < response.data.length; i++) {
             const el = response.data[i];
             const md = JSON.parse(el.metadata);
             this.items.push({
-              'name': el.fileName,
+              'graphname': el.fileName,
+              'produktname': md.prodName,
               'stückzahl': md.prodQuant,
-              'startzustand': md.start,
-              'endprodukt': md.end,
-              'bearbeitungsschritte': md.IDCount,
-              'teile': md.IDCount,
+              // as mentioned above, these metadata are not being saved to graph.json yet
+              //'startzustand': md.start,
+              //'endprodukt': md.end,
+              //'bearbeitungsschritte': md.IDCount,
+              //'teile': md.IDCount,
               'autor': el.userName,
               'image': null
             });
           }
         })
+        // if anything went wrong while sending the request or processing the response, we will catch it and print an error message here
         .catch(error => {
           dialogComponent.dialogError('Laden der Datenbank fehlgeschlagen')
         });
     },
+    // opening the export menu with the database tab open
     openExportDB() {
       this.$parent.$parent.$parent.$parent.$parent.$parent.$refs.exportMenu.setActiveTab(1);
       this.$parent.$parent.$parent.$parent.$parent.$parent.$refs.exportMenu.setdialog(true);
     },
+    // requesting a specific graph with the given filename to load into the current cytoscape instance
     loadGraph(item) {
-      if (this.type === 1) {
-        if(confirm('Beim Laden wird der derzeitige Graph überschrieben. Wirklich den Graph "'+item.name+'" aus der Datenbank laden?')) {
-          const url = 'http://192.168.99.101:1110/VarG/graph/' + item.name;
+      if (this.type === 1) {  // execution of the axios request is slightly different based on if we are in the DB menu (here) or window (else)
+        if(confirm('Beim Laden wird der derzeitige Graph überschrieben. Wirklich den Graph "'+item.graphname+'" aus der Datenbank laden?')) {
+          const url = 'http://192.168.1.103:1110/VarG/graph/' + item.graphname;
           axios
             .get(url, {
               params: {
@@ -256,8 +265,8 @@ export default {
               }
             })
             .then(response => {
-              ExJSon.LoadJSon(response.data[0].graphObject, this.getGraph(), dialogComponent);
-              this.$parent.$parent.$parent.$parent.closeDialog();
+              ExJSon.LoadJSon(response.data[0].graphObject, this.getGraph(), dialogComponent);  // calling the LoadJSon function in JSonPersistence.js to overwrite the current cytoscape instance with the received graph
+              this.$parent.$parent.$parent.$parent.closeDialog(); // closing the DB menu
               dialogComponent.dialogSuccess('Graph erfolgreich aus Datenbank geladen');
             })
             .catch(error => {
@@ -265,9 +274,9 @@ export default {
             });
         }
       }
-      else if (this.type === 0) {
-        if(confirm('Den Graph "'+item.name+'" aus der Datenbank laden?')) {
-          const url = 'http://192.168.1.103:1110/VarG/graph/' + item.name;
+      else if (this.type === 0) { // we are in the DB window (opened from HomeMenu)
+        if(confirm('Den Graph "'+item.graphname+'" aus der Datenbank laden?')) {
+          const url = 'http://192.168.1.103:1110/VarG/graph/' + item.graphname;
           axios
             .get(url, {
               params: {
@@ -275,7 +284,7 @@ export default {
               }
             })
             .then(response => {
-              ExJSon.LoadJSon(response.data[0].graphObject, null, dialogComponent);
+              ExJSon.LoadJSon(response.data[0].graphObject, null, dialogComponent); // here we pass 'null' as the cytoscape instance because we aren't in the main graph window which means there's nothing loaded yet
               dialogComponent.dialogSuccess('Graph erfolgreich aus Datenbank geladen');
             })
             .catch(error => {
@@ -284,8 +293,10 @@ export default {
         }
       }
     },
+    // similar to loadGraph with the difference being that we don't load the received graph into our cytoscape instance
+    // but instead convert it to an image and show it in the DB GUI
     loadImage (item) {
-      const url = 'http://192.168.99.101:1110/VarG/graph/' + item.name;
+      const url = 'http://192.168.1.103:1110/VarG/graph/' + item.graphname;
       axios
         .get(url, {
           params: {
@@ -294,35 +305,43 @@ export default {
         })
         .then(response => {
           let graph = JSON.parse(response.data[0].graphObject);
-          // TODO change render container so graph doesn't load and show in graph window
-          let cy = cytoscape({container: document.getElementById("image-render")});
-          cy.json(graph);
-          FileManager.changeStyleForExport(cy);
-          item.image = cy.png({full: true, scale: 1.5});
+          let cy = cytoscape({container: document.getElementById("image-render")}); // creating a new cytoscape object that renders in an invisible div container
+          cy.json(graph); // loading the received graph data into the new cytoscape object
+          FileManager.changeStyleForExport(cy); // using FileManager.js to adjust some values for image conversion
+          // two things happen in the following if condition:
+          // 1. cytoscape converts the graph to a png image and assigns it to the image value of the given graph-item (from the graph-items array)
+          // 2. it is then being checked if that image value equals 'data:,' which means the graph is empty (no nodes and edges) and thus the image is also empty
+          if ((item.image = cy.png({full: true, scale: 1.5})) === 'data:,') {
+            item.image = null;  // if the image is empty Vue will throw an error when attempting to show it, so it is instantly being reset to 'null'
+            throw 'Empty image';  // and a custom error is being thrown so we can show a more precise error message below
+          }
         })
         .catch(error => {
-          dialogComponent.dialogError('Laden des Bildes fehlgeschlagen');
+          if (error === 'Empty image') { dialogComponent.dialogError('Laden des Bildes fehlgeschlagen: <b>Leerer Graph</b>'); }
+          else { dialogComponent.dialogError('Laden des Bildes fehlgeschlagen'); }
         });
     },
+    // requesting to delete the graph from the DB
     deleteGraph (item) {
-      if(confirm('Wirklich den Graph "'+item.name+'" unwiderruflich aus der Datenbank löschen?')) {
-        const url = 'http://192.168.99.101:1110/VarG/graph/' + item.name;
-        axios
+      if(confirm('Wirklich den Graph "'+item.graphname+'" unwiderruflich aus der Datenbank löschen?')) {
+        const url = 'http://192.168.1.103:1110/VarG/graph/' + item.graphname;
+        axios // axios.delete request
           .delete(url, {
             params: {
               user: this.$store.state.user.name
             }
           })
           .then(response => {
-            this.loadItems();
+            this.loadItems(); // refreshing the graph-items array to remove the deleted graph from the list
             dialogComponent.dialogSuccess('Graph erfolgreich von Datenbank gelöscht');
-            this.onChangePage();
+            this.onChangePage(); // checking if the current shown page in the GUI needs to be updated
           })
           .catch(error => {
             dialogComponent.dialogError('Löschen fehlgeschlagen');
           });
       }
     },
+    // algorithms to handle page changes in the GUI
     nextPage() {
       if (this.page + 1 <= this.numberOfPages) this.page += 1;
     },
