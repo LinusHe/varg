@@ -335,7 +335,7 @@ export default {
         .data("settingsOptimizationStartEndName", this.endSelect);
 
       // set StartIDs for Optimization Algorithm
-      console.log("wurde aufgerufeb")
+      console.log("wurde aufgerufen")
       console.log("hier startselect")
       let startIDs = [];
       this.getNodeItemsID()
