@@ -123,7 +123,7 @@
                           <strong>Kosten:</strong>
                           {{rank.cost}} €,
                           <strong>Zeit:</strong>
-                          {{rank.time}} s
+                          {{rank.time}}
                         </v-card-text>
                       </template>
                     </v-radio>
@@ -180,6 +180,12 @@ export default {
       scrollbox.scrollTo(0, 500);
     },
 
+    convertTime( sec){
+
+      return this.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$refs.graphInfo.toHHMMSS(sec)
+
+    },
+
     applyRanking() {
       this.rankArray = [];
       let bestPaths = this.getGraph()
@@ -190,6 +196,31 @@ export default {
         let nextRank = {};
         nextRank.cost = this.getGraph().getTotalCost(bestPaths[i]);
         nextRank.time = this.getGraph().getTotalTime(bestPaths[i]);
+
+
+        switch(this.getGraph()
+          .getCytoGraph(this.getGraph())
+          .data("settingsUnitTimeSelection")){
+
+        
+          case "Sekunden" :
+             nextRank.time = this.convertTime(parseInt(nextRank.time) )
+            break;
+          case "Minuten" :
+           nextRank.time = this.convertTime(parseInt(nextRank.time) * 60)
+            break;
+          case "Stunden" :
+             nextRank.time = this.convertTime(parseInt(nextRank.time)* 60 *60)
+            break;
+          case "Tage" :
+             nextRank.time = this.convertTime(parseInt(nextRank.time) * 60 *60 * 24 )
+            break;
+          default:
+            nextRank.time = "etwas ist schief gelaufen"
+      }
+
+
+
         nextRank.path = [];
         for (let j = 0; j < bestPaths[i].length; j++) {
           if (j == 0) {
