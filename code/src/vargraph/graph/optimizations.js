@@ -411,15 +411,8 @@ export default {
   },
   
   optimizing() {
-<<<<<<< HEAD
-  
-    let cy = this.getCytoGraph()
-    console.log(cy.data("settingsOptimizationStartIDs"))
-=======
-   
+
     let cy = cyStore.data.cy
- 
->>>>>>> MultipleStartNodes
 
    
     let option = cy.data("settingsOptimizationOption");   // false = time, true = cost
