@@ -109,7 +109,7 @@ export default {
       if (this.$refs.formDB.validate()) {
         const CONTENT = ExJSon.CreateJSon(this.getGraph()); // creating a json object containing the current cytoscape instance with JSonPersistence.js
         axios // axios.post request
-          .post('http://192.168.1.103:1110/VarG/graph', {
+          .post('http://192.168.99.101:1110/VarG/graph', {
             // appending different data to save in the DB
             name: this.DataBaseName,  // name aka fileName in the DB
             user: this.$store.state.user.name,  // user aka userName
@@ -143,7 +143,7 @@ export default {
     },
     // requesting to overwrite the graph with the given name in the DB
     confirmOverwrite(fileName) {
-      const URL = 'http://192.168.1.103:1110/VarG/graph/' + fileName;
+      const URL = 'http://192.168.99.101:1110/VarG/graph/' + fileName;
       const CONTENT = ExJSon.CreateJSon(this.getGraph());
       axios // axios.put request
         .put(URL, {

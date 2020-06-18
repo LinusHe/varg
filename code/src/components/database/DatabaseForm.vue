@@ -218,7 +218,7 @@ export default {
     loadItems() {
       this.items = []; // emptying the graph-items array so we can simply push incoming data to the end of it
       axios // axios.get HTTP request to our webserver API (see docker/node.js/api.js)
-        .get('http://192.168.1.103:1110/VarG/graph/meta', {
+        .get('http://192.168.99.101:1110/VarG/graph/meta', {
           params: {
             user: this.$store.state.user.name // appending login session data for DB access control
           }
@@ -257,7 +257,7 @@ export default {
     loadGraph(item) {
       if (this.type === 1) {  // execution of the axios request is slightly different based on if we are in the DB menu (here) or window (else)
         if(confirm('Beim Laden wird der derzeitige Graph überschrieben. Wirklich den Graph "'+item.graphname+'" aus der Datenbank laden?')) {
-          const url = 'http://192.168.1.103:1110/VarG/graph/' + item.graphname;
+          const url = 'http://192.168.99.101:1110/VarG/graph/' + item.graphname;
           axios
             .get(url, {
               params: {
@@ -276,7 +276,7 @@ export default {
       }
       else if (this.type === 0) { // we are in the DB window (opened from HomeMenu)
         if(confirm('Den Graph "'+item.graphname+'" aus der Datenbank laden?')) {
-          const url = 'http://192.168.1.103:1110/VarG/graph/' + item.graphname;
+          const url = 'http://192.168.99.101:1110/VarG/graph/' + item.graphname;
           axios
             .get(url, {
               params: {
@@ -296,7 +296,7 @@ export default {
     // similar to loadGraph with the difference being that we don't load the received graph into our cytoscape instance
     // but instead convert it to an image and show it in the DB GUI
     loadImage (item) {
-      const url = 'http://192.168.1.103:1110/VarG/graph/' + item.graphname;
+      const url = 'http://192.168.99.101:1110/VarG/graph/' + item.graphname;
       axios
         .get(url, {
           params: {
@@ -324,7 +324,7 @@ export default {
     // requesting to delete the graph from the DB
     deleteGraph (item) {
       if(confirm('Wirklich den Graph "'+item.graphname+'" unwiderruflich aus der Datenbank löschen?')) {
-        const url = 'http://192.168.1.103:1110/VarG/graph/' + item.graphname;
+        const url = 'http://192.168.99.101:1110/VarG/graph/' + item.graphname;
         axios // axios.delete request
           .delete(url, {
             params: {
