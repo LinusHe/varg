@@ -268,7 +268,7 @@ export default {
       }
       else if (this.type === 0) {
         if(confirm('Den Graph "'+item.name+'" aus der Datenbank laden?')) {
-          const url = 'http://192.168.1.103:1110/VarG/graph/' + item.fileId;
+          const url = 'http://192.168.99.101:1110/VarG/graph/' + item.fileId;
           axios
             .get(url, {
               params: {

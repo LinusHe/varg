@@ -16,8 +16,8 @@
             v-model="input.email"
             class="mt-8 mb-3 email-input hueshift"
             id="email"
-            label="E-Mail"
-            placeholder="beispiel@htwk-leipzig.de"
+            label="User-Name"
+            placeholder="z.B.: jdoe"
             outlined
             clearable
             @focus="clearError()"

@@ -7,7 +7,7 @@ const mysql_driver = require('mysql');
 
 //config object holds information for database access
 const config = {
-    // eheldt: 192.168.1.103
+    // eheldt: 192.168.99.101
     // jhohlfel: 192.168.99.101
     //host => adress of database server
     host: "192.168.99.101",
@@ -77,7 +77,7 @@ router.route('/login?')
         console.log(userName + ", " + password);
         //universal password for all users - no specification of user
         //if we had a user database, we could log them into their accounts here
-        if (userName === "VarG" && password === "2020"){
+        if (password === "2020"){
             console.log(userName + ", willkommen in der Matrix.");
             //account information
             let user = {
