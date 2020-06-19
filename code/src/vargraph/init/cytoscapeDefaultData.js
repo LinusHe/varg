@@ -38,7 +38,9 @@ const data = {
   settingsOptimizationStartIDs: [],
   settingsOptimizationEndID: -1,
   // Optimizations
-  settingsOptimizations: [{}]
+  settingsOptimizations: [{}],
+  // Grid Snapping
+  gridSnap: false
 };
 
 export default data;
