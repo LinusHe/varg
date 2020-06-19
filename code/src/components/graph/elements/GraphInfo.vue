@@ -135,7 +135,7 @@
           <v-icon size="40px" class="mt-2 darkmode-ign" v-bind:style="{ color: '#'+iconColorCost }">mdi-cash</v-icon>
         </v-card>
         <p class="mb-0">
-          <v-card-subtitle class="pb-0" v-bind:style="{ color: '#'+iconColorCost }">
+          <v-card-subtitle class="pb-0" v-bind:style="{ color: '#'+fontColorCost }">
             Gesamtkosten:
             <v-tooltip top>
               <template v-slot:activator="{ on }">
@@ -183,7 +183,7 @@
           <v-icon size="40px" class="mt-2 darkmode-ign" v-bind:style="{ color: '#'+iconColorTime }">mdi-clock-outline</v-icon>
         </v-card>
         <p class="mb-0">
-          <v-card-subtitle class="pb-0" v-bind:style="{ color: '#'+iconColorTime }">
+          <v-card-subtitle class="pb-0" v-bind:style="{ color: '#'+fontColorTime }">
             Gesamtzeit:
             <v-tooltip top>
               <template v-slot:activator="{ on }">
@@ -250,7 +250,9 @@ export default {
       optimized: false,
       costs: "",
       iconColorCost: "2699FB",
-      iconColorTime: "2699FB"
+      iconColorTime: "2699FB",
+      fontColorCost: "00000099",
+      fontColorTime: "00000099",
     };
   },
   methods: {
@@ -356,10 +358,14 @@ export default {
       if(this.getGraph().getCytoGraph(this.getGraph()).data("settingsOptimizationOption") == 'optionCost') {
         this.iconColorCost = "FF7675"
         this.iconColorTime = "2699FB"
+        this.fontColorCost = "FF7675"
+        this.fontColorTime = "00000099"
       }
       else {
         this.iconColorTime = "FF7675"
         this.iconColorCost = "2699FB"
+        this.fontColorCost = "00000099"
+        this.fontColorTime = "FF7675"
       }
     },
     runOptimization() {
