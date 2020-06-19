@@ -1,36 +1,27 @@
 <template>
   <v-card flat class="scrolling-container" style="max-height: 55vh">
-    <v-card-text>
-      <p>
-        Morbi nec metus. Suspendisse faucibus, nunc et pellentesque egestas, lacus ante convallis tellus, vitae
-        iaculis lacus elit id tortor. Sed mollis, eros et ultrices tempus, mauris ipsum aliquam libero, non
-        adipiscing dolor urna a orci. Curabitur ligula sapien, tincidunt non, euismod vitae, posuere imperdiet,
-        leo. Nunc sed turpis.
-      </p>
-
-      <p>
-        Suspendisse feugiat. Suspendisse faucibus, nunc et pellentesque egestas, lacus ante convallis tellus,
-        vitae iaculis lacus elit id tortor. Proin viverra, ligula sit amet ultrices semper, ligula arcu
-        tristique sapien, a accumsan nisi mauris ac eros. In hac habitasse platea dictumst. Fusce ac felis sit
-        amet ligula pharetra condimentum.
-      </p>
-
-      <p>
-        Sed consequat, leo eget bibendum sodales, augue velit cursus nunc, quis gravida magna mi a libero. Nam
-        commodo suscipit quam. In consectetuer turpis ut velit. Sed cursus turpis vitae tortor. Aliquam eu
-        nunc.
-      </p>
-
-      <p>
-        Etiam ut purus mattis mauris sodales aliquam. Ut varius tincidunt libero. Aenean viverra rhoncus pede.
-        Duis leo. Fusce fermentum odio nec arcu.
-      </p>
-
-      <p class="mb-0">
-        Donec venenatis vulputate lorem. Aenean viverra rhoncus pede. In dui magna, posuere eget, vestibulum et,
-        tempor auctor, justo. Fusce commodo aliquam arcu. Suspendisse enim turpis, dictum sed, iaculis a,
-        condimentum nec, nisi.
-      </p>
+    <v-card-text class="scrolling-container pb-10" style="max-height: 55vh">
+      <v-card-subtitle>Account-Infos</v-card-subtitle>
+      <v-card class="ml-6 mr-6">
+        <v-row>
+          <v-col sm="1">
+            <v-card-text>
+              <v-avatar color="red">
+                <span class="white--text headline">{{usershort}}</span>
+              </v-avatar>
+            </v-card-text>
+          </v-col>
+          <v-col class="pl-5" sm="11">
+            <v-card-text>
+              <b>Dein Nutzername:</b>
+              {{username}}
+              <br />
+              <b>Anzahl deiner Graphen in der Datenbank:</b>
+              {{graphcount}}
+            </v-card-text>
+          </v-col>
+        </v-row>
+      </v-card>
     </v-card-text>
   </v-card>
 </template>
@@ -39,6 +30,7 @@
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
 /* eslint-disable standard/computed-property-even-spacing */
+import axios from "axios";
 let dialogComponent;
 
 export default {
@@ -46,9 +38,14 @@ export default {
   mounted: function() {
     dialogComponent = this.$parent.$parent.$parent.$parent.$parent.$parent
       .$parent.$parent.$parent.$parent.$parent.$parent.$refs["dialogs"];
+    this.usershort = this.$store.state.user.name.substring(0, 2).toUpperCase();
+    this.username = this.$store.state.user.name;
+    this.getGraphCount();
   },
   data: () => ({
-    // ...
+    usershort: "JG",
+    username: "undefined",
+    graphcount: 0
   }),
   methods: {
     getGraph() {
@@ -56,16 +53,30 @@ export default {
         .$parent.$parent.$refs["vargraph"];
     },
 
-    // get Settings 
+    // get Settings
     getAccountSettings() {
-      // ...
-      
+      this.getGraphCount();
+    },
+
+    getGraphCount() {
+
+      axios
+      .get("http://192.168.99.101:1110/VarG/graph/meta", {
+        params: {
+          user: this.$store.state.user.name
+        }
+      })
+      .then(response => {
+        this.graphcount = response.data.length;
+      })
+      .catch(error => {
+        dialogComponent.dialogError("Laden der Datenbank fehlgeschlagen");
+      });
     },
 
     // apply settings to cytoscape element
     setAccountSettings() {
       // ...
-
     }
   }
 };

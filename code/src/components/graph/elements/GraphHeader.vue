@@ -82,7 +82,7 @@ export default {
     dialogComponent = this.$parent.$parent.$parent.$parent.$refs[
       "dialogs"
     ];
-    this.usershort = this.$store.state.user.name.substring(0, 2);
+    this.usershort = this.$store.state.user.name.substring(0, 2).toUpperCase();
   },
   data() {
     return {
