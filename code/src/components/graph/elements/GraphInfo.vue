@@ -338,7 +338,8 @@ export default {
     setOptimized(bool) {
       this.optimized = bool;
     },
-    runOptC() {
+      //depending on the pressed button the graf gets either cost-optimization or time-optimization
+    runOptC() {      
       this.getGraph()
         .getCytoGraph(this.getGraph())
         .data("settingsOptimizationOption", "optionCost")
@@ -353,6 +354,7 @@ export default {
       this.startOptimizing()
     },
     markOption() {
+        //depending on the current OptimizationOption (Cost/Time) one side gets marked (orange) and the other side gets reset (blue)
       if(this.getGraph().getCytoGraph(this.getGraph()).data("settingsOptimizationOption") == 'optionCost') {
         this.iconColorCost = "FF7675"
         this.iconColorTime = "2699FB"
@@ -462,15 +464,6 @@ export default {
 
     startOptimizing() {
       this.markOption()
-
-      console.log(
-        "Startknoten: " +
-          this.getGraph()
-            .getCytoGraph(this.getGraph())
-            .data("settingsOptimizationStartNames")
-      );
-
-
 
       if (!this.getGraph().hasQuickEdges(this.getGraph())) {
         if (
