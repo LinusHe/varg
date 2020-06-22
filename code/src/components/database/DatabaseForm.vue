@@ -217,62 +217,36 @@ export default {
     // requesting metadata from all graphs of a given user to list in the DB GUI
     loadItems() {
       this.items = []; // emptying the graph-items array so we can simply push incoming data to the end of it
-      if (this.$store.state.user.name === "admin")  {
-        axios
-          .get('http://192.168.99.101:1110/VarG/graph', {
-            params: {
-              user: this.$store.state.user.name // appending login session data for DB access control
-            }
-          })
-          .then(response => {
-              for (let i = 0; i < response.data.length; i++) {
-              const el = response.data[i];
-              const md = JSON.parse(el.metadata);
-              this.items.push({
-                'graphname': el.fileName,
-                'produktname': md.prodName,
-                'stückzahl': md.prodQuant,
-                'autor': el.userName,
-                'image': null
-              });
-            }
-          })
-          .catch(error => {
-            dialogComponent.dialogError('Laden der Datenbank fehlgeschlagen')
-          })
-      }
-      else{
-        axios // axios.get HTTP request to our webserver API (see docker/node.js/api.js)
-          .get('http://192.168.99.101:1110/VarG/graph/meta', {
-            params: {
-              user: this.$store.state.user.name // appending login session data for DB access control
-            }
-          })
-          // if request was succesfull and we got a response, we will then process the response here
-          .then(response => {
-            // looping through the response array and pushing the different data of each entry on the graph-items array
-            for (let i = 0; i < response.data.length; i++) {
-              const el = response.data[i];
-              const md = JSON.parse(el.metadata);
-              this.items.push({
-                'graphname': el.fileName,
-                'produktname': md.prodName,
-                'stückzahl': md.prodQuant,
-                // as mentioned above, these metadata are not being saved to graph.json yet
-                //'startzustand': md.start,
-                //'endprodukt': md.end,
-                //'bearbeitungsschritte': md.IDCount,
-                //'teile': md.IDCount,
-                'autor': el.userName,
-                'image': null
-              });
-            }
-          })
-          // if anything went wrong while sending the request or processing the response, we will catch it and print an error message here
-          .catch(error => {
-            dialogComponent.dialogError('Laden der Datenbank fehlgeschlagen')
-        });
-      }
+      axios // axios.get HTTP request to our webserver API (see docker/node.js/api.js)
+        .get('http://192.168.99.101:1110/VarG/graph/meta', {
+          params: {
+            user: this.$store.state.user.name // appending login session data for DB access control
+          }
+        })
+        // if request was succesfull and we got a response, we will then process the response here
+        .then(response => {
+          // looping through the response array and pushing the different data of each entry on the graph-items array
+          for (let i = 0; i < response.data.length; i++) {
+            const el = response.data[i];
+            const md = JSON.parse(el.metadata);
+            this.items.push({
+              'graphname': el.fileName,
+              'produktname': md.prodName,
+              'stückzahl': md.prodQuant,
+              // as mentioned above, these metadata are not being saved to graph.json yet
+              //'startzustand': md.start,
+              //'endprodukt': md.end,
+              //'bearbeitungsschritte': md.IDCount,
+              //'teile': md.IDCount,
+              'autor': el.userName,
+              'image': null
+            });
+          }
+        })
+        // if anything went wrong while sending the request or processing the response, we will catch it and print an error message here
+        .catch(error => {
+          dialogComponent.dialogError('Laden der Datenbank fehlgeschlagen')
+      });
     },
     // opening the export menu with the database tab open
     openExportDB() {
@@ -287,7 +261,8 @@ export default {
           axios
             .get(url, {
               params: {
-                user: this.$store.state.user.name
+                user: this.$store.state.user.name,
+                author: item.autor
               }
             })
             .then(response => {
@@ -306,7 +281,8 @@ export default {
           axios
             .get(url, {
               params: {
-                user: this.$store.state.user.name
+                user: this.$store.state.user.name,
+                author: item.autor
               }
             })
             .then(response => {
@@ -326,7 +302,8 @@ export default {
       axios
         .get(url, {
           params: {
-            user: this.$store.state.user.name
+            user: this.$store.state.user.name,
+            author: item.autor
           }
         })
         .then(response => {
@@ -354,7 +331,8 @@ export default {
         axios // axios.delete request
           .delete(url, {
             params: {
-              user: this.$store.state.user.name
+              user: this.$store.state.user.name,
+              author: item.autor
             }
           })
           .then(response => {
