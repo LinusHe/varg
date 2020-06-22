@@ -21,7 +21,7 @@ export function loadGraphFromJson(event, graphComponent, dialog) {
 }
 
 export function saveGraphAsPng(graph, name) {
-  var filename = "varggraph_" + graph.data("name") + "-" + name + ".png";
+  var filename = name + ".png";
   // Adjust Graph Styling
   changeStyleForExport(graph);
   // Generate Img and save it
@@ -32,7 +32,7 @@ export function saveGraphAsPng(graph, name) {
 }
 
 export function saveGraphAsJpg(graph, name) {
-  var filename = "varggraph_" + graph.data("name") + "-" + name + ".jpg";
+  var filename = name + ".jpg";
   // Adjust Graph Styling
   changeStyleForExport(graph);
   // Generate Img and save it
