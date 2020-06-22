@@ -72,7 +72,7 @@ export default {
   data() {
     return {
       format: "",
-      formatname: [".json", ".xml", ".png", ".svg", ".jpg"],
+      formatname: [".json", ".png", ".jpg"],
       filename: "",
       validLocal: true,
       name: "",
