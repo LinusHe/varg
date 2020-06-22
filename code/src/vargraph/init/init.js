@@ -9,12 +9,14 @@ import nodeHtmlLabel from "../plugins/cytoscape-node-html-label";
 import klay from "cytoscape-klay";
 import defaultData from "@/vargraph/init/cytoscapeDefaultData.js";
 import edgehandles from "cytoscape-edgehandles";
+import gridGuide from "cytoscape-grid-guide";
 
 export default {
   // this method will run before cytoscape is configured
   preConfig(cytoscape) {
     console.log("calling pre-config", cytoscape);
     nodeHtmlLabel(cytoscape);
+    gridGuide( cytoscape );
     cytoscape.use(klay);
     cytoscape.use(edgehandles);
   },
@@ -107,6 +109,10 @@ export default {
     // sets edgeHandle Default Valuse
     let handler = cy.edgehandles(this.getEdgeHandleDefaults());
     cyStore.data.edgeHandler = handler;
+
+    // set gridSnapping
+    this.setGridSnap(graphComponent);
+    console.log(this.methods)
   },
 
   getDialogComponent(graphComponent) {

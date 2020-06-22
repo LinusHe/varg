@@ -4,6 +4,19 @@
       <v-card-subtitle>Grundeinstellungen</v-card-subtitle>
       <v-card class="ml-6 mr-6">
         <v-row>
+          <v-col sm="10">
+            <v-card-text>Bearbeitungsschritte nach Raster ausrichten</v-card-text>
+          </v-col>
+          <v-col sm="2">
+            <v-switch
+              v-model="gridSnap"
+              hide-details
+              class="mt-3"
+            ></v-switch>
+          </v-col>
+        </v-row>
+        <v-divider></v-divider>
+        <v-row>
           <v-col sm="9">
             <v-card-text>Kosteneinheit für Verknüpfungen</v-card-text>
           </v-col>
@@ -171,7 +184,8 @@ export default {
     edgeShowSuCost: true,
     edgeShowSuTime: true,
     edgeTitleItems: ["Name", "Kürzel"],
-    edgeTitleSelection: "Name"
+    edgeTitleSelection: "Name",
+    gridSnap: false
   }),
   methods: {
     getGraph() {
@@ -230,6 +244,9 @@ export default {
       this.edgeTitleSelection = this.getGraph()
         .getCytoGraph(this.getGraph())
         .data("settingsEdgeTitleSelection");
+      this.gridSnap = this.getGraph()
+        .getCytoGraph(this.getGraph())
+        .data("gridSnap");
       this.changeShortOnly();
     },
 
@@ -279,6 +296,10 @@ export default {
       this.getGraph()
         .getCytoGraph(this.getGraph())
         .data("settingsEdgeTitleSelection", this.edgeTitleSelection);
+      this.getGraph()
+        .getCytoGraph(this.getGraph())
+        .data("gridSnap", this.gridSnap);
+      this.getGraph().setGridSnap(this.getGraph())
       console.log(
         "new settings: ",
         this.getGraph()
