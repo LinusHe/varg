@@ -442,6 +442,7 @@ export default {
         .catch(error => {
           dialogComponent.dialogError("Löschen fehlgeschlagen");
         });
+      this.deleteDialog = false;
     },
     // algorithms to handle page changes in the GUI
     nextPage() {
