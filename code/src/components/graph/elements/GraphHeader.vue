@@ -44,7 +44,7 @@
           <template v-slot:activator="{ on }">
             <v-btn id="avatar-btn" height="48px" color="primary" icon v-on="on">
               <v-avatar color="red">
-                <span class="white--text headline">CJ</span>
+                <span class="white--text headline">{{usershort}}</span>
               </v-avatar>
             </v-btn>
           </template>
@@ -82,6 +82,12 @@ export default {
     dialogComponent = this.$parent.$parent.$parent.$parent.$refs[
       "dialogs"
     ];
+    this.usershort = this.$store.state.user.name.substring(0, 2).toUpperCase();
+  },
+  data() {
+    return {
+      usershort: "CJ",
+    };
   },
   name: "GraphHeader",
   methods: {
