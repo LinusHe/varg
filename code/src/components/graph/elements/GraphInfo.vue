@@ -135,7 +135,7 @@
           <v-icon size="40px" class="mt-2 darkmode-ign" v-bind:style="{ color: '#'+iconColorCost }">mdi-cash</v-icon>
         </v-card>
         <p class="mb-0">
-          <v-card-subtitle class="pb-0" v-bind:style="{ color: '#'+fontColorCost }">
+          <v-card-subtitle class="mt-2 darkmode-ign" v-bind:style="{ color: '#'+iconColorCost }">
             Gesamtkosten:
             <v-tooltip top>
               <template v-slot:activator="{ on }">
@@ -183,7 +183,7 @@
           <v-icon size="40px" class="mt-2 darkmode-ign" v-bind:style="{ color: '#'+iconColorTime }">mdi-clock-outline</v-icon>
         </v-card>
         <p class="mb-0">
-          <v-card-subtitle class="pb-0" v-bind:style="{ color: '#'+fontColorTime }">
+          <v-card-subtitle class="mt-2 darkmode-ign" v-bind:style="{ color: '#'+iconColorTime }">
             Gesamtzeit:
             <v-tooltip top>
               <template v-slot:activator="{ on }">
