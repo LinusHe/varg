@@ -129,7 +129,7 @@ export default {
 
             if (error.response) {
               console.log(error.response)*/
-              this.overwriteDialog = true;  // TODO check if error.response actually says duplicate key error, if not then don't open overwrite menu and show varg-dialog with "Hochladen fehlgeschlagen: Datenbankfehler"
+              this.overwriteDialog = true;  // TODO check if error.response actually says duplicate key error, if not then don't open overwrite menu and show varg-dialog with "Hochladen fehlgeschlagen: Unbekannter Datenbankfehler"
             /*}
             else if (error.request) {
               console.log(error.request)
