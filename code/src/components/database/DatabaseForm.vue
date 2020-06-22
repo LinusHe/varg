@@ -102,7 +102,7 @@
                         class="darkmode-ign"
                         color="error"
                         text
-                        @click="deleteGraph(item)"
+                        @click="deleteRequest(item)"
                       >Löschen</v-btn>
                     </v-col>
                   </v-row>
