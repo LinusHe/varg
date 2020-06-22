@@ -61,7 +61,7 @@ export default {
     getGraphCount() {
 
       axios
-      .get("http://192.168.99.101:1110/VarG/graph/meta", {
+      .get("https://sam.imn.htwk-leipzig.de:7070/VarG/graph/meta", {
         params: {
           user: this.$store.state.user.name
         }
