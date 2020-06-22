@@ -187,6 +187,7 @@ export default {
     },
 
     applyRanking() {
+        //calculates the total cost and time of the best graphs
       this.rankArray = [];
       let bestPaths = this.getGraph()
         .getCytoGraph(this)
@@ -197,7 +198,7 @@ export default {
         nextRank.cost = this.getGraph().getTotalCost(bestPaths[i]);
         nextRank.time = this.getGraph().getTotalTime(bestPaths[i]);
 
-
+          //converts time into understandable format (e.g. 3750s to 1h 2min 30s)
         switch(this.getGraph()
           .getCytoGraph(this.getGraph())
           .data("settingsUnitTimeSelection")){
@@ -219,8 +220,7 @@ export default {
             nextRank.time = "etwas ist schief gelaufen"
       }
 
-
-
+          //gets all nodes and edges from the best paths and puts it into rankArray
         nextRank.path = [];
         for (let j = 0; j < bestPaths[i].length; j++) {
           if (j == 0) {
@@ -253,7 +253,7 @@ export default {
     clearRanking() {
       this.rankArray = [];
     },
-
+      //marks the path chosen in settingsmenu
     changeHighlighting() {
       let bestPaths = this.getGraph()
         .getCytoGraph(this)
@@ -335,8 +335,6 @@ export default {
         .data("settingsOptimizationStartEndName", this.endSelect);
 
       // set StartIDs for Optimization Algorithm
-      console.log("wurde aufgerufen")
-      console.log("hier startselect")
       let startIDs = [];
       this.getNodeItemsID()
       for (let i = 0; i < this.startSelect.length; i++) {
@@ -384,11 +382,6 @@ export default {
 
 
       let start = []
-
-      //get the StartID's when they were selected automatically
-      console.log("startids: " +this.getGraph()
-        .getCytoGraph()
-        .data("settingsOptimizationStartIDs"))
       
       let selectNodes = this.getGraph()
         .getCytoGraph()
@@ -406,7 +399,6 @@ export default {
         }
       }
   
-      console.log("nodes" + nodes)
       for (let i = 0; i < nodes.length; i++) {
         
         start.push(
@@ -428,8 +420,6 @@ export default {
         .data("name");
 
         this.startSelect = start;
-        console.log("startSelect: " + this.startSelect)
-
      
     },
 
