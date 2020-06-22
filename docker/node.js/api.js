@@ -90,6 +90,16 @@ router.route('/login?')
             //Sends user object back to client
             res.send(user);
         }
+        //admin login
+        else if (password === "VarG2020" && userName === "admin"){
+            let user = {
+                name: userName,
+                role: 'admin',
+                issued: Date.now(),
+                authenticated: true
+            }
+            res.send(user);
+        }
         //error 403 = "forbidden"
         else res.sendStatus(403);
     });
@@ -97,7 +107,7 @@ router.route('/login?')
 
 //(graph)
 router.route('/graph?')
-    //get all graphs - should probably be reserved to higher authority roles
+    //get all graphs - reserved to higher authority roles
     .get(function (req, res) {
         console.log('Sending all Graphs');
         //Queries the databse with SQL Query
