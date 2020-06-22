@@ -219,7 +219,11 @@ export default {
       this.items = []; // emptying the graph-items array so we can simply push incoming data to the end of it
       if (this.$store.state.user.name === "admin")  {
         axios
-          .get('http://192.168.99.101:1110/VarG/graph', {})
+          .get('http://192.168.99.101:1110/VarG/graph', {
+            params: {
+              user: this.$store.state.user.name // appending login session data for DB access control
+            }
+          })
           .then(response => {
               for (let i = 0; i < response.data.length; i++) {
               const el = response.data[i];
