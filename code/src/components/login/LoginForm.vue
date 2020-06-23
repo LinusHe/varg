@@ -21,8 +21,7 @@
             outlined
             clearable
             @focus="clearError()"
-            :rules="[v => !!v || 'Feld darf nicht leer sein', 
-                   v => (v || '').indexOf(' ') < 0 || 'Keine Leerzeichen erlaubt']"
+            :rules="[v => !!v || 'Feld darf nicht leer sein', v => (v || '').indexOf(' ') < 0 || 'Keine Leerzeichen erlaubt', v => v.length <= 25 || 'Maximal 25 Zeichen erlaubt']"
           ></v-text-field>
           <v-text-field
             v-model="input.password"
@@ -34,7 +33,7 @@
             :type="show ? 'text' : 'password'"
             :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
             @click:append="show = !show"
-            :rules="[v => !!v || 'Feld darf nicht leer sein']"
+            :rules="[v => !!v || 'Feld darf nicht leer sein', v => v.length <= 255 || 'Maximal 255 Zeichen erlaubt']"
             @focus="clearError()"
             @keyup.enter="login()"
           ></v-text-field>

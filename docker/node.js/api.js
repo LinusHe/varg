@@ -20,7 +20,7 @@ const config = {
 };
 
 //MySQL Driver configuration
-const con=mysql_driver.createConnection(config);
+const con = mysql_driver.createConnection(config);
 
 //Node connects to DB, test
 con.connect(function(err) {
@@ -88,23 +88,61 @@ router.route('/login?')
             }
             else { res.sendStatus(403); }
         }
-        //universal password for all users - no specification of user
-        //if we had a user database, we could log them into their accounts here
-        else if (password === "2020"){
-            console.log(userName + ", willkommen in der Matrix.");
-            //account information
-            let user = {
-                name: userName,
-                role: 'student',
-                issued: Date.now(),
-                //lets the client know that login was succesfull
-                authenticated: true
-            }
-            //Sends user object back to client
-            res.send(user);
+        //student login
+        else {
+            con.query('SELECT EXISTS(SELECT * FROM userreg WHERE userName = ?) as "user_exists"', [userName], 
+            function(err, result, fields) { 
+                if (err) throw err;
+                console.log("Checking if user exists...");
+                if (result[0]['user_exists']) {
+                    con.query('SELECT EXISTS(SELECT * FROM userreg WHERE userName = ? AND password = ?) as "matching_pw"', [userName, password],
+                    function (err, result) {
+                        if (err) throw err;
+                        console.log("User exists. Checking if password matches...");
+                        if (result[0]['matching_pw']) {
+                            console.log("Correct password. Logging in existing user",userName,"...");
+                            //account information
+                            let user = {
+                                name: userName,
+                                role: 'student',
+                                issued: Date.now(),
+                                //lets the client know that login was succesfull
+                                authenticated: true
+                            }
+                            //Sends user object back to client
+                            res.send(user);
+                        }
+                        else {
+                            console.log("Wrong password. Invalid Login.");
+                            //error 403 = "forbidden"
+                            res.sendStatus(403); //entered existing user with wrong password
+                        }
+                    });
+                }
+                else {
+                    console.log("User doesn't exist. Creating new account...");
+                    account = {
+                        userName: userName,
+                        password: password
+                    }
+                    con.query("INSERT INTO userreg SET ?", account,
+                    function(err, result, fields) {
+                        if (err) throw err;
+                        console.log("Successfully created new user account. Logging in new user",userName,"...");
+                        let user = {
+                            name: userName,
+                            role: 'student',
+                            issued: Date.now(),
+                            authenticated: true
+                        }
+                        res.send(user);
+                    });
+                }
+            });
+            
         }
         //error 403 = "forbidden"
-        else res.sendStatus(403);
+        //else res.sendStatus(403);
     });
 
 

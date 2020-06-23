@@ -2,17 +2,18 @@ ALTER USER 'varg' IDENTIFIED WITH mysql_native_password BY 'VarG2020';
 FLUSH PRIVILEGES;
 
 CREATE TABLE userreg (
-    userid VARCHAR(20),
-    auth VARCHAR(20),
-    PRIMARY KEY (userid)
+    userName VARCHAR(25),
+    password VARCHAR(255) NOT NULL,
+    role CHAR(7) DEFAULT 'student' NOT NULL,
+    PRIMARY KEY (userName)
 );
 
-INSERT INTO userreg VALUES ('jhohlfel', 'admin');
-INSERT INTO userreg VALUES ('eheldt', 'admin');
+INSERT INTO userreg (userName, password) VALUES ('jhohlfel', 'jhohlfels PW');
+INSERT INTO userreg (userName, password, role) VALUES ('eheldt', 'eheldts PW', 'admin');
 
 CREATE TABLE cytographs (
     fileName VARCHAR(25),
-    userName VARCHAR(10),
+    userName VARCHAR(25),
     graphObject JSON,
     PRIMARY KEY (fileName, userName)
 );
@@ -202,9 +203,6 @@ INSERT INTO cytographs (fileName, userName, graphObject) VALUES ('sampleGraph1',
     ],
     "data": {
       "IDCount": 5,
-      "latestSave": null,
-      "user": "eheldt",
-      "filename": "DefaultFileName",
       "prodName": "testprodukt",
       "prodQuant": "12345",
       "settingsUnitCostItems": [
@@ -435,9 +433,6 @@ INSERT INTO cytographs (fileName, userName, graphObject) VALUES ('sampleGraph2',
     ],
     "data": {
       "IDCount": 5,
-      "latestSave": null,
-      "user": "eheldt",
-      "filename": "DefaultFileName",
       "prodName": "testprodukt",
       "prodQuant": "12345",
       "settingsUnitCostItems": [
@@ -668,9 +663,6 @@ INSERT INTO cytographs (fileName, userName, graphObject) VALUES ('sampleGraph3',
     ],
     "data": {
       "IDCount": 5,
-      "latestSave": null,
-      "user": "eheldt",
-      "filename": "DefaultFileName",
       "prodName": "testprodukt",
       "prodQuant": "12345",
       "settingsUnitCostItems": [
