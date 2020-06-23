@@ -683,12 +683,13 @@ präsenzfreien Zeit notwendig.
 XXX
 
 \subsection{Installationsanleitung}
+\subsubsection{Clientseitige Installation für Anwender}
 {\small Autor: Erik Heldt}
-\\\textbf{Für User:}
 
-VarG ist eine plattformunabhängige Webanwendung, das heißt man muss nichts lokal auf seinem PC installieren, um sie zu benutzen. Alles was man benötigt, ist ein moderner Web-Browser und eine Internetverbindung (Browser-Empfehlung: Google Chrome oder Firefox). Öffne den Browser und gib in der URL-Leiste \url{www.TODO-sampledomain.de} ein. Nun befindest du dich im Home-Menü von VarG und kannst loslegen!
-\\
-\\\textbf{Für Entwickler:}
+VarG ist eine plattformunabhängige Webanwendung, das heißt man muss nichts lokal auf seinem PC installieren, um sie zu benutzen. Alles was man benötigt, ist ein moderner Web-Browser und eine Internetverbindung (Browser-Empfehlung: Google Chrome oder Firefox). Öffne den Browser und gib in der URL-Leiste \url{www.sam.imn.htwk-leipzig.de} ein. Nun befindest du dich im Home-Menü von VarG und kannst loslegen!
+
+\subsubsection{Clientseitige Installation für Entwickler}
+{\small Autor: Erik Heldt}
 
 Um die Anwendung im Entwicklungszustand ausführen zu können, musst du Node.js und npm auf deinem PC installieren. Wie das geht erfährst du hier: \url{https://www.npmjs.com/get-npm}. Node.js ist eine JavaScript-Entwicklungsumgebung, die benötigt wird, um die Anwendung samt der genutzten Frameworks und Bibliotheken kompilieren und ausführen zu können. Node Package Manager, oder kurz npm, wird mit Node.js mitgeliefert und verwaltet alle installierten Pakete, die beim Bauen des Programms verwendet werden.
 
@@ -698,7 +699,45 @@ Weiterhin wird das Versionsmanagement-Tool Git benötigt. Den Download dafür gi
 \\
 \\Es sollten dort mehrere Ordner zu sehen sein, unter anderem der ''code''-Ordner. Darin ist der gesamte Quellcode des Projekts enthalten. Du solltest dich also zur Ausführung des Programms immer in diesem Ordner aufhalten. Um nun den Code zu kompilieren und als Entwicklungsversion auszuführen, folge bitte diesem Tutorial: \href[pdfnewwindow=true]{file:zuarbeiten/InstallationVarg.pdf}{VarG-Installation von Linus Herterich} (klickbarer Link, Anleitung nur für VSCode).
 \\
-\\TODO: Installation der Anwendung und der Datenbank (Docker) auf dem HTWK-Server dokumentieren.
+\\\subsubsection{Serverseitige Installation}
+{\small Autor: Linus Herterich}
+\\
+\textbf{Login-Daten}
+\\Im folgenden werden die Login Daten für den aktuellen Server, welcher unter der Adresse \url{https://sam.imn.htwk-leipzig.de} 
+erreichbar ist, genannt. Die Installationsanleitung ist aber auch so formuliert, dass sie auf anderen Servern 
+nachgestellt werden kann.
+\\SSH-Befehl (für z.B. Git-Bash), um auf den Server per Remote zuzugreifen (nur im HTWK Netz oder per HTWK-VPN möglich):
+\begin{verbatim}
+  ssh root@sam.imn.htwk-leipzig.de
+\end{verbatim}
+Login-Daten für SSH:
+\begin{verbatim}
+  User: 'root' | Passwort: 'zuwinket3771{Harne'
+\end{verbatim}
+Login-Daten für die MySQL Datenbank:
+\begin{verbatim}
+  User: 'root' | Passwort: 'VarG2020' | Datenbank: 'vargdb'
+\end{verbatim}
+\textbf{Webserver und SSL}
+\\Für die serverseitige Installation des Projekts wird ein SSL zertifizierter Webserver benötigt.
+In unserem Fall haben wir Apache 2.4 verwendet, um das Frontend live zu schalten. Es sind aber auch andere
+gängige HTTP Webserver möglich. Wenn andere Webserver technologien verwendet werden, muss folgende
+Anleitung beachtet werden, damit das Vue-Routing funktioniert: \url{https://router.vuejs.org/guide/essentials/history-mode.html}.
+Für die Installation eines SSL Zertifikats haben wir den certbot (\url{https://certbot.eff.org/}) verwendet. 
+\\ACHTUNG: Das SSL-Zertifikat muss im Sommer 2021 verlängert werden, damit die Webanwendung weiter problemlos funktioniert 
+(Anleitung hierfür findet sich auf der certbot Webseite).
+\\Am Ende der Datei \begin{verbatim}
+  varg/docker/node.js/api.js
+\end{verbatim}
+müssen die SSL ''.perm'' Zertifikate verlinkt werden, damit die API auch auf die SSL-Zertifikate zugreifen kann
+und somit eine Verschlüsselte Kommunikation zwischen Frontend und Backend stattfinden kann.
+\\\\
+\textbf{Klonen des Projekts}
+\\Sind die Grundvoraussetzungen gegebenen, kann das Projekt auf dem Webserver geklont werden.
+Hierzu muss sich zunächst auf dem Server eingeloggt werden. 
+\\\\
+\textbf{Unterschiede Entwicklungsversion und Produktionsversion}
+\\
 
 \subsection{Software-Lizenz}
 {\small Autor: Linus Herterich}
