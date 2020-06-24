@@ -220,7 +220,9 @@ export default {
       axios // axios.get HTTP request to our webserver API (see docker/node.js/api.js)
         .get('http://192.168.99.101:1110/VarG/graph/meta', {
           params: {
-            user: this.$store.state.user.name // appending login session data for DB access control
+            // appending login session data for DB access control
+            user: this.$store.state.user.name,
+            role: this.$store.state.user.role
           }
         })
         // if request was succesfull and we got a response, we will then process the response here
@@ -262,6 +264,7 @@ export default {
             .get(url, {
               params: {
                 user: this.$store.state.user.name,
+                role: this.$store.state.user.role,
                 author: item.autor
               }
             })
@@ -282,6 +285,7 @@ export default {
             .get(url, {
               params: {
                 user: this.$store.state.user.name,
+                role: this.$store.state.user.role,
                 author: item.autor
               }
             })
@@ -303,6 +307,7 @@ export default {
         .get(url, {
           params: {
             user: this.$store.state.user.name,
+            role: this.$store.state.user.role,
             author: item.autor
           }
         })
@@ -332,6 +337,7 @@ export default {
           .delete(url, {
             params: {
               user: this.$store.state.user.name,
+              role: this.$store.state.user.role,
               author: item.autor
             }
           })

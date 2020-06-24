@@ -66,6 +66,16 @@ let bodyParser = require('body-parser');
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
 
+//authenticate user by requesting their role (student or admin) from the DB
+function authenticate (userName, callback) {
+    con.query('SELECT role FROM userreg WHERE userName = ?', [userName],
+    function (err, result) {
+        if (err) throw err;
+        if (result[0]) return callback(result[0]['role']);
+        else return callback('none');
+    });
+}
+
 //login
 router.route('/login?')
     //catch the login-Request
@@ -75,74 +85,71 @@ router.route('/login?')
         let userName = req.body.user;
         let password = req.body.password;
         console.log(userName + ", " + password);
-        //admin login
-        if (userName === "admin"){
-            if (password === "VarG2020") {
-                let user = {
-                    name: userName,
-                    role: 'admin',
-                    issued: Date.now(),
-                    authenticated: true
-                }
-                res.send(user);
-            }
-            else { res.sendStatus(403); }
-        }
-        //student login
-        else {
-            con.query('SELECT EXISTS(SELECT * FROM userreg WHERE userName = ?) as "user_exists"', [userName], 
-            function(err, result, fields) { 
-                if (err) throw err;
-                console.log("Checking if user exists...");
-                if (result[0]['user_exists']) {
-                    con.query('SELECT EXISTS(SELECT * FROM userreg WHERE userName = ? AND password = ?) as "matching_pw"', [userName, password],
-                    function (err, result) {
-                        if (err) throw err;
-                        console.log("User exists. Checking if password matches...");
-                        if (result[0]['matching_pw']) {
-                            console.log("Correct password. Logging in existing user",userName,"...");
-                            //account information
-                            let user = {
-                                name: userName,
-                                role: 'student',
-                                issued: Date.now(),
-                                //lets the client know that login was succesfull
-                                authenticated: true
+        con.query('SELECT EXISTS(SELECT * FROM userreg WHERE userName = ?) as "user_exists"', [userName], 
+        function(err, result, fields) { 
+            if (err) throw err;
+            console.log("Checking if user exists ...");
+            if (result[0]['user_exists']) {
+                con.query('SELECT EXISTS(SELECT * FROM userreg WHERE userName = ? AND password = ?) as "matching_pw"', [userName, password],
+                function (err, result) {
+                    if (err) throw err;
+                    console.log("User exists. Checking if password matches ...");
+                    if (result[0]['matching_pw']) {
+                        authenticate(userName, function (role) {
+                            console.log("Correct password. Logging in existing user",userName,"with role '"+role+"' ...");
+                            if (role === 'admin') {
+                                //account information
+                                let user = {
+                                    name: userName,
+                                    role: 'admin',
+                                    issued: Date.now(),
+                                    authenticated: true //lets the client know that login was succesfull
+                                }
+                                //Sends user object back to client
+                                res.send(user);
                             }
-                            //Sends user object back to client
-                            res.send(user);
-                        }
-                        else {
-                            console.log("Wrong password. Invalid Login.");
-                            //error 403 = "forbidden"
-                            res.sendStatus(403); //entered existing user with wrong password
-                        }
-                    });
-                }
-                else {
-                    console.log("User doesn't exist. Creating new account...");
-                    account = {
-                        userName: userName,
-                        password: password
+                            else if (role === 'student') {
+                                let user = {
+                                    name: userName,
+                                    role: 'student',
+                                    issued: Date.now(),
+                                    authenticated: true
+                                }
+                                res.send(user);
+                            }
+                            else {
+                                console.log("Something went wrong during authentication. Aborting Login.");
+                                //error 403 = "forbidden"
+                                res.sendStatus(403); //didn't receive a role for the user which means something went wrong
+                            }
+                        });
                     }
-                    con.query("INSERT INTO userreg SET ?", account,
-                    function(err, result, fields) {
-                        if (err) throw err;
-                        console.log("Successfully created new user account. Logging in new user",userName,"...");
-                        let user = {
-                            name: userName,
-                            role: 'student',
-                            issued: Date.now(),
-                            authenticated: true
-                        }
-                        res.send(user);
-                    });
+                    else {
+                        console.log("Wrong password. Invalid Login.");
+                        res.sendStatus(403); //entered existing user with wrong password
+                    }
+                });
+            }
+            else {
+                console.log("User doesn't exist. Creating new account ...");
+                account = {
+                    userName: userName,
+                    password: password
                 }
-            });
-            
-        }
-        //error 403 = "forbidden"
-        //else res.sendStatus(403);
+                con.query("INSERT INTO userreg SET ?", account,
+                function(err, result, fields) {
+                    if (err) throw err;
+                    console.log("Successfully created new user account. Logging in new user",userName,"with role 'student' ...");
+                    let user = {
+                        name: userName,
+                        role: 'student',
+                        issued: Date.now(),
+                        authenticated: true
+                    }
+                    res.send(user);
+                });
+            }
+        });
     });
 
 
@@ -152,16 +159,18 @@ router.route('/graph?')
     .post(function(req,res) {
         console.log('Attempting to post a graph with filename:',req.body.filename);
         //all information needed for creating a new entry, read from request body
-        let post = {fileName: req.body.name, 
-                    userName: req.body.user, 
-                    graphObject: req.body.json};
+        let post = {
+            fileName: req.body.name, 
+            userName: req.body.user, 
+            graphObject: req.body.json
+        };
         //query syntax makes safe string escapes, (protection against injections)
         con.query("INSERT INTO cytographs SET ?", post,
-         function(err, result, fields) {
+        function(err, result, fields) {
             if (err) throw err;
             console.log("Post was succesfull.");
-            //status 201 = "Succesful"
-            res.sendStatus(201);
+            //status 200 = "Succesful"
+            res.sendStatus(200);
         });
     });
 
@@ -172,26 +181,26 @@ router.route('/graph?')
 router.route('/graph/meta')
     .get(function (req, res) {
         let userName = req.query.user;
-        if (userName === 'admin') {
-            console.log('Sending all metadata for admin');
-            con.query('SELECT JSON_EXTRACT(graphObject,"$.data") AS "metadata", fileName, userName FROM cytographs',
-            function(err, result, fields) {
-                if (err) throw err;
-                console.log("Query was successful !");
-                res.send(result);
-            });
+        let userRole = req.query.role;
+        let query = '';
+        let values = [];
+        console.log('Requesting metadata ...');
+        if (userRole === 'admin') {
+            query = 'SELECT JSON_EXTRACT(graphObject,"$.data") AS "metadata", fileName, userName FROM cytographs';
+        }
+        else if (userRole === 'student') {
+            query = 'SELECT JSON_EXTRACT(graphObject,"$.data") AS "metadata", fileName, userName FROM cytographs WHERE userName = ?';
+            values = [userName];
         }
         else {
-            console.log('Sending all metadata of specified user:', userName);
-            //string escape syntax
-            con.query('SELECT JSON_EXTRACT(graphObject,"$.data") AS "metadata", fileName, userName FROM cytographs WHERE userName = ?', [userName],
-            function(err, result, fields) {
-                if (err) throw err;
-                console.log("Query was successful !");
-                res.send(result);
-            });
+            console.log('Insufficient rights. Aborting request.')
+            res.send({'data': []});
         }
-        
+        con.query(query, values, function(err, result, fields) {
+            if (err) throw err;
+            console.log("Successfully received metadata. Sending to client.");
+            res.send(result);
+        });
     });
 
 //everytime a call to the api is made with the structure /graph/:file_name,
@@ -199,64 +208,58 @@ router.route('/graph/meta')
 //It makes sure that the specified graph exists in the database
 router.param('file_name', function(req, res, next, fileName)   {
     //check if Graph with fileName+userName exists within database
-    let userName=req.query.user;
-    console.log("Checking Database for Graph");
-    if(userName === 'admin') {
-        let author = req.query.author;
-        con.query("SELECT graphObject FROM cytographs WHERE fileName = ? AND userName = ?", [fileName, author], 
+    let userRole = req.query.role;
+    let userName = '';
+    console.log("Checking Database for graph ...");
+    if (userRole === 'admin') {
+        userName = req.query.author;
+    }
+    else if (userRole === 'student') {
+        userName = req.query.user;
+    }
+    else {
+        console.log('Insufficient rights. Aborting request.');
+        throw new Error;
+    }
+    con.query("SELECT graphObject FROM cytographs WHERE fileName = ? AND userName = ?", [fileName, userName], 
         function(err, result, fields) {
             if (err) {
                 //connection issues may exist and the graph could still be in the db
-                console.log("Graph may not exist.");
+                console.log("Could not find graph in Database. Aborting request.");
                 //route will not continue nad throw an error
                 throw err;
             }
             else{
-                console.log("Graph does exist.");
+                console.log("Found graph in the Database. Continuing with request ...");
                 //next - route will continue normally
                 next();
             }
-        });
-    }
-    else {
-        con.query("SELECT graphObject FROM cytographs WHERE fileName = ? AND userName = ?", [fileName, userName], 
-        function(err, result, fields) {
-            if (err) {
-                console.log("Graph may not exist.");
-                throw err;
-            }
-            else{
-                console.log("Graph does exist.");
-                next();
-            }
-        });
-    }
+    });
 });
 
 router.route('/graph/:file_name?')
     //get a single graph identified by fileName+userName
     .get(function(req, res) {
-        let fileName=req.params.file_name;
-        let userName=req.query.user;
-        if(userName === 'admin') {
-            let author = req.query.author;
-            console.log('Sending Graph with fileName:', fileName, ', author:', author);
-            con.query("SELECT graphObject FROM cytographs WHERE fileName = ? AND userName = ?", [fileName, author], 
-            function(err, result, fields) { 
-                if (err) throw err;
-                console.log("Get-Query was successful!");
-                res.send(result);
-            });
+        let fileName = req.params.file_name;
+        let userRole = req.query.role;
+        let userName = '';
+        console.log("Requesting graph from Database ...");
+        if (userRole === 'admin') {
+            userName = req.query.author;
+        }
+        else if (userRole === 'student') {
+            userName = req.query.user;
         }
         else {
-            console.log('Sending Graph with fileName:',fileName,', userName:',userName);
-            con.query("SELECT graphObject FROM cytographs WHERE fileName = ? AND userName = ?", [fileName, userName], 
+            console.log('Insufficient rights. Aborting request.');
+            res.send({'data': []});
+        }
+        con.query("SELECT graphObject FROM cytographs WHERE fileName = ? AND userName = ?", [fileName, userName], 
             function(err, result, fields) { 
                 if (err) throw err;
-                console.log("Get-Query was successful!");
+                console.log("Successfully received graph. Sending to client.");
                 res.send(result);
-            });
-        }
+        });
     })
     //update a single graph identified by fileName+userName
     .put(function(req, res) {
@@ -265,38 +268,35 @@ router.route('/graph/:file_name?')
             fileName: req.params.file_name,
             userName: req.body.user
         }
-        console.log('Updating Graph with fileName:', put.fileName, ', userName:', put.userName);
-        con.query("UPDATE cytographs SET graphObject = ? WHERE fileName = ? AND userName = ?",
-        [put.graphObject, put.fileName, put.userName],
-        function(err, result, fields) {
-            if (err) throw err;
-            console.log(result.affectedRows + " record(s) updated");
-            res.sendStatus(200);
+        console.log('Requesting override on graph in Database ...');
+        con.query("UPDATE cytographs SET graphObject = ? WHERE fileName = ? AND userName = ?", [put.graphObject, put.fileName, put.userName],
+            function(err, result, fields) {
+                if (err) throw err;
+                console.log('Successfully overwrote graph. Closing request.');
+                res.sendStatus(200);
         });
     })
     //delete a single graph identified by fileName+userName
     .delete(function(req, res) {
         let fileName = req.params.file_name;
-        let userName = req.query.user;
-        if (userName === 'admin') {
-            let author = req.query.author;
-            console.log('Deleting Graph with fileName:', fileName, ', author:', author);
-            con.query("DELETE FROM cytographs WHERE fileName = ? AND userName = ?", [fileName, author],
-            function(err, result,fields)   {
-                if (err) throw err;
-                console.log("Delete-Query succesfull");
-                res.send(result);
-            });
+        let userName = '';
+        console.log("Requesting deletion of graph from Database ...");
+        if (userRole === 'admin') {
+            userName = req.query.author;
+        }
+        else if (userRole === 'student') {
+            userName = req.query.user;
         }
         else {
-            console.log('Deleting Graph with fileName:', fileName, ', userName:', userName);
-            con.query("DELETE FROM cytographs WHERE fileName = ? AND userName = ?", [fileName, userName],
-            function(err, result,fields)   {
-                if (err) throw err;
-                console.log("Delete-Query succesfull");
-                res.send(result);
-            });
+            console.log('Insufficient rights. Aborting request.');
+            res.sendStatus(403);
         }
+        con.query("DELETE FROM cytographs WHERE fileName = ? AND userName = ?", [fileName, userName],
+            function(err, result, fields)   {
+                if (err) throw err;
+                console.log('Successfully deleted graph. Closing request.');
+                res.sendStatus(200);
+        });
     });
 
 //route for testing purposes - remove in build
