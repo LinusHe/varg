@@ -90,7 +90,7 @@ router.route('/login?')
             if (err) throw err;
             console.log("Checking if user exists ...");
             if (result[0]['user_exists']) {
-                con.query('SELECT EXISTS(SELECT * FROM userreg WHERE userName = ? AND password = ?) as "matching_pw"', [userName, password],
+                con.query('SELECT EXISTS(SELECT * FROM userreg WHERE userName = ? AND BINARY password = ?) as "matching_pw"', [userName, password],
                 function (err, result) {
                     if (err) throw err;
                     console.log("User exists. Checking if password matches ...");
@@ -221,7 +221,7 @@ router.param('file_name', function(req, res, next, fileName)   {
         throw new Error;
     }
     console.log("Checking Database for graph ...");
-    con.query("SELECT graphObject FROM cytographs WHERE fileName = ? AND userName = ?", [fileName, userName], 
+    con.query("SELECT graphObject FROM cytographs WHERE BINARY fileName = ? AND userName = ?", [fileName, userName], 
         function(err, result, fields) {
             if (err) {
                 //connection issues may exist and the graph could still be in the db
@@ -254,7 +254,7 @@ router.route('/graph/:file_name?')
             console.log('Insufficient rights. Aborting request.');
             res.send({'data': []});
         }
-        con.query("SELECT graphObject FROM cytographs WHERE fileName = ? AND userName = ?", [fileName, userName], 
+        con.query("SELECT graphObject FROM cytographs WHERE BINARY fileName = ? AND userName = ?", [fileName, userName], 
             function(err, result, fields) { 
                 if (err) throw err;
                 console.log("Successfully received graph. Sending to client.");
@@ -269,7 +269,7 @@ router.route('/graph/:file_name?')
             userName: req.body.user
         }
         console.log('Requesting override on graph in Database ...');
-        con.query("UPDATE cytographs SET graphObject = ? WHERE fileName = ? AND userName = ?", [put.graphObject, put.fileName, put.userName],
+        con.query("UPDATE cytographs SET graphObject = ? WHERE BINARY fileName = ? AND userName = ?", [put.graphObject, put.fileName, put.userName],
             function(err, result, fields) {
                 if (err) throw err;
                 console.log('Successfully overwrote graph. Closing request.');
@@ -292,7 +292,7 @@ router.route('/graph/:file_name?')
             console.log('Insufficient rights. Aborting request.');
             res.sendStatus(403);
         }
-        con.query("DELETE FROM cytographs WHERE fileName = ? AND userName = ?", [fileName, userName],
+        con.query("DELETE FROM cytographs WHERE BINARY fileName = ? AND userName = ?", [fileName, userName],
             function(err, result, fields)   {
                 if (err) throw err;
                 console.log('Successfully deleted graph. Closing request.');

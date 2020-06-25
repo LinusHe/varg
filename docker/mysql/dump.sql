@@ -3,7 +3,7 @@ FLUSH PRIVILEGES;
 
 CREATE TABLE userreg (
     userName VARCHAR(25),
-    password VARCHAR(255) NOT NULL,
+    password VARCHAR(255) BINARY NOT NULL,
     role CHAR(7) DEFAULT 'student' NOT NULL,
     PRIMARY KEY (userName)
 );
@@ -12,7 +12,7 @@ INSERT INTO userreg (userName, password) VALUES ('jhohlfel', 'jhohlfels PW');
 INSERT INTO userreg (userName, password, role) VALUES ('eheldt', 'eheldts PW', 'admin');
 
 CREATE TABLE cytographs (
-    fileName VARCHAR(25),
+    fileName VARCHAR(25) BINARY,
     userName VARCHAR(25),
     graphObject JSON,
     PRIMARY KEY (fileName, userName)
