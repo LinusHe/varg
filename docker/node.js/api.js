@@ -90,7 +90,7 @@ router.route('/login?')
             if (err) throw err;
             console.log("Checking if user exists ...");
             if (result[0]['user_exists']) {
-                con.query('SELECT EXISTS(SELECT * FROM userreg WHERE userName = ? AND BINARY password = ?) as "matching_pw"', [userName, password],
+                con.query('SELECT EXISTS(SELECT * FROM userreg WHERE userName = ? AND AES_DECRYPT(password, UNHEX("41F273B8BC2311843B1E91C39ADFD320")) = ?) as "matching_pw"', [userName, password],
                 function (err, result) {
                     if (err) throw err;
                     console.log("User exists. Checking if password matches ...");
@@ -132,11 +132,7 @@ router.route('/login?')
             }
             else {
                 console.log("User doesn't exist. Creating new account ...");
-                account = {
-                    userName: userName,
-                    password: password
-                }
-                con.query("INSERT INTO userreg SET ?", account,
+                con.query('INSERT INTO userreg (userName, password) VALUES (?, AES_ENCRYPT(?, UNHEX("41F273B8BC2311843B1E91C39ADFD320")))', [userName, password],
                 function(err, result, fields) {
                     if (err) throw err;
                     console.log("Successfully created new user account. Logging in new user",userName,"with role 'student' ...");

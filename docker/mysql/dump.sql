@@ -3,13 +3,13 @@ FLUSH PRIVILEGES;
 
 CREATE TABLE userreg (
     userName VARCHAR(25),
-    password VARCHAR(255) BINARY NOT NULL,
+    password BLOB NOT NULL,
     role CHAR(7) DEFAULT 'student' NOT NULL,
     PRIMARY KEY (userName)
 );
 
-INSERT INTO userreg (userName, password) VALUES ('jhohlfel', 'jhohlfels PW');
-INSERT INTO userreg (userName, password, role) VALUES ('eheldt', 'eheldts PW', 'admin');
+INSERT INTO userreg (userName, password) VALUES ('jhohlfel', AES_ENCRYPT('jhohlfels PW', UNHEX('41F273B8BC2311843B1E91C39ADFD320')));
+INSERT INTO userreg VALUES ('eheldt', AES_ENCRYPT('eheldts PW', UNHEX('41F273B8BC2311843B1E91C39ADFD320')), 'admin');
 
 CREATE TABLE cytographs (
     fileName VARCHAR(25) BINARY,
