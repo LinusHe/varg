@@ -119,14 +119,13 @@ router.route('/login?')
                             }
                             else {
                                 console.log("Something went wrong during authentication. Aborting Login.");
-                                //error 403 = "forbidden"
-                                res.sendStatus(403); //didn't receive a role for the user which means something went wrong
+                                res.sendStatus(500); //error 500 = "Internal Server Error": didn't receive a role for the user which means something went wrong
                             }
                         });
                     }
                     else {
                         console.log("Wrong password. Invalid Login.");
-                        res.sendStatus(403); //entered existing user with wrong password
+                        res.sendStatus(403); //error 403 = "Forbidden": entered existing user with wrong password
                     }
                 });
             }
@@ -165,8 +164,7 @@ router.route('/graph?')
         function(err, result, fields) {
             if (err) throw err;
             console.log("Post was succesfull.");
-            //status 200 = "Succesful"
-            res.sendStatus(200);
+            res.sendStatus(200); //status 200 = "Succesful"
         });
     });
 
