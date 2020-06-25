@@ -210,17 +210,21 @@ router.param('file_name', function(req, res, next, fileName)   {
     //check if Graph with fileName+userName exists within database
     let userRole = req.query.role;
     let userName = '';
-    console.log("Checking Database for graph ...");
+    console.log("USER: " + req.query.user)
+    console.log("ROLE: "+ req.query.role)
     if (userRole === 'admin') {
         userName = req.query.author;
+        console.log("Get was here");
     }
     else if (userRole === 'student') {
         userName = req.query.user;
+        console.log("Get was here");
     }
     else {
         console.log('Insufficient rights. Aborting request.');
         throw new Error;
     }
+    console.log("Checking Database for graph ...");
     con.query("SELECT graphObject FROM cytographs WHERE fileName = ? AND userName = ?", [fileName, userName], 
         function(err, result, fields) {
             if (err) {
