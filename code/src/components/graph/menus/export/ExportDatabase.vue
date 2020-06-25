@@ -147,11 +147,9 @@ export default {
       const CONTENT = ExJSon.CreateJSon(this.getGraph());
       axios // axios.put request
         .put(URL, {
-          params: {
-            user: this.$store.state.user.name,
-            role: this.$store.state.user.role,
-            json: JSON.stringify(CONTENT)
-          }
+          user: this.$store.state.user.name,
+          role: this.$store.state.user.role,
+          json: JSON.stringify(CONTENT)
         })
         .then(response => {
           this.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$refs.databaseMenu.$refs.databaseGUI.loadItems();

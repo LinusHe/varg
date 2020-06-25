@@ -208,17 +208,13 @@ router.route('/graph/meta')
 //It makes sure that the specified graph exists in the database
 router.param('file_name', function(req, res, next, fileName)   {
     //check if Graph with fileName+userName exists within database
-    let userRole = req.query.role;
+    let userRole = (req.query.role ? req.query.role : req.body.role);
     let userName = '';
-    console.log("USER: " + req.query.user)
-    console.log("ROLE: "+ req.query.role)
     if (userRole === 'admin') {
-        userName = req.query.author;
-        console.log("Get was here");
+        userName = (req.query.role ? req.query.author : req.body.author);
     }
     else if (userRole === 'student') {
-        userName = req.query.user;
-        console.log("Get was here");
+        userName = (req.query.role ? req.query.user : req.body.user);
     }
     else {
         console.log('Insufficient rights. Aborting request.');
@@ -283,6 +279,7 @@ router.route('/graph/:file_name?')
     //delete a single graph identified by fileName+userName
     .delete(function(req, res) {
         let fileName = req.params.file_name;
+        let userRole = req.query.role;
         let userName = '';
         console.log("Requesting deletion of graph from Database ...");
         if (userRole === 'admin') {
