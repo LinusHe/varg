@@ -6,7 +6,7 @@
         <v-list-item-title align="center" class="login-headline mb-1 darkmode-ign">VarG</v-list-item-title>
         <v-form
           align="center"
-          ref="form"
+          ref="login_form"
           v-model="valid"
           lazy-validation
           @submit="login()"
@@ -16,13 +16,12 @@
             v-model="input.email"
             class="mt-8 mb-3 email-input hueshift"
             id="email"
-            label="User-Name"
+            label="Benutzername"
             placeholder="z.B.: jdoe"
             outlined
             clearable
             @focus="clearError()"
-            :rules="[v => !!v || 'Feld darf nicht leer sein', 
-                   v => (v || '').indexOf(' ') < 0 || 'Keine Leerzeichen erlaubt']"
+            :rules="[v => !!v || 'Feld darf nicht leer sein', v => (v || '').indexOf(' ') < 0 || 'Keine Leerzeichen erlaubt', v => v.length <= 25 || 'Maximal 25 Zeichen erlaubt']"
           ></v-text-field>
           <v-text-field
             v-model="input.password"
@@ -34,7 +33,7 @@
             :type="show ? 'text' : 'password'"
             :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
             @click:append="show = !show"
-            :rules="[v => !!v || 'Feld darf nicht leer sein']"
+            :rules="[v => !!v || 'Feld darf nicht leer sein', v => v.length <= 25 || 'Maximal 25 Zeichen erlaubt']"
             @focus="clearError()"
             @keyup.enter="login()"
           ></v-text-field>
@@ -90,9 +89,7 @@ let dialogComponent;
 export default {
   name: "LoginForm",
   mounted: function() {
-    dialogComponent = this.$parent.$parent.$parent.$parent.$parent.$refs[
-      "dialogs"
-    ];
+    dialogComponent = this.$parent.$parent.$parent.$parent.$parent.$refs.dialogs;
   },
   data() {
     return {
@@ -102,7 +99,7 @@ export default {
       },
       show: false,
       valid: false
-    };
+    }
   },
   methods: {
     // For Debuging. See buttons above
@@ -133,9 +130,22 @@ export default {
      * Validation of user input is missing. See outdated login() function
      */
     login: function () {
-     this.$store.dispatch("AUTH_REQUEST", { user: this.input.email, password: this.input.password }).then(() => {
-     this.$router.replace("/home/menu");
-   })
+      if (this.$refs.login_form.validate()) {
+      this.$store.dispatch("AUTH_REQUEST", {
+        user: this.input.email,
+        password: this.input.password
+        })
+        .then(() => {
+          this.$router.replace("/home/menu");
+          dialogComponent.dialogSuccess('Login erfolgreich - Willkommen bei VarG, ' + this.$store.state.user.name + '!');
+        })
+        .catch(err => {
+          if (err.message === 'Network Error') { dialogComponent.dialogError('Login fehlgeschlagen: <b>Netzwerkfehler</b> - bitte überprüfe deine Internetverbindung'); }
+          else if (err.message === 'Request failed with status code 403') { dialogComponent.dialogError('Login fehlgeschlagen: <b>Ungültige Login-Daten</b> - bitte überprüfe Benutzername und Passwort'); }
+          else if (err.message === 'Request failed with status code 500') { dialogComponent.dialogError('Login fehlgeschlagen: <b>Unzureichende Rechte</b> - bitte wende dich an einen Admin'); }
+          else { dialogComponent.dialogError('Login fehlgeschlagen: <b>Unbekannter Fehler</b> - bitte wende dich an einen Admin'); }
+        });
+      }
     },
 
     /**
@@ -147,7 +157,7 @@ export default {
 
     /*
     login() {
-      if (this.$refs.form.validate()) {
+      if (this.$refs.login_form.validate()) {
         if (this.input.email === "VarG" && this.input.password === "2020") {
           //new
           this.$store.commit("refreshIssued");

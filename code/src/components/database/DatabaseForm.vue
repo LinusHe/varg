@@ -291,7 +291,9 @@ export default {
       axios // axios.get HTTP request to our webserver API (see docker/node.js/api.js)
         .get("http://192.168.99.101:1110/VarG/graph/meta", {
           params: {
-            user: this.$store.state.user.name // appending login session data for DB access control
+            // appending login session data for DB access control
+            user: this.$store.state.user.name,
+            role: this.$store.state.user.role
           }
         })
         // if request was succesfull and we got a response, we will then process the response here
@@ -316,7 +318,7 @@ export default {
         })
         // if anything went wrong while sending the request or processing the response, we will catch it and print an error message here
         .catch(error => {
-          dialogComponent.dialogError("Laden der Datenbank fehlgeschlagen");
+          dialogComponent.dialogError('Laden der Datenbank fehlgeschlagen');
         });
     },
     // opening the export menu with the database tab open
@@ -346,7 +348,9 @@ export default {
       axios
         .get(url, {
           params: {
-            user: this.$store.state.user.name
+            user: this.$store.state.user.name,
+            role: this.$store.state.user.role,
+            author: item.autor
           }
         })
         .then(response => {
@@ -370,7 +374,9 @@ export default {
       axios
         .get(url, {
           params: {
-            user: this.$store.state.user.name
+            user: this.$store.state.user.name,
+            role: this.$store.state.user.role,
+            author: item.autor
           }
         })
         .then(response => {
@@ -390,7 +396,9 @@ export default {
       axios
         .get(url, {
           params: {
-            user: this.$store.state.user.name
+            user: this.$store.state.user.name,
+            role: this.$store.state.user.role,
+            author: item.autor
           }
         })
         .then(response => {
@@ -429,7 +437,9 @@ export default {
       axios // axios.delete request
         .delete(url, {
           params: {
-            user: this.$store.state.user.name
+            user: this.$store.state.user.name,
+            role: this.$store.state.user.role,
+            author: item.autor
           }
         })
         .then(response => {

@@ -107,6 +107,7 @@ export default {
     uploadGraph() {
       // Checks if menu formular was filled in correctly
       if (this.$refs.formDB.validate()) {
+        dialogComponent.dialogWarning('Graph wird hochgeladen, bitte warte einen Augenblick...');
         const CONTENT = ExJSon.CreateJSon(this.getGraph()); // creating a json object containing the current cytoscape instance with JSonPersistence.js
         axios // axios.post request
           .post('http://192.168.99.101:1110/VarG/graph', {
@@ -121,23 +122,12 @@ export default {
             dialogComponent.dialogSuccess('Graph erfolgreich in Datenbank hochgeladen');
             this.checkNewGraph(); // check if the upload menu was opened from the newgraph menu
           })
-          // currently, if any error occurs the overwrite menu opens, which should only happen if the error is a duplicate key error that the DB sent with the response.
-          // however with the current functionality of the API we only get errors with empty response bodies, which makes it impossible to distinguish different error types,
-          // thus the TODO comments below
           .catch(error => {
-            /* TODO to use these error distinctions, the API must return proper errors instead of ERR_EMPTY_RESPONSE
-
-            if (error.response) {
-              console.log(error.response)*/
-              this.overwriteDialog = true;  // TODO check if error.response actually says duplicate key error, if not then don't open overwrite menu and show varg-dialog with "Hochladen fehlgeschlagen: Datenbankfehler"
-            /*}
-            else if (error.request) {
-              console.log(error.request)
-              dialogComponent.dialogError('Hochladen fehlgeschlagen: <b>Konnte nicht zum Server verbinden</b>');
+            if (error.message === 'Request failed with status code 403') {
+              this.overwriteDialog = true;
+              dialogComponent.dialogWarning('Bitte folge den Anweisungen in dem neuen Fenster');
             }
-            else {
-              dialogComponent.dialogError('Hochladen fehlgeschlagen: <b>Unbekannter Fehler</b>');
-            }*/
+            else { dialogComponent.dialogError('Hochladen fehlgeschlagen: <b>Ein Fehler ist aufgetreten</b> - bitte versuche es später erneut oder wende dich an einen Admin'); }
           }); 
       }
     },
@@ -148,6 +138,7 @@ export default {
       axios // axios.put request
         .put(URL, {
           user: this.$store.state.user.name,
+          role: this.$store.state.user.role,
           json: JSON.stringify(CONTENT)
         })
         .then(response => {
@@ -157,18 +148,14 @@ export default {
           this.checkNewGraph();
         })
         .catch(error => {
-          dialogComponent.dialogError('Hochladen fehlgeschlagen: <b>Unbekannter Fehler</b>');
+          dialogComponent.dialogError('Hochladen fehlgeschlagen: <b>Ein Fehler ist aufgetreten</b> - bitte versuche es später erneut oder wende dich an einen Admin');
         });
     },
     checkNewGraph() {
       // check if dialog was opened from newgraph menu
-      if (
-        this.$parent.$parent.$parent.$parent.$parent.$parent.$parent.getNewGraph()
-      ) {
+      if (this.$parent.$parent.$parent.$parent.$parent.$parent.$parent.getNewGraph()) {
         // continue with newGraph function
-        this.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$refs[
-          "newGraphMenu"
-        ].discard();
+        this.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$refs.newGraphMenu.discard();
       }
     }
   }
