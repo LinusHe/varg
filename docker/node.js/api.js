@@ -159,12 +159,19 @@ router.route('/graph?')
             userName: req.body.user, 
             graphObject: req.body.json
         };
-        //query syntax makes safe string escapes, (protection against injections)
-        con.query("INSERT INTO cytographs SET ?", post,
-        function(err, result, fields) {
-            if (err) throw err;
-            console.log("Post was succesfull.");
-            res.sendStatus(200); //status 200 = "Succesful"
+        //check if graph already exists to prevent duplicate key error
+        con.query('SELECT EXISTS(SELECT * FROM cytographs WHERE fileName = ? AND userName = ?) as "graph_exists"', [post.fileName, post.userName],
+            function (err, result) {
+                if (result[0]['graph_exists']) { res.sendStatus(403); } // graph already exists -> send status Forbidden
+                else {  // graph doesn't exist -> post allowed
+                    //query syntax makes safe string escapes, (protection against injections)
+                    con.query("INSERT INTO cytographs SET ?", post,
+                        function(err, result, fields) {
+                            if (err) throw err;
+                            console.log("Post was succesfull.");
+                            res.sendStatus(200); //status 200 = "Succesful"
+                    });
+                }
         });
     });
 
