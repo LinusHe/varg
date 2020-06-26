@@ -17,6 +17,7 @@
               v-model="DataBaseName"
               required
               :rules="nameRules"
+              @keyup.enter="uploadGraph()"
             ></v-text-field>
           </v-col>
         </v-row>

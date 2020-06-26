@@ -21,7 +21,7 @@
       <v-card class="ml-6 mr-6">
         <v-row>
           <v-col sm="10">
-            <v-card-text>Darkmode aktivieren</v-card-text>
+            <v-card-text>Darkmode aktivieren (experimentell)</v-card-text>
           </v-col>
           <v-col sm="2">
             <v-switch

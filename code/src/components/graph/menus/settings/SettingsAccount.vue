@@ -13,12 +13,41 @@
           </v-col>
           <v-col class="pl-5" sm="11">
             <v-card-text>
-              <b>Dein Nutzername:</b>
+              <b>Dein Benutzername:</b>
               {{username}}
               <br />
               <b>Anzahl deiner Graphen in der Datenbank:</b>
               {{graphcount}}
             </v-card-text>
+          </v-col>
+        </v-row>
+      </v-card>
+      <v-card-subtitle>Account-Einstellungen</v-card-subtitle>
+      <v-card class="ml-6 mr-6">
+        <v-row justify="space-around">
+          <v-col sm="4">
+            <v-btn
+              class="darkmode-ign"
+              color="blue"
+              text
+              @click="editUserName()"
+            >Benutzernamen ändern</v-btn>
+          </v-col>
+          <v-col sm="3">
+            <v-btn
+              class="darkmode-ign"
+              color="blue"
+              text
+              @click="editUserPW()"
+            >Passwort ändern</v-btn>
+          </v-col>
+          <v-col sm="3">
+            <v-btn
+              class="darkmode-ign"
+              color="error"
+              text
+              @click="deleteUserAccount()"
+            >Account löschen</v-btn>
           </v-col>
         </v-row>
       </v-card>
@@ -59,19 +88,39 @@ export default {
     },
 
     getGraphCount() {
-
       axios
       .get("http://192.168.99.101:1110/VarG/graph/meta", {
         params: {
-          user: this.$store.state.user.name
+          user: this.$store.state.user.name,
+          role: this.$store.state.user.role
         }
       })
       .then(response => {
-        this.graphcount = response.data.length;
+        this.graphcount = 0;
+        // we have to check which graph belongs to the current user in case he is an admin,
+        // otherwise if we would just do this.graphcount = response.data.length
+        // an admin would see the number of all graphs from all users in the DB, not just his
+        for (let i = 0; i < response.data.length; i++) {
+          if (response.data[i].userName === this.$store.state.user.name) {
+            this.graphcount++;
+          }
+        }
       })
       .catch(error => {
         dialogComponent.dialogError("Laden der Datenbank fehlgeschlagen");
       });
+    },
+
+    editUserName() {
+      //TODO
+    },
+
+    editUserPW() {
+      //TODO
+    },
+
+    deleteUserAccount() {
+      //TODO
     },
 
     // apply settings to cytoscape element
