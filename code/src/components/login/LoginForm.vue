@@ -33,7 +33,7 @@
             :type="show ? 'text' : 'password'"
             :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
             @click:append="show = !show"
-            :rules="[v => !!v || 'Feld darf nicht leer sein', v => v.length <= 255 || 'Maximal 255 Zeichen erlaubt']"
+            :rules="[v => !!v || 'Feld darf nicht leer sein', v => v.length <= 25 || 'Maximal 25 Zeichen erlaubt']"
             @focus="clearError()"
             @keyup.enter="login()"
           ></v-text-field>
@@ -137,7 +137,7 @@ export default {
         })
         .then(() => {
           this.$router.replace("/home/menu");
-          dialogComponent.dialogSuccess('Login erfolgreich - Willkommen bei VarG!');
+          dialogComponent.dialogSuccess('Login erfolgreich - Willkommen bei VarG, ' + this.$store.state.user.name + '!');
         })
         .catch(err => {
           if (err.message === 'Network Error') { dialogComponent.dialogError('Login fehlgeschlagen: <b>Netzwerkfehler</b> - bitte überprüfe deine Internetverbindung'); }

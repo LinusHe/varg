@@ -8,8 +8,8 @@ CREATE TABLE userreg (
     PRIMARY KEY (userName)
 );
 
-INSERT INTO userreg (userName, password) VALUES ('jhohlfel', AES_ENCRYPT('jhohlfels PW', UNHEX('41F273B8BC2311843B1E91C39ADFD320')));
-INSERT INTO userreg VALUES ('eheldt', AES_ENCRYPT('eheldts PW', UNHEX('41F273B8BC2311843B1E91C39ADFD320')), 'admin');
+INSERT INTO userreg (userName, password) VALUES ('jhohlfel', AES_ENCRYPT('jhohlfels PW', UNHEX(SHA2('jhohlfels PW', 512))));
+INSERT INTO userreg VALUES ('eheldt', AES_ENCRYPT('eheldts PW', UNHEX(SHA2('eheldts PW', 512))), 'admin');
 
 CREATE TABLE cytographs (
     fileName VARCHAR(25) BINARY,
