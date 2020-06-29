@@ -325,7 +325,7 @@ export default {
         dialogComponent.dialogError(
           "Stückzahl nicht geändert: <b>Stückzahl muss ganzzahlig sein</b>"
         );
-      } 
+      }
     },
     openOptimize() {
       this.$parent.$parent.$refs.settingsMenu.setActiveTab(2);
@@ -341,7 +341,7 @@ export default {
       this.optimized = bool;
     },
       //depending on the pressed button the graf gets either cost-optimization or time-optimization
-    runOptC() {      
+    runOptC() {
       this.getGraph()
         .getCytoGraph(this.getGraph())
         .data("settingsOptimizationOption", "optionCost")
@@ -499,7 +499,7 @@ export default {
         ) {
           this.runOptimization();
           dialogComponent.dialogWarning(
-            "Die Startzustände wurden automatisch eingestellt. Wenn du sie ändern möchtest öffne die Optimierungseinstellungen!",
+            "Die Startzustände wurden automatisch eingestellt. Wenn du sie ändern möchtest, öffne die Optimierungseinstellungen!",
             6000
           );
         } else if (
@@ -512,13 +512,13 @@ export default {
         ) {
           this.runOptimization();
           dialogComponent.dialogWarning(
-            "Der Endzustand wurde automatisch eingestellt. Wenn du ihn ändern möchtest öffne die Optimierungseinstellungen!",
+            "Der Endzustand wurde automatisch eingestellt. Wenn du ihn ändern möchtest, öffne die Optimierungseinstellungen!",
             6000
           );
         } else {
           this.runOptimization();
           dialogComponent.dialogWarning(
-            "Die Start- und Endzustände wurden automatisch eingestellt. Wenn du sie ändern möchtest öffne die Optimierungseinstellungen!",
+            "Die Start- und Endzustände wurden automatisch eingestellt. Wenn du sie ändern möchtest, öffne die Optimierungseinstellungen!",
             6000
           );
         }

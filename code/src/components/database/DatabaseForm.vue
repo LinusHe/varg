@@ -41,16 +41,16 @@
         </template>
 
         <template v-slot:default="props">
-          <div v-if="!props.items.length" style="min-height: 500px;">
+          <!--div v-if="!props.items.length" style="min-height: 500px;">
             TODO why is this not showing? (this is supposed to preserve the height of the Database window even when no items are loaded,
             but for some reason this div never shows)
-          </div>
-          <div v-else class="scrolling-container">
-            <!-- <div> -->
+          </div-->
+          <!--div v-else class="scrolling-container"-->
+          <div class="scrolling-container">
             <v-row class="ma-0">
               <v-col
                 v-for="item in props.items"
-                :key="item.graphname"
+                :key="item.graphname+item.autor"
                 cols="12"
                 sm="6"
                 md="6"

@@ -138,7 +138,7 @@ export default {
     },
     openHelpDialog() {
       dialogComponent.dialogInfo(
-        "Wähle das Format <b>.json</b> oder<b>.xml</b> aus, um den Graphen in einem Format herunterzuladen, welches du später wieder im Editor importieren kannst. <br /> <br /> Wähle<b>.png</b> oder<b>.svg</b> aus, um den Graphen in einem Bildvormat herunterzuladen.",
+        "Wähle das Format <b>.json</b> aus, wenn du den VarGraph später wieder über die Import-Funktion in die Anwendung laden willst. <br /> <br /> Wähle <b>.png</b> oder <b>.jpg</b> aus, um den VarGraph als Bild herunterzuladen.",
         15000
       );
     },

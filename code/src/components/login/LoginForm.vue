@@ -48,10 +48,10 @@
         </v-form>
 
         <a align="center" class="font-italic mt-6" color="error">Passwort vergessen?</a>
-        
+
         <v-divider
         class="mx-4 mt-10"
-        :inset="inset"
+        inset
         horizontal
       ></v-divider>
       <em align="center" class="login-bottom-links mt-5 mb-5" color="lightgrey">
@@ -75,7 +75,7 @@
       @click="delLocal()"
       large
       color="primary"
-    >Remove localStorage</v-btn> 
+    >Remove localStorage</v-btn>
     Buttons for debugging. Regard functions in <script> -->
   </div>
 </template>
@@ -131,20 +131,20 @@ export default {
      */
     login: function () {
       if (this.$refs.login_form.validate()) {
-      this.$store.dispatch("AUTH_REQUEST", {
-        user: this.input.email,
-        password: this.input.password
-        })
-        .then(() => {
-          this.$router.replace("/home/menu");
-          dialogComponent.dialogSuccess('Login erfolgreich - Willkommen bei VarG, ' + this.$store.state.user.name + '!');
-        })
-        .catch(err => {
-          if (err.message === 'Network Error') { dialogComponent.dialogError('Login fehlgeschlagen: <b>Netzwerkfehler</b> - bitte überprüfe deine Internetverbindung'); }
-          else if (err.message === 'Request failed with status code 403') { dialogComponent.dialogError('Login fehlgeschlagen: <b>Ungültige Login-Daten</b> - bitte überprüfe Benutzername und Passwort'); }
-          else if (err.message === 'Request failed with status code 500') { dialogComponent.dialogError('Login fehlgeschlagen: <b>Unzureichende Rechte</b> - bitte wende dich an einen Admin'); }
-          else { dialogComponent.dialogError('Login fehlgeschlagen: <b>Unbekannter Fehler</b> - bitte wende dich an einen Admin'); }
-        });
+        this.$store.dispatch("AUTH_REQUEST", {
+          user: this.input.email,
+          password: this.input.password
+          })
+          .then(() => {
+            this.$router.replace("/home/menu");
+            dialogComponent.dialogSuccess('Login erfolgreich - Willkommen bei VarG, ' + this.$store.state.user.name + '!');
+          })
+          .catch(err => {
+            if (err.message === 'Network Error') { dialogComponent.dialogError('Login fehlgeschlagen: <b>Netzwerkfehler</b> - bitte überprüfe deine Internetverbindung'); }
+            else if (err.message === 'Request failed with status code 403') { dialogComponent.dialogError('Login fehlgeschlagen: <b>Ungültige Login-Daten</b> - bitte überprüfe Benutzername und Passwort'); }
+            else if (err.message === 'Request failed with status code 500') { dialogComponent.dialogError('Login fehlgeschlagen: <b>Unzureichende Rechte</b> - bitte wende dich an einen Admin'); }
+            else { dialogComponent.dialogError('Login fehlgeschlagen: <b>Unbekannter Fehler</b> - bitte wende dich an einen Admin'); }
+          });
       }
     },
 

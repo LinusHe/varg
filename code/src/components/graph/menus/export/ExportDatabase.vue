@@ -1,7 +1,7 @@
 <template>
   <v-card flat id="save-menu">
     <v-card-text>
-      <v-form ref="formDB" v-model="validDB" lazy-validation>
+      <v-form ref="formDB" v-model="validDB" lazy-validation v-on:submit.prevent="uploadGraph()">
         <v-row class="ml-2 mt-4 mr-2">
           <p>
             Unter folgendem Namen kann der aktuelle Graph
@@ -17,7 +17,6 @@
               v-model="DataBaseName"
               required
               :rules="nameRules"
-              @keyup.enter="uploadGraph()"
             ></v-text-field>
           </v-col>
         </v-row>
@@ -108,7 +107,7 @@ export default {
     uploadGraph() {
       // Checks if menu formular was filled in correctly
       if (this.$refs.formDB.validate()) {
-        dialogComponent.dialogWarning('Graph wird hochgeladen, bitte warte einen Augenblick...');
+        dialogComponent.dialogInfo('Graph wird hochgeladen, bitte warte einen Augenblick...');
         const CONTENT = ExJSon.CreateJSon(this.getGraph()); // creating a json object containing the current cytoscape instance with JSonPersistence.js
         axios // axios.post request
           .post('http://192.168.99.101:1110/VarG/graph', {
@@ -126,10 +125,10 @@ export default {
           .catch(error => {
             if (error.message === 'Request failed with status code 403') {
               this.overwriteDialog = true;
-              dialogComponent.dialogWarning('Bitte folge den Anweisungen in dem neuen Fenster');
+              dialogComponent.dialogInfo('Bitte folge den Anweisungen in dem neuen Fenster');
             }
             else { dialogComponent.dialogError('Hochladen fehlgeschlagen: <b>Ein Fehler ist aufgetreten</b> - bitte versuche es später erneut oder wende dich an einen Admin'); }
-          }); 
+          });
       }
     },
     // requesting to overwrite the graph with the given name in the DB

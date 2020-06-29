@@ -46,10 +46,10 @@
         </v-col>
       </v-row>
 
-      
+
        <v-divider
         class="mx-4 mt-10"
-        :inset="inset"
+        inset
         horizontal
       ></v-divider>
       <em align="center" class="login-bottom-links mt-5 mb-5" color="lightgrey">

@@ -126,6 +126,7 @@ export default {
     },
     account() {
       this.$parent.$refs.settingsMenu.setActiveTab(3);
+      this.$parent.$refs.settingsMenu.prepAccountInfo();
       this.$parent.$refs.settingsMenu.openDialog();
     },
     logout() {

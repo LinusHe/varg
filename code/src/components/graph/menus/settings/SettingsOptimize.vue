@@ -193,7 +193,7 @@ export default {
         .getCytoGraph(this)
         .data("bestPaths");
 
-      for (let i = 0; i < bestPaths.length; i++) {
+      for (let i = 0; i < (bestPaths ? bestPaths.length : 0); i++) {
         let nextRank = {};
         nextRank.cost = this.getGraph().getTotalCost(bestPaths[i]);
         nextRank.time = this.getGraph().getTotalTime(bestPaths[i]);
@@ -203,7 +203,7 @@ export default {
           .getCytoGraph(this.getGraph())
           .data("settingsUnitTimeSelection")){
 
-        
+
           case "Sekunden" :
              nextRank.time = this.convertTime(parseInt(nextRank.time) )
             break;
@@ -338,9 +338,9 @@ export default {
       let startIDs = [];
       this.getNodeItemsID()
       for (let i = 0; i < this.startSelect.length; i++) {
-    
+
         let indexStart = this.itemsName.indexOf(this.startSelect[i]);
-       
+
         startIDs.push(this.itemsID[indexStart]);
       }
 
@@ -368,7 +368,7 @@ export default {
       // remove optimization
       this.getGraph().removeOptimization();
       this.rankArray = [];
-      
+
     },
 
     getNodeItemsID() {
@@ -377,12 +377,12 @@ export default {
 
     getNodeItemsName() {
       //get the nodeNames to show in settings
-      
+
       this.itemsName = this.getGraph().getNodeName(this.getGraph());
 
 
       let start = []
-      
+
       let selectNodes = this.getGraph()
         .getCytoGraph()
         .data("settingsOptimizationStartIDs");
@@ -390,17 +390,17 @@ export default {
       let nodes = []
 
 
-    
+
       for(let i = 0; i < selectNodes.length; i++){
-        
+
         if(selectNodes[i] != "" && selectNodes[i] != undefined){
-          
+
           nodes.push(selectNodes[i])
         }
       }
-  
+
       for (let i = 0; i < nodes.length; i++) {
-        
+
         start.push(
           this.getGraph()
             .getCytoGraph()
@@ -420,7 +420,7 @@ export default {
         .data("name");
 
         this.startSelect = start;
-     
+
     },
 
     getOption() {
@@ -431,7 +431,7 @@ export default {
         this.optimizationOption = 'Kosten';
       }
     }
-    
+
   }
 
 };
