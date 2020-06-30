@@ -731,13 +731,169 @@ Für die Installation eines SSL Zertifikats haben wir den certbot (\url{https://
 \end{verbatim}
 müssen die SSL ''.perm'' Zertifikate verlinkt werden, damit die API auch auf die SSL-Zertifikate zugreifen kann
 und somit eine Verschlüsselte Kommunikation zwischen Frontend und Backend stattfinden kann.
+Derzeit sind bereits die richtigen Pfade eingetragen.
 \\\\
 \textbf{Klonen des Projekts}
 \\Sind die Grundvoraussetzungen gegebenen, kann das Projekt auf dem Webserver geklont werden.
-Hierzu muss sich zunächst auf dem Server eingeloggt werden. 
+Hierzu muss sich zunächst auf dem Server eingeloggt werden (Anmeldedaten siehe oben). Als nächstes muss mit den Befehl
+\begin{verbatim}
+  cd /var/www/html
+\end{verbatim} 
+in das Standard-Webserver Verzeichnis von Apache navigiert werden. Dort wird anschließend das Projekt mit dem Befehl
+\begin{verbatim}
+  git clone https://gitlab.imn.htwk-leipzig.de/weicker/varg.git
+\end{verbatim} 
+geklont. Nun muss ein GitLab-Nutzername und Passwort eingegeben werden, damit das Projekt in den Ordner ''varg'' geklont werden kann.
+Will man dies umgehen, kann auch ein SSH Schlüssel generiert werden und bei einem GitLab Account hinterlegt werden (weitere Details:
+\url{https://docs.gitlab.com/ee/ssh/})
+\\Nun wurde ein Ordner mit folgendem Pfad angelegt, indem die Projekt-Daten sind:
+\begin{verbatim}
+  /var/www/html/varg
+\end{verbatim}
+Navigiert man per ''cd'' in den Ordner, so kann dort das Projekt aktuallisiert (mit ''git pull'') oder andere Branches ausgewählt werden (mit ''git checkout ..'').
 \\\\
 \textbf{Unterschiede Entwicklungsversion und Produktionsversion}
-\\
+\\Im Code sind einige Stellen zu ändern, damit das Projekt auf dem Server lauffähig ist. Am besten wird hierfür ein neuer Branch erstellt, welcher zwar auf dem 
+aktuellen Projektstand ist, aber die Server-Änderungen beinhaltet. Dieser Branch wird anschließend auf dem Server gepullt (wir nannten diesen Branch immer ''prod'').
+\\Bei den Änderungen handelt es sich zum einen um IP-Adressen, die zum API-Docker-Container zeigen, aber auf der Live Version zur Live-API-Adresse zeigen müssen. 
+\begin{itemize}
+\item Mit dem Suchen und ersetzen Tool im IDE müssen all diese IP-Adressen ausgetauscht werden, die für die AXIOS Requests verwendet werden:
+\begin{verbatim}
+  '192.168.1.102:1110'
+\end{verbatim}
+in den Dateien 'DataBaseForm.vue' und 'ExportDataBase.vue' zur Live-API Adresse: 
+\begin{verbatim}
+  'https://sam.imn.htwk-leipzig.de:7070'
+\end{verbatim}
+Wichtig: Die Endungen (z.B. .../VarG/graph/meta) müssen gleich bleiben und an die Adresse angehangen werden.
+
+\item Desweiteren müssen die Datenbank-Zugangsdaten in folgender Datei geändert werden:
+\begin{verbatim}
+  /var/www/html/varg/docker/node.js/api.js
+\end{verbatim}
+Die Zugangsdaten sind am Anfang in einer Konstanten (namens config) abgespeichert und müssen auf folgende Daten geändert werden:
+\begin{verbatim}
+  host: "localhost",
+  user: "root",
+  password: "VarG2020",
+  database: "vargdb"
+
+
+\end{verbatim}
+\item Zudem muss in der api.js Datei folgende Zeile geändert werden:
+\begin{verbatim}
+  res.header("Access-Control-Allow-Origin", "http://localhost:8080")
+\end{verbatim}
+zu
+\begin{verbatim}
+  res.header("Access-Control-Allow-Origin", "https://sam.imn.htwk-leipzig.de");
+
+
+\end{verbatim}
+\item Außerdem muss am Ende der Datei der Block
+\begin{verbatim}
+  api.listen(8080, () => {
+    console.log('API listens to 8080');
+  });
+\end{verbatim}
+mit folgendem ersetzt werden
+\begin{verbatim}
+  https
+    .createServer(
+      {
+        key: fs.readFileSync("/etc/letsencrypt/live/sam.imn.htwk-leipzig.de/privkey.pem"),
+        cert: fs.readFileSync("/etc/letsencrypt/live/sam.imn.htwk-leipzig.de/cert.pem"),
+      },
+      api
+    )
+    .listen(7070);
+
+\end{verbatim}
+Damit dies funktioniert müssen eventuell am Anfang der Datei folgende Module importiert werden:
+\begin{verbatim}
+  const express = require("express");
+  const mysql_driver = require("mysql");
+  const fs = require("fs");
+  const https = require("https");
+
+
+\end{verbatim}
+\end{itemize}
+All diese Änderungen sollten auf einem prarallelen Branch durchgeführt und anschließend gepusht werden.
+Im Anschluss kann das Projekt mit den Live-Änderungen auf dem Server gepullt werden.
+\\\\
+\textbf{Installation Produktions-Frontend}
+\\Sobald alle nötigen Produktions-Anpassungen durchgeführt sind und das Projekt im richtigen Ordner geklont wurde, 
+kann mit npm das Projekt kompiliert werden. Zunächst muss in folgenden Ordner navigiert werden:
+\begin{verbatim}
+  cd /var/www/html/varg/code
+\end{verbatim}
+anschließend wird folgender Befehl ausgeführt (Voraussetzung ist eine LTS-Version von npm auf dem Web-Server):
+\begin{verbatim}
+  npm install
+\end{verbatim}
+und im Anschluss:
+\begin{verbatim}
+  npm run build
+
+\end{verbatim}
+Nun wurden die kompilierten Dateien in den Ordner
+\begin{verbatim}
+  /var/www/html/varg/code/dist
+\end{verbatim}
+abgelegt. Apache (oder andere HTML Server Technologie) muss so konfiguriert werden (auf dem aktuellen Server ist das bereits eingestellt), 
+dass der DocumentRoot in diesen Ordner zeigt. Wird mit Apache gearbeitet, muss zudem sichergestellt sein, dass ''mod rewrite'' aktiviert ist
+(siehe \url{https://wiki.ubuntuusers.de/Apache/mod_rewrite/} ) . Sonst wird die ''.htaccess'' Datei im ''dist'' Ordner nicht richtig gelesen und 
+die Navigation zwischen einzelnen Seiten funktioniert nicht richtig.
+\\Ist alles problemlos abgelaufen, sollte nun das Frontend unter der URL ''https://sam.imn.htwk-leipzig.de'' erreichbar sein.
+\\\\
+\textbf{Installation MYSQL}
+\\Auf dem Webserver muss eine aktuelle Version von MYSQL laufen. Es kann folgende Anleitung zur Installtion verwendet werden:
+\url{https://wiki.ubuntuusers.de/MySQL/}. Es ist darauf zu achten, dass als root Passwort ''VarG2020'' gewählt wird. 
+Ansonsten muss ein anderes Passwort in der ''api.js'' Datei (siehe oben) eingetragen werden.
+\\Sobald MySQL installiert ist, kann über das Adminer Tool, welches beim Frontend unter der URL ''https://sam.imn.htwk-leipzig.de/adminer.php'' 
+erreichbar ist, eine Datenbank mit dem Namen ''vargdb'' angelegt werden. Um die Initialen Tabellen mit Beispieldaten anzulegen, kann im 
+Anschluss folgende Datei in die Datenbank per Adminer importiert werden:
+\begin{verbatim}
+  varg/docker/mysql/dump.sql
+\end{verbatim} 
+Nun ist die Datenbank eingerichtet und kann über die API angesteuert werden.
+\\\\
+\textbf{API-Server starten}
+\\Der API-Server basiert auf der ''Node.js'' Technologie. Damit die API funktioniert, muss Node.js auf dem Server installiert sein.
+Die API kann dann mit dem Befehl:
+\begin{verbatim}
+  node /var/www/html/varg/docker/node.js/api.js
+\end{verbatim}
+gestartet werden. Man sieht nun den Log der API. Bei jeder Anfrage wird nun eine Zeile ausgegeben. Wenn es Probleme mit der Verbindung
+zur MySQL Datenbank gibt, werden diese hier angezeigt.
+\\\\
+\textbf{API-Server dauerhaft laufen lassen}
+\\Ein Problem ist, dass die API nur solange läuft, solange auch der Terminal geöffnet ist, unter dem der Befehl aufgerufen wurde.
+Da aber die API immer laufen soll, kann die Technologie ''forever'' verwendet werden (\url{https://www.npmjs.com/package/forever}).\\
+Mit folgendem Befehl kann die API dauerhaft gestartet werden:
+\begin{verbatim}
+  forever start -o out.log -e err.log /var/www/html/varg/docker/node.js/api.js
+\end{verbatim}
+für out.log und err.log können auch andere Namen oder Pfade verwendet werden. Es handelt sich hierbei um den Output bzw. Error-Meldungen,
+die ansonsten über das Terminal ausgegben worden wären.
+\\Mit folgendem Befehl kann nun angezeigt werden, ob die API (noch) mit forever läuft:
+\begin{verbatim}
+  forever list
+\end{verbatim}
+Die dort Angegebene Liste beinhaltet neben dem Namen der ausgeführten API-Datei auch eine ID. Diese kann verwendet werden, um mit folgendem
+Befehl die API zu stoppen:
+\begin{verbatim}
+  forever stop [ID]
+\end{verbatim}
+\textbf{Projekt Live (Produktions-Version) aktualisieren}
+\\Wenn neue Features auf dem Server installiert werden sollen, so muss nach der Entwicklung zunächst der neu-entwickelte Branch auf einem neuen (Produktions-) Branch
+so angepasst werden, wie es oben beschrieben ist (IPs austauschen etc.). Dieser geänderte Branch wird anschließend per ''git pull''
+im Verzeichnis ''/var/www/html/varg/'' auf dem Web-Server heruntergeladen.
+\\Als nächstes kann die neue Version kompiliert werden (siehe Installation Produktions-Frontend).
+\\Wenn Änderungen an der API-Logik vorgenommen wurden, so muss die API mit dem ''forever stop'' Befehl gestoppt und anschließend neu gestartet werden.
+\\Falls an der MySQL Datenbank etwas grundlegendes geändert wurde, so kann die Datenbank mit dem Adminer Tool (\url{https://sam.imn.htwk-leipzig.de/adminer.php})
+bearbeitet werden.
 
 \subsection{Software-Lizenz}
 {\small Autor: Linus Herterich}
