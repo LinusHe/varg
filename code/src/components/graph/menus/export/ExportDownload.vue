@@ -152,7 +152,7 @@ export default {
           "newGraphMenu"
         ].discard();*/
         this.$store.commit("setDownload",1);
-        this.$store.commit("ResetGraph");  // After Download Graph will be reseted
+        this.$store.commit("resetGraph");  // After Download Graph will be reseted
         this.$router.replace("/");        //Loadingscreen will take us to home/menu
       }
     }
