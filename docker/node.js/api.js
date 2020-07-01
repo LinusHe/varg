@@ -14,7 +14,7 @@ const config = {
     //user that accesses the database
     user: "varg",
     //password to be used (has to match database password)
-    password: "VarG2020",
+    password: "l_GD6P67+V",
     //which database on the server to access
     database: "vargdb"
 };
