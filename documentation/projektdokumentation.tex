@@ -759,9 +759,11 @@ aktuellen Projektstand ist, aber die Server-Änderungen beinhaltet. Dieser Branc
 \begin{itemize}
 \item Mit dem Suchen und ersetzen Tool im IDE müssen all diese IP-Adressen ausgetauscht werden, die für die AXIOS Requests verwendet werden:
 \begin{verbatim}
-  '192.168.1.102:1110'
+  'http://192.168.1.102:1110' 
+  (Kann auch abweichen. Bitte selbst in den Dateien (bspw. SettingsAccount.vue)
+   überprüfen, an welche Domain alle Axios Requests gehen)
 \end{verbatim}
-in den Dateien 'DataBaseForm.vue' und 'ExportDataBase.vue' zur Live-API Adresse: 
+in den allen Dateien zur Live-API Adresse ändern: 
 \begin{verbatim}
   'https://sam.imn.htwk-leipzig.de:7070'
 \end{verbatim}
