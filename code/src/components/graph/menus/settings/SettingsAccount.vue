@@ -224,7 +224,7 @@ export default {
 
     editUserName() {
       axios
-        .put("http://192.168.99.101:1110/VarG/account", {
+        .put("https://sam.imn.htwk-leipzig.de:7070/VarG/account", {
           type: 0,
           user: this.$store.state.user.name,
           newInfo: this.newusername
@@ -246,7 +246,7 @@ export default {
 
     editUserPW() {
       axios
-        .put("http://192.168.99.101:1110/VarG/account", {
+        .put("https://sam.imn.htwk-leipzig.de:7070/VarG/account", {
           type: 1,
           user: this.$store.state.user.name,
           password: this.password,
@@ -266,7 +266,7 @@ export default {
 
     deleteUserAccount() {
       axios
-        .delete("http://192.168.99.101:1110/VarG/account", {
+        .delete("https://sam.imn.htwk-leipzig.de:7070/VarG/account", {
           params: {
             user: this.$store.state.user.name,
             password: this.password

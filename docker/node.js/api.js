@@ -2,17 +2,19 @@
 //Node.js setup for interface between front and backend
 
 //uses express module and mysqljs 
-const express = require('express');
-const mysql_driver = require('mysql');
+const express = require("express");
+const mysql_driver = require("mysql");
+const fs = require("fs");
+const https = require("https");
 
 //config object holds information for database access
 const config = {
     // eheldt: 192.168.1.102
     // jhohlfel: 192.168.99.101
     //host => adress of database server
-    host: "192.168.99.101",
+    host: "localhost",
     //user that accesses the database
-    user: "varg",
+    user: "root",
     //password to be used (has to match database password)
     password: "l_GD6P67+V",
     //which database on the server to access
@@ -47,7 +49,7 @@ router.use(function(req,res,next) {
     console.log("middleware could happen here");
 
     //this will allow to (only) access the resources from the specified address
-    res.header("Access-Control-Allow-Origin", "http://localhost:8080");
+    res.header("Access-Control-Allow-Origin", "https://sam.imn.htwk-leipzig.de");
     res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 
@@ -475,6 +477,12 @@ api.use('/VarG', router);
 
 //8080 is the port number -> probably needs to change
 //on server: port 80 (HTTP), port 443 (HTTPS)
-api.listen(8080, () => {
-    console.log('API listens to 8080');
-});
+https
+    .createServer(
+        {
+            key: fs.readFileSync("/etc/letsencrypt/live/sam.imn.htwk-leipzig.de/privkey.pem"),
+            cert: fs.readFileSync("/etc/letsencrypt/live/sam.imn.htwk-leipzig.de/cert.pem"),
+        },
+            api
+        )
+    .listen(7070);
