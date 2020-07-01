@@ -199,7 +199,7 @@ export default {
 
     getGraphCount() {
       axios
-      .get("http://192.168.178.63:1110/VarG/graph/meta", {
+      .get("http://192.168.99.101:1110/VarG/graph/meta", {
         params: {
           user: this.$store.state.user.name,
           role: this.$store.state.user.role
@@ -224,7 +224,7 @@ export default {
 
     editUserName() {
       axios
-        .put("http://192.168.178.63:1110/VarG/account", {
+        .put("http://192.168.99.101:1110/VarG/account", {
           type: 0,
           user: this.$store.state.user.name,
           newInfo: this.newusername
@@ -246,7 +246,7 @@ export default {
 
     editUserPW() {
       axios
-        .put("http://192.168.178.63:1110/VarG/account", {
+        .put("http://192.168.99.101:1110/VarG/account", {
           type: 1,
           user: this.$store.state.user.name,
           password: this.password,
@@ -266,7 +266,7 @@ export default {
 
     deleteUserAccount() {
       axios
-        .delete("http://192.168.178.63:1110/VarG/account", {
+        .delete("http://192.168.99.101:1110/VarG/account", {
           params: {
             user: this.$store.state.user.name,
             password: this.password
