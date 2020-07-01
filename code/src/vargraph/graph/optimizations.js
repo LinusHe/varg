@@ -410,6 +410,8 @@ export default {
     return oldPath
   },
   
+    //the whole optimization Algorithm can be exchanged by k shortest path routing
+    //https://en.wikipedia.org/wiki/K_shortest_path_routing#Algorithm
   optimizing() {
 
     let cy = cyStore.data.cy
@@ -514,15 +516,12 @@ export default {
           if(allreadyFound < nextBestCounter) {
             sortNodes.push(nextNode)
           }
-        }
-          //checkedNodes noch nicht funktional, aber nur für performance relevant          
+        }        
         checkedNodes.push(sortNodes[i][0])
       }
     }
   
     let bestPaths = []
-   // let endID = cyStore.data.cy.data("settingsOptimizationEndID");
-   // let endID = this.getCytoGraph(this).data("settingsOptimizationEndID");
     
       //look for the end-node, first one found is the one with lowest cost
     let search = 0
@@ -531,7 +530,8 @@ export default {
     }
 
     if(search >= sortNodes.length) {
-      console.log("Kein Weg möglich...")
+      
+      ("Kein Weg möglich...")
     }
     else {
       bestPaths.push(sortNodes[search][1])

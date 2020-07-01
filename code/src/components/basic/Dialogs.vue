@@ -65,7 +65,7 @@ export default {
       mySb.textColorStyle = "color: #ffffff";
       mySb.dialogText = text;
       mySb.dialogVisible = true;
-      if (newtimeout != null) this.dialogTimeout = newtimeout;
+      if (newtimeout != null) mySb.dialogTimeout = newtimeout;
 
       // push to dialog queue
       this.addToSnackbars(mySb);
@@ -82,7 +82,7 @@ export default {
       mySb.textColorStyle = "color: #000";
       mySb.dialogText = text;
       mySb.dialogVisible = true;
-      if (newtimeout != null) this.dialogTimeout = newtimeout;
+      if (newtimeout != null) mySb.dialogTimeout = newtimeout;
 
       // push to dialog-queue
       this.addToSnackbars(mySb);
@@ -99,7 +99,7 @@ export default {
       mySb.textColorStyle = "color: #ffffff";
       mySb.dialogText = text;
       mySb.dialogVisible = true;
-      if (newtimeout != null) this.dialogTimeout = newtimeout;
+      if (newtimeout != null) mySb.dialogTimeout = newtimeout;
 
       // push to dialog-queue
       this.addToSnackbars(mySb);

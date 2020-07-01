@@ -187,22 +187,23 @@ export default {
     },
 
     applyRanking() {
+        //calculates the total cost and time of the best graphs
       this.rankArray = [];
       let bestPaths = this.getGraph()
         .getCytoGraph(this)
         .data("bestPaths");
 
-      for (let i = 0; i < bestPaths.length; i++) {
+      for (let i = 0; i < (bestPaths ? bestPaths.length : 0); i++) {
         let nextRank = {};
         nextRank.cost = this.getGraph().getTotalCost(bestPaths[i]);
         nextRank.time = this.getGraph().getTotalTime(bestPaths[i]);
 
-
+          //converts time into understandable format (e.g. 3750s to 1h 2min 30s)
         switch(this.getGraph()
           .getCytoGraph(this.getGraph())
           .data("settingsUnitTimeSelection")){
 
-        
+
           case "Sekunden" :
              nextRank.time = this.convertTime(parseInt(nextRank.time) )
             break;
@@ -219,8 +220,7 @@ export default {
             nextRank.time = "etwas ist schief gelaufen"
       }
 
-
-
+          //gets all nodes and edges from the best paths and puts it into rankArray
         nextRank.path = [];
         for (let j = 0; j < bestPaths[i].length; j++) {
           if (j == 0) {
@@ -253,7 +253,7 @@ export default {
     clearRanking() {
       this.rankArray = [];
     },
-
+      //marks the path chosen in settingsmenu
     changeHighlighting() {
       let bestPaths = this.getGraph()
         .getCytoGraph(this)
@@ -335,14 +335,12 @@ export default {
         .data("settingsOptimizationStartEndName", this.endSelect);
 
       // set StartIDs for Optimization Algorithm
-      console.log("wurde aufgerufen")
-      console.log("hier startselect")
       let startIDs = [];
       this.getNodeItemsID()
       for (let i = 0; i < this.startSelect.length; i++) {
-    
+
         let indexStart = this.itemsName.indexOf(this.startSelect[i]);
-       
+
         startIDs.push(this.itemsID[indexStart]);
       }
 
@@ -370,7 +368,7 @@ export default {
       // remove optimization
       this.getGraph().removeOptimization();
       this.rankArray = [];
-      
+
     },
 
     getNodeItemsID() {
@@ -379,17 +377,12 @@ export default {
 
     getNodeItemsName() {
       //get the nodeNames to show in settings
-      
+
       this.itemsName = this.getGraph().getNodeName(this.getGraph());
 
 
       let start = []
 
-      //get the StartID's when they were selected automatically
-      console.log("startids: " +this.getGraph()
-        .getCytoGraph()
-        .data("settingsOptimizationStartIDs"))
-      
       let selectNodes = this.getGraph()
         .getCytoGraph()
         .data("settingsOptimizationStartIDs");
@@ -397,18 +390,17 @@ export default {
       let nodes = []
 
 
-    
+
       for(let i = 0; i < selectNodes.length; i++){
-        
+
         if(selectNodes[i] != "" && selectNodes[i] != undefined){
-          
+
           nodes.push(selectNodes[i])
         }
       }
-  
-      console.log("nodes" + nodes)
+
       for (let i = 0; i < nodes.length; i++) {
-        
+
         start.push(
           this.getGraph()
             .getCytoGraph()
@@ -428,9 +420,7 @@ export default {
         .data("name");
 
         this.startSelect = start;
-        console.log("startSelect: " + this.startSelect)
 
-     
     },
 
     getOption() {
@@ -441,7 +431,7 @@ export default {
         this.optimizationOption = 'Kosten';
       }
     }
-    
+
   }
 
 };

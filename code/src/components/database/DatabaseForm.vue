@@ -41,16 +41,16 @@
         </template>
 
         <template v-slot:default="props">
-          <div v-if="!props.items.length" style="min-height: 500px;">
+          <!--div v-if="!props.items.length" style="min-height: 500px;">
             TODO why is this not showing? (this is supposed to preserve the height of the Database window even when no items are loaded,
             but for some reason this div never shows)
-          </div>
-          <div v-else class="scrolling-container">
-            <!-- <div> -->
+          </div-->
+          <!--div v-else class="scrolling-container"-->
+          <div class="scrolling-container">
             <v-row class="ma-0">
               <v-col
                 v-for="item in props.items"
-                :key="item.graphname"
+                :key="item.graphname+item.autor"
                 cols="12"
                 sm="6"
                 md="6"
@@ -291,7 +291,9 @@ export default {
       axios // axios.get HTTP request to our webserver API (see docker/node.js/api.js)
         .get("https://sam.imn.htwk-leipzig.de:7070/VarG/graph/meta", {
           params: {
-            user: this.$store.state.user.name // appending login session data for DB access control
+            // appending login session data for DB access control
+            user: this.$store.state.user.name,
+            role: this.$store.state.user.role
           }
         })
         // if request was succesfull and we got a response, we will then process the response here
@@ -316,7 +318,7 @@ export default {
         })
         // if anything went wrong while sending the request or processing the response, we will catch it and print an error message here
         .catch(error => {
-          dialogComponent.dialogError("Laden der Datenbank fehlgeschlagen");
+          dialogComponent.dialogError('Laden der Datenbank fehlgeschlagen');
         });
     },
     // opening the export menu with the database tab open
@@ -346,7 +348,9 @@ export default {
       axios
         .get(url, {
           params: {
-            user: this.$store.state.user.name
+            user: this.$store.state.user.name,
+            role: this.$store.state.user.role,
+            author: item.autor
           }
         })
         .then(response => {
@@ -370,7 +374,9 @@ export default {
       axios
         .get(url, {
           params: {
-            user: this.$store.state.user.name
+            user: this.$store.state.user.name,
+            role: this.$store.state.user.role,
+            author: item.autor
           }
         })
         .then(response => {
@@ -390,7 +396,9 @@ export default {
       axios
         .get(url, {
           params: {
-            user: this.$store.state.user.name
+            user: this.$store.state.user.name,
+            role: this.$store.state.user.role,
+            author: item.autor
           }
         })
         .then(response => {
@@ -429,7 +437,9 @@ export default {
       axios // axios.delete request
         .delete(url, {
           params: {
-            user: this.$store.state.user.name
+            user: this.$store.state.user.name,
+            role: this.$store.state.user.role,
+            author: item.autor
           }
         })
         .then(response => {

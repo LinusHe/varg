@@ -542,7 +542,7 @@ export default {
 
       this.edgeDeleteDialog = false;
       this.edgeGui = false;
-      dialogComponent.dialogWarning("Kante erfolgreich gelöscht");
+      dialogComponent.dialogSuccess("Kante erfolgreich gelöscht");
     },
     openEdgeDeleteMenu() {
       this.edgeDeleteDialog = true;
@@ -567,7 +567,7 @@ export default {
       this.nodeDeleteDialog = false;
       this.nodeGui = false;
       this.deleteInvEdges = false;
-      dialogComponent.dialogWarning("Knoten erfolgreich gelöscht");
+      dialogComponent.dialogSuccess("Knoten erfolgreich gelöscht");
     },
     cancel() {
       // this.clearFields();

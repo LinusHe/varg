@@ -135,7 +135,7 @@
           <v-icon size="40px" class="mt-2 darkmode-ign" v-bind:style="{ color: '#'+iconColorCost }">mdi-cash</v-icon>
         </v-card>
         <p class="mb-0">
-          <v-card-subtitle class="pb-0" v-bind:style="{ color: '#'+fontColorCost }">
+          <v-card-subtitle class="mt-2 darkmode-ign" v-bind:style="{ color: '#'+iconColorCost }">
             Gesamtkosten:
             <v-tooltip top>
               <template v-slot:activator="{ on }">
@@ -183,7 +183,7 @@
           <v-icon size="40px" class="mt-2 darkmode-ign" v-bind:style="{ color: '#'+iconColorTime }">mdi-clock-outline</v-icon>
         </v-card>
         <p class="mb-0">
-          <v-card-subtitle class="pb-0" v-bind:style="{ color: '#'+fontColorTime }">
+          <v-card-subtitle class="mt-2 darkmode-ign" v-bind:style="{ color: '#'+iconColorTime }">
             Gesamtzeit:
             <v-tooltip top>
               <template v-slot:activator="{ on }">
@@ -325,7 +325,7 @@ export default {
         dialogComponent.dialogError(
           "Stückzahl nicht geändert: <b>Stückzahl muss ganzzahlig sein</b>"
         );
-      } 
+      }
     },
     openOptimize() {
       this.$parent.$parent.$refs.settingsMenu.setActiveTab(2);
@@ -340,6 +340,7 @@ export default {
     setOptimized(bool) {
       this.optimized = bool;
     },
+      //depending on the pressed button the graf gets either cost-optimization or time-optimization
     runOptC() {
       this.getGraph()
         .getCytoGraph(this.getGraph())
@@ -355,6 +356,7 @@ export default {
       this.startOptimizing()
     },
     markOption() {
+        //depending on the current OptimizationOption (Cost/Time) one side gets marked (orange) and the other side gets reset (blue)
       if(this.getGraph().getCytoGraph(this.getGraph()).data("settingsOptimizationOption") == 'optionCost') {
         this.iconColorCost = "FF7675"
         this.iconColorTime = "2699FB"
@@ -469,15 +471,6 @@ export default {
     startOptimizing() {
       this.markOption()
 
-      console.log(
-        "Startknoten: " +
-          this.getGraph()
-            .getCytoGraph(this.getGraph())
-            .data("settingsOptimizationStartNames")
-      );
-
-
-
       if (!this.getGraph().hasQuickEdges(this.getGraph())) {
         if (
           this.getGraph()
@@ -506,7 +499,7 @@ export default {
         ) {
           this.runOptimization();
           dialogComponent.dialogWarning(
-            "Die Startzustände wurden automatisch eingestellt. Wenn du sie ändern möchtest öffne die Optimierungseinstellungen!",
+            "Die Startzustände wurden automatisch eingestellt. Wenn du sie ändern möchtest, öffne die Optimierungseinstellungen!",
             6000
           );
         } else if (
@@ -519,13 +512,13 @@ export default {
         ) {
           this.runOptimization();
           dialogComponent.dialogWarning(
-            "Der Endzustand wurde automatisch eingestellt. Wenn du ihn ändern möchtest öffne die Optimierungseinstellungen!",
+            "Der Endzustand wurde automatisch eingestellt. Wenn du ihn ändern möchtest, öffne die Optimierungseinstellungen!",
             6000
           );
         } else {
           this.runOptimization();
           dialogComponent.dialogWarning(
-            "Die Start- und Endzustände wurden automatisch eingestellt. Wenn du sie ändern möchtest öffne die Optimierungseinstellungen!",
+            "Die Start- und Endzustände wurden automatisch eingestellt. Wenn du sie ändern möchtest, öffne die Optimierungseinstellungen!",
             6000
           );
         }

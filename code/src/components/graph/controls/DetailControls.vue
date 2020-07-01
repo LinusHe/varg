@@ -757,7 +757,7 @@ export default {
 
       this.edgeDeleteDialog = false;
       this.edgeGui = false;
-      dialogComponent.dialogWarning("Bearbeitungsschritt erfolgreich gelöscht");
+      dialogComponent.dialogSuccess("Bearbeitungsschritt erfolgreich gelöscht");
       // remove optimization
       this.getGraph().removeOptimization();
     },
@@ -785,7 +785,7 @@ export default {
       this.nodeDeleteDialog = false;
       this.nodeGui = false;
       this.deleteInvEdges = false;
-      dialogComponent.dialogWarning("Teil erfolgreich gelöscht");
+      dialogComponent.dialogSuccess("Teil erfolgreich gelöscht");
       this.backupGraph();
     },
     cancel() {

@@ -14,7 +14,7 @@
         <v-tab id="settings-tab-optimize">
           <v-icon left>mdi-checkbox-multiple-marked-circle-outline</v-icon>Optimierung
         </v-tab>
-        <v-tab id="settings-tab-account">
+        <v-tab id="settings-tab-account" @click="prepAccountInfo()">
           <v-icon left>mdi-account</v-icon>Benutzer
         </v-tab>
         <v-tab id="settings-tab-help">
@@ -31,7 +31,7 @@
           <SettingsOptimize ref="settingsOptimize"></SettingsOptimize>
         </v-tab-item>
         <v-tab-item>
-          <SettingsAccount ref="settingsGeneral"></SettingsAccount>
+          <SettingsAccount ref="settingsAccount"></SettingsAccount>
         </v-tab-item>
         <v-tab-item>
           <SettingsHelp ref="settingsHelp"></SettingsHelp>
@@ -39,7 +39,7 @@
       </v-tabs>
       <v-card-actions class="pr-5 pb-5 mt-3">
         <v-spacer></v-spacer>
-        <v-btn color="green darken-1" text @click="saveSettings()">Anwenden</v-btn>
+        <v-btn v-if="this.activeTab < 3" color="green darken-1" text @click="saveSettings()">Anwenden</v-btn>
         <v-btn color="grey" text @click="dialog = false">Schließen</v-btn>
       </v-card-actions>
     </v-card>
@@ -93,8 +93,6 @@ export default {
     saveSettings() {
       // if user clicks on save, but tab wasnt activated before -> type is undefined
 
-      
-
       if (typeof this.$refs.settingsGraph !== "undefined") {
         this.$refs.settingsGraph.setGraphSettings();
         console.log("updated graph Settings:", this.getGraph())
@@ -107,6 +105,9 @@ export default {
       this.getGraph().applySettings(this.getGraph());
       this.dialog = false;
       dialogComponent.dialogSuccess("Einstellungen erfolgreich gespeichert");
+    },
+    prepAccountInfo() {
+      if (this.$refs.settingsAccount) this.$refs.settingsAccount.getAccountSettings();
     }
   }
 };

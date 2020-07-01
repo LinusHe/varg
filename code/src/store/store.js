@@ -16,8 +16,7 @@ export const store = new Vuex.Store({
     user: {
       name: "Gast", // User name, could be used for personalisation
       authenticated: false,
-      role: "guest", // Role management was implemented in backend
-      //admin: false // Role management was implemented in backend
+      role: "guest", // Role management for DB access control (guest: no rights, student: limited rights, admin: full rights)
       issued : Date.now(), // Timestamp, used for timeout
     },
 
