@@ -265,7 +265,9 @@ XXX
 \begin{itemize}
   \item \textbf{ Login }
     \\\
-      Um sich einlogggen zu können, benötigt man einen Account. Diesen legt man an, indem man sich im Login-Screen mit einem neuen Benutzernamen und Passwort einloggt. Der angegebene Name wird als neuer Nutzer (mit Rolle: 'Student') angelegt und das dazugehörige Passwort gespeichert. Beides kann nachträglich in den Benutzereinstellungen (siehe 'Einstellungen') geändert werden. Ein ändern der Rolle (von 'Student' auf 'Admin') ist nur durch direkten zugriff auf die Datenbank möglich. (Momentan wird eine eigene Datenbank benutzt, diese kann später durch eine Anbindung an shiboleth ersetzt werden)
+      Um sich einloggen zu können, benötigt man einen Account. Diesen legt man an, indem man sich im Login-Fenster mit einem neuen Benutzernamen und Passwort einloggt. Der angegebene Name wird als neuer Nutzer (mit Rolle: ''Student'') angelegt und das dazugehörige Passwort gespeichert. Beides kann nachträglich in den Benutzereinstellungen (siehe ''Einstellungen'') geändert werden.
+      \\\textbf{Hinweis:} Wenn beim Versuch, einen neuen Account zu erstellen, der Fehler ''Ungültige Login-Daten'' auftritt, bedeutet das, dass der eingegebene Benutzername bereits existiert. In diesem Fall muss ein anderer Name gewählt werden.
+      \\Ein Ändern der Rolle (von ''Student'' auf ''Admin'') ist nur durch direkten Zugriff auf die Datenbank möglich. (Momentan wird eine programmeigene User-Datenbank benutzt, diese könnte später durch eine Anbindung an Shibboleth ersetzt werden.)
   \item \textbf{ Neuen Graphen erstellen }
     \\\
       Über den Menüpunkt 'Neuen Graphen erstellen' im Startfenster gelangt man in das 'Neues Produkt' Fenster. Hier kann Name und Stückzahl des neuen Graphen festgelegt werden. Über den 'Starten'  Button wird der neue Graph erstellt. Im Graphenfenster gelangt man über den 'Neuer Graph' Button zurück ins Startmenü. Über die Stift-Icons neben dem Produktnamen und der Stückzahl können diese nachträglich bearbeitet werden.
@@ -285,13 +287,13 @@ Nach dem Betätigen des 'Optimierung starten' Buttons (im Einstellungsmenü) wir
 Sobald etwas am Graph geändert wird, erscheinen die 'Graph optimieren' bzw. 'Optimierung starten' Buttons wieder. Zuvor lässt sich der Graph durch Klicken auf das Wiederholen-Icon (neben 'Gesammtzeit' oder 'Gesamtkosten' im Graphenfenster) erneut optimieren.
   \item \textbf{ Einstellungen }
     \\\
-      Mit einem Linksklick auf 'Einstellungen' am oberen Rand öffnet sich das Einstellungenfenster. Im Tab 'Graph' lassen sich Einstellungen bezüglich der Darstellung des Graphs vornehmen, wie zum Beispiel die Einheiten oder die angezeigten Details der Verknüpfungen (Bearbeitungsschritte). Außerdem lässt sich hier ein "Raster" aktivieren, auf dem die Knoten dann gebunden sind. Im Tab 'Benutzer' lassen sich Benutzername und Passwort ändern sowie der Account löschen. Beim Ändern des Benutzernamen wird der 'Autor' jedes mit diesem Account erstellten Graphen ebenfalls geändert, beim Löschen des Accounts werden auch alle mit diesem Account erstellten Graphen gelöscht. Zum Löschen des Accounts oder Ändern des Passworts wird das Passwort benötigt. Der Tab 'Hilfe' ist noch nicht funktional.
+      Mit einem Linksklick auf ''Einstellungen'' am oberen Rand öffnet sich das Einstellungsfenster. Im Tab ''Graph'' lassen sich Einstellungen bezüglich der Darstellung des VarGraphs vornehmen, wie zum Beispiel die Einheiten oder die angezeigten Details der Verknüpfungen (Bearbeitungsschritte). Außerdem lässt sich hier ein ''Raster'' aktivieren, auf dem die Knoten dann gebunden sind. Im Tab ''Benutzer'' lassen sich Benutzername und Passwort ändern, sowie der Account löschen. Beim Ändern des Benutzernamens wird der ''Autor'' jedes mit diesem Account erstellten Graphen ebenfalls geändert, beim Löschen des Accounts werden auch alle mit diesem Account erstellten Graphen gelöscht. Zum Löschen des Accounts oder Ändern des Passworts wird das Passwort benötigt. Im Tab ''Hilfe'' ist dieses Handbuch verlinkt.
   \item \textbf{ Offline Speicher }
     \\\
-      Über den Button 'Export' am oberen Rand lässt sich der Graph in den Formaten .json, .png, .svp und .jpg exportieren und lokal speichern. Über den 'Import' Button lässt sich ein in .json exportierter Graph wieder im Programm öffnen.
+      Über den Button ''Export'' am oberen Rand lässt sich der Graph in den Formaten .json, .png und .jpg exportieren und lokal speichern. Über den ''Import'' Button lässt sich ein in .json exportierter Graph wieder im Programm öffnen.
   \item \textbf{ Online Speicher }
     \\\
-      Über den Button 'Datenbank' am oberen Rand öffnet sich das Datenbank-Fenster. Hier können erstellte Graphen online gespeichert bzw. wieder geladen werden. Dabei können Accounts mit der Rolle 'Student' lediglich auf Ihre eigenen Graphen zugreifen. Accounts mit der Rolle 'Admin' haben Zugriff auf alle Graphen.
+      Über den Button ''Datenbank'' am oberen Rand öffnet sich das Datenbank-Fenster. Hier können erstellte Graphen online gespeichert bzw. wieder geladen werden. Dabei können Accounts mit der Rolle ''Student'' lediglich auf ihre eigenen Graphen zugreifen. Accounts mit der Rolle ''Admin'' haben Zugriff auf alle Graphen.
 \end{itemize}
 
 
