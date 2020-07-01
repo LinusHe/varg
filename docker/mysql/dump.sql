@@ -1,4 +1,3 @@
-ALTER USER 'varg' IDENTIFIED WITH mysql_native_password BY 'l_GD6P67+V';
 FLUSH PRIVILEGES;
 
 CREATE TABLE userreg (
