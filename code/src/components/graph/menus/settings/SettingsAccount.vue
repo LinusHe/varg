@@ -39,7 +39,7 @@
                 class="darkmode-ign"
                 color="blue"
                 text
-                @click="deleteDialog = true"
+                @click="passwordDialog = true"
               >Passwort ändern</v-btn>
             </v-col>
             <v-col sm="3">
@@ -54,6 +54,8 @@
         </v-card>
       </v-card-text>
     </v-card>
+
+
     <!-- Dialogs -->
 
     <!-- Edit Name -->
@@ -75,6 +77,43 @@
           <v-spacer></v-spacer>
           <v-btn color="green darken-1" text @click="editUserName()">Account Umbenennen</v-btn>
           <v-btn color="grey" text @click="usernameDialog = false">Abbrechen</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
+    <!-- Edit Password -->
+    <v-dialog v-model="passwordDialog" persistent max-width="400">
+      <v-card>
+        <v-card-title class="headline">Passwort ändern</v-card-title>
+        <v-card-text>
+          <b>Achtung: Wenn du dein Passwort änderst, wirst du danach ausgeloggt und musst dich neu einloggen. Dabei gehen nicht gespeicherte Daten verloren!</b>
+          <br />
+          <v-text-field
+            v-model="password"
+            id="password"
+            label="Aktuelles Passwort"
+            class="mb-5 mt-5 password hueshift"
+            :type="show ? 'text' : 'password'"
+            :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+            @click:append="show = !show"
+            :rules="[v => !!v || 'Feld darf nicht leer sein', v => v.length <= 255 || 'Maximal 255 Zeichen erlaubt']"
+          ></v-text-field>
+          <v-text-field
+            v-model="newpassword"
+            id="newpassword"
+            label="Neues Passwort"
+            class="mb-5 mt-5 password hueshift"
+            :type="show ? 'text' : 'password'"
+            :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+            @click:append="show = !show"
+            :rules="[v => !!v || 'Feld darf nicht leer sein', v => v.length <= 255 || 'Maximal 255 Zeichen erlaubt']"
+          ></v-text-field>
+            <em>Diese Aktion kann nicht rückgängig gemacht werden.</em>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="green darken-1" text @click="editUserPW()">Passwort Ändern</v-btn>
+          <v-btn color="grey" text @click="passwordDialog = false">Abbrechen</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -135,6 +174,7 @@ export default {
     usernameDialog: false,
     show: false,
     password: "",
+    newpassword: "",
     newusername: "",
   }),
   methods: {
@@ -205,38 +245,23 @@ export default {
     },
 
     editUserPW() {
-      // TODO confirm und prompts in UI Fenster umbauen -> validation rules für beide pw inputs:
-      // [v => !!v || 'Feld darf nicht leer sein', v => v.length <= 25 || 'Maximal 25 Zeichen erlaubt']
-      if(confirm("Wenn du dein Passwort änderst, wirst du danach ausgeloggt und musst dich neu einloggen. Dabei gehen nicht gespeicherte Daten verloren!")) {
-        let currentPW = prompt("Wenn du dein Passwort ändern möchtest, gib bitte hier dein aktuelles Passwort und das neue Passwort ein und bestätige mit Ok.\nAktuelles PW:");
-        let newPW = prompt("Neues PW:");
-
-        if(currentPW && newPW) { // currentPW && newPW ersetzen durch this.$refs.userPWForm.validate()
-          axios
-            .put("http://192.168.178.63:1110/VarG/account", {
-              type: 1,
-              user: this.$store.state.user.name,
-              password: currentPW,
-              newInfo: newPW
-            })
-            .then(response => {
-              dialogComponent.dialogSuccess("Passwort erfolgreich geändert - du wirst jetzt ausgeloggt");
-              this.logout();
-            })
-            .catch(error => {
-              if(error.response) {
-                if(error.response.status === 403) dialogComponent.dialogError("Ändern des Passworts fehlgeschlagen: <b>Das aktuelle Passwort wurde falsch eingegeben</b>");
-              }
-              else dialogComponent.dialogError("Ändern der Benutzerdaten fehlgeschlagen: <b>Netzwerkfehler</b>");
-              });
-        }
-        else {
-          dialogComponent.dialogInfo("Passwort nicht geändert");
-        }
-      }
-      else {
-        dialogComponent.dialogInfo("Passwort nicht geändert");
-      }
+      axios
+        .put("http://192.168.178.63:1110/VarG/account", {
+          type: 1,
+          user: this.$store.state.user.name,
+          password: this.password,
+          newInfo: this.newpassword
+        })
+        .then(response => {
+          dialogComponent.dialogSuccess("Passwort erfolgreich geändert - du wirst jetzt ausgeloggt");
+          this.logout();
+        })
+        .catch(error => {
+          if(error.response) {
+            if(error.response.status === 403) dialogComponent.dialogError("Ändern des Passworts fehlgeschlagen: <b>Das aktuelle Passwort wurde falsch eingegeben</b>");
+          }
+          else dialogComponent.dialogError("Ändern der Benutzerdaten fehlgeschlagen: <b>Netzwerkfehler</b>");
+          });
     },
 
     deleteUserAccount() {
