@@ -858,7 +858,16 @@ Anschluss folgende Datei in die Datenbank per Adminer importiert werden:
   varg/docker/mysql/dump.sql
 \end{verbatim} 
 Nun ist die Datenbank eingerichtet und kann über die API angesteuert werden.
-\\\\
+\\\\Falls der aktuelle Server weitergenutzt wird, ist bereits mySQL mit der aktuellen Datenbank installiert. Um auf die MySQL Datenbank per
+Terminal zuzugreifen, muss sich per SSH eingeloggt werden und anschließend folgender Befehl eingegeben werden:
+\begin{verbatim}
+  mysql -uroot -p
+\end{verbatim}
+Nun wird das MySQL passwort gefordert. Das aktuelle Passwort ist:
+\begin{verbatim}
+  l_GD6P67+V
+  
+\end{verbatim}
 \textbf{API-Server starten}
 \\Der API-Server basiert auf der ''Node.js'' Technologie. Damit die API funktioniert, muss Node.js auf dem Server installiert sein.
 Die API kann dann mit dem Befehl:
