@@ -58,7 +58,7 @@
 	\pagestyle{fancy}
 	\fancyhead{}
 	\fancyfoot{}
-	\fancyhead[C]{Projektdokumentation $\bullet$ VarG $\bullet$ WS19/20$+$SS20}
+	\fancyhead[C]{Projektdokumentation $\bullet$ VarG $\bullet$ WS2019/20$+$SS2020}
 	\fancyfoot[RO,LE]{}
 
 
@@ -813,10 +813,10 @@ Wichtig: Die Endungen (z.B. .../VarG/graph/meta) müssen gleich bleiben und an d
 \end{verbatim}
 Die Zugangsdaten sind am Anfang in einer Konstanten (namens config) abgespeichert und müssen auf folgende Daten geändert werden:
 \begin{verbatim}
-  host: "localhost",
-  user: "root",
-  password: "l_GD6P67+V",
-  database: "vargdb"
+  host: 'localhost',
+  user: 'root',
+  password: 'l_GD6P67+V',
+  database: 'vargdb'
 
 
 \end{verbatim}
@@ -888,8 +888,8 @@ die Navigation zwischen einzelnen Seiten funktioniert nicht richtig.
 \\Ist alles problemlos abgelaufen, sollte nun das Frontend unter der URL ''https://sam.imn.htwk-leipzig.de'' erreichbar sein.
 \\\\
 \textbf{Installation MYSQL}
-\\Auf dem Webserver muss eine aktuelle Version von MYSQL laufen. Es kann folgende Anleitung zur Installtion verwendet werden:
-\url{https://wiki.ubuntuusers.de/MySQL/}. Es ist darauf zu achten, dass als root Passwort ''l_GD6P67+V'' gewählt wird. 
+\\Auf dem Webserver muss eine aktuelle Version von MYSQL laufen. Es kann folgende Anleitung zur Installation verwendet werden:
+\url{https://wiki.ubuntuusers.de/MySQL/}. Es ist darauf zu achten, dass als root Passwort \begin{verbatim}'l_GD6P67+V'\end{verbatim} gewählt wird. 
 Ansonsten muss ein anderes Passwort in der ''api.js'' Datei (siehe oben) eingetragen werden.
 \\Sobald MySQL installiert ist, kann über das Adminer Tool, welches beim Frontend unter der URL ''https://sam.imn.htwk-leipzig.de/adminer.php'' 
 erreichbar ist, eine Datenbank mit dem Namen ''vargdb'' angelegt werden. Um die Initialen Tabellen mit Beispieldaten anzulegen, kann im 
@@ -906,7 +906,6 @@ Terminal zuzugreifen, muss sich per SSH eingeloggt werden und anschließend folg
 Nun wird das MySQL passwort gefordert. Das aktuelle Passwort ist:
 \begin{verbatim}
   l_GD6P67+V
-  
 \end{verbatim}
 \textbf{API-Server starten}
 \\Der API-Server basiert auf der ''Node.js'' Technologie. Damit die API funktioniert, muss Node.js auf dem Server installiert sein.
