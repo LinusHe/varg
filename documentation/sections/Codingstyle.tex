@@ -1,0 +1,197 @@
+%%%%%%%%%%%%  Generated using docx2latex.com  %%%%%%%%%%%%%%
+
+%%%%%%%%%%%%  v2.0.0-beta  %%%%%%%%%%%%%%
+
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage{latexsym}
+\usepackage{amsfonts}
+\usepackage[normalem]{ulem}
+\usepackage{soul}
+\usepackage{array}
+\usepackage{amssymb}
+\usepackage{extarrows}
+\usepackage{graphicx}
+\usepackage[backend=biber,
+style=numeric,
+sorting=none,
+isbn=false,
+doi=false,
+url=false,
+]{biblatex}\addbibresource{bibliography.bib}
+
+\usepackage{subfig}
+\usepackage{wrapfig}
+\usepackage{wasysym}
+\usepackage{enumitem}
+\usepackage{adjustbox}
+\usepackage{ragged2e}
+\usepackage[svgnames,table]{xcolor}
+\usepackage{tikz}
+\usepackage{longtable}
+\usepackage{changepage}
+\usepackage{setspace}
+\usepackage{hhline}
+\usepackage{multicol}
+\usepackage{tabto}
+\usepackage{float}
+\usepackage{multirow}
+\usepackage{makecell}
+\usepackage{fancyhdr}
+\usepackage[toc,page]{appendix}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{shapes.symbols,shapes.geometric,shadows,arrows.meta}
+\tikzset{>={Latex[width=1.5mm,length=2mm]}}
+\usepackage{flowchart}\usepackage[paperheight=11.69in,paperwidth=8.27in,left=0.98in,right=0.98in,top=0.98in,bottom=0.79in,headheight=1in]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[german]{babel}
+\TabPositions{0.49in,0.98in,1.47in,1.96in,2.45in,2.94in,3.43in,3.92in,4.41in,4.9in,5.39in,5.88in,}
+
+\urlstyle{same}
+
+\renewcommand{\_}{\kern-1.5pt\textunderscore\kern-1.5pt}
+
+ %%%%%%%%%%%%  Set Depths for Sections  %%%%%%%%%%%%%%
+
+% 1) Section
+% 1.1) SubSection
+% 1.1.1) SubSubSection
+% 1.1.1.1) Paragraph
+% 1.1.1.1.1) Subparagraph
+
+
+\setcounter{tocdepth}{5}
+\setcounter{secnumdepth}{5}
+
+
+ %%%%%%%%%%%%  Set Depths for Nested Lists created by \begin{enumerate}  %%%%%%%%%%%%%%
+
+
+\setlistdepth{9}
+\renewlist{enumerate}{enumerate}{9}
+		\setlist[enumerate,1]{label=\arabic*)}
+		\setlist[enumerate,2]{label=\alph*)}
+		\setlist[enumerate,3]{label=(\roman*)}
+		\setlist[enumerate,4]{label=(\arabic*)}
+		\setlist[enumerate,5]{label=(\Alph*)}
+		\setlist[enumerate,6]{label=(\Roman*)}
+		\setlist[enumerate,7]{label=\arabic*}
+		\setlist[enumerate,8]{label=\alph*}
+		\setlist[enumerate,9]{label=\roman*}
+
+\renewlist{itemize}{itemize}{9}
+		\setlist[itemize]{label=$\cdot$}
+		\setlist[itemize,1]{label=\textbullet}
+		\setlist[itemize,2]{label=$\circ$}
+		\setlist[itemize,3]{label=$\ast$}
+		\setlist[itemize,4]{label=$\dagger$}
+		\setlist[itemize,5]{label=$\triangleright$}
+		\setlist[itemize,6]{label=$\bigstar$}
+		\setlist[itemize,7]{label=$\blacklozenge$}
+		\setlist[itemize,8]{label=$\prime$}
+
+\setlength{\topsep}{0pt}\setlength{\parskip}{8.04pt}
+\setlength{\parindent}{0pt}
+
+ %%%%%%%%%%%%  This sets linespacing (verticle gap between Lines) Default=1 %%%%%%%%%%%%%%
+
+
+\renewcommand{\arraystretch}{1.3}
+
+
+%%%%%%%%%%%%%%%%%%%% Document code starts here %%%%%%%%%%%%%%%%%%%%
+
+
+
+\begin{document}
+Coding Style\par
+
+
+\vspace{\baselineskip}
+Beim Schreiben unseres Programmcodes haben wir uns an einigen Coding Conventions gehalten.\par
+
+\begin{itemize}
+	\item Zeilenlänge: maximal 80 Zeichen\par
+
+	\item Kommentare und Dokumentation\par
+
+\begin{itemize}
+	\item Kommentare auf Englisch\par
+
+	\item Klassen und Methoden in kurzen, prägnanten Sätzen beschreiben\par
+
+	\item Unnötige Kommentare vermeiden\par
+
+	\item Kommentare aktuell halten\par
+
+
+\end{itemize}
+	\item Einrückung und Zeilenumbrüche\par
+
+\begin{itemize}
+	\item 2 Leerzeichen statt Tabulator\par
+
+	\item ‚$ \{ $ ‘ hinter Methodendeklaration\par
+
+	\item ‚$ \} $ ‘ in neuer Zeile auf gleiche Einrückungsebene\par
+
+	\item Optionale Zeilenumbrüche für Übersichtlichkeit\par
+
+	\item Nur ein Import pro Zeile\par
+
+
+\end{itemize}
+	\item Leerzeichen\par
+
+\begin{itemize}
+	\item Vor und nach binären Operationen\par
+
+\begin{itemize}
+	\item Ausnahme nur im Fall von Verdeutlichung unterschiedlicher Prioritäten\par
+
+
+\end{itemize}
+	\item Keine Leerzeichen vor und nach Klammern\par
+
+	\item Keine Leerzeichen vor Kommata und Semikolon\par
+
+	\item Leerzeichen nach Kommata\par
+
+	\item Keine Leerzeichen am Zeilenende\par
+
+
+\end{itemize}
+	\item Konsistentes Benennungsschema\par
+
+\begin{itemize}
+	\item Deskriptive Namen verwenden\par
+
+	\item mixedCase für Variablen\par
+
+	\item GROßSCHREIBUNG für Konstanten\par
+
+	\item Keine Umlaute\par
+
+	\item Reservierte Schlüsselwörter beachten\par
+
+	\item Immer auf Englisch\par
+
+	\item Bezeichner von Booleanwerte sollen Zustand beschreiben, der wahr oder falsch sein kann\par
+
+	\item Hilfsvariablen möglichst gleich benennen\par
+
+	\item Übergabe von Attributen an Konstruktoren\par
+
+\begin{itemize}
+	\item ‚length‘ als Attribut, ‚\_length‘ als Argument\par
+
+
+\end{itemize}
+\end{itemize}
+	\item Textcodierung UTF-8
+\end{itemize}\par
+
+
+\printbibliography
+\end{document}

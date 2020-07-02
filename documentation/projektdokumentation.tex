@@ -64,7 +64,7 @@
 
 % ------
 % Clickable URLs (optional)
-% \usepackage{hyperref}
+\usepackage{hyperref}
 
 % ------
 % Literaturverweise mit Bibtex einbinden
@@ -113,11 +113,26 @@
 \section{Anforderungsspezifikation}
 
 \subsection{Initiale Kundenvorgaben}
-{\small Autor: xxx}
+{\small Autor: Jonas Gwozdz}
 
-Maecenas sed ultricies felis. Sed imperdiet dictum arcu a egestas.
-In sapien ante, ultricies quis pellentesque ut, fringilla id sem. Proin justo libero, dapibus consequat auctor at, euismod et erat. Sed ut ipsum erat, iaculis vehicula lorem. Cras non dolor id libero blandit ornare. Pellentesque luctus fermentum eros ut posuere. Suspendisse rutrum suscipit massa sit amet molestie. Donec suscipit lacinia diam, eu posuere libero rutrum sed. Nam blandit lorem sit amet dolor vestibulum in lacinia purus varius. Ut tortor massa, rhoncus ut auctor eget, vestibulum ut justo.
+\vspace{\baselineskip}
+\noindent Die Vorgaben unseres Kunden, Prof. Gürtler, ließen uns viele Freiheiten in der Gestaltung des Programms. \par
 
+\noindent Die gegebenen Vorgaben legten das Folgende fest: \par
+\begin{itemize}
+  \item Für die Herstellung eines Werkstücks gibt es in der Regel mehrere Alternativen.
+  Ausgehend von einem Rohteil folgen verschiedene   Bearbeitungsschritte, die zum Fertigteil führen. 
+  Die einzelnen   Bearbeitungsschritte sollen mit einer Bearbeitungszeit und Kosten belegt werden. \par
+
+  \item Im Tool soll der entsprechende Graph angelegt werden und Kostenfunktionen sowie Bearbeitungszeiten 
+  für die einzelnen Schritte und eine Losgröße   eingegeben werden können. \par
+
+  \item Kosten fallen pro Bearbeitungsschritt einmalig, pro Zeiteinheit (z.B. Lohn) 
+  und pro Werkstück an. AN jeder Maschine werden Rüstzeiten (pro Los) und Bearbeitungszeiten (pro Werkstück) verbraucht. \par
+
+  \item Das Tool soll bei Vorgabe all dieser Größen die günstigsten Varianten (nach Kosten, Zeit oder einer Kombination der beiden) 
+  in Abhängigkeit von einer vorgegebenen Losgröße berechnen.
+\end{itemize}
 
 \subsection{Produktvision}
 {\small Autor: Alex Hofmann}
@@ -133,9 +148,11 @@ In sapien ante, ultricies quis pellentesque ut, fringilla id sem. Proin justo li
 \end{tabular}
 \\
 
-\noindent Die Webanwendung VarG ist entwickelt für Lehrende und Lernende aus dem Maschinenbau Bachelorstudiengang.
-Diese erleichtert die einheitliche Erstellung, Bearbeitung, Optimierung sowie Im- bzw. Exportierung von sogenannten Variantenfolgegraphen. Darunter ist eine graphische Übersicht zu verstehen, die die möglichen Varianten eines Produktionsprozesses für ein Werkstück darstellt.
-
+\noindent Die Webanwendung VarG wird entwickelt für Lehrende und Lernende aus dem Maschinenbau Bachelorstudiengang.
+Diese erleichtert die einheitliche Erstellung, Bearbeitung, Optimierung sowie Im- bzw. Exportierung von sogenannten Variantenfolgegraphen, kurz VarGraphs. Darunter ist eine graphische Übersicht zu verstehen, die die möglichen Varianten eines Produktionsprozesses für ein Werkstück darstellt.
+\\
+\\\textbf{Später überarbeitete Produktvision bzw. neue Projektbeschreibung:}
+\\Die plattformunabhängige Open-Source Webanwendung ''VarG'' soll es Lehrenden und Lernenden aus dem Studiengang Maschinenbau ermöglichen, einfach und schnell Variantenfolgegraphen, kurz VarGraphs, zur Herstellung von Werkstücken zu visualisieren und nach verschiedenen Kriterien die günstigsten Wege berechnen und anzeigen zu lassen. Dafür stehen ihnen viele Features für Aufbau, Funktionsweise, Design, Export und Import zur Verfügung.
 
 
 % Das hier ist ein Absatz, der die Grafik in Abbildung~\ref{fig:bild1} detailliert erläutert, erklärt und interpretiert.
@@ -149,8 +166,18 @@ Diese erleichtert die einheitliche Erstellung, Bearbeitung, Optimierung sowie Im
 
 
 \subsection{Liste der funktionalen Anforderungen}
+{\small Autor: Erik Heldt}
 
-XXX
+\begin{itemize}
+  \item Erstellen von Zuständen mit Namen \& Kürzel
+  \item Erstellen von Arbeitsschritten mit Namen \& Kürzel zwischen je 2 Zuständen
+  \item Zuweisen von (Rüst-)Zeitkosten, (Rüst-)Geldkosten \& Losgröße zu Arbeitsschritt
+  \item Anzeigen des günstigsten Weges im Graph, berechnet nach der angegebenen Kostenart
+  \item Lokaler Export als Bilddatei oder importierbarer JSON \& Lokaler Import als JSON
+  \item Hochladen in online gehostete Datenbank \& Laden aus online gehosteter Datenbank
+  \item Login-Management für Zugriffskontrolle auf Anwendung
+  \item Rollen-Management (Student, Professor) für Zugriffsrechte auf Datenbank
+\end{itemize}
 
 %
 % soll der Inhalt dieser Subsection in einer separaten Datei
@@ -160,18 +187,37 @@ XXX
 % \input{listefunktional}
 
 \subsection{Liste der nicht-funktionalen Anforderungen}
-{\small Autor: xxx}
+{\small Autor: Erik Heldt}
 
-XXX
+\begin{itemize}
+  \item Schnelle Einarbeitung in die Anwendungsumgebung
+  \item Einfacher \& intuitiver Umgang mit den Programmkomponenten und -funktionen
+  \item Stabiler \& konsistenter Programmablauf, keine Abstürze oder Verluste von Dateien
+  \item Kompatibilität mit so vielen modernen Browsern wie möglich
+  \item Sicherheit \& korrekte Funktionalität des Login-Algorithmus und des DB-Rollenmanagements
+  \item Datenschutz bei Login-Sessions einhalten
+\end{itemize}
 
 \subsection{Weitere Zuarbeiten zum Produktvisions-Workshop}
+{\small Autor: Erik Heldt}
 
-XXX
+Für den Produktvisions-Workshop wurden 4 Dokumente erstellt, welche unterschiedliche Aspekte des Anwendungsentwurfs behandeln.
 
-\subsubsection{Zuarbeit von Autor X}
-XXX
-\subsubsection{Zuarbeit von Autor Y}
-XXX
+Die erste Ausarbeitung zeigt Ideen zur Darstellung der GUI inklusive eines interaktiven GUI-Prototyps auf Adobe XD, die Zweite ist ein Epic bzw. eine Zusammenfassung vieler User-Stories zu allgemeinen Anforderungen an die Funktionalität. Das dritte Dokument geht genauer auf spezifische Kernfunktionen ein und das vierte umfasst die Datenmodellierung des Programms.
+\\
+\\Die nachfolgende Liste an Zuarbeiten sind klickbare Verweise auf die jeweiligen Dokumente im ''zuarbeiten''-Ordner.
+
+\subsubsection{Zuarbeit von Linus Herterich, Jonas Gwozdz, Julius Hohlfeld}
+\href[pdfnewwindow=true]{file:zuarbeiten/Produktvision_-_VarG_GUI.pdf}{VarG GUI}
+
+\subsubsection{Zuarbeit von Erik Heldt, Alaa Aldin Karkoutli}
+\href[pdfnewwindow=true]{file:zuarbeiten/Erste_User-Story.pdf}{Erstes Epic}
+
+\subsubsection{Zuarbeit von Lennart Buchmann, Nils Buxel, Matthias Berger}
+\href[pdfnewwindow=true]{file:zuarbeiten/Produktvision_Kernfunktionalität.pdf}{Kernfunktionalität}
+
+\subsubsection{Zuarbeit von Tim Henning, David Koch}
+\href[pdfnewwindow=true]{file:zuarbeiten/Produktvision_-_Datenmodell.pdf}{Datenmodell}
 
 \subsection{Liste der Kundengespräche mit Ergebnissen}
 {\small Autor: xxx}
@@ -183,47 +229,418 @@ XXX
 \section{Architektur und Entwurf}
 
 \subsection{Zuarbeiten der Teammitglieder}
+{\small Autor: Erik Heldt}
 
-XXX
+Für die Technologierecherche informierte sich das Team über verschiedene Technologien, mit denen die Anwendung entwickelt werden kann. Außerdem fassten wir erste Ideen zur Graphenanordnung zusammen und legten Coding Conventions fest. Die Ausarbeitungen wurden in den nachfolgenden Dokumenten festgehalten.
+\\
+\\Die nachfolgende Liste an Zuarbeiten sind klickbare Verweise auf die jeweiligen Dokumente im ''zuarbeiten''-Ordner.
+
+\subsubsection{Zuarbeit von Tim Henning}
+\href[pdfnewwindow=true]{file:zuarbeiten/Django_und_Python.pdf}{Django und Python}
+
+\subsubsection{Zuarbeit von Erik Heldt}
+\href[pdfnewwindow=true]{file:zuarbeiten/Ruby_on_Rails.pdf}{Ruby on Rails}
+\\\href[pdfnewwindow=true]{file:zuarbeiten/Ruby_on_Rails_Kurz.pdf}{Ruby on Rails (kurz)}
+\\\href[pdfnewwindow=true]{file:zuarbeiten/Graphenanordnung.pdf}{Graphenanordnung}
+
+\subsubsection{Zuarbeit von David Koch}
+\href[pdfnewwindow=true]{file:zuarbeiten/Java_Canvas.pdf}{Java Canvas}
+\\\href[pdfnewwindow=true]{file:zuarbeiten/Recherche_Datenbanken.pdf}{Datenbanken}
+
+\subsubsection{Zuarbeit von Matthias Berger, Nils Buxel}
+\href[pdfnewwindow=true]{file:zuarbeiten/CodingGuidelines.pdf}{Coding Guidelines}
+
+\subsubsection{Zuarbeit von Nils Buxel}
+\href[pdfnewwindow=true]{file:zuarbeiten/BestPractise_CodingConventions_CSS.pdf}{Coding Conventions CSS}
+
+\subsubsection{Zuarbeit von Julius Hohlfeld}
+\href[pdfnewwindow=true]{file:zuarbeiten/AngularRecherche.pdf}{Angular}
+
+\subsubsection{Zuarbeit von Lennart Buchmann, Alaa Aldin Karkoutli, Jonas Gwozdz, Linus Herterich}
+\href[pdfnewwindow=true]{file:zuarbeiten/TechnologierechercheOpenSource.pdf}{Bibliotheken zur Graphenerstellung}
 
 \subsection{Entscheidungen des Technologieworkshops}
-{\small Autor: xxx}
+{\small Autor: Erik Heldt}
 
-XXX
+Nach ausgiebigen Recherchen über verschiedenste Programmiersprachen, Frameworks und Bibliotheken entschieden wir uns für eine Webanwendung auf Basis von HTML/CSS/JavaScript.
+
+Wir haben uns weiterhin auf das JS-Framework Vue.js geeinigt, da es viele Vorteile für die Front-End-Entwicklung mit sich bringt und von den vielen untersuchten Frameworks am intuitivsten erschien. Außerdem haben wir nach einer JS-Bibliothek zur Graphdarstellung recherchiert und unter verschiedenen Kandidaten stach Cytoscape mit seinen vielen Funktionen zur Graphenerstellung und -editierung am meisten heraus, was wir somit auch in unsere Architektur integrierten.
+
+Bei der Programmierumgebung waren wir uns schnell einig, dass Visual Studio Code am besten für unsere Ansprüche geeignet ist. Wir installierten die IDE zusammen mit dem Plugin ESLint zur Unterstützung der Einhaltung standardmäßiger Coding Conventions.
 
 \subsection{Überblick über Architektur}
-{\small Autor: xxx}
+{\small Autor: Linus Herterich}
 
-XXX
+VarG ist eine Web-App nach dem Client-Server Modell, wobei der Großteil der Berechnungen per JavaScript auf dem clientseitigen Browser
+durchgeführt werden.
+\\Serverseitig wird eine Datenbank (inkl. API-Schnittstelle) zum persistenten Speichern der erstellten Graphen angeboten.
+\\
+\\Die Architektur der Web-App basiert auf dem JavaScript-Webframework ''Vue.js'',
+mit dem Webanwendungen nach dem MVVM Muster (Model View ViewModel) realisiert werden können. Die gesamte App ist nach logischen
+Sites (Seiten, bei denen sich die URL ändert) und Components (wiederverwendbare, abgeschlossene Software-Schnipsel) aufgebaut.
+Jede Vue Component (.vue Dateien) enthält ein HTML-Template (GUI), sowie Daten, mit denen das Template befüllt wird. Zudem werden
+Funktionen definiert, die entweder zu bestimmten Laufzeitbedingungen der App oder durch Events und Trigger aufgerufen werden.
+Die Kommunikation zwischen Components wird über Vererbungen zu Eltern-/ Kind-Components realisiert.
+\\Die Web-App besteht im Entwicklungszustand aus vielen hunderten Dateien, welche vom Framework verwaltet werden. Sobald
+die App in den Produktionsstatus wechselt, muss das Projekt kompiliert werden. Dies übernimmt ebenfalls das Framework, welches
+hierfür Technologien wie ''WebPack'' einsetzt. So bleiben lediglich wenige HTML, CSS und JavaScript Dateien übrig, die anschließend
+auf einem Web-Server (z.B. Apache) zur Verfügung gestellt werden müssen.
+\\
+\\Um die Darstellung einheitlich zu halten, haben wir die UI-Bibliothek 'Vuetify'' genutzt. Diese hält sich an den Industriestandard
+''Material Design'' von Google. Damit konnten wir alle unsere im Vorfeld erstellten Design-Konzepte umsetzen. Um an den ''Vuetify'' Elementen
+weitere optische Anpassungen vorzunehmen haben wir die CSS-Language-Extension ''less'' verwendet. Mit dieser ist es möglich, übersichtliche und
+einheitliche Style-Vorgaben auf die Design-Komponenten anzuwenden.
+\\
+\\Damit alle Daten komponentenübergreifend auf einen gemeinsamen Datenstamm zugreifen können und die Daten auch nach einer Session persistent
+gespeichert werden können, haben wir die Vue.js-Erweiterung ''Vuex'' eingesetzt. Diese bietet eine zentralisierte Speichermöglichkeit
+für alle Daten, die übergreifend verwendet werden müssen (beispielsweise Log-In Daten oder der Zustand des VarGraphs).
+\\
+\\Für die Darstellung des Graphen (Knoten + Kanten und deren Beschriftung) haben wir die JavaScript Bibliothek ''Cytoscape.js'' verwendet.
+Die Bibliothek hält alle Graph-Daten in einem JavaScript Objekt, auf das mit verschiedenen API-Funktionen zugegriffen werden kann.
+Die Darstellung des Graphen wird über ein Canvas HTML Element realisiert, in welches Cytoscape die angelegten Knoten und Kanten zeichnet.
+Cytoscape bietet ebenfalls eine Hand voll Algorithmen zur analytischen Auswertung des Graphen. Da die Optimierung des VarGraphs
+allerdings zusätzlichen Bedingungen und Parametern unterliegt, wurde ein eigener VarGraph-Optimierungsalgorithmus entwickelt.
+\\
+\\Bei der Wahl der serverseitigen Architektur haben wir eine REST-konforme (Representational State Transfer)
+Architektur eingesetzt, an dessen Ende eine MySQL Datenbank zur Speicherung der Cytoscape Objekte, sowie Authentifizierungsdaten
+steht. Auf die Daten der Datenbank greift eine API-Schnittstelle zu, welche mit Node.js umgesetzt ist (weitere Details zur Schnittstelle:
+siehe II.4 - Schnittstellen). Anfragen an die API werden mit dem ''axios'' Framework per ''Promise-based'' HTTP-Requests gestellt. Die HTTP-Requests
+folgen einem klaren Schema, welches vom serverseitigen Node.js interpretiert und an die Datenbank weitergeleitet wird.
+\\
+\\Um die Web-App großflächig zu testen haben wir uns zum einen für das Framework ''Cypress'' entschieden, welches Integrationstests anhand der
+HTML-Elemente übernimmt. Cypress wertet aus, ob bestimmte Elemente unter bestimmten Bedingungen vorhanden sind beziehungsweise spezielle
+Eigenschaften aufweisen. Die Cypress Tests haben wir auch erfolgreich an die ''CI / CD Pipeline'' von GitLab angeschlossen, sodass nach jedem
+push die Tests durchlaufen (Stichwort: Regressionstest).
+\\Zum anderen haben wir das Framework ''jest'' für Unit-Tests eingesetzt, mit dem einzelne Funktionen auf ihre Richtigkeit überprüft werden können. Vor allem
+für die Optimierungsalgorithmen sind isolierte Tests nötig gewesen.
+\\
+\\Um eine Client-Server Architektur zu simulieren haben wir ''Docker'' eingesetzt. Dieses Tool erlaubt es, virtuelle Maschinen zu erstellen,
+welche untereinander kommunizieren können. Für Entwicklungszwecke haben wir einen Docker-Container für eine MySQL Datenbank und
+einen Node.js-Webserver (API Schnittstelle) erzeugt. Ein weiterer Docker-Container wurde eingesetzt, auf dem ''Adminer'' läuft. Mit diesem
+Tool ist es möglich, die MySQL-Datenbank komfortabel anzuzeigen und SQL-Zugriffe auszuführen.
+
 
 \subsection{Definierte Schnittstellen}
-{\small Autor: xxx}
+{\small Autor: Julius Hohlfeld}
 
-XXX
+VarGs Funktionalitäten erfordern eine Datenbank, um die erstellten Graphen speichern und wieder abrufen zu können.\\
+Um den Zugriff auf die Datenbank zu kontrollieren benötigen wir eine definierte Schnittstelle (bzw. API) zwischen Client,
+Webserver und Datenbank.\\
+\\
+Diese Schnittstelle ist RESTful - d.h. sie folgt einigen der sog. REST-Constraints. Eine Übersicht zu REST und dessen Bedeutung für das Projekt findet sich im GitLab Wiki unter ''API Dokumentation''.\\
+Die Schnittstelle setzt sich wie folgt zusammen:
+\begin{itemize}
+  \item \textbf{Vue}
+        \\\textit{Framework für Client + Axios-Module für asnychrone (promise-based) HTTP-Requests}
+  \item  \textbf{Express}
+        \\\textit{Serverseitiges Node-Module für Webserver: hört angemeldete Ports auf Requests ab, die dem URI-Modell entsprechen}
+  \item \textbf{Node.js}
+        \\\textit{Serverseitige Programmierung des Webservers mit mysqljs als Driver, um auf die Datenbank zuzugreifen}
+  \item \textbf{DB}
+        \\\textit{MySQL-Datenbank auf extra Server}
+\end{itemize}
+
+Diese Struktur (kurz VenDB) entspricht einer Anpassung des sog. MEAN-Stacks auf das VarG-Projekt (MongoDB, Express, Angular, Node.js).\\
+Dabei erfolgt jeglicher Austausch der Graphdaten im JSON-Format, damit auf die Cytoscape-Funktion zum Laden des Graphen zugegriffen werden kann.\\
+\\
+\subsubsection{Client}
+
+Der Client enthält Trigger durch Events, welche Requests an den Webserver senden. Z.B.: das Aufrufen des Datenbankfenster löst eine Anfrage aus, welche alle Graphen des aktuellen Nutzers abfragt.
+Diese werden durch das Axios-Modul umgesetzt. Nachdem der Trigger ausgelöst wird, schickt der Client eine asynchrone Request. Diese wird vom Webserver verarbeitet, welcher dann eine Antwort schickt. Diese kann von Axios aufgefangen werden (axios."request"(url, {}).then(response => {}).catch(error => {})).
+
+\subsubsection{Server}
+
+Der durch Express und mysqljs programmierte Webserver definiert folgende mögliche Zugriffstellen auf die Datenbank:
+\begin{itemize}
+  \item \textbf{Get-Requests}
+        \begin{itemize}
+          \item \textbf{graph}
+                \\\textit{Fragt alle Graphen aus der Datenbank ab - für Admin reserviert.}
+          \item \textbf{graph/:id?}
+                \\\textit{Fragt einen spezifischen Graphen (entsprechend der ID) ab.}
+          \item \textbf{graph/meta}
+                \\\textit{Fragt Metadaten z.B.: Namen, Id, Stückzahl usw. ab für die Graphen des Nutzers ab.}
+        \end{itemize}
+  \item  \textbf{Put-Requests}
+        \begin{itemize}
+          \item \textbf{graph/:id?}
+                \\\textit{Client schickt Server eine Repräsentation des Graphen in Json um einen bereits existierenden Graphen (entsprechend der ID) zu überschreiben.}
+        \end{itemize}
+  \item \textbf{Post-Requests}
+        \begin{itemize}
+          \item \textbf{graph?}
+                \\\textit{Client schickt Server eine Repräsentation des Graphen in Json um einen neuen Eintrag für den Nutzer zu erzeugen.}
+        \end{itemize}
+  \item \textbf{Delete-Request}
+        \begin{itemize}
+          \item \textbf{graph/:id?}
+                \\\textit{Spezifizierter Graph (entprechend der ID) wird aus der Datenbank gelöscht.}
+        \end{itemize}
+\end{itemize}
+
+Das '?' bedeutet, dass hier auf bestimmte URL Queries geachetet werden kann.
+Das ist nützlich um z.B.: einen Nutzer nur auf seine eigenen Graphen zugreifen zu lassen.
+Diese werden dann in die entsprechenden Queries umgewandelt.\\
 
 \subsection{Liste der Architekturentscheidungen}
-{\small Autor: xxx}
+{\small Autor: Alaa Aldin Karkoutli}\newline
 
-XXX (bewusste und unbewusste Entscheidungen mit zeitlicher Einordnung)
-
-
+\textbf{JavaScript} ist die grundlegende Programmiersprache, auf der diese App basiert ist. Sonst wurde es für die folgenden Architekturen entschieden:
+\begin{description}
+    \item [I) Vue.js]: wurde als das JavaScript-Webframework der Web-App eingesetzt. 
+    \item [II) Vuetify]: ist die UI-Bibliothek, für die entschieden wurde.  
+    \item [III) CSS-Language-Extenion]: wurde eingesetzt, um die optischen Dinge anzupassen.
+    \item [IV) Vuex]: ist eine 'Vue.js-Erweiterung', die als Speicher der Daten benutzt wird.
+    \item [V) Cytoscape.js]: ist die JavaScript-Bibliothek, für die entschieden wurde, um die Graphen zu erstellen.
+    \item [VI) Cypress]: ist ein Framework zum Testen der HTML-Elemente.
+    \item [VII) jest]: ist das Framework zum Testen der Richtigkeit einzelner Funktionen.
+    \item [VIII) REST-Konforme] (Representational State Transfer): ist die Architektur zur Kommunikation der DB und Authentifizierungsdaten mit der App.
+    \item [IX) Node.js]: ist die ausgewählte Schnittstelle, um auf die Daten der DB zuzugreifen.
+    \item [X) Axios 'Promise-based' HTTP-Request]: ist das eingesetzte Framework, um die Abfragen zu stellen. 
+    \item [XI) Docker]: ist die Client-Server Architektur, für die entschieden wurde.
+    \item [XII) MySQL]: ist das DB-System, für das im Docker-Container entschieden wurde.  
+\end{description}
 
 \section{Prozess- und Implementationsvorgaben}
 
 \subsection{Definition of Done}
-{\small Autor: xxx}
+{\small Autor: Tim Henning}
+\\
+Im Allgemeinen wurde in dem Projekt die Definition von "doneness"\ nicht all zu umfangreich
+gestaltet, da es für viele Teammitglieder eines der ersten Softwareprojekte war. So wurden als Defintion of Done folgende
+Punkte für alle Userstories aufgestellt:
+\begin{itemize}
+  \item >50\% Testabdeckung
+  \item Technische Kommentare im Code
+  \item Einhaltung der festgelegten Code Konventionen
+\end{itemize}
+Das Team hatte an sich zu den meisten Zeitpunkten eine klare Vorstellung was einen "fertigen Entwurf"\ kennzeichnet und wurde so auch in den Reviews untereinander kommuniziert.
+Dies wiederum führte zu einer klaren Transparenz im Team, was die Qualität des Produktes erhöhte und das Zusammenarbeiten erleichterte.
+Größtenteils wurde sich
+an die allgemeinen Akzeptanzkritieren gehalten und viele Backlog-Einträge als "done"\ erklärt. Zu fast jeder Komponente wurde
+getestet und zu den Methoden der einzelnen Komponenten wurden erklärende sinnvolle Codekommentare geschrieben.
+Außerdem wurde im Team umfangreich kommuniziert und die Kriterien angepasst, wenn die Fertigstellung einer Userstorie doch mal nicht gänzlich klar war.
+So wurde es ermöglicht nach der Hälfte des Projektes, am Ende jedes Sprints einen fertigen Productionbuild dem Kunden zu liefern.
 
-XXX
+
 
 \subsection{Coding Style}
-{\small Autor: xxx}
+{\small Autor: Jonas Gwozdz}
 
-XXX
+\vspace{\baselineskip}
+\noindent Beim Schreiben unseres Programmcodes haben wir uns an folgende Coding Conventions gehalten.\par
+
+\begin{itemize}
+	\item Zeilenlänge: maximal 80 Zeichen\par
+
+	\item Kommentare und Dokumentation\par
+
+\begin{itemize}
+	\item Kommentare auf Englisch\par
+
+	\item Klassen und Methoden in kurzen, prägnanten Sätzen beschreiben\par
+
+	\item Unnötige Kommentare vermeiden\par
+
+	\item Kommentare aktuell halten\par
+
+
+\end{itemize}
+	\item Einrückung und Zeilenumbrüche\par
+
+\begin{itemize}
+	\item 2 Leerzeichen statt Tabulator\par
+
+	\item ‚$ \{ $ ‘ hinter Methodendeklaration\par
+
+	\item ‚$ \} $ ‘ in neuer Zeile auf gleiche Einrückungsebene\par
+
+	\item Optionale Zeilenumbrüche für Übersichtlichkeit\par
+
+	\item Nur ein Import pro Zeile\par
+
+
+\end{itemize}
+	\item Leerzeichen\par
+
+\begin{itemize}
+	\item Vor und nach binären Operationen\par
+
+\begin{itemize}
+	\item Ausnahme nur im Fall von Verdeutlichung unterschiedlicher Prioritäten\par
+
+
+\end{itemize}
+	\item Keine Leerzeichen vor und nach Klammern\par
+
+	\item Keine Leerzeichen vor Kommata und Semikolon\par
+
+	\item Leerzeichen nach Kommata\par
+
+	\item Keine Leerzeichen am Zeilenende\par
+
+
+\end{itemize}
+	\item Konsistentes Benennungsschema\par
+
+\begin{itemize}
+	\item Deskriptive Namen verwenden\par
+
+	\item mixedCase für Variablen\par
+
+	\item GROßSCHREIBUNG für Konstanten\par
+
+	\item Keine Umlaute\par
+
+	\item Reservierte Schlüsselwörter beachten\par
+
+	\item Immer auf Englisch\par
+
+	\item Bezeichner von Booleanwerte sollen Zustand beschreiben, der wahr oder falsch sein kann\par
+
+	\item Hilfsvariablen möglichst gleich benennen\par
+
+	\item Übergabe von Attributen an Konstruktoren\par
+
+\begin{itemize}
+	\item ‚length‘ als Attribut, ‚\_length‘ als Argument\par
+
+
+\end{itemize}
+\end{itemize}
+	\item Textcodierung UTF-8
+\end{itemize}\par
+\textbf{Best Practice}\par
+
+\begin{itemize}
+	\item Allgemeines\par
+
+\begin{itemize}
+	\item Kein ‚language‘ Tag verwenden\par
+
+	\item Wiederholungen Vermeiden\par
+
+	\item Dopplungen vermeiden\par
+
+
+\end{itemize}
+\end{itemize}
+\begin{itemize}
+	\item Variablen und Objekte\par
+
+\begin{itemize}
+	\item Keine globalen Variablen
+
+	\item Lokale Variablen, auch Zahlenvariablen zu Beginn deklarieren und initialisieren\par
+
+	\item Deklaration mehrerer Variablen können zusammengefasst werden\par
+
+	\item Datentyp wird über die Initialisierung zugewiesen\par
+
+	\item Kapselung mittels Namespace\par
+
+	\item Keine Deklaration mittels ‚new $ \ldots $ ()‘\par
+
+\end{itemize}
+\end{itemize}
+\begin{itemize}
+	\item Funktionen\par
+
+\begin{itemize}
+	\item Vergleiche mittels ‚===‘
+
+	\item Unter keinen Umständen ‚eval()‘ benutzen\par
+
+	\item Keine ‚with‘ Statements\par
+
+	\item Keine ‚for ($ \ldots $  in $ \ldots $ )‘ Loops\par
+
+	\item Jeder ‚switch‘ hate einen ‚default‘ Case\par
+
+	\item Vorsicht bei Verwendung von ‚typeof()‘\par
+
+	\item Nicht erhaltene Argumente gelten als ‚undefined‘
+\end{itemize}\par
+\end{itemize}
+
 
 \subsection{Zu nutzende Werkzeuge}
-{\small Autor: xxx}
+{\small Autor: Linus Herterich}
 
-XXX
+Im Folgenden werden die Werkzeuge erwähnt, mit denen wir die Software
+entwickelt haben. Zudem wird darauf eingegangen, über welche Kanäle kommuniziert
+wurde.
+
+
+\subsubsection{Voraussetzungen}
+Das Versionsmanagement-Tool ''GitLab'' sowie das Zeitmanagement-Tool ''YouTrack''
+wurden zu Beginn des Projekts vorgeschrieben. Die Commits in ''GitLab'' werden jeweils mit
+der ID des zugehörigen YouTrack-Tickets am Anfang des Commit-Titels versehen.
+\\Damit das gesamte Team einheitliche Versionen der verwendeten Bibliotheken benutzt,
+wird der Paketmanager ''npm'' verwendet. Mir diesem lassen sich Pakete (und deren Versionen) definieren,
+welche für das Projekt benötigt werden.
+\\ Damit am Projekt gearbeitet werden kann, muss sich somit jedes Teammitglied die LTS-
+Version von Node.js (welches npm enthält) installieren.
+\\ Sobald Node.js global installiert ist, kann im ''code'' Verzeichnis der Befehl
+''npm install'' ausgeführt werden, um die benötigten Bibliotheken zu installieren.
+
+\subsubsection{Compiler}
+Achtung: Das Kompilieren funktioniert erst, sobald die Bibliotheken mit dem Befehl
+''npm install'' (im /code Verzeichnis) installiert wurden.
+\\
+Um Änderungen des Projektes einzusehen, muss das Projekt kompiliert werden.
+''Vue.js'' bringt bereits einen Echtzeit-Compiler mit, welcher reagiert, sobald Änderungen
+an Dateien im ''code'' Verzeichnis gemacht wurden. Um diesen Compiler aufzurufen, muss der npm-Befehl \mbox{''npm run serve''} im ''code'' Verzeichnis
+aufgerufen werden.
+\\Um das Projekt nicht während der Entwicklung zu kompilieren, sondern für die Produktion freizugeben,
+muss der Befehl ''npm run build'' im ''code'' Verzeichnis aufgerufen werden. Es werden
+anschließend die kompilierten Dateien im Verzeichnis ''code/dist'' abgelegt.
+Diese können anschließend auf einem Webserver (z.B. Apache HTTP Server) hochgeladen werden.
+
+\subsubsection{Entwicklungsumgebung}
+Für die Entwicklung der Software wird der freie Quelltext-Editor ''Visual Studio Code''
+von Microsoft verwendet. Dieser ist plattformunabhängig und kann durch zahlreiche Erweiterungen
+angepasst werden. Beispielsweise kann durch das Plugin ''Vetur'' die Vue.js-eigene Syntax
+vervollständigt und hervorgehoben werden.
+\\Weitere Einstellungsvorgaben bezüglich der Entwicklungsumgebung wurden nicht getroffen.
+Es muss allerdings darauf geachtet werden, dass die Coding-Conventions durch automatische
+Formatierungen eingehalten werden.
+
+\subsubsection{CI / CD Pipeline}
+In der CI / CD Pipeline unseres Versionsmanagement-Tools, die nach jedem Git-Push
+ausgeführt wird, werden folgende Operationen durchgeführt:
+\begin{itemize}
+  \item Test, ob das Projekt kompiliert (inklusive Syntaxprüfung durch ES-Lint)
+  \item Cypress Tests durchführen (siehe ''Überblick über Architektur'')
+  \item LaTeX Doku kompilieren
+\end{itemize}
+
+Sollte einer der Punkte fehlschlagen, wird der Autor des Git-Push's per E-Mail
+darüber informiert. Somit ist die Wahrscheinlichkeit, dass bestehende Features durch
+neue Entwicklungen längerfristig ''zerstört'' werden, möglichst gering.
+
+\subsubsection{Docker}
+Um die Client-Server Architektur des Projektes lokal zu simulieren, wird die
+Container-Virtualisierungssoftware ''Docker'' verwendet.
+Mit dieser haben wir einen Webserver simuliert, auf dem die Datenbank ausgeführt
+und verwaltet wird (siehe ''Überblick über Architektur''). Die Container werden
+im Projekt-Ordner ''docker'' definiert.
+
+
+\subsubsection{Kommunikationstools}
+Zu Beginn des Projekts wurde sich auf das kostenlose Kommunikationstool ''Slack'' geeinigt.
+Mit diesem ist es möglich, in verschiedenen Kanälen Text, Dateien und Medien auszutauschen.
+Auch private Konversationen, sowie Kleingruppen-Chaträume sind in diesem Tool möglich.
+Die Software kann sowohl als App installiert, als auch im Browser verwendet werden.
+\\Da wir über die Weihnachtsferien einen Sprint durchgeführt haben, führten wir Mitte Dezember
+das Tool ''Discord'' ein, mit dem es möglich ist, sich in Echtzeit-Sprachchats zusammenzufinden.
+Dazu ist es möglich, seinen Desktop zu teilen, womit sich das Tool bestens eignet,
+um räumlich getrennt über Code-Passagen oder neue Features zu sprechen.
+\\Die Kombination beider Tools hat problemlos funktioniert und uns auch
+während des Lockdowns in der ''Corona-Krise'' geholfen. Da wir die Tools bereits frühzeitig
+eingesetzt haben, war kaum eine Um- bzw. Eingewöhnungszeit zu Beginn der
+präsenzfreien Zeit notwendig.
+
 
 \newpage
 
@@ -265,7 +682,9 @@ XXX
 \begin{itemize}
   \item \textbf{ Login }
     \\\
-      Um sich einlogggen zu können, benötigt man einen Account. Diesen legt man an, indem man sich im Login-Screen mit einem neuen Benutzernamen und Passwort einloggt. Der angegebene Name wird als neuer Nutzer (mit Rolle: 'Student') angelegt und das dazugehörige Passwort gespeichert. Beides kann nachträglich in den Benutzereinstellungen (siehe 'Einstellungen') geändert werden. Ein ändern der Rolle (von 'Student' auf 'Admin') ist nur durch direkten zugriff auf die Datenbank möglich. (Momentan wird eine eigene Datenbank benutzt, diese kann später durch eine Anbindung an shiboleth ersetzt werden)
+      Um sich einloggen zu können, benötigt man einen Account. Diesen legt man an, indem man sich im Login-Fenster mit einem neuen Benutzernamen und Passwort einloggt. Der angegebene Name wird als neuer Nutzer (mit Rolle: ''Student'') angelegt und das dazugehörige Passwort gespeichert. Beides kann nachträglich in den Benutzereinstellungen (siehe ''Einstellungen'') geändert werden.
+      \\\textbf{Hinweis:} Wenn beim Versuch, einen neuen Account zu erstellen, der Fehler ''Ungültige Login-Daten'' auftritt, bedeutet das, dass der eingegebene Benutzername bereits existiert. In diesem Fall muss ein anderer Name gewählt werden.
+      \\Ein Ändern der Rolle (von ''Student'' auf ''Admin'') ist nur durch direkten Zugriff auf die Datenbank möglich. (Momentan wird eine programmeigene User-Datenbank benutzt, diese könnte später durch eine Anbindung an Shibboleth ersetzt werden.)
   \item \textbf{ Neuen Graphen erstellen }
     \\\
       Über den Menüpunkt 'Neuen Graphen erstellen' im Startfenster gelangt man in das 'Neues Produkt' Fenster. Hier kann Name und Stückzahl des neuen Graphen festgelegt werden. Über den 'Starten'  Button wird der neue Graph erstellt. Im Graphenfenster gelangt man über den 'Neuer Graph' Button zurück ins Startmenü. Über die Stift-Icons neben dem Produktnamen und der Stückzahl können diese nachträglich bearbeitet werden.
@@ -285,25 +704,266 @@ Nach dem Betätigen des 'Optimierung starten' Buttons (im Einstellungsmenü) wir
 Sobald etwas am Graph geändert wird, erscheinen die 'Graph optimieren' bzw. 'Optimierung starten' Buttons wieder. Zuvor lässt sich der Graph durch Klicken auf das Wiederholen-Icon (neben 'Gesammtzeit' oder 'Gesamtkosten' im Graphenfenster) erneut optimieren.
   \item \textbf{ Einstellungen }
     \\\
-      Mit einem Linksklick auf 'Einstellungen' am oberen Rand öffnet sich das Einstellungenfenster. Im Tab 'Graph' lassen sich Einstellungen bezüglich der Darstellung des Graphs vornehmen, wie zum Beispiel die Einheiten oder die angezeigten Details der Verknüpfungen (Bearbeitungsschritte). Außerdem lässt sich hier ein "Raster" aktivieren, auf dem die Knoten dann gebunden sind. Im Tab 'Benutzer' lassen sich Benutzername und Passwort ändern sowie der Account löschen. Beim Ändern des Benutzernamen wird der 'Autor' jedes mit diesem Account erstellten Graphen ebenfalls geändert, beim Löschen des Accounts werden auch alle mit diesem Account erstellten Graphen gelöscht. Zum Löschen des Accounts oder Ändern des Passworts wird das Passwort benötigt. Der Tab 'Hilfe' ist noch nicht funktional.
+      Mit einem Linksklick auf ''Einstellungen'' am oberen Rand öffnet sich das Einstellungsfenster. Im Tab ''Graph'' lassen sich Einstellungen bezüglich der Darstellung des VarGraphs vornehmen, wie zum Beispiel die Einheiten oder die angezeigten Details der Verknüpfungen (Bearbeitungsschritte). Außerdem lässt sich hier ein ''Raster'' aktivieren, auf dem die Knoten dann gebunden sind. Im Tab ''Benutzer'' lassen sich Benutzername und Passwort ändern, sowie der Account löschen. Beim Ändern des Benutzernamens wird der ''Autor'' jedes mit diesem Account erstellten Graphen ebenfalls geändert, beim Löschen des Accounts werden auch alle mit diesem Account erstellten Graphen gelöscht. Zum Löschen des Accounts oder Ändern des Passworts wird das Passwort benötigt. Im Tab ''Hilfe'' ist dieses Handbuch verlinkt.
   \item \textbf{ Offline Speicher }
     \\\
-      Über den Button 'Export' am oberen Rand lässt sich der Graph in den Formaten .json, .png, .svp und .jpg exportieren und lokal speichern. Über den 'Import' Button lässt sich ein in .json exportierter Graph wieder im Programm öffnen.
+      Über den Button ''Export'' am oberen Rand lässt sich der Graph in den Formaten .json, .png und .jpg exportieren und lokal speichern. Über den ''Import'' Button lässt sich ein in .json exportierter Graph wieder im Programm öffnen.
   \item \textbf{ Online Speicher }
     \\\
-      Über den Button 'Datenbank' am oberen Rand öffnet sich das Datenbank-Fenster. Hier können erstellte Graphen online gespeichert bzw. wieder geladen werden. Dabei können Accounts mit der Rolle 'Student' lediglich auf Ihre eigenen Graphen zugreifen. Accounts mit der Rolle 'Admin' haben Zugriff auf alle Graphen.
+      Über den Button ''Datenbank'' am oberen Rand öffnet sich das Datenbank-Fenster. Hier können erstellte Graphen online gespeichert bzw. wieder geladen werden. Dabei können Accounts mit der Rolle ''Student'' lediglich auf ihre eigenen Graphen zugreifen. Accounts mit der Rolle ''Admin'' haben Zugriff auf alle Graphen.
 \end{itemize}
 
 
 \subsection{Installationsanleitung}
-{\small Autor: xxx}
+\subsubsection{Clientseitige Installation für Anwender}
+{\small Autor: Erik Heldt}
 
-XXX
+VarG ist eine plattformunabhängige Webanwendung, das heißt man muss nichts lokal auf seinem PC installieren, um sie zu benutzen. Alles was man benötigt, ist ein moderner Web-Browser und eine Internetverbindung (Browser-Empfehlung: Google Chrome oder Firefox). Öffne den Browser und gib in der URL-Leiste \url{www.sam.imn.htwk-leipzig.de} ein. Nun befindest du dich im Home-Menü von VarG und kannst loslegen!
+
+\subsubsection{Clientseitige Installation für Entwickler}
+{\small Autor: Erik Heldt}
+
+Um die Anwendung im Entwicklungszustand ausführen zu können, musst du Node.js und npm auf deinem PC installieren. Wie das geht erfährst du hier: \url{https://www.npmjs.com/get-npm}. Node.js ist eine JavaScript-Entwicklungsumgebung, die benötigt wird, um die Anwendung samt der genutzten Frameworks und Bibliotheken kompilieren und ausführen zu können. Node Package Manager, oder kurz npm, wird mit Node.js mitgeliefert und verwaltet alle installierten Pakete, die beim Bauen des Programms verwendet werden.
+
+Weiterhin wird das Versionsmanagement-Tool Git benötigt. Den Download dafür gibt es hier: \url{https://git-scm.com/downloads} bzw. für Windows-Nutzer wird die Git BASH empfohlen: \url{https://gitforwindows.org/}.
+\\
+\\Sind diese Tools nun installiert, musst du dir das VarG-Repository von GitLab auf deinen PC herunterladen bzw. ''klonen''. Um vollständigen Zugriff auf dieses Repository zu haben, musst du im GitLab dem Projekt zugeordnet sein. Besitzt du also die entsprechenden Rechte, navigiere im Terminal in einen Ordner auf deinem Rechner, in dem du das Projekt speichern willst, und gib dort den Befehl \begin{verbatim}git clone https://gitlab.imn.htwk-leipzig.de/weicker/varg.git\end{verbatim} ein. Warte, bis das Herunterladen abgeschlossen ist, und öffne dann den neu erschienenen Ordner ''varg'' in einem Code-Editor (empfohlen wird Visual Studio Code).
+\\
+\\Es sollten dort mehrere Ordner zu sehen sein, unter anderem der ''code''-Ordner. Darin ist der gesamte Quellcode des Projekts enthalten. Du solltest dich also zur Ausführung des Programms immer in diesem Ordner aufhalten. Um nun den Code zu kompilieren und als Entwicklungsversion auszuführen, folge bitte diesem Tutorial: \href[pdfnewwindow=true]{file:zuarbeiten/InstallationVarg.pdf}{VarG-Installation von Linus Herterich} (klickbarer Link, Anleitung nur für VSCode).
+\\
+\\\subsubsection{Serverseitige Installation}
+{\small Autor: Linus Herterich}
+\\
+\textbf{Login-Daten}
+\\Im folgenden werden die Login Daten für den aktuellen Server, welcher unter der Adresse \url{https://sam.imn.htwk-leipzig.de} 
+erreichbar ist, genannt. Die Installationsanleitung ist aber auch so formuliert, dass sie auf anderen Servern 
+nachgestellt werden kann.
+\\SSH-Befehl (für z.B. Git-Bash), um auf den Server per Remote zuzugreifen (nur im HTWK Netz oder per HTWK-VPN möglich):
+\begin{verbatim}
+  ssh root@sam.imn.htwk-leipzig.de
+\end{verbatim}
+Login-Daten für SSH:
+\begin{verbatim}
+  User: 'root' | Passwort: 'zuwinket3771{Harne'
+\end{verbatim}
+Login-Daten für die MySQL Datenbank:
+\begin{verbatim}
+  User: 'root' | Passwort: 'l_GD6P67+V' | Datenbank: 'vargdb'
+\end{verbatim}
+\textbf{Webserver und SSL}
+\\Für die serverseitige Installation des Projekts wird ein SSL zertifizierter Webserver benötigt.
+In unserem Fall haben wir Apache 2.4 verwendet, um das Frontend live zu schalten. Es sind aber auch andere
+gängige HTTP Webserver möglich. Wenn andere Webserver technologien verwendet werden, muss folgende
+Anleitung beachtet werden, damit das Vue-Routing funktioniert: \url{https://router.vuejs.org/guide/essentials/history-mode.html}.
+Für die Installation eines SSL Zertifikats haben wir den certbot (\url{https://certbot.eff.org/}) verwendet. 
+\\ACHTUNG: Das SSL-Zertifikat muss im Sommer 2021 verlängert werden, damit die Webanwendung weiter problemlos funktioniert 
+(Anleitung hierfür findet sich auf der certbot Webseite).
+\\Am Ende der Datei \begin{verbatim}
+  varg/docker/node.js/api.js
+\end{verbatim}
+müssen die SSL ''.perm'' Zertifikate verlinkt werden, damit die API auch auf die SSL-Zertifikate zugreifen kann
+und somit eine Verschlüsselte Kommunikation zwischen Frontend und Backend stattfinden kann.
+Derzeit sind bereits die richtigen Pfade eingetragen.
+\\\\
+\textbf{Klonen des Projekts}
+\\Sind die Grundvoraussetzungen gegebenen, kann das Projekt auf dem Webserver geklont werden.
+Hierzu muss sich zunächst auf dem Server eingeloggt werden (Anmeldedaten siehe oben). Als nächstes muss mit den Befehl
+\begin{verbatim}
+  cd /var/www/html
+\end{verbatim} 
+in das Standard-Webserver Verzeichnis von Apache navigiert werden. Dort wird anschließend das Projekt mit dem Befehl
+\begin{verbatim}
+  git clone https://gitlab.imn.htwk-leipzig.de/weicker/varg.git
+\end{verbatim} 
+geklont. Nun muss ein GitLab-Nutzername und Passwort eingegeben werden, damit das Projekt in den Ordner ''varg'' geklont werden kann.
+Will man dies umgehen, kann auch ein SSH Schlüssel generiert werden und bei einem GitLab Account hinterlegt werden (weitere Details:
+\url{https://docs.gitlab.com/ee/ssh/})
+\\Nun wurde ein Ordner mit folgendem Pfad angelegt, indem die Projekt-Daten sind:
+\begin{verbatim}
+  /var/www/html/varg
+\end{verbatim}
+Navigiert man per ''cd'' in den Ordner, so kann dort das Projekt aktuallisiert (mit ''git pull'') oder andere Branches ausgewählt werden (mit ''git checkout ..'').
+\\\\
+\textbf{Unterschiede Entwicklungsversion und Produktionsversion}
+\\Im Code sind einige Stellen zu ändern, damit das Projekt auf dem Server lauffähig ist. Am besten wird hierfür ein neuer Branch erstellt, welcher zwar auf dem 
+aktuellen Projektstand ist, aber die Server-Änderungen beinhaltet. Dieser Branch wird anschließend auf dem Server gepullt (wir nannten diesen Branch immer ''prod'').
+\\Bei den Änderungen handelt es sich zum einen um IP-Adressen, die zum API-Docker-Container zeigen, aber auf der Live Version zur Live-API-Adresse zeigen müssen. 
+\begin{itemize}
+\item Mit dem Suchen und ersetzen Tool im IDE müssen all diese IP-Adressen ausgetauscht werden, die für die AXIOS Requests verwendet werden:
+\begin{verbatim}
+  'http://192.168.1.102:1110' 
+  (Kann auch abweichen. Bitte selbst in den Dateien (bspw. SettingsAccount.vue)
+   überprüfen, an welche Domain alle Axios Requests gehen)
+\end{verbatim}
+in den allen Dateien zur Live-API Adresse ändern: 
+\begin{verbatim}
+  'https://sam.imn.htwk-leipzig.de:7070'
+\end{verbatim}
+Wichtig: Die Endungen (z.B. .../VarG/graph/meta) müssen gleich bleiben und an die Adresse angehangen werden.
+
+\item Desweiteren müssen die Datenbank-Zugangsdaten in folgender Datei geändert werden:
+\begin{verbatim}
+  /var/www/html/varg/docker/node.js/api.js
+\end{verbatim}
+Die Zugangsdaten sind am Anfang in einer Konstanten (namens config) abgespeichert und müssen auf folgende Daten geändert werden:
+\begin{verbatim}
+  host: "localhost",
+  user: "root",
+  password: "l_GD6P67+V",
+  database: "vargdb"
+
+
+\end{verbatim}
+\item Zudem muss in der api.js Datei folgende Zeile geändert werden:
+\begin{verbatim}
+  res.header("Access-Control-Allow-Origin", "http://localhost:8080")
+\end{verbatim}
+zu
+\begin{verbatim}
+  res.header("Access-Control-Allow-Origin", "https://sam.imn.htwk-leipzig.de");
+
+
+\end{verbatim}
+\item Außerdem muss am Ende der Datei der Block
+\begin{verbatim}
+  api.listen(8080, () => {
+    console.log('API listens to 8080');
+  });
+\end{verbatim}
+mit folgendem ersetzt werden
+\begin{verbatim}
+  https
+    .createServer(
+      {
+        key: fs.readFileSync("/etc/letsencrypt/live/sam.imn.htwk-leipzig.de/privkey.pem"),
+        cert: fs.readFileSync("/etc/letsencrypt/live/sam.imn.htwk-leipzig.de/cert.pem"),
+      },
+      api
+    )
+    .listen(7070);
+
+\end{verbatim}
+Damit dies funktioniert müssen eventuell am Anfang der Datei folgende Module importiert werden:
+\begin{verbatim}
+  const express = require("express");
+  const mysql_driver = require("mysql");
+  const fs = require("fs");
+  const https = require("https");
+
+
+\end{verbatim}
+\end{itemize}
+All diese Änderungen sollten auf einem prarallelen Branch durchgeführt und anschließend gepusht werden.
+Im Anschluss kann das Projekt mit den Live-Änderungen auf dem Server gepullt werden.
+\\\\
+\textbf{Installation Produktions-Frontend}
+\\Sobald alle nötigen Produktions-Anpassungen durchgeführt sind und das Projekt im richtigen Ordner geklont wurde, 
+kann mit npm das Projekt kompiliert werden. Zunächst muss in folgenden Ordner navigiert werden:
+\begin{verbatim}
+  cd /var/www/html/varg/code
+\end{verbatim}
+anschließend wird folgender Befehl ausgeführt (Voraussetzung ist eine LTS-Version von npm auf dem Web-Server):
+\begin{verbatim}
+  npm install
+\end{verbatim}
+und im Anschluss:
+\begin{verbatim}
+  npm run build
+
+\end{verbatim}
+Nun wurden die kompilierten Dateien in den Ordner
+\begin{verbatim}
+  /var/www/html/varg/code/dist
+\end{verbatim}
+abgelegt. Apache (oder andere HTML Server Technologie) muss so konfiguriert werden (auf dem aktuellen Server ist das bereits eingestellt), 
+dass der DocumentRoot in diesen Ordner zeigt. Wird mit Apache gearbeitet, muss zudem sichergestellt sein, dass ''mod rewrite'' aktiviert ist
+(siehe \url{https://wiki.ubuntuusers.de/Apache/mod_rewrite/} ) . Sonst wird die ''.htaccess'' Datei im ''dist'' Ordner nicht richtig gelesen und 
+die Navigation zwischen einzelnen Seiten funktioniert nicht richtig.
+\\Ist alles problemlos abgelaufen, sollte nun das Frontend unter der URL ''https://sam.imn.htwk-leipzig.de'' erreichbar sein.
+\\\\
+\textbf{Installation MYSQL}
+\\Auf dem Webserver muss eine aktuelle Version von MYSQL laufen. Es kann folgende Anleitung zur Installtion verwendet werden:
+\url{https://wiki.ubuntuusers.de/MySQL/}. Es ist darauf zu achten, dass als root Passwort ''l_GD6P67+V'' gewählt wird. 
+Ansonsten muss ein anderes Passwort in der ''api.js'' Datei (siehe oben) eingetragen werden.
+\\Sobald MySQL installiert ist, kann über das Adminer Tool, welches beim Frontend unter der URL ''https://sam.imn.htwk-leipzig.de/adminer.php'' 
+erreichbar ist, eine Datenbank mit dem Namen ''vargdb'' angelegt werden. Um die Initialen Tabellen mit Beispieldaten anzulegen, kann im 
+Anschluss folgende Datei in die Datenbank per Adminer importiert werden:
+\begin{verbatim}
+  varg/docker/mysql/dump.sql
+\end{verbatim} 
+Nun ist die Datenbank eingerichtet und kann über die API angesteuert werden.
+\\\\Falls der aktuelle Server weitergenutzt wird, ist bereits mySQL mit der aktuellen Datenbank installiert. Um auf die MySQL Datenbank per
+Terminal zuzugreifen, muss sich per SSH eingeloggt werden und anschließend folgender Befehl eingegeben werden:
+\begin{verbatim}
+  mysql -uroot -p
+\end{verbatim}
+Nun wird das MySQL passwort gefordert. Das aktuelle Passwort ist:
+\begin{verbatim}
+  l_GD6P67+V
+  
+\end{verbatim}
+\textbf{API-Server starten}
+\\Der API-Server basiert auf der ''Node.js'' Technologie. Damit die API funktioniert, muss Node.js auf dem Server installiert sein.
+Die API kann dann mit dem Befehl:
+\begin{verbatim}
+  node /var/www/html/varg/docker/node.js/api.js
+\end{verbatim}
+gestartet werden. Man sieht nun den Log der API. Bei jeder Anfrage wird nun eine Zeile ausgegeben. Wenn es Probleme mit der Verbindung
+zur MySQL Datenbank gibt, werden diese hier angezeigt.
+\\\\
+\textbf{API-Server dauerhaft laufen lassen}
+\\Ein Problem ist, dass die API nur solange läuft, solange auch der Terminal geöffnet ist, unter dem der Befehl aufgerufen wurde.
+Da aber die API immer laufen soll, kann die Technologie ''forever'' verwendet werden (\url{https://www.npmjs.com/package/forever}).\\
+Mit folgendem Befehl kann die API dauerhaft gestartet werden:
+\begin{verbatim}
+  forever start -o out.log -e err.log /var/www/html/varg/docker/node.js/api.js
+\end{verbatim}
+für out.log und err.log können auch andere Namen oder Pfade verwendet werden. Es handelt sich hierbei um den Output bzw. Error-Meldungen,
+die ansonsten über das Terminal ausgegben worden wären.
+\\Mit folgendem Befehl kann nun angezeigt werden, ob die API (noch) mit forever läuft:
+\begin{verbatim}
+  forever list
+\end{verbatim}
+Die dort Angegebene Liste beinhaltet neben dem Namen der ausgeführten API-Datei auch eine ID. Diese kann verwendet werden, um mit folgendem
+Befehl die API zu stoppen:
+\begin{verbatim}
+  forever stop [ID]
+\end{verbatim}
+\textbf{Projekt Live (Produktions-Version) aktualisieren}
+\\Wenn neue Features auf dem Server installiert werden sollen, so muss nach der Entwicklung zunächst der neu-entwickelte Branch auf einem neuen (Produktions-) Branch
+so angepasst werden, wie es oben beschrieben ist (IPs austauschen etc.). Dieser geänderte Branch wird anschließend per ''git pull''
+im Verzeichnis ''/var/www/html/varg/'' auf dem Web-Server heruntergeladen.
+\\Als nächstes kann die neue Version kompiliert werden (siehe Installation Produktions-Frontend).
+\\Wenn Änderungen an der API-Logik vorgenommen wurden, so muss die API mit dem ''forever stop'' Befehl gestoppt und anschließend neu gestartet werden.
+\\Falls an der MySQL Datenbank etwas grundlegendes geändert wurde, so kann die Datenbank mit dem Adminer Tool (\url{https://sam.imn.htwk-leipzig.de/adminer.php})
+bearbeitet werden.
 
 \subsection{Software-Lizenz}
-{\small Autor: xxx}
+{\small Autor: Linus Herterich}
 
-XXX
+Im folgenden werden die verwendeten Bibliotkeken und deren Lizenz aufgelistet:
+\begin{itemize}
+  \item Vue.js - MIT License: Copyright (c) 2013-present Yuxi Evan You
+  \item vuetify - MIT License: Copyright (c) 2016-2020 John Jeremy Leider
+  \item cytoscape - MIT License: Copyright (c) 2016-2020, The Cytoscape Consortium.
+  \item cytoscape-node-html-label - MIT License: Copyright (c) 2017 Kalugin Sergey
+  \item cypress - MIT Licence: Copyright (c) 2015 Cypress.io, LLC
+  \item jest - MIT Licence: Copyright (c) Facebook, Inc. and its affiliates.
+  \item axios - MIT License: Copyright (c) 2014-present Matt Zabriskie
+  \item darkmode.js - MIT License: Copyright (c) 2018 Nickolas
+  \item file-saver.js - MIT License: Copyright (c) 2016 Eli Grey
+  \item file-saver.js - MIT License: Copyright (c) 2016 Eli Grey
+\end{itemize}
+
+Da ausschließlich die MIT Lizenz verwendet wurde, werden wir auch die Software ''VarG'' unter der
+MIT-Lizenz veröffentlichen.
+\\ \\
+VarG-Lizenz:
+\\
+\\ Copyright (c) 2020 HTWK-Leipzig
+\\ Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the ''Software''), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+\\ The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+\\THE SOFTWARE IS PROVIDED ''AS IS'', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
 \section{Projektabschluss}
@@ -314,9 +974,8 @@ XXX
 XXX
 
 \subsection{Präsentation auf der Messe}
-{\small Autor: xxx}
-
-Poster, Bericht
+{\small Autor: Erik Heldt}
+\\\href[pdfnewwindow=true]{file:zuarbeiten/VarG_Messepräsentation.pdf}{VarG Messepräsentation (klick)}
 
 \subsection{Abschließende Einschätzung durch Product-Owner}
 {\small Autor: xxx}
