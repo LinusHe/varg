@@ -1,36 +1,25 @@
 <template>
-  <v-card flat class="scrolling-container" style="max-height: 55vh">
-    <v-card-text>
-      <p>
-        Morbi nec metus. Suspendisse faucibus, nunc et pellentesque egestas, lacus ante convallis tellus, vitae
-        iaculis lacus elit id tortor. Sed mollis, eros et ultrices tempus, mauris ipsum aliquam libero, non
-        adipiscing dolor urna a orci. Curabitur ligula sapien, tincidunt non, euismod vitae, posuere imperdiet,
-        leo. Nunc sed turpis.
-      </p>
-
-      <p>
-        Suspendisse feugiat. Suspendisse faucibus, nunc et pellentesque egestas, lacus ante convallis tellus,
-        vitae iaculis lacus elit id tortor. Proin viverra, ligula sit amet ultrices semper, ligula arcu
-        tristique sapien, a accumsan nisi mauris ac eros. In hac habitasse platea dictumst. Fusce ac felis sit
-        amet ligula pharetra condimentum.
-      </p>
-
-      <p>
-        Sed consequat, leo eget bibendum sodales, augue velit cursus nunc, quis gravida magna mi a libero. Nam
-        commodo suscipit quam. In consectetuer turpis ut velit. Sed cursus turpis vitae tortor. Aliquam eu
-        nunc.
-      </p>
-
-      <p>
-        Etiam ut purus mattis mauris sodales aliquam. Ut varius tincidunt libero. Aenean viverra rhoncus pede.
-        Duis leo. Fusce fermentum odio nec arcu.
-      </p>
-
-      <p class="mb-0">
-        Donec venenatis vulputate lorem. Aenean viverra rhoncus pede. In dui magna, posuere eget, vestibulum et,
-        tempor auctor, justo. Fusce commodo aliquam arcu. Suspendisse enim turpis, dictum sed, iaculis a,
-        condimentum nec, nisi.
-      </p>
+  <v-card flat>
+    <v-card-text class="scrolling-container pb-10" style="max-height: 55vh">
+      <v-card-subtitle>Handbuch</v-card-subtitle>
+      <v-card class="ml-6 mr-6">
+        <v-row>
+          <v-col class="pr-0 pl-6" sm="6">
+            <v-card-text
+              class="pr-0"
+            >Handbuch herunterladen, um mehr über die Benutzung der WebApp zu erfahren</v-card-text>
+          </v-col>
+          <v-col sm="6">
+            <v-card-text class="pr-6">
+              <a href="handbuch.pdf" target="_blank">
+                <v-btn large depressed color="primary" :value="false">
+                  <v-icon>mdi-download</v-icon>Handbuch herunterladen
+                </v-btn>
+              </a>
+            </v-card-text>
+          </v-col>
+        </v-row>
+      </v-card>
     </v-card-text>
   </v-card>
 </template>
@@ -56,16 +45,14 @@ export default {
         .$parent.$parent.$refs["vargraph"];
     },
 
-    // get Settings 
+    // get Settings
     getHelpSettings() {
       // ...
-      
     },
 
     // apply settings to cytoscape element
     setHelpSettings() {
       // ...
-
     }
   }
 };

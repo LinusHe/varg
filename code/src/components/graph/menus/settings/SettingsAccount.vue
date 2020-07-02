@@ -68,9 +68,15 @@
           <v-text-field
             v-model="newusername"
             id="username"
+            ref="userNameForm"
             label="Neuer Name"
             class="mb-5 mt-5 hueshift"
-            :rules="[v => !!v || 'Feld darf nicht leer sein', v => v.length <= 25 || 'Maximal 25 Zeichen erlaubt']"
+            :rules="[
+              v => !!v || 'Feld darf nicht leer sein',
+              v => (v || '').indexOf(' ') < 0 || 'Keine Leerzeichen erlaubt',
+              v => v.length <= 25 || 'Maximal 25 Zeichen erlaubt', 
+              v => v !== this.$store.state.user.name || 'Das ist dein derzeitiger Name'
+            ]"
           ></v-text-field>
         </v-card-text>
         <v-card-actions>
@@ -91,22 +97,24 @@
           <v-text-field
             v-model="password"
             id="password"
+            ref="userPWForm"
             label="Aktuelles Passwort"
             class="mb-5 mt-5 password hueshift"
             :type="show ? 'text' : 'password'"
             :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
             @click:append="show = !show"
-            :rules="[v => !!v || 'Feld darf nicht leer sein', v => v.length <= 255 || 'Maximal 255 Zeichen erlaubt']"
+            :rules="[v => !!v || 'Feld darf nicht leer sein', v => v.length <= 25 || 'Maximal 25 Zeichen erlaubt']"
           ></v-text-field>
           <v-text-field
             v-model="newpassword"
             id="newpassword"
+            ref="userPWForm"
             label="Neues Passwort"
             class="mb-5 mt-5 password hueshift"
             :type="show ? 'text' : 'password'"
             :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
             @click:append="show = !show"
-            :rules="[v => !!v || 'Feld darf nicht leer sein', v => v.length <= 255 || 'Maximal 255 Zeichen erlaubt']"
+            :rules="[v => !!v || 'Feld darf nicht leer sein', v => v.length <= 25 || 'Maximal 25 Zeichen erlaubt']"
           ></v-text-field>
             <em>Diese Aktion kann nicht rückgängig gemacht werden.</em>
         </v-card-text>
@@ -123,18 +131,19 @@
       <v-card>
         <v-card-title class="headline">Account löschen</v-card-title>
         <v-card-text>
-          <b>Achtung: Wenn du deinen Account löschst, werden alle deine Graphen aus der Datenbank entfernt und dein Account gelöscht.<br /><br />
-          Anschließend wirst du ausgeloggt.</b>
+          <b>Achtung: Wenn du deinen Account löschst, werden deine Kontoinformationen und alle deine Graphen unwiderruflich aus der Datenbank entfernt!<br /><br />
+          Du wirst nach erfolgreicher Löschung automatisch ausgeloggt.</b>
           <br />
           <v-text-field
             v-model="password"
             id="password"
+            ref="userDeleteForm"
             label="Passwort"
             class="mb-5 mt-5 password hueshift"
             :type="show ? 'text' : 'password'"
             :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
             @click:append="show = !show"
-            :rules="[v => !!v || 'Feld darf nicht leer sein', v => v.length <= 255 || 'Maximal 255 Zeichen erlaubt']"
+            :rules="[v => !!v || 'Feld darf nicht leer sein', v => v.length <= 25 || 'Maximal 25 Zeichen erlaubt']"
           ></v-text-field>
             <em>Diese Aktion kann nicht rückgängig gemacht werden.</em>
         </v-card-text>
@@ -223,65 +232,71 @@ export default {
     },
 
     editUserName() {
-      axios
-        .put("https://sam.imn.htwk-leipzig.de:7070/VarG/account", {
-          type: 0,
-          user: this.$store.state.user.name,
-          newInfo: this.newusername
-        })
-        .then(response => {
-          this.$store.state.user.name = this.newusername;
-          this.getAccountSettings();
-          dialogComponent.dialogSuccess("Benutzername erfolgreich geändert - dein neuer Name ist " + this.$store.state.user.name);
-          this.usernameDialog = false;
-          this.newusername = "";
-        })
-        .catch(error => {
-          if(error.response) {
-            if(error.response.status === 403) dialogComponent.dialogError("Ändern des Benutzernamens fehlgeschlagen: <b>Dieser Name existiert bereits</b>");
-          }
-          else dialogComponent.dialogError("Ändern der Benutzerdaten fehlgeschlagen: <b>Netzwerkfehler</b>");
-        });
+      if(this.$refs.userNameForm.validate()) {
+        axios
+          .put("http://192.168.99.101:1110/VarG/account", {
+            type: 0,
+            user: this.$store.state.user.name,
+            newInfo: this.newusername
+          })
+          .then(response => {
+            this.$store.state.user.name = this.newusername;
+            this.getAccountSettings();
+            dialogComponent.dialogSuccess("Benutzername erfolgreich geändert - dein neuer Name ist " + this.$store.state.user.name);
+            this.usernameDialog = false;
+            this.newusername = "";
+          })
+          .catch(error => {
+            if(error.response) {
+              if(error.response.status === 403) dialogComponent.dialogError("Ändern des Benutzernamens fehlgeschlagen: <b>Dieser Name existiert bereits</b>");
+            }
+            else dialogComponent.dialogError("Ändern der Benutzerdaten fehlgeschlagen: <b>Netzwerkfehler</b>");
+          });
+      }
     },
 
     editUserPW() {
-      axios
-        .put("https://sam.imn.htwk-leipzig.de:7070/VarG/account", {
-          type: 1,
-          user: this.$store.state.user.name,
-          password: this.password,
-          newInfo: this.newpassword
-        })
-        .then(response => {
-          dialogComponent.dialogSuccess("Passwort erfolgreich geändert - du wirst jetzt ausgeloggt");
-          this.logout();
-        })
-        .catch(error => {
-          if(error.response) {
-            if(error.response.status === 403) dialogComponent.dialogError("Ändern des Passworts fehlgeschlagen: <b>Das aktuelle Passwort wurde falsch eingegeben</b>");
-          }
-          else dialogComponent.dialogError("Ändern der Benutzerdaten fehlgeschlagen: <b>Netzwerkfehler</b>");
-          });
+      if(this.$refs.userPWForm.validate()) {
+        axios
+          .put("http://192.168.99.101:1110/VarG/account", {
+            type: 1,
+            user: this.$store.state.user.name,
+            password: this.password,
+            newInfo: this.newpassword
+          })
+          .then(response => {
+            dialogComponent.dialogSuccess("Passwort erfolgreich geändert - du wirst jetzt ausgeloggt");
+            this.logout();
+          })
+          .catch(error => {
+            if(error.response) {
+              if(error.response.status === 403) dialogComponent.dialogError("Ändern des Passworts fehlgeschlagen: <b>Das aktuelle Passwort wurde falsch eingegeben</b>");
+            }
+            else dialogComponent.dialogError("Ändern der Benutzerdaten fehlgeschlagen: <b>Netzwerkfehler</b>");
+            });
+      }
     },
 
     deleteUserAccount() {
-      axios
-        .delete("https://sam.imn.htwk-leipzig.de:7070/VarG/account", {
-          params: {
-            user: this.$store.state.user.name,
-            password: this.password
-          }
-        })
-        .then(response => {
-          dialogComponent.dialogSuccess("Account erfolgreich gelöscht - du wirst jetzt ausgeloggt");
-          this.logout();
-        })
-        .catch(error => {
-          if(error.response) {
-            if(error.response.status === 403) dialogComponent.dialogError("Löschen des Accounts fehlgeschlagen: <b>Das eingegebene Passwort ist falsch</b>");
-          }
-          else dialogComponent.dialogError("Löschen des Accounts fehlgeschlagen: <b>Netzwerkfehler</b>");
-        });
+      if(this.$refs.userDeleteForm.validate()) {
+        axios
+          .delete("http://192.168.99.101:1110/VarG/account", {
+            params: {
+              user: this.$store.state.user.name,
+              password: this.password
+            }
+          })
+          .then(response => {
+            dialogComponent.dialogSuccess("Account erfolgreich gelöscht - du wirst jetzt ausgeloggt");
+            this.logout();
+          })
+          .catch(error => {
+            if(error.response) {
+              if(error.response.status === 403) dialogComponent.dialogError("Löschen des Accounts fehlgeschlagen: <b>Das eingegebene Passwort ist falsch</b>");
+            }
+            else dialogComponent.dialogError("Löschen des Accounts fehlgeschlagen: <b>Netzwerkfehler</b>");
+          });
+      }
     },
 
     // apply settings to cytoscape element

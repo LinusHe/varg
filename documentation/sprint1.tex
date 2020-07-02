@@ -47,15 +47,15 @@ Im Planning-Meeting erklärten die Projektmanager zu Beginn noch einmal kurz, wi
         \hline
 	Arbeitspaket & Person & Start & Ende & h & Artefakt\\
         \hline
-	Vue.js "Getting Started" Tutorial durcharbeiten (für alle) & Buchmann, Lennart & 07.12.19 & 07.12.19 & 3 & Tutorial abgeschlossen\\ \hline
+	Vue.js ''Getting Started'' Tutorial durcharbeiten (für alle) & Buchmann, Lennart & 07.12.19 & 07.12.19 & 3 & Tutorial abgeschlossen\\ \hline
 	Beispielgraph erstellen & Buxel, Nils & 09.12.19 & 09.12.19 & 1 & index.js\\ \hline
 	Kürzesten Weg mit A*-Algorithm berechnen u anzeigen lassen & Buxel, Nils &16.12.19 & 16.12.19 & 1 & index.js\\ \hline
 	Funktionen zu Buttons hinzufügen & Gwozdz, Jonas & 14.12.19 & 16.12.19 & 4 & MenuControls.vue\\ \hline
 	Task: Einbindung in Vue-Dateistruktur & Heldt, Erik & 15.12.19 & 15.12.19 & 3 & MenuControls.vue, BasicData.js\\ \hline
 	Graphenanordnung & Heldt, Erik & 05.12.19 & 05.12.19 & 3 & Graphenanordnung.pdf\\ \hline
-	Vue.js "Getting Started" Tutorial durcharbeiten (für alle) & Heldt, Erik & 11.12.19 & 11.12.19 & 2 & Tutorial abgeschlossen\\ \hline
+	Vue.js ''Getting Started'' Tutorial durcharbeiten (für alle) & Heldt, Erik & 11.12.19 & 11.12.19 & 2 & Tutorial abgeschlossen\\ \hline
 	Funktionen zu Buttons hinzufügen & Henning, Tim & 10.12.19 & 10.12.19 & 2 & MenuControls.vue\\ \hline
-	Vue.js "Getting Started" Tutorial durcharbeiten (für alle) & Henning, Tim & 06.12.19 & 06.12.19 & 3 & Tutorial abgeschlossen\\ \hline
+	Vue.js ''Getting Started'' Tutorial durcharbeiten (für alle) & Henning, Tim & 06.12.19 & 06.12.19 & 3 & Tutorial abgeschlossen\\ \hline
 	Einbindung von Cytoscape in Vue & Herterich, Linus & 10.12.19 & 10.12.19 & 4 & index.js\\ \hline
 	Buttons für Knoten und Kantenerstellung & Herterich, Linus & 13.12.19 & 13.12.19 & 3 & CreateControls.vue\\ \hline
 	Knoten zu Graph hinzufügen & Herterich, Linus & 16.12.19 & 16.12.19 & 2,5 & index.js, CreateControls.vue\\ \hline
@@ -77,18 +77,25 @@ Da der erste Sprint größtenteils nur zur Erstellung einer grundlegenden Datens
 {\small Autor: Erik Heldt}
 
 Im ersten Review-Meeting stellten die Bachelorstudenten ihre Ergebnisse aus dem Sprint vor und die Manager gaben ihr Feedback dazu. Da sich die meisten Teammitglieder noch nicht richtig in Vue.js und Cytoscape einarbeiten konnten und teilweise große Schwierigkeiten mit den Frameworks hatten, gab es noch viele offene Aufgaben und nicht jeder hatte etwas vorzuzeigen.
+
 Als erstes stellten Julius H. und Erik die Datenstruktur für die Knoten vor. Weiterhin zeigte Julius, wie ein Knoten in der Anwendung dargestellt wird und dass dieser durch ungeschickte Verschiebung und Skalierung aus der GUI verschwinden kann. Deshalb kamen Vorschläge, zukünftig den Zoom zu limitieren und das grundsätzliche Graph-Layout nochmal zu überarbeiten.
+
 Um allen den Einstieg in die neuen Programmiersprachen und Bibliotheken etwas zu vereinfachen, stellte daraufhin Linus die Grundstruktur vor und erklärte noch einmal genau die einzelnen Elemente in der Dateistruktur. Weiterhin zeigte er, wie man ESLint-Fehler bei der Konsolenausgabe verhindern kann.
+
 Danach wurde zwischen den Managern und den Bachelorstudenten noch die zukünftige Berechnung der kürzesten Wege und die unbearbeiteten User-Stories besprochen und dass diese in den nächsten Sprint mit einfließen werden.
+
 Zum Schluss wurden noch ein paar allgemeine Fragen zum Testen und zu Git geklärt.
 
 \subsection{Ergebnisse der Retrospektive}
 {\small Autor: Erik Heldt}
 
 In der Retrospektive konnte jedes Teammitglied vor an die Tafel gehen und verschiedene Aspekte des Sprints mit einem Strich in einer Tabelle bewerten.
+
 Die Bewertung ging ausgeglichen aus. Die Gruppenleistung und das Gesamtergebnis waren gut, aber die Einzelleistungen der meisten Teammitglieder nicht. Viele Aufgaben blieben offen und wurden nicht erledigt, wozu in der Diskussion verschiedene Gründe angeführt wurden. Einerseits war es für die meisten schwer, sich selbst in die neue Programmierumgebung samt den Frameworks und Bibliotheken einzuarbeiten. Andererseits wussten viele nicht, was und wie viel sie machen sollten, was auf die nicht festgelegte Aufgabenzuteilung im Planning und die schlechte Kommunikation im Team während des Sprints zurückgeführt wurde. Letzteres Problem plante man damit zu lösen, in zukünftigen Plannings immer direkt Verantwortliche für bestimmte User-Stories festzulegen und entsprechende Tickets sofort im Anschluss zu erstellen und zuzuweisen.
+
 Beim Thema der Daily Meetings ist man zu dem Schluss gekommen, dass diese wenn möglich immer persönlich bleiben sollten und nur in Ausnahmefällen online z.B. über Discord stattfinden sollten. Weiterhin wurde diskutiert, ob die Zeitspanne zwischen Donnerstag und Montag evtl. zu kurz ist, um schon weitreichende Ergebnisse zu erzielen, da am Wochenende einige Teammitglieder nicht programmieren können. Deshalb sollten die ersten Meetings beim nächsten Sprint stattdessen Montag und Donnerstag stattfinden.
-Ein weiterer Themenpunkt war die Organisation im Git. Es wurde festgelegt, dass der Master-Branch während des Sprints unberührt bleiben sollte, da dieser immer lauffähig sein muss. Stattdessen sollte sich jeder seinen eigenen Branch erstellen und diesen nach Abschluss der eigenen Aufgaben auf den neuen Developer-Branch namens "targetbranch" mergen. Am Ende jedes Sprints würde dann der Developer-Branch mit dem Master-Branch gemerged werden.
+
+Ein weiterer Themenpunkt war die Organisation im Git. Es wurde festgelegt, dass der Master-Branch während des Sprints unberührt bleiben sollte, da dieser immer lauffähig sein muss. Stattdessen sollte sich jeder seinen eigenen Branch erstellen und diesen nach Abschluss der eigenen Aufgaben auf den neuen Developer-Branch namens ''targetbranch'' mergen. Am Ende jedes Sprints würde dann der Developer-Branch mit dem Master-Branch gemerged werden.
 
 \subsection{Abschließende Einschätzung des Product-Owners}
 {\small Autor: xxx}
