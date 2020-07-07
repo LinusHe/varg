@@ -139,6 +139,7 @@ export default {
         .put(URL, {
           user: this.$store.state.user.name,
           role: this.$store.state.user.role,
+          author: this.$store.state.user.name,  // theoretically we don't actually need the author in this request, but the API needs it if the user is an admin
           json: JSON.stringify(CONTENT)
         })
         .then(response => {
