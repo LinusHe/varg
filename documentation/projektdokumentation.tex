@@ -718,20 +718,21 @@ Sobald etwas am Graph geändert wird, erscheinen die 'Graph optimieren' bzw. 'Op
 \subsubsection{Clientseitige Installation für Anwender}
 {\small Autor: Erik Heldt}
 
-VarG ist eine plattformunabhängige Webanwendung, das heißt man muss nichts lokal auf seinem PC installieren, um sie zu benutzen. Alles was man benötigt, ist ein moderner Web-Browser und eine Internetverbindung (Browser-Empfehlung: Google Chrome oder Firefox). Öffne den Browser und gib in der URL-Leiste \url{www.sam.imn.htwk-leipzig.de} ein. Nun befindest du dich im Home-Menü von VarG und kannst loslegen!
+VarG ist eine plattformunabhängige Webanwendung, das heißt man muss nichts lokal auf seinem PC installieren, um sie zu benutzen. Alles was man benötigt, ist ein moderner Web-Browser und eine Internetverbindung (Browser-Empfehlung: Google Chrome oder Firefox). Öffne den Browser und gib in der URL-Leiste \url{https://sam.imn.htwk-leipzig.de} ein. Nun befindest du dich im Home-Menü von VarG und kannst loslegen!
 
 \subsubsection{Clientseitige Installation für Entwickler}
 {\small Autor: Erik Heldt}
 
-Um die Anwendung im Entwicklungszustand ausführen zu können, musst du Node.js und npm auf deinem PC installieren. Wie das geht erfährst du hier: \url{https://www.npmjs.com/get-npm}. Node.js ist eine JavaScript-Entwicklungsumgebung, die benötigt wird, um die Anwendung samt der genutzten Frameworks und Bibliotheken kompilieren und ausführen zu können. Node Package Manager, oder kurz npm, wird mit Node.js mitgeliefert und verwaltet alle installierten Pakete, die beim Bauen des Programms verwendet werden.
+Um die Anwendung im Entwicklungszustand ausführen zu können, musst du Node.js und npm auf deinem PC installieren. Wie das geht erfährst du hier: \url{https://www.npmjs.com/get-npm}.
+\\Node.js ist eine JavaScript-Entwicklungsumgebung, die benötigt wird, um die Anwendung samt der genutzten Frameworks und Bibliotheken kompilieren und ausführen zu können. Node Package Manager, oder kurz npm, wird mit Node.js mitgeliefert und verwaltet alle installierten Pakete, die beim Bauen des Programms verwendet werden.
 
-Weiterhin wird das Versionsmanagement-Tool Git benötigt. Den Download dafür gibt es hier: \url{https://git-scm.com/downloads} bzw. für Windows-Nutzer wird die Git BASH empfohlen: \url{https://gitforwindows.org/}.
+Weiterhin wird das Versionsmanagement-Tool Git benötigt. Den Download dafür gibt es hier: \url{https://git-scm.com/downloads} bzw. für Windows-Nutzer wird die Git-Bash empfohlen: \url{https://gitforwindows.org}.
 \\
 \\Sind diese Tools nun installiert, musst du dir das VarG-Repository von GitLab auf deinen PC herunterladen bzw. ''klonen''. Um vollständigen Zugriff auf dieses Repository zu haben, musst du im GitLab dem Projekt zugeordnet sein. Besitzt du also die entsprechenden Rechte, navigiere im Terminal in einen Ordner auf deinem Rechner, in dem du das Projekt speichern willst, und gib dort den Befehl \begin{verbatim}git clone https://gitlab.imn.htwk-leipzig.de/weicker/varg.git\end{verbatim} ein. Warte, bis das Herunterladen abgeschlossen ist, und öffne dann den neu erschienenen Ordner ''varg'' in einem Code-Editor (empfohlen wird Visual Studio Code).
 \\
-\\Es sollten dort mehrere Ordner zu sehen sein, unter anderem der ''code''-Ordner. Darin ist der gesamte Quellcode des Projekts enthalten. Du solltest dich also zur Ausführung des Programms immer in diesem Ordner aufhalten. Um nun den Code zu kompilieren und als Entwicklungsversion auszuführen, folge bitte diesem Tutorial: \href[pdfnewwindow=true]{file:zuarbeiten/InstallationVarg.pdf}{VarG-Installation von Linus Herterich} (klickbarer Link, Anleitung nur für VSCode).
-\\
-\\\subsubsection{Serverseitige Installation}
+\\Es sollten dort mehrere Ordner zu sehen sein, unter anderem der ''code''-Ordner. Darin ist der gesamte Quellcode des Projekts enthalten. Du solltest dich also zur Ausführung des Programms immer in diesem Ordner aufhalten. Um nun den Code zu kompilieren und als Entwicklungsversion auszuführen, folge bitte diesem Tutorial: \href[pdfnewwindow=true]{file:zuarbeiten/InstallationVarg.pdf}{VarG-Installation von Linus Herterich} (klickbarer Link, Anleitung nur für VSCode).\newpage
+
+\subsubsection{Serverseitige Installation}
 {\small Autor: Linus Herterich}
 \\
 \textbf{Login-Daten}
@@ -751,18 +752,18 @@ Login-Daten für die MySQL Datenbank:
   User: 'root' | Passwort: 'l_GD6P67+V' | Datenbank: 'vargdb'
 \end{verbatim}
 \textbf{Webserver und SSL}
-\\Für die serverseitige Installation des Projekts wird ein SSL zertifizierter Webserver benötigt.
+\\Für die serverseitige Installation des Projekts wird ein SSL-zertifizierter Webserver benötigt.
 In unserem Fall haben wir Apache 2.4 verwendet, um das Frontend live zu schalten. Es sind aber auch andere
-gängige HTTP Webserver möglich. Wenn andere Webserver technologien verwendet werden, muss folgende
+gängige HTTP Webserver möglich. Wenn andere Webservertechnologien verwendet werden, muss folgende
 Anleitung beachtet werden, damit das Vue-Routing funktioniert: \url{https://router.vuejs.org/guide/essentials/history-mode.html}.
-Für die Installation eines SSL Zertifikats haben wir den certbot (\url{https://certbot.eff.org/}) verwendet. 
+Für die Installation eines SSL-Zertifikats haben wir den certbot ( \url{https://certbot.eff.org/} ) verwendet. 
 \\ACHTUNG: Das SSL-Zertifikat muss im Sommer 2021 verlängert werden, damit die Webanwendung weiter problemlos funktioniert 
 (Anleitung hierfür findet sich auf der certbot Webseite).
 \\Am Ende der Datei \begin{verbatim}
   varg/docker/node.js/api.js
 \end{verbatim}
 müssen die SSL ''.perm'' Zertifikate verlinkt werden, damit die API auch auf die SSL-Zertifikate zugreifen kann
-und somit eine Verschlüsselte Kommunikation zwischen Frontend und Backend stattfinden kann.
+und somit eine verschlüsselte Kommunikation zwischen Frontend und Backend stattfinden kann.
 Derzeit sind bereits die richtigen Pfade eingetragen.
 \\\\
 \textbf{Klonen des Projekts}
@@ -771,37 +772,37 @@ Hierzu muss sich zunächst auf dem Server eingeloggt werden (Anmeldedaten siehe 
 \begin{verbatim}
   cd /var/www/html
 \end{verbatim} 
-in das Standard-Webserver Verzeichnis von Apache navigiert werden. Dort wird anschließend das Projekt mit dem Befehl
+in das Standard Webserver-Verzeichnis von Apache navigiert werden. Dort wird anschließend das Projekt mit dem Befehl
 \begin{verbatim}
   git clone https://gitlab.imn.htwk-leipzig.de/weicker/varg.git
 \end{verbatim} 
-geklont. Nun muss ein GitLab-Nutzername und Passwort eingegeben werden, damit das Projekt in den Ordner ''varg'' geklont werden kann.
-Will man dies umgehen, kann auch ein SSH Schlüssel generiert werden und bei einem GitLab Account hinterlegt werden (weitere Details:
+geklont. Nun muss ein GitLab-Nutzername und -Passwort eingegeben werden, damit das Projekt in den Ordner ''varg'' geklont werden kann.
+Will man dies umgehen, kann auch ein SSH-Schlüssel generiert werden und bei einem GitLab Account hinterlegt werden (weitere Details:
 \url{https://docs.gitlab.com/ee/ssh/})
 \\Nun wurde ein Ordner mit folgendem Pfad angelegt, indem die Projekt-Daten sind:
 \begin{verbatim}
   /var/www/html/varg
 \end{verbatim}
-Navigiert man per ''cd'' in den Ordner, so kann dort das Projekt aktuallisiert (mit ''git pull'') oder andere Branches ausgewählt werden (mit ''git checkout ..'').
+Navigiert man per ''cd'' in den Ordner, so kann dort das Projekt aktualisiert (mit ''git pull'') oder andere Branches ausgewählt werden (mit ''git checkout ...'').
 \\\\
 \textbf{Unterschiede Entwicklungsversion und Produktionsversion}
 \\Im Code sind einige Stellen zu ändern, damit das Projekt auf dem Server lauffähig ist. Am besten wird hierfür ein neuer Branch erstellt, welcher zwar auf dem 
 aktuellen Projektstand ist, aber die Server-Änderungen beinhaltet. Dieser Branch wird anschließend auf dem Server gepullt (wir nannten diesen Branch immer ''prod'').
 \\Bei den Änderungen handelt es sich zum einen um IP-Adressen, die zum API-Docker-Container zeigen, aber auf der Live Version zur Live-API-Adresse zeigen müssen. 
 \begin{itemize}
-\item Mit dem Suchen und ersetzen Tool im IDE müssen all diese IP-Adressen ausgetauscht werden, die für die AXIOS Requests verwendet werden:
+\item Mit dem ''Suchen und Ersetzen''-Tool im IDE (in VSCode: View -> Search) müssen all diese IP-Adressen ausgetauscht werden, die für die HTTP-Requests verwendet werden:
 \begin{verbatim}
-  'http://192.168.1.102:1110' 
+  'http://192.168.99.101:1110' 
   (Kann auch abweichen. Bitte selbst in den Dateien (bspw. SettingsAccount.vue)
-   überprüfen, an welche Domain alle Axios Requests gehen)
+   überprüfen, an welche Domain alle Axios-Requests gehen)
 \end{verbatim}
-in den allen Dateien zur Live-API Adresse ändern: 
+in allen Dateien zur Live-API Adresse ändern: 
 \begin{verbatim}
   'https://sam.imn.htwk-leipzig.de:7070'
 \end{verbatim}
-Wichtig: Die Endungen (z.B. .../VarG/graph/meta) müssen gleich bleiben und an die Adresse angehangen werden.
+Wichtig: Die Endungen (z.B. .../VarG/graph/meta) dürfen nicht verändert werden und müssen an der Adresse angehängt bleiben (außer man ändert auch die Express-Routen in der API).
 
-\item Desweiteren müssen die Datenbank-Zugangsdaten in folgender Datei geändert werden:
+\item Des Weiteren müssen die Datenbank-Zugangsdaten in folgender Datei geändert werden:
 \begin{verbatim}
   /var/www/html/varg/docker/node.js/api.js
 \end{verbatim}
@@ -811,26 +812,22 @@ Die Zugangsdaten sind am Anfang in einer Konstanten (namens config) abgespeicher
   user: 'root',
   password: 'l_GD6P67+V',
   database: 'vargdb'
-
-
 \end{verbatim}
-\item Zudem muss in der api.js Datei folgende Zeile geändert werden:
+\item Weiterhin muss in api.js folgende Zeile geändert werden:
 \begin{verbatim}
-  res.header("Access-Control-Allow-Origin", "http://localhost:8080")
+  res.header("Access-Control-Allow-Origin", "http://localhost:8080");
 \end{verbatim}
 zu
 \begin{verbatim}
   res.header("Access-Control-Allow-Origin", "https://sam.imn.htwk-leipzig.de");
-
-
-\end{verbatim}
-\item Außerdem muss am Ende der Datei der Block
+\end{verbatim}\newpage
+\item Außerdem muss am Ende der Datei der Code-Block
 \begin{verbatim}
   api.listen(8080, () => {
     console.log('API listens to 8080');
   });
 \end{verbatim}
-mit folgendem ersetzt werden
+durch folgenden Code ersetzt werden:
 \begin{verbatim}
   https
     .createServer(
@@ -841,7 +838,6 @@ mit folgendem ersetzt werden
       api
     )
     .listen(7070);
-
 \end{verbatim}
 Damit dies funktioniert müssen eventuell am Anfang der Datei folgende Module importiert werden:
 \begin{verbatim}
@@ -849,11 +845,9 @@ Damit dies funktioniert müssen eventuell am Anfang der Datei folgende Module im
   const mysql_driver = require("mysql");
   const fs = require("fs");
   const https = require("https");
-
-
 \end{verbatim}
 \end{itemize}
-All diese Änderungen sollten auf einem prarallelen Branch durchgeführt und anschließend gepusht werden.
+Wie bereits erwähnt sollten all diese Änderungen auf einem parallelen Branch durchgeführt und anschließend gepusht werden.
 Im Anschluss kann das Projekt mit den Live-Änderungen auf dem Server gepullt werden.
 \\\\
 \textbf{Installation Produktions-Frontend}
@@ -869,30 +863,29 @@ anschließend wird folgender Befehl ausgeführt (Voraussetzung ist eine LTS-Vers
 und im Anschluss:
 \begin{verbatim}
   npm run build
-
-\end{verbatim}
-Nun wurden die kompilierten Dateien in den Ordner
+\end{verbatim}\newpage
+\noindent Nun wurden die kompilierten Dateien in den Ordner
 \begin{verbatim}
   /var/www/html/varg/code/dist
 \end{verbatim}
-abgelegt. Apache (oder andere HTML Server Technologie) muss so konfiguriert werden (auf dem aktuellen Server ist das bereits eingestellt), 
-dass der DocumentRoot in diesen Ordner zeigt. Wird mit Apache gearbeitet, muss zudem sichergestellt sein, dass ''mod rewrite'' aktiviert ist
-(siehe \url{https://wiki.ubuntuusers.de/Apache/mod_rewrite/} ) . Sonst wird die ''.htaccess'' Datei im ''dist'' Ordner nicht richtig gelesen und 
+abgelegt. Apache (oder andere HTML Server Technologie) muss so konfiguriert werden, 
+dass der DocumentRoot in diesen Ordner zeigt (auf dem aktuellen Server ist das bereits eingestellt). Wird mit Apache gearbeitet, muss zudem sichergestellt sein, dass ''mod rewrite'' aktiviert ist
+(siehe \url{https://wiki.ubuntuusers.de/Apache/mod_rewrite/} ). Sonst wird die ''.htaccess'' Datei im ''dist'' Ordner nicht richtig gelesen und 
 die Navigation zwischen einzelnen Seiten funktioniert nicht richtig.
-\\Ist alles problemlos abgelaufen, sollte nun das Frontend unter der URL ''https://sam.imn.htwk-leipzig.de'' erreichbar sein.
+\\Ist alles problemlos abgelaufen, sollte nun das Frontend unter der URL \url{https://sam.imn.htwk-leipzig.de} erreichbar sein.
 \\\\
-\textbf{Installation MYSQL}
-\\Auf dem Webserver muss eine aktuelle Version von MYSQL laufen. Es kann folgende Anleitung zur Installation verwendet werden:
-\url{https://wiki.ubuntuusers.de/MySQL/}. Es ist darauf zu achten, dass als root Passwort \begin{verbatim}'l_GD6P67+V'\end{verbatim} gewählt wird. 
+\textbf{Installation MySQL}
+\\Auf dem Webserver muss eine aktuelle Version von MySQL laufen. Es kann folgende Anleitung zur Installation verwendet werden:
+\url{https://wiki.ubuntuusers.de/MySQL/} . Es ist darauf zu achten, dass als root Passwort \begin{verbatim}'l_GD6P67+V'\end{verbatim} gewählt wird. 
 Ansonsten muss ein anderes Passwort in der ''api.js'' Datei (siehe oben) eingetragen werden.
-\\Sobald MySQL installiert ist, kann über das Adminer Tool, welches beim Frontend unter der URL ''https://sam.imn.htwk-leipzig.de/adminer.php'' 
-erreichbar ist, eine Datenbank mit dem Namen ''vargdb'' angelegt werden. Um die Initialen Tabellen mit Beispieldaten anzulegen, kann im 
+\\Sobald MySQL installiert ist, kann über das ''Adminer''-Tool, welches beim Frontend unter der URL \url{https://sam.imn.htwk-leipzig.de/adminer.php} 
+erreichbar ist, eine Datenbank mit dem Namen ''vargdb'' angelegt werden. Um die initialen Tabellen (evtl. mit Beispieldaten) anzulegen, kann im 
 Anschluss folgende Datei in die Datenbank per Adminer importiert werden:
 \begin{verbatim}
   varg/docker/mysql/dump.sql
 \end{verbatim} 
 Nun ist die Datenbank eingerichtet und kann über die API angesteuert werden.
-\\\\Falls der aktuelle Server weitergenutzt wird, ist bereits mySQL mit der aktuellen Datenbank installiert. Um auf die MySQL Datenbank per
+\\\\Falls der aktuelle Server weitergenutzt wird, ist bereits MySQL mit der aktuellen Datenbank installiert. Um auf die MySQL Datenbank per
 Terminal zuzugreifen, muss sich per SSH eingeloggt werden und anschließend folgender Befehl eingegeben werden:
 \begin{verbatim}
   mysql -uroot -p
@@ -911,19 +904,19 @@ gestartet werden. Man sieht nun den Log der API. Bei jeder Anfrage wird nun eine
 zur MySQL Datenbank gibt, werden diese hier angezeigt.
 \\\\
 \textbf{API-Server dauerhaft laufen lassen}
-\\Ein Problem ist, dass die API nur solange läuft, solange auch der Terminal geöffnet ist, unter dem der Befehl aufgerufen wurde.
+\\Ein Problem ist, dass die API nur solange läuft, solange auch das Terminal geöffnet ist, in dem der Befehl aufgerufen wurde.
 Da aber die API immer laufen soll, kann die Technologie ''forever'' verwendet werden (\url{https://www.npmjs.com/package/forever}).\\
 Mit folgendem Befehl kann die API dauerhaft gestartet werden:
 \begin{verbatim}
   forever start -o out.log -e err.log /var/www/html/varg/docker/node.js/api.js
 \end{verbatim}
-für out.log und err.log können auch andere Namen oder Pfade verwendet werden. Es handelt sich hierbei um den Output bzw. Error-Meldungen,
-die ansonsten über das Terminal ausgegben worden wären.
+Für ''out.log'' und ''err.log'' können auch andere Namen oder Pfade verwendet werden. Es handelt sich hierbei um den Output bzw. Error-Meldungen,
+die ansonsten über das Terminal ausgegeben worden wären.
 \\Mit folgendem Befehl kann nun angezeigt werden, ob die API (noch) mit forever läuft:
 \begin{verbatim}
   forever list
 \end{verbatim}
-Die dort Angegebene Liste beinhaltet neben dem Namen der ausgeführten API-Datei auch eine ID. Diese kann verwendet werden, um mit folgendem
+Die dort angegebene Liste beinhaltet neben dem Namen der ausgeführten API-Datei auch eine ID. Diese kann verwendet werden, um mit folgendem
 Befehl die API zu stoppen:
 \begin{verbatim}
   forever stop [ID]
@@ -936,11 +929,30 @@ im Verzeichnis ''/var/www/html/varg/'' auf dem Web-Server heruntergeladen.
 \\Wenn Änderungen an der API-Logik vorgenommen wurden, so muss die API mit dem ''forever stop'' Befehl gestoppt und anschließend neu gestartet werden.
 \\Falls an der MySQL Datenbank etwas grundlegendes geändert wurde, so kann die Datenbank mit dem Adminer Tool (\url{https://sam.imn.htwk-leipzig.de/adminer.php})
 bearbeitet werden.
+\\\\\textbf{Vergessenes Passwort eines Users ändern}
+\\Wir verwenden eine programmeigene User-Datenbank zur Verwaltung des Logins und der damit verbundenen User-Accounts (Tabelle ''userreg'' in der MySQL DB). Da diese sehr simpel implementiert ist und keine E-Mail zur Anmeldung erforderlich ist, konnten wir keine Frontend-Funktionalität für ''Passwort vergessen'' einbauen (Passwort ändern ist natürlich möglich, aber dafür wird das derzeitige Passwort benötigt). Wenn ein User mal sein Passwort vergisst, muss er sich an einen Backend-Admin mit Zugriff auf Adminer wenden. Im Folgenden wird beschrieben wie der Admin das Passwort für den User manuell ändern kann:
+\begin{enumerate}
+  \item Vergewissern, dass es sich wirklich um den Account des Users handelt und er nicht versucht, sich Zugriff auf einen anderen Account zu verschaffen
+  \item In Adminer einloggen (Login-Daten siehe oben)
+  \item Links auf ''SQL-Kommando'' klicken
+  \item In dem Fenster folgenden Befehl eingeben:
+           \begin{verbatim}
+  SET @userName = "...";
+  SET @password = "...";
+  UPDATE userreg
+    SET password = AES_ENCRYPT(@password, UNHEX(SHA2(@password, 512)))
+    WHERE userName = @userName;
+           \end{verbatim}
+  \item In der 1. Zeile die drei Punkte ersetzen durch den (exakten!) Namen des Users, dessen Passwort geändert werden soll (kann aus der userreg-Tabelle kopiert werden)
+  \item In der 2. Zeile die drei Punkte ersetzen durch ein neues temporäres Passwort, welches der User für seinen nächsten Login benutzen kann
+  \item Alles andere so lassen und auf ''Ausführen'' klicken - wenn es geklappt hat sollte mindestens eine grüne Nachricht mit dem Text ''Abfrage ausgeführt, 1 Datensatz betroffen.'' erscheinen
+  \item Dem User mitteilen, dass er nach dem ersten Login mit dem neuen Passwort bitte sofort in seine Account-Einstellungen gehen und das temporäre Passwort in sein eigenes ändern soll
+\end{enumerate}
 
 \subsection{Software-Lizenz}
 {\small Autor: Linus Herterich}
 
-Im folgenden werden die verwendeten Bibliotkeken und deren Lizenz aufgelistet:
+Im Folgenden werden die verwendeten Bibliotkeken und deren Lizenz aufgelistet:
 \begin{itemize}
   \item Vue.js - MIT License: Copyright (c) 2013-present Yuxi Evan You
   \item vuetify - MIT License: Copyright (c) 2016-2020 John Jeremy Leider
