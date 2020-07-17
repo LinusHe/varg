@@ -1,0 +1,229 @@
+\subsection{Ziel des Sprints}
+{\small Autor: Alaa Aldin Karkoutli}
+
+Ziel des Sprints war es, das Software zu dokumentieren und die noch stehenden Bugs zu beheben.\\
+
+\subsection{User-Stories des Sprint-Backlogs}
+{\small Autor: Alaa Aldin Karkoutli}
+
+\begin{itemize}
+  \item \textbf{Bugs fixen}
+        \\\textit{Als Benutzer möchte ich eine Software benutzen, in welcher keine unerwarteten Probleme auftauchen.}
+  \item \textbf{ Optimierung }
+        \\\textit{
+        Als Nutzer möchte ich wissen, nach welchen Kriterien die Graphen optemiert sind .}
+  \item \textbf{Dokumentation }
+        \\\textit{
+          Als Benutzer möchte mit einem Software arbeiten, das eine vollständige Dokumentation hat .}
+  \item \textbf{Persistenz der eingetragenen Daten}
+        \\\textit{
+          Als User will ich Kanten/Knoten Eigenschaften automatisch zu speichern, wenn sie bearbeitet werden.}
+  \item \textbf{Login}
+        \\\textit{
+          Als Nutzer möchte ich mehr Zugriff auf der DatenBank haben wenn ich Admin bin(Rollenmangment) und Login noch bissel optemiert sehen.}
+  \item \textbf{Backend-Datenbank}
+        \\\textit{
+          Als Benutzer möchte ich Test-Graphen in der Datenbank finden und die DatenBank vor Gefahr schützen .}
+\end{itemize}
+
+\subsection{Liste der durchgeführten Meetings}
+{\small Autor: Alaa Aldin Karkoutli}
+
+\begin{itemize}
+\item 25.05.2020: Planning
+\item 28.05.2020: Weekly
+\item 01.06.2020: Weekly
+\item 04.06.2020: Review \& Retro
+\end{itemize}
+
+\subsection{Ergebnisse des Planning-Meetings}
+{\small Autor: Alaa Aldin Karkoutli}
+
+Anwesend: Alaa Aldin, David, Erik, Jonas, Julius H., Lennart, Linus, Matthias, Tim, Alex, Manuel, Julius J.\\
+\\
+Im Planning haben wir die wichtigsten Punkte festgesetzt, die in der letzten Sprints Priorität haben, und die Schwierigkeit von denen bewertet.\\
+
+
+\textbf{Backend Datenbanken}\\
+Die Datenbank soll auf einem Server aufgesetzt werden, wenn Server bereitgestellt ist.
+Die generierte Test-Daten können in die Datenbank eingespeist werden. Als Ziel wurde gesetzt die Bugs zu beheben und alles nebenbei zu dokumentieren. 
+Diese Ziele wurden wie im letzten Sprint mit einer 6 bewertet.\\
+
+\textbf{Login}\\
+Weil es keine Antwort von IT-HTWK gab, konnte das Software an Schibboleth nicht verbunden werden.
+Es galt als Ziel Bugs zu behebn, Login zu überarbeiten und einen einfachen Zugriff auf die Datenbank vorzubereiten, in Absprache mit Backend-Team.
+Diese Ziele wurden mit einer 7 bewertet.\\
+
+\textbf{Optimierung}\\
+Es ist wichtig anzuzeigen, nach welchen Kriterien der Graph Optimiert ist.
+Dieses Ziel wurde mit 4 bewertet.\\
+
+\textbf{Persistenz der eingetragen Daten}\\
+Die Eigenschaften der Kanten/Knoten sollen automatisch gespeichert, wenn der Benutzer irgendeine Änderung auf diese Eigenschaften macht.
+Die Losgröße soll auch ohne Scrollbar dargestellt werden.
+Diese Ziele wurden mit 4 bewertet, aber nach hinten eingestellt, da Doku Priorität hat. \\
+
+\textbf{Dokumentation}\\
+Das Software soll ausführlich dokumentiert werden. Tests, Code-Kommentare und 
+Technische Ausarbeitungen müssen noch gemacht werden. Die Gedanken, die nicht gemacht werden konnten (Schibboleth, Datenbank..), müssen
+auch in der Dokumentation stehen. 
+Das Team stimmte ab und schätzte die Schwierigkeit auf 7.\\
+
+\textbf{Bugs fixen}\\
+Möglichst alle Bugs zu beheben ist seit den letzten Sprints in Bearbeitung. Das Ziel ist es,
+ein fehlerfreies Software abzugeben, indem alles ausprobieren und die Bugs lösen.
+
+\subsection{Aufgewendete Arbeitszeit pro Person$+$Arbeitspaket}
+{\small Autor: Alaa Aldin Karkoutli}
+
+\begin{longtable}{|p{4cm}|p{2cm}|p{1.2cm}|p{1.2cm}|p{0.7cm}|p{3.8cm}|}
+  \hline
+  Arbeitspaket                                                          & Person                & Start    & Ende     & h     & Artefakt                                                    \\
+  \hline
+  Überarbeitung Login                                                   & Berger, Matthias      & 31.05.20 & 31.05.20 & 4     & LoginForm.vue $+$ store/store.js                                              \\ \hline
+  
+
+  Überarbeitung Login                                                   & Buchmann, Lennart     & 31.05.20 & 31.05.20 & 4     & LoginForm.vue $+$ store/store.js                                              \\ \hline
+  Überarbeitung Login                                                   & Buchmann, Lennart     & 04.06.20 & 04.06.20 & 1     & LoginForm.vue $+$ store/store.js                                             \\ \hline
+
+
+  Bug: Fehlerhafte Verschiebung bei Manchen Knotenkonstellationen       & Gwozdz, Jonas         & 27.05.20 & 27.05.20 & 2,15   & position.js $+$ src/vargraph/graph/edges.js                                            \\ \hline
+  Bug: Fehlerhafte Verschiebung bei Manchen Knotenkonstellationen       & Gwozdz, Jonas         & 02.06.20 & 02.06.20 & 2,30   & position.js $+$ src/vargraph/graph/nodes.js                                      \\ \hline
+  Verschieben der Knoten beim anlegen                                   & Gwozdz, Jonas         & 02.06.20 & 02.06.20 & 0,30   & src/vargraph/graph/nodes.js                                                \\ \hline
+  Test für Darkmode                                                     & Gwozdz, Jonas         & 03.06.20 & 03.06.20 & 1,40   & darkmode\_spec.js                                               \\ \hline
+  I.1 Initiale Kundenvorgaben                                           & Gwozdz, Jonas         & 03.06.20 & 03.06.20 & 0,40   & Dokumentation                                            \\ \hline
+  III.2 Coding Style                                                    & Gwozdz, Jonas         & 03.06.20 & 03.06.20 & 1,10   & Dokumentation                                            \\ \hline
+  
+  
+  Dokumentation                                                         & Heldt, Erik           & 28.05.20 & 28.05.20 & 3,45  & documentation/projektdokumentation.tex                                                \\ \hline
+  Anzeigen des Graphen als Bild in der GUI                              & Heldt, Erik           & 01.06.20 & 03.06.20 & 3,30  & DatabaseForm.vue                                              \\ \hline
+  Ersetzen der TestDatabase durch MySQL DB                              & Heldt, Erik           & 03.06.20 & 03.06.20 & 0,30  & removedcode/ExportDatabase                                              \\ \hline
+  Überarbeitung Login                                                   & Heldt, Erik           & 04.06.20 & 04.06.20 & 1     & verschiedene Stellen                                            \\ \hline
+  DB Button in Home Menu nicht korrekt angebunden                       & Heldt, Erik           & 03.06.20 & 03.06.20 & 1     & NewGraph.vue                                            \\ \hline
+  Testen der Applikation                                                & Heldt, Erik           & 27.05.20 & 27.05.20 & 0,30  &                                                    \\ \hline
+  Konsistenz bei der Positionierung ähnlicher Komponenten               & Heldt, Erik           & 01.06.20 & 03.06.20 & 0,50  & verschiedene Stellen                                      \\ \hline
+
+  III.1 Definition of Done                                              & Henning, Tim          & 03.06.20 & 03.06.20 & 1     & projektdokumentation.tex                                             \\ \hline
+  Bug: Start und Endzustandsanzeige                                     & Henning, Tim          & 29.05.20 & 29.05.20 & 2     & vargraph/graph/optimizations.js                                                   \\ \hline
+  Selection-Felder bei Optimierungs-Einstellungen                       & Henning, Tim          & 31.05.20 & 31.05.20 & 4     & GraphInfo.vue $+$ vargraph/graph/optimizations.js                                          \\ \hline
+
+  II.3 Überblick über Architektur                                       & Herterich, Linus      & 03.06.20 & 04.06.20 & 1,45  & projektdokumentation.tex                                             \\ \hline
+  Testen der Applikation                                                & Herterich, Linus      & 03.06.20 & 03.06.20 & 0,5   &                                           \\ \hline
+  Drag-n-Drop Button verschwindet nach drüberhovern nicht               & Herterich, Linus      & 28.05.20 & 03.06.20 & 2,10  & verschiedene Stellen                                          \\ \hline
+  
+  Bug: Falsche Anzeige der Gesamtkosten und Zeit nach Importieren       & Hohlfeld, Julius      & 25.05.20 & 28.05.20 & 1     & vargraph/JSonPersistence.js                                                    \\ \hline         
+  Datenbank GUI wechselt nicht automatisch die Seite                    & Hohlfeld, Julius      & 27.05.20 & 27.05.20 & 1     & verschiedene Stellen                                          \\ \hline
+  Schutz vor SQL-Injections                                             & Hohlfeld, Julius      & 03.06.20 & 03.06.20 & 1,30  & api.js                                                      \\ \hline
+  II.4 Definierte Schnittstellen                                        & Hohlfeld, Julius      & 03.06.20 & 04.06.20 & 3,30  & projektdokumentation.tex                                                      \\ \hline
+  Backend Test Recherche                                                & Hohlfeld, Julius      & 03.06.20 & 03.06.20 & 0,5   & Recherche                                                    \\ \hline
+
+  Bugs:Persistenz des Graphen                                           & Karkoutli, Alaa Aldin & 02.06.20 & 02.06.20 & 3     & router/index.js                                              \\ \hline
+  Sprint-Doku                                                           & Karkoutli, Alaa Aldin & 01.06.20 & 05.06.20 & 4     & documentation/Sprint\_8.tex                                            \\ \hline
+  Graph wird nicht heruntergeladen,"Neuer Graph"->"Speichern"           & Karkoutli, Alaa Aldin & 01.06.20 & 01.06.20 & 1     & ExportDownload.vue $+$ HomeMenu.vue                                          \\ \hline
+  Überarbeitung Login                                                   & Karkoutli, Alaa Aldin & 31.05.20 & 31.05.20 & 4     & LoginForm.vue $+$ store/store.js                                          \\ \hline
+  
+  
+  Selection-Felder bei Optimierungs-Einstellungen                       & Koch, David           & 31.05.20 & 31.05.20 & 2     & GraphInfo.vue $+$ vargraph/graph/optimizations.js                                                   \\ \hline
+  X.1 Handbuch                                                          & Koch, David           & 04.06.20 & 04.06.20 & 2     & projektdokumentation.tex                                         
+\\ \hline
+\end{longtable}
+
+\subsection{Konkrete Code-Qualität im Sprint}
+{\small Autor: Alaa Aldin Karkoutli}
+
+Die Codequatlität war weiterhin gut.
+
+\subsection{Ergebnisse des Reviews}
+{\small Autor: Alaa Aldin Karkoutli}
+        
+Anwesend: Alaa Aldin, Erik, Jonas, Julius H., Lennart, David, Manuel, Alex, Julius J., Matthias, Linus, Tim \\
+
+Im Review stellte jeder Anwesende seine Arbeit vor.\\
+Die Ergebnisse und Erkenntnisse wurden ausgewertet.\\
+
+
+\textbf{David:}
+\begin{itemize}
+\item Handbuch dokumentiert
+\item Optimierung nicht viel gemacht
+\end{itemize}
+
+\textbf{Erik:}
+\begin{itemize}
+\item Dokumentationen geschrieben
+\item Datenbank Preview-Bilder anzeigen
+\item Testdatabase.js entfernt
+\end{itemize}
+
+\textbf{Jonas:}
+\begin{itemize}
+\item Springen der Knoten gefixt
+\item Bechreibung in der Kanten lesen
+\item Tests für Darkmode
+\item Dokumentation geschrieben
+\end{itemize}
+
+\textbf{Julius H.:}
+\begin{itemize}
+\item Dokumentation geschrieben.
+\item Sicher vor SQL-Injection
+\item Bugs (Importiern und Datenbank) gefixet
+\end{itemize}
+
+\textbf{Linus:}
+\begin{itemize}
+\item Bug gefixt (Darg und Drop Knoten)
+\item Dokumentation geschrieben
+\end{itemize}
+
+\textbf{Alaa Aldin, Lennart und Matthias (Login-Team):}
+\begin{itemize}
+\item Login-Überarbeitung vorbereitet (Code auskommentiert)
+\item Rollenmanagement 
+\end{itemize}
+
+\textbf{Alaa Aldin:}
+\begin{itemize}
+\item Bugs(NeuerGraph -> Speichern, Persistenz der Graphen, Logout) gefixt
+\item Knoten und Kanten in der gespeicherten Positionen laden
+\item Änderungen auf importierten Graphen in der LocalStorage speichern
+\end{itemize}
+
+\textbf{Bugs}\\
+Bugs sollen im Laufe des kommenden Sprints gefixt werden.\\
+
+\subsection{Ergebnisse der Retrospektive}
+{\small Autor: Alaa Aldin Karkoutli}
+
+Anwesend: Alaa Aldin, Erik, Jonas, Julius H., Lennart, David, Manuel, Alex, Julius J. \\
+
+Das Team war zufrieden mit der erreichten Leistung und hat eine positve Ansicht zum Sprint. Angesichts des baldigem Ende des Softwareprojekts wurde auch die Verwendung der restlichen Zeit kurz diskutiert.\\
+
+\begin{center}
+\begin{tabular}{ |c|c|c|c| }
+\hline
+ Keep & Add & Less & More\\
+\hline 
+-Teamwork & -Motivation & -unkompilierbare Doku & -Code Kommentare \\
+-Bugfixing & -Sprint & & -Branches aufräumen \\
+ & -funktionierender Login & & -Infos über Produktions-Version \\
+ & -Console Errors entfernen & & \\
+\hline     
+\end{tabular}
+\end{center}
+
+\subsection{Abschließende Einschätzung des Product-Owners}
+{\small Autor: xxx}
+
+XXX
+
+\subsection{Abschließende Einschätzung des Software-Architekten}
+{\small Autor: xxx}
+
+XXX
+
+\subsection{Abschließende Einschätzung des Team-Managers}
+{\small Autor: Alex Hofmann}
+
+Es ist vereinzelt an der Motivation zu spüren, dass sich das Semester und somit auch das Softwareprojekt dem Ende zuneigt.
+Dies liegt vermutlich auch daran, dass aufgrund von nur noch einem verbleibenden Sprint einige Komponenten, woran die Bachelor jetzt schon mehrere Wochen dran gearbeitet haben, auf der Strecke bleiben werden.
