@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 describe("createEdge menu", () => {
   beforeEach(() => {
-    cy.login();
+    cy.homePage();
     cy.get("#newGraph").click();
     cy.get("#prodname").type("Testprodukt");
     cy.get("#prodquantity").type("1000");

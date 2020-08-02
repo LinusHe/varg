@@ -5,6 +5,14 @@ Cypress.Commands.add("login", () => {
   cy.get("#password").type("2020{enter}");
 });
 
+Cypress.Commands.add("homePage", () => {
+  cy.visit("/home/");
+});
+
+Cypress.Commands.add("graphPage", () => {
+  cy.visit("/graph");
+});
+
 Cypress.Commands.add("createNode", (name, short, colorNum) => {
   cy.get("#dial-add-node").should("not.be.visible");
   cy.get("#dial-open > .v-btn").click();

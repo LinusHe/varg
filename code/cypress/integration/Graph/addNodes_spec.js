@@ -5,7 +5,7 @@ describe("create Nodes menu", () => {
     // TODO: Performance Boost, User-Auth. Token direkt mitgeben,
     //   ohne immer die Login Seite aufrufen zu müssen
     //   Siehe: https://youtu.be/5XQOK0v_YRE?t=1337
-    cy.login();
+    cy.homePage();
     // Creates new Graph
     cy.get("#newGraph").click();
     cy.get("#prodname").type("Testprodukt");

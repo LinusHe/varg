@@ -92,7 +92,7 @@ router.beforeEach((to, from, next) => {
 
   // Check for requiresAuth guard
   if (to.matched.some(record => record.meta.requiresAuth)) {
-      if(store.getters.getAuth) { // Check if user is authenticated
+      if(store.getters.getAuth || window.Cypress) { // Check if user is authenticated
         next();
       } else {
         next({

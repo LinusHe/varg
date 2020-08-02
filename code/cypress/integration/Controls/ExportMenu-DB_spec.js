@@ -8,7 +8,7 @@ describe("Export-Menu DB", () => {
   //rules this means that Cypress has to login itself for each
   //test suites.
   beforeEach(() => {
-    cy.login();
+    cy.homePage();
     cy.get("#newGraph").click();
     cy.get("#prodname").type("Testprodukt");
     cy.get("#prodquantity").type("1000");

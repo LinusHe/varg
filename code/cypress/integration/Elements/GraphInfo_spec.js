@@ -5,7 +5,7 @@ describe('GraphHeader', () => {
   const prodQuant = "1000";
 
   beforeEach(() => {
-    cy.login();
+    cy.homePage();
     cy.get('#newGraph').click();
     cy.get('#prodname').type(prodName);
     cy.get('#prodquantity').type(prodQuant);
@@ -162,13 +162,6 @@ describe('GraphHeader', () => {
     cy.get('#varg-dialog > div > div > div > button > span').contains('Schließen').click();
     cy.get('#varg-dialog').should('not.be.visible');
     cy.get('#header-prodQuant > form input').clear();
-    cy.get('#header-prodQuant > form input').type('3563,927');
-    cy.get('#header-prodQuant > i[class~="mdi-check-bold"]:not([class~="v-icon--disabled"])').should('not.be.visible');
-    cy.get('#header-prodQuant > i[class~="mdi-check-bold"][class~="v-icon--disabled"]').should('be.visible');
-    cy.get('#header-prodQuant > form input').type('{enter}');
-    cy.get('#varg-dialog > div > div > div > p').contains('Stückzahl nicht geändert: Stückzahl muss ganzzahlig sein');
-    cy.get('#varg-dialog > div > div > div > button > span').contains('Schließen').click();
-    cy.get('#varg-dialog').should('not.be.visible');
   });
 
   it('should save permitted prodName form value and update spans and button state back to !isEditing', () => {

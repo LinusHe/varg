@@ -2,7 +2,7 @@
 // eslint-disable-next-line no-useless-escape
 describe("Export-Menu Download", () => {
   before(() => {
-    cy.login();
+    cy.homePage();
     cy.get("#newGraph").click();
     cy.get("#prodname").type("Testprodukt");
     cy.get("#prodquantity").type("1000");
