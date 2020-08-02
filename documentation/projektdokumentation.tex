@@ -113,7 +113,7 @@
 \section{Anforderungsspezifikation}
 
 \subsection{Initiale Kundenvorgaben}
-{\small Autor: Jonas Gwozdz}
+{\small Autor: Jonas Gwozdz, Korrektur: Linus Herterich}
 
 \vspace{\baselineskip}
 \noindent Die Vorgaben unseres Kunden, Prof. Gürtler, ließen uns viele Freiheiten in der Gestaltung des Programms. \par
@@ -122,16 +122,17 @@
 \begin{itemize}
   \item Für die Herstellung eines Werkstücks gibt es in der Regel mehrere Alternativen.
   Ausgehend von einem Rohteil folgen verschiedene   Bearbeitungsschritte, die zum Fertigteil führen. 
-  Die einzelnen   Bearbeitungsschritte sollen mit einer Bearbeitungszeit und Kosten belegt werden. \par
+  Die einzelnen Bearbeitungsschritte sollen mit einer Bearbeitungszeit und Kosten belegt werden. \par
 
-  \item Im Tool soll der entsprechende Graph angelegt werden und Kostenfunktionen sowie Bearbeitungszeiten 
-  für die einzelnen Schritte und eine Losgröße   eingegeben werden können. \par
+  \item Im Tool soll ein horizontaler Graph erstellt werden können, auf dem die Teile als Knoten und 
+  die Bearbeitungsschritte zwischen ihnen als Kanten dargestellt sind. Im nachhinein soll der optimale 
+  Fertigungsprozess nach Kosten oder Zeit ausgewertet werden. Alle hierfür benötigten Daten sollen im Tool eingegeben werden können\par
 
-  \item Kosten fallen pro Bearbeitungsschritt einmalig, pro Zeiteinheit (z.B. Lohn) 
-  und pro Werkstück an. AN jeder Maschine werden Rüstzeiten (pro Los) und Bearbeitungszeiten (pro Werkstück) verbraucht. \par
+  \item Rüstkosten und -zeit fallen pro Charge (festlegbar per Losgröße, mindestens aber ein mal) bei jedem Bearbeitungsschritt an. 
+  Zusätzlich werden pro Stück für jeden Bearbeitungsschritt die benötigten Kosten und Zeit mit einbezogen. \par
 
   \item Das Tool soll bei Vorgabe all dieser Größen die günstigsten Varianten (nach Kosten, Zeit oder einer Kombination der beiden) 
-  in Abhängigkeit von einer vorgegebenen Losgröße berechnen.
+  berechnen und die nächstbesten Varianten ausgeben.
 \end{itemize}
 
 \subsection{Produktvision}
@@ -169,10 +170,10 @@ Diese erleichtert die einheitliche Erstellung, Bearbeitung, Optimierung sowie Im
 {\small Autor: Erik Heldt}
 
 \begin{itemize}
-  \item Erstellen von Zuständen mit Namen \& Kürzel
-  \item Erstellen von Arbeitsschritten mit Namen \& Kürzel zwischen je 2 Zuständen
-  \item Zuweisen von (Rüst-)Zeitkosten, (Rüst-)Geldkosten \& Losgröße zu Arbeitsschritt
-  \item Anzeigen des günstigsten Weges im Graph, berechnet nach der angegebenen Kostenart
+  \item Erstellen von Zuständen (Teilen) mit Namen \& Kürzel
+  \item Erstellen von Bearbeitungsschritten mit Namen \& Kürzel zwischen je 2 Zuständen
+  \item Zuweisen von Rüstzeit, Geldkosten \& Losgröße zu Bearbeitungsschritten
+  \item Anzeigen des günstigsten Weges im Graph, berechnet nach Zeit oder Kosten
   \item Lokaler Export als Bilddatei oder importierbarer JSON \& Lokaler Import als JSON
   \item Hochladen in online gehostete Datenbank \& Laden aus online gehosteter Datenbank
   \item Login-Management für Zugriffskontrolle auf Anwendung
@@ -201,11 +202,14 @@ Diese erleichtert die einheitliche Erstellung, Bearbeitung, Optimierung sowie Im
 \subsection{Weitere Zuarbeiten zum Produktvisions-Workshop}
 {\small Autor: Erik Heldt}
 
-Für den Produktvisions-Workshop wurden 4 Dokumente erstellt, welche unterschiedliche Aspekte des Anwendungsentwurfs behandeln.
-
-Die erste Ausarbeitung zeigt Ideen zur Darstellung der GUI inklusive eines interaktiven GUI-Prototyps auf Adobe XD, die Zweite ist ein Epic bzw. eine Zusammenfassung vieler User-Stories zu allgemeinen Anforderungen an die Funktionalität. Das dritte Dokument geht genauer auf spezifische Kernfunktionen ein und das vierte umfasst die Datenmodellierung des Programms.
-\\
-\\Die nachfolgende Liste an Zuarbeiten sind klickbare Verweise auf die jeweiligen Dokumente im ''zuarbeiten''-Ordner.
+Für den Produktvisions-Workshop wurden 4 Dokumente erstellt, welche unterschiedliche Aspekte des Anwendungsentwurfs behandeln:
+\begin{itemize}
+  \item Ideen zur Darstellung der GUI inklusive eines interaktiven GUI-Prototyps auf Adobe XD
+  \item Epic bzw. eine Zusammenfassung vieler User-Stories zu allgemeinen Anforderungen an die Funktionalität
+  \item Formulierung der Kernfunktionen des Programms
+  \item Datenmodellierung des Programms
+\end{itemize}
+Die nachfolgende Liste an Zuarbeiten sind klickbare Verweise auf die jeweiligen Dokumente im ''zuarbeiten''-Ordner.
 
 \subsubsection{Zuarbeit von Linus Herterich, Jonas Gwozdz, Julius Hohlfeld}
 \href[pdfnewwindow=true]{file:zuarbeiten/Produktvision_-_VarG_GUI.pdf}{VarG GUI}
