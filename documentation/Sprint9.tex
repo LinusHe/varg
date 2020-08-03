@@ -49,15 +49,50 @@ Anwesend: Jonas Gwozdz, Erik Heldt, Linus Herterich, Julius Hohlfeld, Lennart Bu
 Zunächst wurde sich darauf geeinigt keine weiteren großen Projekte in Angriff zu nehmen. Stattdessen sollen ggf. Kommentare im Quelltext hinterlassen werden, die evtl. verfolgte Lösungsansätze dokumentieren sollen. Einzig großes Projekt war die Überarbeitung des Logins, sodass Nutzername und Passwort nicht weiter im Quelltext auslesbar sind. Ursprünglich sollte dies durch die Anbindung an Shibboleth ersetzt werden. Stattdessen musste nun innerhalb kürzester Zeit eine Verifikation im eigenen Backend umgesetzt werden. Die Hauptpriorität sollte auf der Dokumentation des Projektes, der Präsentation für die Messe und weiteren Bugfixes liegen.
 
 \subsection{Aufgewendete Arbeitszeit pro Person$+$Arbeitspaket}
-{\small Autor: xxx}
+{\small Autor: Matthias Berger}
 
-\begin{longtable}{|p{4cm}|l|l|l|l|l|}
-        \hline
-        Arbeitspaket & Person & Start & Ende & h & Artefakt\\
-        \hline
-        Dummyklassen & Musterstudi & 3.5.09 & 12.5.09 & 14 & Klasse.java\\ \hline
-        AP XYZ &  &  &  & & \\ \hline
-      \end{longtable}
+\begin{longtable}{|p{4cm}|p{2cm}|p{1.2cm}|p{1.2cm}|p{0.7cm}|p{3.8cm}|}
+      \hline
+      Arbeitspaket                                                           & Person                & Start    & Ende     & h    & Artefakt                                                  \\ \hline
+      Testen der Applikation                                                 & Berger, Matthias      & 08.06.20 & 08.06.20 & 0.5  & Testen der Applikation                                    \\ \hline
+      Überarbeitung Login                                                    & Berger, Matthias      & 16.06.20 & 18.06.20 & 6.75 & LoginForm.vue, store.js                                   \\ \hline
+      Umzug Datenbank auf Fachschaftsserver                                  & Berger, Matthias      & 11.06.20 & 11.06.20 & 1    & Organisation und Kommunikation mit FSR                    \\ \hline
+      Testen der Applikation                                                 & Buchmann, Lennart     & 08.06.20 & 08.06.20 & 0.5  & Testen der Applikation                                    \\ \hline
+      Überarbeitung Login                                                    & Buchmann, Lennart     & 16.06.20 & 18.06.20 & 6.75 & LoginForm.vue, store.js                                   \\ \hline
+      Umzug Datenbank auf Fachschaftsserver                                  & Buchmann, Lennart     & 11.06.20 & 11.06.20 & 1    & Organisation und Kommunikation mit FSR                    \\ \hline
+      Testen der Applikation                                                 & Gwozdz, Jonas         & 16.06.20 & 18.06.20 & 1.75 & Testen der Applikation                                    \\ \hline
+      I.2 Produktvision                                                      & Gwozdz, Jonas         & 15.06.20 & 15.06.20 & 0.5  & projektdokumentation.tex                                  \\ \hline
+      II.2 Entscheidungen des Technologieworkshops                           & Gwozdz, Jonas         & 15.06.20 & 15.06.20 & 0.25 & projektdokumentation.tex                                  \\ \hline
+      III.2 Coding Style                                                     & Gwozdz, Jonas         & 09.06.20 & 09.06.20 & 1.5  & projektdokumentation.tex                                  \\ \hline
+      Dokumentation in Latex-Dokument einfügen                               & Gwozdz, Jonas         & 15.06.20 & 15.06.20 & 0.5  & projektdokumentation.tex                                  \\ \hline
+      X.2 Installationsanleitung                                             & Heldt, Erik           & 12.06.20 & 12.06.20 & 0.75 & projektdokumentation.tex                                  \\ \hline
+      DB Button in Home Menu nicht korrekt angebunden                        & Heldt, Erik           & 17.06.20 & 17.06.20 & 2.75 & HomeMenu.vue                                              \\ \hline
+      Überarbeitung Login                                                    & Heldt, Erik           & 16.06.20 & 17.06.20 & 1    & store.js                                                  \\ \hline
+      Konsistenz bei der Positionierung ähnlicher Komponent                  & Heldt, Erik           & 17.06.20 & 18.06.20 & 0.75 & LoginForm.vue                                             \\ \hline
+      Peer- Review                                                           & Heldt, Erik           & 11.06.20 & 11.06.20 & 1    & projektdokumentation.tex                                  \\ \hline
+      Umstellung des DB primary keys von fileName hash auf fileName+userName & Heldt, Erik           & 17.06.20 & 17.06.20 & 0.75 & DatabaseForm.vue, ExportDatabase.vue, dump.sql, api.js    \\ \hline
+      Code-Kommentare für DB GUI                                             & Heldt, Erik           & 18.06.20 & 18.06.20 & 1    & ExportDatabase.vue                                        \\ \hline
+      Testen der Applikation                                                 & Henning, Tim          & 18.06.20 & 18.06.20 & 0.5  & Testen der Applikation                                    \\ \hline
+      Mehrere Startzustände                                                  & Henning, Tim          & 11.06.20 & 11.06.20 & 1    & SettingsOptimize.vue, optimizations.js,                   \\ \hline
+      Automatische Umrechnung der Zeit bei Optimierung                       & Henning, Tim          & 11.06.20 & 11.06.20 & 1.5  & GraphInfo.vue                                             \\ \hline
+      Peer- Review                                                           & Henning, Tim          & 18.06.20 & 18.06.20 & 0.5  & projektdokumentation.tex                                  \\ \hline
+      Graph optimieren funktioniert nicht(alternative Pfade)                 & Henning, Tim          & 11.06.20 & 11.06.20 & 5    & GraphInfo.vue, SettingsOptimize.vue, optimizations.js     \\ \hline
+      Zeitformat in Alternativen pfaden                                      & Henning, Tim          & 18.06.20 & 18.06.20 & 1    & SettingsOptimize.vue                                      \\ \hline
+      Umstellung Persistenz der Menüs                                        & Herterich, Linus      & 13.06.20 & 13.06.20 & 2    & SettingsMenu.less, CreateControls.vue, DetailControls.vue \\ \hline
+      Umstellung Zweiseitiges Layout für Kanten-Menüs                        & Herterich, Linus      & 09.06.20 & 09.06.20 & 3    & DetailControls.vue, CreateControls.vue                    \\ \hline
+      III.3 Zu nutzende Werkzeuge                                            & Herterich, Linus      & 08.06.20 & 08.06.20 & 2    & projektdokumentation.tex                                  \\ \hline
+      X.3 Software-Lizenz                                                    & Herterich, Linus      & 08.06.20 & 08.06.20 & 0.75 & projektdokumentation.tex                                  \\ \hline
+      Frontend auf Server                                                    & Herterich, Linus      & 11.06.20 & 12.06.20 & 4    & Frontend auf Server                                       \\ \hline
+      Anpassungen am Projekt für Livegang                                    & Herterich, Linus      & 11.06.20 & 11.06.20 & 0.25 & Anpassungen am Projekt für Livegang                       \\ \hline
+      HTTPS Zertifikat installieren                                          & Herterich, Linus      & 16.06.20 & 16.06.20 & 0.5  & HTTPS Zertifikat installieren                             \\ \hline
+      Docker Container auf HTWK-Server                                       & Hohlfeld, Julius      & 14.06.20 & 14.06.20 & 2    & Docker Container auf HTWK-Server                          \\ \hline
+      Put-Request/ Update funktioniert nicht                                 & Hohlfeld, Julius      & 16.06.20 & 16.06.20 & 2.5  & api.js                                                    \\ \hline
+      II.5 Liste der Architekturentscheidungen                               & Karkoutli, Alaa Aldin & 15.06.20 & 15.06.20 & 2    & projektdokumentation.tex                                  \\ \hline
+      Aktualisierte Produktname und Stückzahl in Store speichern             & Karkoutli, Alaa Aldin & 14.06.20 & 14.06.20 & 0.5  & GraphInfo.vue, ExportDownload.vue, HomeMenu.vue, store.js \\ \hline
+      Auf Graph Seite Highlighten, nach was optimiert wird                   & Koch, David           & 10.06.20 & 17.06.20 & 4    & GraphInfo.vue, SettingsOptimize.vue, optimizations.js     \\ \hline
+      Buttons im Graphfenster differenzieren                                 & Koch, David           & 10.06.20 & 16.06.20 & 2    & GraphInfo.vue, SettingsOptimize.vue                       \\ \hline
+\end{longtable}
+
 
 \subsection{Konkrete Code-Qualität im Sprint}
 {\small Autor: Matthias Berger}

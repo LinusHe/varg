@@ -84,8 +84,8 @@
         % alle Autoren hier listen
         % 
 	\large
-	\textsc{Autor I -- E-Mail} \\[2mm]
-	\textsc{Autor II -- E-Mail} \\[2mm]
+	\textsc{Linus Herterich -- linus.herterich@stud.htwk-leipzig.de} \\[2mm]
+	\textsc{Nächster Autor -- E-Mail} \\[2mm]
 	\normalsize	HTWK Leipzig 
 	}
 \date{}
@@ -113,7 +113,7 @@
 \section{Anforderungsspezifikation}
 
 \subsection{Initiale Kundenvorgaben}
-{\small Autor: Jonas Gwozdz}
+{\small Autor: Jonas Gwozdz, Korrektur: Linus Herterich}
 
 \vspace{\baselineskip}
 \noindent Die Vorgaben unseres Kunden, Prof. Gürtler, ließen uns viele Freiheiten in der Gestaltung des Programms. \par
@@ -122,16 +122,17 @@
 \begin{itemize}
   \item Für die Herstellung eines Werkstücks gibt es in der Regel mehrere Alternativen.
   Ausgehend von einem Rohteil folgen verschiedene   Bearbeitungsschritte, die zum Fertigteil führen. 
-  Die einzelnen   Bearbeitungsschritte sollen mit einer Bearbeitungszeit und Kosten belegt werden. \par
+  Die einzelnen Bearbeitungsschritte sollen mit einer Bearbeitungszeit und Kosten belegt werden. \par
 
-  \item Im Tool soll der entsprechende Graph angelegt werden und Kostenfunktionen sowie Bearbeitungszeiten 
-  für die einzelnen Schritte und eine Losgröße   eingegeben werden können. \par
+  \item Im Tool soll ein horizontaler Graph erstellt werden können, auf dem die Teile als Knoten und 
+  die Bearbeitungsschritte zwischen ihnen als Kanten dargestellt sind. Im nachhinein soll der optimale 
+  Fertigungsprozess nach Kosten oder Zeit ausgewertet werden. Alle hierfür benötigten Daten sollen im Tool eingegeben werden können\par
 
-  \item Kosten fallen pro Bearbeitungsschritt einmalig, pro Zeiteinheit (z.B. Lohn) 
-  und pro Werkstück an. AN jeder Maschine werden Rüstzeiten (pro Los) und Bearbeitungszeiten (pro Werkstück) verbraucht. \par
+  \item Rüstkosten und -zeit fallen pro Charge (festlegbar per Losgröße, mindestens aber ein mal) bei jedem Bearbeitungsschritt an. 
+  Zusätzlich werden pro Stück für jeden Bearbeitungsschritt die benötigten Kosten und Zeit mit einbezogen. \par
 
   \item Das Tool soll bei Vorgabe all dieser Größen die günstigsten Varianten (nach Kosten, Zeit oder einer Kombination der beiden) 
-  in Abhängigkeit von einer vorgegebenen Losgröße berechnen.
+  berechnen und die nächstbesten Varianten ausgeben.
 \end{itemize}
 
 \subsection{Produktvision}
@@ -169,10 +170,10 @@ Diese erleichtert die einheitliche Erstellung, Bearbeitung, Optimierung sowie Im
 {\small Autor: Erik Heldt}
 
 \begin{itemize}
-  \item Erstellen von Zuständen mit Namen \& Kürzel
-  \item Erstellen von Arbeitsschritten mit Namen \& Kürzel zwischen je 2 Zuständen
-  \item Zuweisen von (Rüst-)Zeitkosten, (Rüst-)Geldkosten \& Losgröße zu Arbeitsschritt
-  \item Anzeigen des günstigsten Weges im Graph, berechnet nach der angegebenen Kostenart
+  \item Erstellen von Zuständen (Teilen) mit Namen \& Kürzel
+  \item Erstellen von Bearbeitungsschritten mit Namen \& Kürzel zwischen je 2 Zuständen
+  \item Zuweisen von Rüstzeit, Geldkosten \& Losgröße zu Bearbeitungsschritten
+  \item Anzeigen des günstigsten Weges im Graph, berechnet nach Zeit oder Kosten
   \item Lokaler Export als Bilddatei oder importierbarer JSON \& Lokaler Import als JSON
   \item Hochladen in online gehostete Datenbank \& Laden aus online gehosteter Datenbank
   \item Login-Management für Zugriffskontrolle auf Anwendung
@@ -201,11 +202,14 @@ Diese erleichtert die einheitliche Erstellung, Bearbeitung, Optimierung sowie Im
 \subsection{Weitere Zuarbeiten zum Produktvisions-Workshop}
 {\small Autor: Erik Heldt}
 
-Für den Produktvisions-Workshop wurden 4 Dokumente erstellt, welche unterschiedliche Aspekte des Anwendungsentwurfs behandeln.
-
-Die erste Ausarbeitung zeigt Ideen zur Darstellung der GUI inklusive eines interaktiven GUI-Prototyps auf Adobe XD, die Zweite ist ein Epic bzw. eine Zusammenfassung vieler User-Stories zu allgemeinen Anforderungen an die Funktionalität. Das dritte Dokument geht genauer auf spezifische Kernfunktionen ein und das vierte umfasst die Datenmodellierung des Programms.
-\\
-\\Die nachfolgende Liste an Zuarbeiten sind klickbare Verweise auf die jeweiligen Dokumente im ''zuarbeiten''-Ordner.
+Für den Produktvisions-Workshop wurden 4 Dokumente erstellt, welche unterschiedliche Aspekte des Anwendungsentwurfs behandeln:
+\begin{itemize}
+  \item Ideen zur Darstellung der GUI inklusive eines interaktiven GUI-Prototyps auf Adobe XD
+  \item Epic bzw. eine Zusammenfassung vieler User-Stories zu allgemeinen Anforderungen an die Funktionalität
+  \item Formulierung der Kernfunktionen des Programms
+  \item Datenmodellierung des Programms
+\end{itemize}
+Die nachfolgende Liste an Zuarbeiten sind klickbare Verweise auf die jeweiligen Dokumente im ''zuarbeiten''-Ordner.
 
 \subsubsection{Zuarbeit von Linus Herterich, Jonas Gwozdz, Julius Hohlfeld}
 \href[pdfnewwindow=true]{file:zuarbeiten/Produktvision_-_VarG_GUI.pdf}{VarG GUI}
@@ -220,9 +224,18 @@ Die erste Ausarbeitung zeigt Ideen zur Darstellung der GUI inklusive eines inter
 \href[pdfnewwindow=true]{file:zuarbeiten/Produktvision_-_Datenmodell.pdf}{Datenmodell}
 
 \subsection{Liste der Kundengespräche mit Ergebnissen}
-{\small Autor: xxx}
+{\small Autor: Manuel Eckert}
 
-XXX
+\begin{tabular}[t]{|p{2cm}|p{4,5cm}|p{8cm}|}
+  \hline Datum    &  Grund  &  Ergebnis\\ \hline
+  30.10.2019 & Kickoff &  Überblick über die Anforderungen,\newline angenähertes Verständnis für das Produkt, \newline  Kennenlernen des Kunden,\\ \hline
+  27.11.2019 & Produktvision & Abgleich Produktvision, \newline Weiteres Verständnis für das Produkt \\ \hline
+  21.01.2020 & Zwischenstand & Auslieferung des Ersten Produktinkrements, \newline Feedback zum ausgelieferten Produkt \\ \hline
+  08.07.2020 & Abnahme \& Retrospektive & Auslieferung des Produktes, \newline Rückblick und Feedback auf den Projektverlauf \\ \hline
+  \end{tabular}
+\\
+
+Aufgrund der besonderen Situation im Sommersemester 2020 haben wir unser Projekt auf einen Webserver gespielt. Ab diesem Zeitpunkt haben wir hauptsächlich mit E-Mails kommuniziert um Feedback und Anforderungen zu besprechen.
 
 
 
@@ -694,6 +707,8 @@ präsenzfreien Zeit notwendig.
 
 \input{Sprint8}
 
+\newpage
+
 \section{Sprint 9}
 
 \input{Sprint9}
@@ -1017,9 +1032,15 @@ XXX
 \\\href[pdfnewwindow=true]{file:zuarbeiten/VarG_Messepräsentation.pdf}{VarG Messepräsentation (klick)}
 
 \subsection{Abschließende Einschätzung durch Product-Owner}
-{\small Autor: xxx}
+{\small Autor: Manuel Eckert}
 
-XXX
+Aus der Sicht des PO war das Projekt "VarG "\ ein voller Erfolg! Unser Kunde war mit dem Produkt sehr zufrieden und war begeistert über die Anzahl der umgesetzten Features. \\
+Allerdings war das Softwareprojekt, für das gesamte Team, ein Lernprozess. Anfangs sind die Planning- und Review-Treffen ein sehr träge und einseitig gelaufen. Sowohl ich als PO, als auch die Entwickler wussten nicht genau welche Rolle sie exakt ausfüllen. Eine merkbare Änderung haben wir alle dann schon im zweiten Sprint festgestellt. Dies hat uns einen großen Schub für das Projekt gegeben. So hat man mit Beendigung eines jeden Sprints, eine deutliche Steigerung in der Produktivität und Qualität der Ticketbearbeitung gespürt. In den letzten Sprints vor Projektabschluss haben die Entwickler viel schneller verstanden, was die einzelnen User-Stories umfassen und was es braucht, um diese abzuschließen. Dies hat meine Arbeit als PO sehr vereinfacht und ich konnte meine Energie auf andere Arbeitsbereiche im Projekt konzentrieren. \\
+Rückblickend war es exzellent, dass sich einzelne Subteams innerhalb des Entwicklerteams geformt haben, welche sich auf einzelne Bereiche innerhalb des Projektes fokussierten. Der Austausch zwischen den einzelnen Teams war aber trotzdem stets durch die Daily Treffen gegeben. Damit gab es Experten auf den unterschiedlichen Bereichen, welches sich sehr Positiv auf des Projekt ausgewirkt hat. \\ 
+Die Kommunikation mit unserem Kunden verlief meist sehr gut. Anfangs war es nicht einfach ein gemeinsames und gleiches Verständnis für die Anforderungen zu entwickeln. Durch genauere und stärkere Auseinandersetzung mit dem Thema ist es uns aber sehr gut Gelungen die Anforderungen des Kunden zu treffen. Eine große Hilfe war dabei auch, dass wir, zum Start des SS2020, das Produktinkrement nach jedem Sprint auf einen Webserver gespielt haben. Somit hat der Kunde jederzeit die Möglichkeit das Produktinkrement zu testen. Dies ermöglichte dem Kunden genaueres Feedback zu geben.\\
+Über die gesamte Laufzeit des Projektes ist festzuhalten, dass sich die Anforderungen des Kunden entwickeln und verändert haben. \\
+Das Projekt war ein großer Zugewinn für jeden einzelnen von uns. Eine so intensive und freie Auseinandersetzung mit einem Produkt ermöglicht es, wichtige neue Fähigkeiten für das Arbeiten als Teil eines Teams zu entwickeln. Jeder in seiner Rolle konnte einen großen Mehrwert aus diesem Projekt ziehen. \\
+ 
 
 \subsection{Abschließende Einschätzung durch Software-Architekt}
 {\small Autor: xxx}
