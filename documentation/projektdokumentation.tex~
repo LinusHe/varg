@@ -796,16 +796,16 @@ Login-Daten für die MySQL Datenbank:
 \end{verbatim}
 \textbf{Webserver und SSL}
 \\Für die serverseitige Installation des Projekts wird ein SSL-zertifizierter Webserver benötigt.
-In unserem Fall haben wir Apache 2.4 verwendet, um das Frontend live zu schalten. Es sind aber auch andere
+In unserem Fall wurde Apache 2.4 verwendet, um das Frontend live zu schalten. Es sind aber auch andere
 gängige HTTP Webserver möglich. Wenn andere Webservertechnologien verwendet werden, muss folgende
 Anleitung beachtet werden, damit das Vue-Routing funktioniert: \url{https://router.vuejs.org/guide/essentials/history-mode.html}.
-Für die Installation eines SSL-Zertifikats haben wir den certbot ( \url{https://certbot.eff.org/} ) verwendet. 
+Für die Installation eines SSL-Zertifikats wurde der certbot ( \url{https://certbot.eff.org/} ) verwendet. 
 \\ACHTUNG: Das SSL-Zertifikat muss im Sommer 2021 verlängert werden, damit die Webanwendung weiter problemlos funktioniert 
 (Anleitung hierfür findet sich auf der certbot Webseite).
 \\Am Ende der Datei \begin{verbatim}
   varg/docker/node.js/api.js
 \end{verbatim}
-müssen die SSL ''.perm'' Zertifikate verlinkt werden, damit die API auch auf die SSL-Zertifikate zugreifen kann
+müssen die SSL '.perm' Zertifikate verlinkt werden, damit die API auch auf die SSL-Zertifikate zugreifen kann
 und somit eine verschlüsselte Kommunikation zwischen Frontend und Backend stattfinden kann.
 Derzeit sind bereits die richtigen Pfade eingetragen.
 \\\\
@@ -819,21 +819,21 @@ in das Standard Webserver-Verzeichnis von Apache navigiert werden. Dort wird ans
 \begin{verbatim}
   git clone https://gitlab.imn.htwk-leipzig.de/weicker/varg.git
 \end{verbatim} 
-geklont. Nun muss ein GitLab-Nutzername und -Passwort eingegeben werden, damit das Projekt in den Ordner ''varg'' geklont werden kann.
+geklont. Nun müssen GitLab-Nutzername und -Passwort eingegeben werden, damit das Projekt in den Ordner '/varg' geklont werden kann.
 Will man dies umgehen, kann auch ein SSH-Schlüssel generiert werden und bei einem GitLab Account hinterlegt werden (weitere Details:
 \url{https://docs.gitlab.com/ee/ssh/})
 \\Nun wurde ein Ordner mit folgendem Pfad angelegt, indem die Projekt-Daten sind:
 \begin{verbatim}
   /var/www/html/varg
 \end{verbatim}
-Navigiert man per ''cd'' in den Ordner, so kann dort das Projekt aktualisiert (mit ''git pull'') oder andere Branches ausgewählt werden (mit ''git checkout ...'').
+Navigiert man per 'cd' in den Ordner, so kann dort das Projekt aktualisiert (mit 'git pull') oder andere Branches ausgewählt werden (mit 'git checkout ...').
 \\\\
-\textbf{Unterschiede Entwicklungsversion und Produktionsversion}
+\textbf{Unterschiede zwischen Entwicklungsversion und Produktionsversion}
 \\Im Code sind einige Stellen zu ändern, damit das Projekt auf dem Server lauffähig ist. Am besten wird hierfür ein neuer Branch erstellt, welcher zwar auf dem 
-aktuellen Projektstand ist, aber die Server-Änderungen beinhaltet. Dieser Branch wird anschließend auf dem Server gepullt (wir nannten diesen Branch immer ''prod'').
+aktuellen Projektstand ist, aber die Server-Änderungen beinhaltet. Dieser Branch wird anschließend auf dem Server gepullt (wir nannten diesen Branch immer 'prod').
 \\Bei den Änderungen handelt es sich zum einen um IP-Adressen, die zum API-Docker-Container zeigen, aber auf der Live Version zur Live-API-Adresse zeigen müssen. 
 \begin{itemize}
-\item Mit dem ''Suchen und Ersetzen''-Tool im IDE (in VSCode: View -> Search) müssen all diese IP-Adressen ausgetauscht werden, die für die HTTP-Requests verwendet werden:
+\item Mit dem 'Suchen und Ersetzen'-Tool im IDE (in VSCode: View -> Search) müssen all diese IP-Adressen ausgetauscht werden, die für die HTTP-Requests verwendet werden:
 \begin{verbatim}
   'http://192.168.99.101:1110' 
   (Kann auch abweichen. Bitte selbst in den Dateien (bspw. SettingsAccount.vue)
@@ -893,8 +893,8 @@ Damit dies funktioniert müssen eventuell am Anfang der Datei folgende Module im
 Wie bereits erwähnt sollten all diese Änderungen auf einem parallelen Branch durchgeführt und anschließend gepusht werden.
 Im Anschluss kann das Projekt mit den Live-Änderungen auf dem Server gepullt werden.
 \\\\
-\textbf{Installation Produktions-Frontend}
-\\Sobald alle nötigen Produktions-Anpassungen durchgeführt sind und das Projekt im richtigen Ordner geklont wurde, 
+\textbf{Installation des Produktions-Frontend}
+\\Sobald alle nötigen Produktions-Anpassungen durchgeführt wurden und das Projekt im richtigen Ordner geklont wurde, 
 kann mit npm das Projekt kompiliert werden. Zunächst muss in folgenden Ordner navigiert werden:
 \begin{verbatim}
   cd /var/www/html/varg/code
@@ -911,18 +911,18 @@ und im Anschluss:
 \begin{verbatim}
   /var/www/html/varg/code/dist
 \end{verbatim}
-abgelegt. Apache (oder andere HTML Server Technologie) muss so konfiguriert werden, 
-dass der DocumentRoot in diesen Ordner zeigt (auf dem aktuellen Server ist das bereits eingestellt). Wird mit Apache gearbeitet, muss zudem sichergestellt sein, dass ''mod rewrite'' aktiviert ist
-(siehe \url{https://wiki.ubuntuusers.de/Apache/mod_rewrite/} ). Sonst wird die ''.htaccess'' Datei im ''dist'' Ordner nicht richtig gelesen und 
+abgelegt. Apache (oder jede andere HTML Server Technologie) muss so konfiguriert werden, 
+dass der DocumentRoot in diesen Ordner zeigt (auf dem aktuellen Server ist das bereits eingestellt). Wird mit Apache gearbeitet, muss zudem sichergestellt sein, dass 'mod rewrite' aktiviert ist
+(siehe \url{https://wiki.ubuntuusers.de/Apache/mod_rewrite/} ). Sonst wird die '.htaccess' Datei im '/dist' Ordner nicht richtig gelesen und 
 die Navigation zwischen einzelnen Seiten funktioniert nicht richtig.
 \\Ist alles problemlos abgelaufen, sollte nun das Frontend unter der URL \url{https://sam.imn.htwk-leipzig.de} erreichbar sein.
 \\\\
 \textbf{Installation MySQL}
 \\Auf dem Webserver muss eine aktuelle Version von MySQL laufen. Es kann folgende Anleitung zur Installation verwendet werden:
 \url{https://wiki.ubuntuusers.de/MySQL/} . Es ist darauf zu achten, dass als root Passwort \begin{verbatim}'l_GD6P67+V'\end{verbatim} gewählt wird. 
-Ansonsten muss ein anderes Passwort in der ''api.js'' Datei (siehe oben) eingetragen werden.
-\\Sobald MySQL installiert ist, kann über das ''Adminer''-Tool, welches beim Frontend unter der URL \url{https://sam.imn.htwk-leipzig.de/adminer.php} 
-erreichbar ist, eine Datenbank mit dem Namen ''vargdb'' angelegt werden. Um die initialen Tabellen (evtl. mit Beispieldaten) anzulegen, kann im 
+Ansonsten muss ein anderes Passwort in der 'api.js' Datei (siehe oben) eingetragen werden.
+\\Sobald MySQL installiert ist, kann über das 'Adminer'-Tool, welches beim Frontend unter der URL \url{https://sam.imn.htwk-leipzig.de/adminer.php} 
+erreichbar ist, eine Datenbank mit dem Namen 'vargdb' angelegt werden. Um die initialen Tabellen (evtl. mit Beispieldaten) anzulegen, kann im 
 Anschluss folgende Datei in die Datenbank per Adminer importiert werden:
 \begin{verbatim}
   varg/docker/mysql/dump.sql
@@ -938,7 +938,7 @@ Nun wird das MySQL passwort gefordert. Das aktuelle Passwort ist:
   l_GD6P67+V
 \end{verbatim}
 \textbf{API-Server starten}
-\\Der API-Server basiert auf der ''Node.js'' Technologie. Damit die API funktioniert, muss Node.js auf dem Server installiert sein.
+\\Der API-Server basiert auf der 'Node.js' Technologie. Damit die API funktioniert, muss Node.js auf dem Server installiert sein.
 Die API kann dann mit dem Befehl:
 \begin{verbatim}
   node /var/www/html/varg/docker/node.js/api.js
@@ -947,13 +947,13 @@ gestartet werden. Man sieht nun den Log der API. Bei jeder Anfrage wird nun eine
 zur MySQL Datenbank gibt, werden diese hier angezeigt.
 \\\\
 \textbf{API-Server dauerhaft laufen lassen}
-\\Ein Problem ist, dass die API nur solange läuft, solange auch das Terminal geöffnet ist, in dem der Befehl aufgerufen wurde.
-Da aber die API immer laufen soll, kann die Technologie ''forever'' verwendet werden (\url{https://www.npmjs.com/package/forever}).\\
+\\Ein Problem ist, dass die API nur läuft, solange auch das Terminal geöffnet ist, in dem der Befehl aufgerufen wurde.
+Da aber die API immer laufen muss, kann die Technologie 'forever' verwendet werden (\url{https://www.npmjs.com/package/forever}).\\
 Mit folgendem Befehl kann die API dauerhaft gestartet werden:
 \begin{verbatim}
   forever start -o out.log -e err.log /var/www/html/varg/docker/node.js/api.js
 \end{verbatim}
-Für ''out.log'' und ''err.log'' können auch andere Namen oder Pfade verwendet werden. Es handelt sich hierbei um den Output bzw. Error-Meldungen,
+Für 'out.log' und 'err.log' können auch andere Namen oder Pfade verwendet werden. Es handelt sich hierbei um den Output bzw. Error-Meldungen,
 die ansonsten über das Terminal ausgegeben worden wären.
 \\Mit folgendem Befehl kann nun angezeigt werden, ob die API (noch) mit forever läuft:
 \begin{verbatim}
@@ -965,15 +965,15 @@ Befehl die API zu stoppen:
   forever stop [ID]
 \end{verbatim}
 \textbf{Projekt Live (Produktions-Version) aktualisieren}
-\\Wenn neue Features auf dem Server installiert werden sollen, so muss nach der Entwicklung zunächst der neu-entwickelte Branch auf einem neuen (Produktions-) Branch
-so angepasst werden, wie es oben beschrieben ist (IPs austauschen etc.). Dieser geänderte Branch wird anschließend per ''git pull''
-im Verzeichnis ''/var/www/html/varg/'' auf dem Web-Server heruntergeladen.
+\\Wenn neue Features auf dem Server installiert werden sollen, so muss nach der Entwicklung zunächst der neuentwickelte Branch auf einem neuen (Produktions-)Branch
+wie oben beschrieben angepasst werden (IPs austauschen etc.). Dieser geänderte Branch wird anschließend per 'git pull'
+im Verzeichnis '/var/www/html/varg/' auf dem Web-Server heruntergeladen.
 \\Als nächstes kann die neue Version kompiliert werden (siehe Installation Produktions-Frontend).
 \\Wenn Änderungen an der API-Logik vorgenommen wurden, so muss die API mit dem ''forever stop'' Befehl gestoppt und anschließend neu gestartet werden.
 \\Falls an der MySQL Datenbank etwas grundlegendes geändert wurde, so kann die Datenbank mit dem Adminer Tool (\url{https://sam.imn.htwk-leipzig.de/adminer.php})
 bearbeitet werden.
 \\\\\textbf{Vergessenes Passwort eines Users ändern}
-\\Wir verwenden eine programmeigene User-Datenbank zur Verwaltung des Logins und der damit verbundenen User-Accounts (Tabelle ''userreg'' in der MySQL DB). Da diese sehr simpel implementiert ist und keine E-Mail zur Anmeldung erforderlich ist, konnten wir keine Frontend-Funktionalität für ''Passwort vergessen'' einbauen (Passwort ändern ist natürlich möglich, aber dafür wird das derzeitige Passwort benötigt). Wenn ein User mal sein Passwort vergisst, muss er sich an einen Backend-Admin mit Zugriff auf Adminer wenden. Im Folgenden wird beschrieben wie der Admin das Passwort für den User manuell ändern kann:
+\\Wir verwenden eine programmeigene User-Datenbank zur Verwaltung des Logins und der damit verbundenen User-Accounts (Tabelle 'userreg' in der MySQL DB). Da diese sehr simpel implementiert ist und keine E-Mail zur Anmeldung erforderlich ist, konnten wir keine Frontend-Funktionalität für 'Passwort vergessen' einbauen (Passwort ändern ist natürlich möglich, aber dafür wird das derzeitige Passwort benötigt). Wenn ein User sein Passwort vergessen sollte, muss er sich an einen Backend-Admin mit Zugriff auf 'Adminer' wenden. Im Folgenden wird beschrieben wie der Admin das Passwort für den User manuell ändern kann:
 \begin{enumerate}
   \item Vergewissern, dass es sich wirklich um den Account des Users handelt und er nicht versucht, sich Zugriff auf einen anderen Account zu verschaffen
   \item In Adminer einloggen (Login-Daten siehe oben)
@@ -988,7 +988,7 @@ bearbeitet werden.
            \end{verbatim}
   \item In der 1. Zeile die drei Punkte ersetzen durch den (exakten!) Namen des Users, dessen Passwort geändert werden soll (kann aus der userreg-Tabelle kopiert werden)
   \item In der 2. Zeile die drei Punkte ersetzen durch ein neues temporäres Passwort, welches der User für seinen nächsten Login benutzen kann
-  \item Alles andere so lassen und auf ''Ausführen'' klicken - wenn es geklappt hat sollte mindestens eine grüne Nachricht mit dem Text ''Abfrage ausgeführt, 1 Datensatz betroffen.'' erscheinen
+  \item Alles andere so lassen und auf 'Ausführen' klicken - wenn es geklappt hat sollte mindestens eine grüne Nachricht mit dem Text 'Abfrage ausgeführt, 1 Datensatz betroffen.' erscheinen
   \item Dem User mitteilen, dass er nach dem ersten Login mit dem neuen Passwort bitte sofort in seine Account-Einstellungen gehen und das temporäre Passwort in sein eigenes ändern soll
 \end{enumerate}
 
