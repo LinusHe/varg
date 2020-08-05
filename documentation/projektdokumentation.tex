@@ -87,6 +87,7 @@
 	\textsc{Linus Herterich -- linus.herterich@stud.htwk-leipzig.de} \\[2mm]
 	\textsc{David Koch -- david.koch.1@stud.htwk-leipzig.de} \\[2mm]
 	\textsc{Jonas Gwozdz -- jonas.gwozdz@stud.htwk-leipzig.de} \\[2mm]
+	\textsc{Erik Heldt -- erik.heldt@stud.htwk-leipzig.de} \\[2mm]
 	\normalsize	HTWK Leipzig 
 	}
 \date{}
@@ -419,62 +420,49 @@ Diese werden dann in die entsprechenden Queries umgewandelt.\\
 
 \subsection{Definition of Done}
 {\small Autor: Tim Henning}
-\\
-Im Allgemeinen wurde in dem Projekt die Definition von "doneness"\ nicht all zu umfangreich
-gestaltet, da es für viele Teammitglieder eines der ersten Softwareprojekte war. So wurden als Defintion of Done folgende
-Punkte für alle Userstories aufgestellt:
+
+Im Allgemeinen wurde in dem Projekt die Definition von 'doneness' nicht allzu umfangreich
+festgelegt, da es für viele Teammitglieder eines der ersten Softwareprojekte war. So wurden als 'Definition of Done' folgende
+Punkte für alle User-Stories aufgestellt:
 \begin{itemize}
   \item >50\% Testabdeckung
   \item Technische Kommentare im Code
-  \item Einhaltung der festgelegten Code Konventionen
+  \item Einhaltung der festgelegten Code-Konventionen
 \end{itemize}
-Das Team hatte an sich zu den meisten Zeitpunkten eine klare Vorstellung was einen "fertigen Entwurf"\ kennzeichnet und wurde so auch in den Reviews untereinander kommuniziert.
-Dies wiederum führte zu einer klaren Transparenz im Team, was die Qualität des Produktes erhöhte und das Zusammenarbeiten erleichterte.
-Größtenteils wurde sich
-an die allgemeinen Akzeptanzkritieren gehalten und viele Backlog-Einträge als "done"\ erklärt. Zu fast jeder Komponente wurde
-getestet und zu den Methoden der einzelnen Komponenten wurden erklärende sinnvolle Codekommentare geschrieben.
-Außerdem wurde im Team umfangreich kommuniziert und die Kriterien angepasst, wenn die Fertigstellung einer Userstorie doch mal nicht gänzlich klar war.
-So wurde es ermöglicht nach der Hälfte des Projektes, am Ende jedes Sprints einen fertigen Productionbuild dem Kunden zu liefern.
+Das Team hatte zu jeder Zeit eine gute Vorstellung, was einen 'fertigen Entwurf' kennzeichnet und dies wurde so auch in den Reviews untereinander kommuniziert.
+Das wiederum führte zu einem klaren Verständnis der wichtigsten Produktanforderungen, was die Qualität des Produktes erhöhte und das Zusammenarbeiten erleichterte.\\
+Größtenteils wurde sich an die allgemeinen Akzeptanzkriterien gehalten und viele Backlog-Einträge als 'done' erklärt. Fast jede Komponente wurde
+getestet und zu deren Methoden hilfreiche Codekommentare geschrieben.
+Außerdem wurde im Team umfangreich kommuniziert und die Kriterien einer User-Story angepasst, wenn die Fertigstellung eines Arbeitspakets doch mal nicht gänzlich klar war.\\
+So war es möglich, bereits nach der Hälfte der Projektzeit dem Kunden regelmäßig stabil laufende Production-Builds auf aktuellstem Stand der Anwendung bereitzustellen.
 
-
-
+\newpage
 \subsection{Coding Style}
 {\small Autor: Jonas Gwozdz}
 
-\vspace{\baselineskip}
-\noindent Beim Schreiben unseres Programmcodes haben wir uns an folgende Coding Conventions gehalten.\par
+Beim Schreiben unseres Programmcodes haben wir uns an folgende Coding-Conventions gehalten:
 
 \begin{itemize}
 	\item Zeilenlänge: maximal 80 Zeichen\par
-
 	\item Kommentare und Dokumentation\par
 
 \begin{itemize}
 	\item Kommentare auf Englisch\par
-
 	\item Klassen und Methoden in kurzen, prägnanten Sätzen beschreiben\par
-
 	\item Unnötige Kommentare vermeiden\par
-
 	\item Kommentare aktuell halten\par
-
-
 \end{itemize}
+
 	\item Einrückung und Zeilenumbrüche\par
 
 \begin{itemize}
 	\item 2 Leerzeichen statt Tabulator\par
-
-	\item ‚$ \{ $ ‘ hinter Methodendeklaration\par
-
-	\item ‚$ \} $ ‘ in neuer Zeile auf gleiche Einrückungsebene\par
-
+	\item '\{' hinter Methodendeklaration\par
+	\item '\}' in neuer Zeile auf gleiche Einrückungsebene\par
 	\item Optionale Zeilenumbrüche für Übersichtlichkeit\par
-
 	\item Nur ein Import pro Zeile\par
-
-
 \end{itemize}
+
 	\item Leerzeichen\par
 
 \begin{itemize}
@@ -482,99 +470,76 @@ So wurde es ermöglicht nach der Hälfte des Projektes, am Ende jedes Sprints ei
 
 \begin{itemize}
 	\item Ausnahme nur im Fall von Verdeutlichung unterschiedlicher Prioritäten\par
-
-
 \end{itemize}
-	\item Keine Leerzeichen vor und nach Klammern\par
 
+	\item Keine Leerzeichen nach und vor Klammern\par
 	\item Keine Leerzeichen vor Kommata und Semikolon\par
-
 	\item Leerzeichen nach Kommata\par
-
 	\item Keine Leerzeichen am Zeilenende\par
-
-
 \end{itemize}
+
 	\item Konsistentes Benennungsschema\par
 
 \begin{itemize}
 	\item Deskriptive Namen verwenden\par
-
 	\item mixedCase für Variablen\par
-
 	\item GROßSCHREIBUNG für Konstanten\par
-
 	\item Keine Umlaute\par
-
 	\item Reservierte Schlüsselwörter beachten\par
-
 	\item Immer auf Englisch\par
-
-	\item Bezeichner von Booleanwerte sollen Zustand beschreiben, der wahr oder falsch sein kann\par
-
+	\item Bezeichner von Boolean-Werten beschreiben Zustand, der wahr oder falsch sein kann\par
 	\item Hilfsvariablen möglichst gleich benennen\par
-
 	\item Übergabe von Attributen an Konstruktoren\par
 
 \begin{itemize}
-	\item ‚length‘ als Attribut, ‚\_length‘ als Argument\par
-
+	\item 'length' als Attribut, '\_length' als Argument\par
+\end{itemize}
 
 \end{itemize}
-\end{itemize}
+
 	\item Textcodierung UTF-8
 \end{itemize}\par
+
 \textbf{Best Practice}\par
 
 \begin{itemize}
 	\item Allgemeines\par
 
 \begin{itemize}
-	\item Kein ‚language‘ Tag verwenden\par
-
-	\item Wiederholungen Vermeiden\par
-
+	\item Kein 'language' Tag verwenden\par
+	\item Wiederholungen vermeiden\par
 	\item Dopplungen vermeiden\par
-
+\end{itemize}
 
 \end{itemize}
-\end{itemize}
+
 \begin{itemize}
 	\item Variablen und Objekte\par
 
 \begin{itemize}
 	\item Keine globalen Variablen
-
 	\item Lokale Variablen, auch Zahlenvariablen zu Beginn deklarieren und initialisieren\par
-
-	\item Deklaration mehrerer Variablen können zusammengefasst werden\par
-
+	\item Deklarationen mehrerer Variablen können zusammengefasst werden\par
 	\item Datentyp wird über die Initialisierung zugewiesen\par
-
 	\item Kapselung mittels Namespace\par
-
-	\item Keine Deklaration mittels ‚new $ \ldots $ ()‘\par
+	\item Keine Deklaration mittels 'new $ \ldots $ ()'\par
+\end{itemize}
 
 \end{itemize}
-\end{itemize}
+
 \begin{itemize}
 	\item Funktionen\par
 
 \begin{itemize}
-	\item Vergleiche mittels ‚===‘
-
-	\item Unter keinen Umständen ‚eval()‘ benutzen\par
-
-	\item Keine ‚with‘ Statements\par
-
-	\item Keine ‚for ($ \ldots $  in $ \ldots $ )‘ Loops\par
-
-	\item Jeder ‚switch‘ hate einen ‚default‘ Case\par
-
-	\item Vorsicht bei Verwendung von ‚typeof()‘\par
-
-	\item Nicht erhaltene Argumente gelten als ‚undefined‘
+	\item Vergleiche mittels '==='
+	\item Unter keinen Umständen 'eval()' benutzen\par
+	\item Keine 'with' Statements\par
+	\item Keine 'for ($ \ldots $  in $ \ldots $ )' Loops\par
+	\item Jeder 'switch' hat einen 'default' Case\par
+	\item Vorsicht bei Verwendung von 'typeof()'\par
+	\item Nicht erhaltene Argumente gelten als 'undefined'
 \end{itemize}\par
+
 \end{itemize}
 
 
