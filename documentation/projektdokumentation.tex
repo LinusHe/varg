@@ -88,6 +88,9 @@
 	\textsc{David Koch -- david.koch.1@stud.htwk-leipzig.de} \\[2mm]
 	\textsc{Jonas Gwozdz -- jonas.gwozdz@stud.htwk-leipzig.de} \\[2mm]
 	\textsc{Erik Heldt -- erik.heldt@stud.htwk-leipzig.de} \\[2mm]
+	\textsc{Alaa Aldin Karkoutli -- alaa_aldin.karkoutli@stud.htwk-leipzig.de} \\[2mm]
+	\textsc{Julius Hohlfeld -- julius.hohlfeld@stud.htwk-leipzig.de} \\[2mm]
+	\textsc{Tim Henning -- tim.henning@stud.htwk-leipzig.de} \\[2mm]
 	\normalsize	HTWK Leipzig 
 	}
 \date{}
@@ -115,7 +118,7 @@
 \section{Anforderungsspezifikation}
 
 \subsection{Initiale Kundenvorgaben}
-{\small Autor: Jonas Gwozdz, Korrektur: Linus Herterich}
+{\small Autor: Jonas Gwozdz, Korrektur: Linus Herterich, Tim Henning}
 
 \vspace{\baselineskip}
 \noindent Die Vorgaben unseres Kunden, Prof. Gürtler, ließen uns viele Freiheiten in der Gestaltung des Programms. \par
@@ -127,8 +130,8 @@
   Die einzelnen Bearbeitungsschritte sollen mit einer Bearbeitungszeit und Kosten belegt werden. \par
 
   \item Im Tool soll ein horizontaler Graph erstellt werden können, auf dem die Teile als Knoten und 
-  die Bearbeitungsschritte zwischen ihnen als Kanten dargestellt sind. Im nachhinein soll der optimale 
-  Fertigungsprozess nach Kosten oder Zeit ausgewertet werden. Alle hierfür benötigten Daten sollen im Tool eingegeben werden können\par
+  die Bearbeitungsschritte zwischen ihnen als Kanten dargestellt sind. Im Nachhinein soll der optimale 
+  Fertigungsprozess nach Kosten oder Zeit ausgewertet werden. Alle hierfür benötigten Daten sollen im Tool eingegeben werden können.\par
 
   \item Rüstkosten und -zeit fallen pro Charge (festlegbar per Losgröße, mindestens aber ein mal) bei jedem Bearbeitungsschritt an. 
   Zusätzlich werden pro Stück für jeden Bearbeitungsschritt die benötigten Kosten und Zeit mit einbezogen. \par
@@ -146,7 +149,7 @@
   \hline
   \textbf{Target Group}                                                  & \textbf{Needs}                                                                                                                        & \textbf{Product}                                                                                                                                                                                                 \\
   \hline
-  -Maschinenbau-Studenten \newline Maschinenbau-Profs \newline -Lehrende & Vgl. zu händisch: \newline einheitlicher, schneller \newline -plattformunabhängig \newline -Open Source \newline -Einfach zu bedienen & -Webanwendung \newline -Als Graph \newline $\rightarrow$ quasi als Baukasten \newline $\rightarrow$ Kantengewichtung, Bausteine wählbar \newline -Import/Export von Modellen \newline Normalisierung des Graphen \\
+  -Maschinenbau-Studenten \newline -Maschinenbau-Profs \newline -Lehrende & Vgl. zu händisch: \newline einheitlicher, schneller \newline -plattformunabhängig \newline -Open Source \newline -Einfach zu bedienen & -Webanwendung \newline -Als Graph \newline $\rightarrow$ quasi als Baukasten \newline $\rightarrow$ Kantengewichtung, Bausteine wählbar \newline -Import/Export von Modellen \newline Normalisierung des Graphen \\
   \hline
 \end{tabular}
 \\
@@ -400,20 +403,20 @@ Diese werden dann in die entsprechenden Queries umgewandelt.\\
 \subsection{Liste der Architekturentscheidungen}
 {\small Autor: Alaa Aldin Karkoutli}\newline
 
-\textbf{JavaScript} ist die grundlegende Programmiersprache, auf der diese App basiert ist. Sonst wurde es für die folgenden Architekturen entschieden:
+\textbf{JavaScript} ist die grundlegende Programmiersprache, auf der diese App basiert ist. Des Weiteren entschieden wir uns für die folgenden Architekturen:
 \begin{description}
     \item [I) Vue.js]: wurde als das JavaScript-Webframework der Web-App eingesetzt. 
-    \item [II) Vuetify]: ist die UI-Bibliothek, für die entschieden wurde.  
+    \item [II) Vuetify]: ist die UI-Bibliothek, für die uns entschieden haben.  
     \item [III) CSS-Language-Extenion]: wurde eingesetzt, um die optischen Dinge anzupassen.
     \item [IV) Vuex]: ist eine 'Vue.js-Erweiterung', die als Speicher der Daten benutzt wird.
-    \item [V) Cytoscape.js]: ist die JavaScript-Bibliothek, für die entschieden wurde, um die Graphen zu erstellen.
+    \item [V) Cytoscape.js]: ist die JavaScript-Bibliothek, für die uns entschieden haben, um die Graphen zu erstellen.
     \item [VI) Cypress]: ist ein Framework zum Testen der HTML-Elemente.
     \item [VII) jest]: ist das Framework zum Testen der Richtigkeit einzelner Funktionen.
     \item [VIII) REST-Konforme] (Representational State Transfer): ist die Architektur zur Kommunikation der DB und Authentifizierungsdaten mit der App.
     \item [IX) Node.js]: ist die ausgewählte Schnittstelle, um auf die Daten der DB zuzugreifen.
     \item [X) Axios 'Promise-based' HTTP-Request]: ist das eingesetzte Framework, um die Abfragen zu stellen. 
-    \item [XI) Docker]: ist die Client-Server Architektur, für die entschieden wurde.
-    \item [XII) MySQL]: ist das DB-System, für das im Docker-Container entschieden wurde.  
+    \item [XI) Docker]: ist die Client-Server Architektur, für die uns entschieden haben.
+    \item [XII) MySQL]: ist das DB-System, für das uns im Docker-Container entschieden haben.  
 \end{description}
 
 \section{Prozess- und Implementationsvorgaben}
@@ -552,34 +555,34 @@ wurde.
 
 
 \subsubsection{Voraussetzungen}
-Das Versionsmanagement-Tool ''GitLab'' sowie das Zeitmanagement-Tool ''YouTrack''
-wurden zu Beginn des Projekts vorgeschrieben. Die Commits in ''GitLab'' werden jeweils mit
+Das Versionsmanagement-Tool 'GitLab' sowie das Zeitmanagement-Tool 'YouTrack'
+wurden zu Beginn des Projekts vorgeschrieben. Die Commits in 'GitLab' werden jeweils mit
 der ID des zugehörigen YouTrack-Tickets am Anfang des Commit-Titels versehen.
 \\Damit das gesamte Team einheitliche Versionen der verwendeten Bibliotheken benutzt,
-wird der Paketmanager ''npm'' verwendet. Mir diesem lassen sich Pakete (und deren Versionen) definieren,
+wird der Paketmanager 'npm' verwendet. Mir diesem lassen sich Pakete (und deren Versionen) definieren,
 welche für das Projekt benötigt werden.
 \\ Damit am Projekt gearbeitet werden kann, muss sich somit jedes Teammitglied die LTS-
 Version von Node.js (welches npm enthält) installieren.
 \\ Sobald Node.js global installiert ist, kann im ''code'' Verzeichnis der Befehl
-''npm install'' ausgeführt werden, um die benötigten Bibliotheken zu installieren.
+'npm install' ausgeführt werden, um die benötigten Bibliotheken zu installieren.
 
 \subsubsection{Compiler}
 Achtung: Das Kompilieren funktioniert erst, sobald die Bibliotheken mit dem Befehl
-''npm install'' (im /code Verzeichnis) installiert wurden.
+'npm install' (im /code Verzeichnis) installiert wurden.
 \\
 Um Änderungen des Projektes einzusehen, muss das Projekt kompiliert werden.
-''Vue.js'' bringt bereits einen Echtzeit-Compiler mit, welcher reagiert, sobald Änderungen
-an Dateien im ''code'' Verzeichnis gemacht wurden. Um diesen Compiler aufzurufen, muss der npm-Befehl \mbox{''npm run serve''} im ''code'' Verzeichnis
+'Vue.js' bringt bereits einen Echtzeit-Compiler mit, welcher reagiert, sobald Änderungen
+an Dateien im '/code' Verzeichnis vorgenommen wurden. Um diesen Compiler aufzurufen, muss der npm-Befehl \mbox{'npm run serve'} im '/code' Verzeichnis
 aufgerufen werden.
 \\Um das Projekt nicht während der Entwicklung zu kompilieren, sondern für die Produktion freizugeben,
-muss der Befehl ''npm run build'' im ''code'' Verzeichnis aufgerufen werden. Es werden
-anschließend die kompilierten Dateien im Verzeichnis ''code/dist'' abgelegt.
-Diese können anschließend auf einem Webserver (z.B. Apache HTTP Server) hochgeladen werden.
+muss der Befehl 'npm run build' im '/code' Verzeichnis aufgerufen werden. Es werden
+anschließend die kompilierten Dateien im Verzeichnis 'code/dist' abgelegt.
+Diese können dann auf einem Webserver (z.B. Apache HTTP Server) hochgeladen werden.
 
 \subsubsection{Entwicklungsumgebung}
-Für die Entwicklung der Software wird der freie Quelltext-Editor ''Visual Studio Code''
+Für die Entwicklung der Software wird der freie Quelltext-Editor 'Visual Studio Code'
 von Microsoft verwendet. Dieser ist plattformunabhängig und kann durch zahlreiche Erweiterungen
-angepasst werden. Beispielsweise kann durch das Plugin ''Vetur'' die Vue.js-eigene Syntax
+angepasst werden. Beispielsweise kann durch das Plugin 'Vetur' die Vue.js-eigene Syntax
 vervollständigt und hervorgehoben werden.
 \\Weitere Einstellungsvorgaben bezüglich der Entwicklungsumgebung wurden nicht getroffen.
 Es muss allerdings darauf geachtet werden, dass die Coding-Conventions durch automatische
@@ -590,7 +593,7 @@ In der CI / CD Pipeline unseres Versionsmanagement-Tools, die nach jedem Git-Pus
 ausgeführt wird, werden folgende Operationen durchgeführt:
 \begin{itemize}
   \item Test, ob das Projekt kompiliert (inklusive Syntaxprüfung durch ES-Lint)
-  \item Cypress Tests durchführen (siehe ''Überblick über Architektur'')
+  \item Cypress Tests durchführen (siehe 'Überblick über Architektur')
   \item LaTeX Doku kompilieren
 \end{itemize}
 
@@ -600,20 +603,20 @@ neue Entwicklungen längerfristig ''zerstört'' werden, möglichst gering.
 
 \subsubsection{Docker}
 Um die Client-Server Architektur des Projektes lokal zu simulieren, wird die
-Container-Virtualisierungssoftware ''Docker'' verwendet.
+Container-Virtualisierungssoftware 'Docker' verwendet.
 Mit dieser haben wir einen Webserver simuliert, auf dem die Datenbank ausgeführt
-und verwaltet wird (siehe ''Überblick über Architektur''). Die Container werden
-im Projekt-Ordner ''docker'' definiert.
+und verwaltet wird (siehe 'Überblick über Architektur'). Die Container werden
+im Projekt-Ordner 'docker' definiert.
 
 
 \subsubsection{Kommunikationstools}
-Zu Beginn des Projekts wurde sich auf das kostenlose Kommunikationstool ''Slack'' geeinigt.
-Mit diesem ist es möglich, in verschiedenen Kanälen Text, Dateien und Medien auszutauschen.
-Auch private Konversationen, sowie Kleingruppen-Chaträume sind in diesem Tool möglich.
+Zu Beginn des Projekts wurde sich auf das kostenlose Kommunikationstool 'Slack' geeinigt.
+Mit diesem ist es möglich, in verschiedenen Kanälen Nachrichten, Dateien und Medien auszutauschen.
+Auch private Konversationen sowie Kleingruppen-Chaträume sind in diesem Tool möglich.
 Die Software kann sowohl als App installiert, als auch im Browser verwendet werden.
 \\Da wir über die Weihnachtsferien einen Sprint durchgeführt haben, führten wir Mitte Dezember
-das Tool ''Discord'' ein, mit dem es möglich ist, sich in Echtzeit-Sprachchats zusammenzufinden.
-Dazu ist es möglich, seinen Desktop zu teilen, womit sich das Tool bestens eignet,
+das Tool 'Discord' ein, mit dem es möglich ist, sich in Echtzeit-Sprachchats zusammenzufinden.
+Außerdem ist es möglich, seinen Desktop zu teilen, sodass sich dieses Tool bestens eignet,
 um räumlich getrennt über Code-Passagen oder neue Features zu sprechen.
 \\Die Kombination beider Tools hat problemlos funktioniert und uns auch
 während des Lockdowns in der ''Corona-Krise'' geholfen. Da wir die Tools bereits frühzeitig
@@ -966,16 +969,25 @@ bearbeitet werden.
 
 Im Folgenden werden die verwendeten Bibliotkeken und deren Lizenz aufgelistet:
 \begin{itemize}
-  \item Vue.js - MIT License: Copyright (c) 2013-present Yuxi Evan You
-  \item vuetify - MIT License: Copyright (c) 2016-2020 John Jeremy Leider
-  \item cytoscape - MIT License: Copyright (c) 2016-2020, The Cytoscape Consortium.
-  \item cytoscape-node-html-label - MIT License: Copyright (c) 2017 Kalugin Sergey
-  \item cypress - MIT Licence: Copyright (c) 2015 Cypress.io, LLC
-  \item jest - MIT Licence: Copyright (c) Facebook, Inc. and its affiliates.
-  \item axios - MIT License: Copyright (c) 2014-present Matt Zabriskie
-  \item darkmode.js - MIT License: Copyright (c) 2018 Nickolas
-  \item file-saver.js - MIT License: Copyright (c) 2016 Eli Grey
-  \item file-saver.js - MIT License: Copyright (c) 2016 Eli Grey
+  \item Vue.js -- MIT License: Copyright (c) 2013-present Yuxi Evan You
+  \item vuetify -- MIT License: Copyright (c) 2016-2020 John Jeremy Leider
+  \item cytoscape -- MIT License: Copyright (c) 2016-2020, The Cytoscape Consortium
+  \item cytoscape-node-html-label -- MIT License: Copyright (c) 2017 Kalugin Sergey
+  \item cypress -- MIT Licence: Copyright (c) 2015 Cypress.io, LLC
+  \item jest -- MIT Licence: Copyright (c) Facebook, Inc. and its affiliates
+  \item axios -- MIT License: Copyright (c) 2014-present Matt Zabriskie
+  \item darkmode.js -- MIT License: Copyright (c) 2018 Nickolas
+  \item file-saver.js -- MIT License: Copyright (c) 2016 Eli Grey
+  \item file-saver.js -- MIT License: Copyright (c) 2016 Eli Grey
+  \item Node.js -- MIT License
+  \item express.js -- MIT License: Copyright (c) 2017 StrongLoop, IBM, and other expressjs.com contributors
+  \item MySQL -- GPLv2 License: Copyright (c) 2020, Oracle Corporation and/or its affiliates
+  \item Docker -- Apache License 2.0: Copyright (c) 2020 Docker Inc.
+  \item Adminer -- Apache License 2.0 or GPLv2
+  \item LaTeX -- LaTeX Project Public License (LPPL)
+  \item https.js -- MIT License
+  \item forever -- MIT License
+  \item Apache-HTTP-Server -- Apache License 2.0: Copyright (c) 1997-2020 The Apache Software Foundation
 \end{itemize}
 
 Da ausschließlich die MIT Lizenz verwendet wurde, werden wir auch die Software ''VarG'' unter der
@@ -998,7 +1010,15 @@ XXX
 
 \subsection{Präsentation auf der Messe}
 {\small Autor: Erik Heldt}
-\\\href[pdfnewwindow=true]{file:zuarbeiten/VarG_Messepräsentation.pdf}{VarG Messepräsentation (klick)}
+\\Die Messe fand in diesem Jahr wegen Corona etwas anders als gewohnt als große Online-Konferenz statt.
+\\Wir haben eine Präsentation vorbereitet (Link: \href[pdfnewwindow=true]{file:zuarbeiten/VarG_Messepräsentation.pdf}{VarG Messepräsentation}),
+um einen groben Überblick über die Features und die Architektur unseres Projekts zu geben. Außerdem haben wir die Anwendung auf dem HTWK-Server öffentlich zugänglich gemacht
+und einen Messe-Login erstellt, um unseren Gästen eine Live-Demo bereitzustellen, mit der sie selbst während der Vorstellung interagieren konnten.
+\\\\Unsere Präsentation verlief sehr gut. Wir haben viel Lob sowohl für das Design als auch die vielen Funktionalitäten erhalten.
+Ein Gast hat uns sogar gefragt, ob wir ein existierendes Projekt übernommen haben, weil es so ein umfangreiches Programm ist.
+Es gab auch noch weitere spezifische Fragen zu verschiedenen Funktionalitäten, wie z.B. dem Login, der Datenbank, der Optimierung und dem Server-Hosting,
+die wir alle so gut wie möglich beantwortet haben.
+\\\\Zusammengefasst war die Messe also ein großer Erfolg für VarG.
 
 \subsection{Abschließende Einschätzung durch Product-Owner}
 {\small Autor: Manuel Eckert}
