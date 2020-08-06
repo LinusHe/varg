@@ -587,34 +587,34 @@ wurde.
 
 
 \subsubsection{Voraussetzungen}
-Das Versionsmanagement-Tool ''GitLab'' sowie das Zeitmanagement-Tool ''YouTrack''
-wurden zu Beginn des Projekts vorgeschrieben. Die Commits in ''GitLab'' werden jeweils mit
+Das Versionsmanagement-Tool 'GitLab' sowie das Zeitmanagement-Tool 'YouTrack'
+wurden zu Beginn des Projekts vorgeschrieben. Die Commits in 'GitLab' werden jeweils mit
 der ID des zugehörigen YouTrack-Tickets am Anfang des Commit-Titels versehen.
 \\Damit das gesamte Team einheitliche Versionen der verwendeten Bibliotheken benutzt,
-wird der Paketmanager ''npm'' verwendet. Mir diesem lassen sich Pakete (und deren Versionen) definieren,
+wird der Paketmanager 'npm' verwendet. Mir diesem lassen sich Pakete (und deren Versionen) definieren,
 welche für das Projekt benötigt werden.
 \\ Damit am Projekt gearbeitet werden kann, muss sich somit jedes Teammitglied die LTS-
 Version von Node.js (welches npm enthält) installieren.
 \\ Sobald Node.js global installiert ist, kann im ''code'' Verzeichnis der Befehl
-''npm install'' ausgeführt werden, um die benötigten Bibliotheken zu installieren.
+'npm install' ausgeführt werden, um die benötigten Bibliotheken zu installieren.
 
 \subsubsection{Compiler}
 Achtung: Das Kompilieren funktioniert erst, sobald die Bibliotheken mit dem Befehl
-''npm install'' (im /code Verzeichnis) installiert wurden.
+'npm install' (im /code Verzeichnis) installiert wurden.
 \\
 Um Änderungen des Projektes einzusehen, muss das Projekt kompiliert werden.
-''Vue.js'' bringt bereits einen Echtzeit-Compiler mit, welcher reagiert, sobald Änderungen
-an Dateien im ''code'' Verzeichnis gemacht wurden. Um diesen Compiler aufzurufen, muss der npm-Befehl \mbox{''npm run serve''} im ''code'' Verzeichnis
+'Vue.js' bringt bereits einen Echtzeit-Compiler mit, welcher reagiert, sobald Änderungen
+an Dateien im '/code' Verzeichnis vorgenommen wurden. Um diesen Compiler aufzurufen, muss der npm-Befehl \mbox{'npm run serve'} im '/code' Verzeichnis
 aufgerufen werden.
 \\Um das Projekt nicht während der Entwicklung zu kompilieren, sondern für die Produktion freizugeben,
-muss der Befehl ''npm run build'' im ''code'' Verzeichnis aufgerufen werden. Es werden
-anschließend die kompilierten Dateien im Verzeichnis ''code/dist'' abgelegt.
-Diese können anschließend auf einem Webserver (z.B. Apache HTTP Server) hochgeladen werden.
+muss der Befehl 'npm run build' im '/code' Verzeichnis aufgerufen werden. Es werden
+anschließend die kompilierten Dateien im Verzeichnis 'code/dist' abgelegt.
+Diese können dann auf einem Webserver (z.B. Apache HTTP Server) hochgeladen werden.
 
 \subsubsection{Entwicklungsumgebung}
-Für die Entwicklung der Software wird der freie Quelltext-Editor ''Visual Studio Code''
+Für die Entwicklung der Software wird der freie Quelltext-Editor 'Visual Studio Code'
 von Microsoft verwendet. Dieser ist plattformunabhängig und kann durch zahlreiche Erweiterungen
-angepasst werden. Beispielsweise kann durch das Plugin ''Vetur'' die Vue.js-eigene Syntax
+angepasst werden. Beispielsweise kann durch das Plugin 'Vetur' die Vue.js-eigene Syntax
 vervollständigt und hervorgehoben werden.
 \\Weitere Einstellungsvorgaben bezüglich der Entwicklungsumgebung wurden nicht getroffen.
 Es muss allerdings darauf geachtet werden, dass die Coding-Conventions durch automatische
@@ -625,7 +625,7 @@ In der CI / CD Pipeline unseres Versionsmanagement-Tools, die nach jedem Git-Pus
 ausgeführt wird, werden folgende Operationen durchgeführt:
 \begin{itemize}
   \item Test, ob das Projekt kompiliert (inklusive Syntaxprüfung durch ES-Lint)
-  \item Cypress Tests durchführen (siehe ''Überblick über Architektur'')
+  \item Cypress Tests durchführen (siehe 'Überblick über Architektur')
   \item LaTeX Doku kompilieren
 \end{itemize}
 
@@ -635,20 +635,20 @@ neue Entwicklungen längerfristig ''zerstört'' werden, möglichst gering.
 
 \subsubsection{Docker}
 Um die Client-Server Architektur des Projektes lokal zu simulieren, wird die
-Container-Virtualisierungssoftware ''Docker'' verwendet.
+Container-Virtualisierungssoftware 'Docker' verwendet.
 Mit dieser haben wir einen Webserver simuliert, auf dem die Datenbank ausgeführt
-und verwaltet wird (siehe ''Überblick über Architektur''). Die Container werden
-im Projekt-Ordner ''docker'' definiert.
+und verwaltet wird (siehe 'Überblick über Architektur'). Die Container werden
+im Projekt-Ordner 'docker' definiert.
 
 
 \subsubsection{Kommunikationstools}
-Zu Beginn des Projekts wurde sich auf das kostenlose Kommunikationstool ''Slack'' geeinigt.
-Mit diesem ist es möglich, in verschiedenen Kanälen Text, Dateien und Medien auszutauschen.
-Auch private Konversationen, sowie Kleingruppen-Chaträume sind in diesem Tool möglich.
+Zu Beginn des Projekts wurde sich auf das kostenlose Kommunikationstool 'Slack' geeinigt.
+Mit diesem ist es möglich, in verschiedenen Kanälen Nachrichten, Dateien und Medien auszutauschen.
+Auch private Konversationen sowie Kleingruppen-Chaträume sind in diesem Tool möglich.
 Die Software kann sowohl als App installiert, als auch im Browser verwendet werden.
 \\Da wir über die Weihnachtsferien einen Sprint durchgeführt haben, führten wir Mitte Dezember
-das Tool ''Discord'' ein, mit dem es möglich ist, sich in Echtzeit-Sprachchats zusammenzufinden.
-Dazu ist es möglich, seinen Desktop zu teilen, womit sich das Tool bestens eignet,
+das Tool 'Discord' ein, mit dem es möglich ist, sich in Echtzeit-Sprachchats zusammenzufinden.
+Außerdem ist es möglich, seinen Desktop zu teilen, sodass sich dieses Tool bestens eignet,
 um räumlich getrennt über Code-Passagen oder neue Features zu sprechen.
 \\Die Kombination beider Tools hat problemlos funktioniert und uns auch
 während des Lockdowns in der ''Corona-Krise'' geholfen. Da wir die Tools bereits frühzeitig
