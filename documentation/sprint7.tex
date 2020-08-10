@@ -1,0 +1,259 @@
+\subsection{Ziel des Sprints}
+{\small Autor: Julius Hohlfeld}
+
+Ziel des Sprints war es die wichtige Features wie die Datenbank und Optimierung weiterzuentwickeln und Fortschritte in Design und Usability zu machen.\\
+
+\subsection{User-Stories des Sprint-Backlogs}
+{\small Autor: Julius Hohlfeld}
+
+\begin{itemize}
+  \item \textbf{Bugs fixen}
+        \\\textit{Als Benutzer möchte ich eine Software benutzen, in welcher keine unerwarteten Probleme auftauchen.}
+  \item \textbf{ Optimierung - Losgröße }
+        \\\textit{
+        Als Nutzer möchte ich Losgrößen der Bearbeitungsschritte einstellen und optimieren. Die Optimierung soll automatisch Knoten für Start- und Endzustand auswählen.}
+  \item \textbf{Drag und Drop Erstellung für Kanten }
+        \\\textit{
+          Als Benutzer möchte ich schnell und effizient Kanten erstellen können.}
+  \item \textbf{Design - Dark Mode}
+        \\\textit{
+          Als User will ich persönliche Präferenz über das Aussehen (konkret Dark Mode) der Applikation treffen.}
+  \item \textbf{Login}
+        \\\textit{
+          Als Nutzer will mich mit dem HTWK-Login einloggen (Shibboleth) und erwarte eine persistente Erfahrung während ich eingeloggt bin.}
+  \item \textbf{Backend-Datenbank}
+        \\\textit{
+          Als Benutzer möchte ich Graphen über die Anwendung und eine API auf einer Datenbank speichern und von dort aus runterladen.}
+\end{itemize}
+
+\subsection{Liste der durchgeführten Meetings}
+{\small Autor: Julius Hohlfeld}
+
+\begin{itemize}
+\item 11.05.2020: Planning
+\item 15.05.2020: Weekly
+\item 18.05.2020: Weekly
+\item 22.05.2020: Review \& Retro
+\end{itemize}
+
+\subsection{Ergebnisse des Planning-Meetings}
+{\small Autor: Julius Hohlfeld}
+
+Anwesend: Alaa Aldin, David, Erik, Jonas, Julius H., Lennart, Linus, Matthias, Tim, Alex, Manuel, Julius J.\\
+\\
+Im Planning haben wir die Ziele für die unterschiedlichen Arbeitsbereiches des Projekts festgelegt und sie in ihrer Schwierigkeit bewertet.\\
+
+
+\textbf{Backend Datenbanken}\\
+Es wurde über die Überführung des Datenbankprototyps in Docker auf die HTWK-Server gesprochen. Allerdings hängt dies zur Zeit noch von der Bereitstellung von der HTWK ab.
+Um das Projekt auch auf echten Servern zu testen, wurde über Alternativen dikutiert. Als Ziel wurde gesetzt weiter die API auszubauen, besonders POST- und DELETE Request sollen
+umgesetzt werden. Diese Ziele wurden mit einer 6 bewertet.\\
+
+\textbf{Login}\\
+Es wurde fesges,tellt dass man auch bei Shibole noch auf eine Antwort der HTWK-IT wartet.
+Es galt als Ziel die Persistenz des Graphen in einer Sitzung zu erreichen, welches mit 6 bewertet wurde.\\
+
+\textbf{Optimierung des Graphen}\\
+Auf Hinweis des Kunden sollen Losgrößen für Kanten implementiert und bei der Optimierung miteingerechnet werden. Auch eine automatische Auswahl der Start- und Endknoten, falls der User
+es selber noch nicht ausgewählt hat, soll erzeitl werden. Die Gruppe schätzte diese Vorhaben mit einer 5 ab.\\
+
+\textbf{Design}\\
+Auf Wunsch des Teams wurde ein Dark Mode für diesen Sprint als Ziel gesetzt. Diese Aufgabe wurde mit einer 4 bewertet.\\
+
+\textbf{Erstellung der Kanten durch Drag\&Drop}\\
+Um die Usability der Anwendung zu erhöhen, wurde vorgeschlagen zwischen verschiedenen Knoten Kanten über Drag\&Drop zu erstellen. Es wurde noch diskutiert inwiefern dies mit der Optimierung
+und Validierung der Kanten kollidiert, da diese User spezifisierte Eingaben benötigen. Das Team stimmte ab und schätzte die Schwierigkeit auf 5.\\
+
+\textbf{Bugs fixen}\\
+Über die letzen Sprints hatten sich Bugs gesammelt und einige Teammitglieder hatten sich extra auf Bughunt begeben um Probleme zu finden. Daraus ergab sich eine Liste folgender Bugs, die es zu fixen galt:
+
+\begin{itemize}
+\item Selection-Felder bei Optimierungs-Einstellungen werden nicht initial geladen
+\item Falsche Anzeige der Gesamtkosten und Zeit nach Importierungen
+\item Datenbank GUI wechselt nicht automatisch die Seite wenn mehr Elemente angezeigt werden
+\item Start und Endzustandsanzeige
+\item Fehlerhafte Verschiebung bei Manchen Knotenkonstellationen
+\item Nach Laden des Graphen falscher Produktname und Produktanzahl
+\item Zu viele Dialogs übereinander
+\item VarG-Dialog verschwindet bei Überlappung zu schnell
+\item Startknoten
+\item Valdierung bei Stückzahleingabe
+\item Import wird auf Richtigkeit getestet
+\item Slider für Anzahl der Optimierungswege größer als Wege generell
+\end{itemize}
+
+\subsection{Aufgewendete Arbeitszeit pro Person$+$Arbeitspaket}
+{\small Autor: Julius Hohlfeld}
+
+\begin{longtable}{|p{4cm}|p{2cm}|p{1.2cm}|p{1.2cm}|p{0.7cm}|p{3.8cm}|}
+  \hline
+  Arbeitspaket                                                          & Person                & Start    & Ende     & h     & Artefakt                                                    \\
+  \hline
+  Bug: Nach laden des Graphen falscher Produktname und Produktanzahl    & Berger, Matthias      & 17.05.20 & 17.05.20 & 1     & GraphInfo.vue                                               \\ \hline
+  Rollenmanagement                                                      & Berger, Matthias      & 17.05.20 & 17.05.20 & 1     & store/store.js                                              \\ \hline
+  Persistenz des Graphen                                                & Berger, Matthias      & 16.05.20 & 21.05.20 & 12,5  & store/store.js                                              \\ \hline
+  Überarbeitung der Weiterleitung                                       & Berger, Matthias      & 16.05.20 & 16.05.20 & 1     & router/index.js                                             \\ \hline
+
+  Bug: Nach laden des Graphen falscher Produktname und Produktanzahl    & Buchmann, Lennart     & 17.05.20 & 17.05.20 & 1     & GraphInfo.vue                                               \\ \hline
+  Rollenmanagement                                                      & Buchmann, Lennart     & 17.05.20 & 17.05.20 & 1     & store/store.js                                              \\ \hline
+  Persistenz des Graphen                                                & Buchmann, Lennart     & 16.05.20 & 21.05.20 & 11,5  & store/store.js                                              \\ \hline
+  Überarbeitung der Weiterleitung                                       & Buchmann, Lennart     & 16.05.20 & 16.05.20 & 1     & router/index.js                                             \\ \hline
+
+  Tests für Einstellungen                                               & Gwozdz, Jonas         & 14.05.20 & 14.05.20 & 0,5   & settings\_spec.js                                            \\ \hline
+  Testen der Applikation                                                & Gwozdz, Jonas         & 12.05.20 & 12.05.20 & 0,5   & Testen der Applikation                                      \\ \hline
+  Dark Mode                                                             & Gwozdz, Jonas         & 13.05.20 & 21.05.20 & 18    & Darkmode.vue                                                \\ \hline
+  Farbschema erstellen                                                  & Gwozdz, Jonas         & 13.05.20 & 13.05.20 & 0,75  & darkmode.less                                               \\ \hline
+  "varg" zu "VarG" ändern                                               & Gwozdz, Jonas         & 14.05.20 & 14.05.20 & 0,33  & Gesamtes Projekt                                            \\ \hline
+  
+  Bug: Importieren funktioniert bei veränderten Knotenpositionen nicht  & Heldt, Erik           & 12.05.20 & 12.05.20 & 0,14  & removed Code                                                \\ \hline
+  Bug: MenuControls-Fenster ist nach unten verschoben                   & Heldt, Erik           & 12.05.20 & 12.05.20 & 0,14  & removed Code                                                \\ \hline
+  Validierung bei Stückzahleingabe                                      & Heldt, Erik           & 12.05.20 & 12.05.20 & 1     & GraphInfo.vue                                               \\ \hline
+  Axios-Requests für Post, Get usw.                                     & Heldt, Erik           & 13.05.20 & 20.05.20 & 8,25  & DatabaseForm.vue                                            \\ \hline
+  Ersetzen der TestDatabase durch MySQL Datenbank                       & Heldt, Erik           & 13.05.20 & 20.05.20 & 6,25  & DatabaseForm.vue                                            \\ \hline
+  Testdaten für die Datenbank                                           & Heldt, Erik           & 19.05.20 & 19.05.20 & 0,25  & dump.sql                                                    \\ \hline
+  Kodierungsfehler beheben                                              & Heldt, Erik           & 19.05.20 & 19.05.20 & 1,5   & api.js                                                      \\ \hline
+
+  Initialzustände auswählen                                             & Henning, Tim          & 12.05.20 & 18.05.20 & 4     & optimization.js                                             \\ \hline
+  Bug: Startknoten                                                      & Henning, Tim          & 12.05.20 & 12.05.20 & 2     & Graph.vue                                                   \\ \hline
+  Tests für Optimierung                                                 & Henning, Tim          & 18.05.20 & 18.05.20 & 3     & optimize.spec.js                                            \\ \hline
+
+  Optimierung des Graphen                                               & Herterich, Linus      & 21.05.20 & 21.05.20 & 0,5   & optimization.js                                             \\ \hline
+  Erstellung von Bearbeitungsschritte durch Klicken                     & Herterich, Linus      & 21.05.20 & 21.05.20 & 0,5   & RightClickMenu.vue                                          \\ \hline
+  Validierung umstellen                                                 & Herterich, Linus      & 18.05.20 & 18.05.20 & 0,5   & DetailControls.vue                                          \\ \hline
+  Tests für Einstellungen                                               & Herterich, Linus      & 14.05.20 & 14.05.20 & 0,75  & settings\_spec.js                                            \\ \hline
+  VarG-Dialog verschwindet bei Überlappung zu schnell                   & Herterich, Linus      & 12.05.20 & 12.05.20 & 3     & Dialogs.vue                                                 \\ \hline
+  Dark-Mode                                                             & Herterich, Linus      & 17.05.20 & 19.05.20 & 2,5   & Darkmode.vue                                                \\ \hline
+  Konzeption Kantenerstellung                                           & Herterich, Linus      & 14.05.20 & 14.05.20 & 0,5   & konzeptuelle Aufgabe                                        \\ \hline
+  Drag\&Drop Funktionalität                                              & Herterich, Linus      & 14.05.20 & 19.05.20 & 8     & edges.js                                                    \\ \hline
+  Rechtsklick-Menü: Kante "von"/"nach" überarbeiten                     & Herterich, Linus      & 21.05.20 & 21.05.20 & 0,5   & RightClickMenu.vue                                          \\ \hline
+  Tests: Kantenerstellung                                               & Herterich, Linus      & 21.05.20 & 21.05.20 & 0,5   & quickEdges\_spec.js                                          \\ \hline
+  Warnungs-Dialog Farbe anpassen                                        & Herterich, Linus      & 18.05.20 & 18.05.20 & 0,5   & Dialogs.vue                                                 \\ \hline
+  zweit- bis x-besten Graphen ausgeben                                  & Herterich, Linus      & 19.05.20 & 20.05.20 & 3,75  & OptimizeControls.Vue                                        \\ \hline
+  Bug: Losgröße - Detail Menü                                           & Herterich, Linus      & 19.05.20 & 19.05.20 & 0,5   & DetailControls.vue                                          \\ \hline
+  Validierung Losgröße                                                  & Herterich, Linus      & 19.05.20 & 19.05.20 & 0,5   & DetailControls.vue                                          \\ \hline
+  Zu viele Dialogs übereinander                                         & Herterich, Linus      & 21.05.20 & 21.05.20 & 1     & Dialogs.vue                                                 \\ \hline
+  Neue Labels                                                           & Herterich, Linus      & 21.05.20 & 21.05.20 & 0,75  & edges.js                                                    \\ \hline
+
+  API-Parser                                                            & Hohlfeld, Julius      & 12.05.20 & 14.05.20 & 0,66  & api.js                                                      \\ \hline         
+  Import wird nicht auf Richtigkeit getestet                            & Hohlfeld, Julius      & 13.05.20 & 19.05.20 & 9,25  & JsonPersistence.js                                          \\ \hline
+  Express-Post                                                          & Hohlfeld, Julius      & 14.05.20 & 14.05.20 & 2,25  & api.js                                                      \\ \hline
+  Express-Delete                                                        & Hohlfeld, Julius      & 12.05.20 & 12.05.20 & 0,08  & api.js                                                      \\ \hline
+  Express-Put                                                           & Hohlfeld, Julius      & 12.05.20 & 12.05.20 & 0,5   & api.js                                                      \\ \hline
+  Sprint Doku 7                                                         & Hohlfeld, Julius      & 11.05.20 & 22.05.20 & 3,5   & sprint7.tex                                                 \\ \hline
+  Kodierungsfehler beheben                                              & Hohlfeld, Julius      & 19.05.20 & 20.05.20 & 3,5   & api.js                                                      \\ \hline
+  
+  Persistenz des Graphen                                                & Karkoutli, Alaa Aldin & 16.05.20 & 21.05.20 & 13,5  & store/store.js                                              \\ \hline
+  Überarbeitung der Weiterleitung                                       & Karkoutli, Alaa Aldin & 16.05.20 & 16.05.20 & 1     & router/index.js                                             \\ \hline
+
+  Losgröße einbinden                                                    & Koch, David           & 14.05.20 & 15.05.20 & 3     & edges.js                                                    \\ \hline
+  Tests für Optimierung                                                 & Koch, David           & 18.05.20 & 18.05.20 & 2     & optimize.spec.js                                            \\ \hline
+  zweit bis x-besten Graphen ausgeben                                   & Koch, David           & 19.05.20 & 20.05.20 & 7     & OptimizeControls.Vue                                        \\ \hline
+  \\ \hline
+\end{longtable}
+
+\subsection{Konkrete Code-Qualität im Sprint}
+{\small Autor: Julius Hohlfeld}
+
+Die Qualtität des Codes war weiterhin gut. Das Team wurde allerdings vom Software-Architekten darauf hingewiesen, die Kommentare verständlicher zu schreiben.\\
+
+\subsection{Konkrete Test-Überdeckung im Sprint}
+{\small Autor: Julius Hohlfeld}
+
+Sämtliche neuen Änderungen wurden auch mit Tests kontrolliert. Es kam zur Diskussion auch Tests für die API zu schreiben, welche noch nicht getestet wird.\\
+
+\subsection{Ergebnisse des Reviews}
+{\small Autor: Julius Hohlfeld}
+
+Anwesend: Alaa Aldin, Erik, Jonas, Julius H., Lennart, David, Manuel, Alex, Julius J. \\
+
+Im Review stellte jeder Anwesende seine Arbeit vor. Einige fehlten, wurden aber durch eng zusammenarbeitende Teammitglieder vertreten. \\
+Die Ergebnisse und Erkenntnisse wurden ausgewertet.\\
+
+\textbf{HTWK-IT}\\
+Mehrfach kam das Thema der fehlenden Kommunikation auf Seiten der HTWK-IT für unser projektkritischen Anfragen zur Sprache. Es wurden neue Kommunikationsversuche besprochen.
+\\
+
+\textbf{David und Tim:}
+\begin{itemize}
+\item Losgröße integriert
+\item Pfad-Optimierung beachtet Losgröße + Ausgabe
+\item Initialzustände beim Optimieren
+\item Optimierungstests
+\end{itemize}
+
+\textbf{Erik:}
+\begin{itemize}
+\item Stückzahl: keine Kommas und führende Nullen
+\item Laden, Löschen, Hochladen von Graphen in DB
+\item Hashkey für Speicherung
+\end{itemize}
+
+\textbf{Jonas:}
+\begin{itemize}
+\item Test für Kantenerstellung
+\item Darkmode (eigene Komponente)
+\end{itemize}
+
+\textbf{Julius H.:}
+\begin{itemize}
+\item API-Anpassungen
+\item JSON Validation
+\item Kodierungsfehler behoben
+\end{itemize}
+
+\textbf{Linus:}
+\begin{itemize}
+\item Pfad-Ausgabe
+\item Drag\&Drop + Tests
+\item Benachrichtigungs Quality of Life
+\item Einstellungsmenü Tests
+\end{itemize}
+
+\textbf{Alaa Aldin, Lennart und Matthias:}
+\begin{itemize}
+\item Graph hat Persistenz
+\item Rollenmanagement
+\item Weiterleitung
+\end{itemize}
+
+\textbf{Bugs}\\
+Es wurden Bugs angesprochen, welche im Verlauf des Sprints oder beim mergen auf den Targetbranch entdeckt wurden.\\
+
+\subsection{Ergebnisse der Retrospektive}
+{\small Autor: Julius Hohlfeld}
+
+Anwesend: Alaa Aldin, Erik, Jonas, Julius H., Lennart, David, Manuel, Alex, Julius J. \\
+
+Das Team war zufrieden mit der erreichten Leistung und hat eine positve Ansicht zum Sprint. Angesichts des baldigem Ende des Softwareprojekts wurde auch die Verwendung der restlichen Zeit kurz diskutiert.\\
+
+\begin{center}
+\begin{tabular}{ |c|c|c|c| }
+\hline
+ Keep & Add & Less & More\\
+\hline 
+ -Zusammenhalt & -Server & -neue instabile Features (weil wenig Sprints übrig) & -Druck bei HTWK für Serverplatz \\
+ -Kommunikation & - Tests & & Tests\\
+ & & & -Bugfixes\\
+ & & & -Code Kommentare\\
+ & & & -Quality assurance\\
+\hline     
+\end{tabular}
+\end{center}
+
+\subsection{Abschließende Einschätzung des Product-Owners}
+{\small Autor: Manuel Eckert}
+
+In den vorherigen Sprints wurde größerer Fokus auf die Ausarbeitung des Frontends gelegt. Somit konnte in diesem und den folgenden Sprints der Schwerpunkt auf das Backend gelegt werden. Dies wurde zusätzlich durch eine fehlende Rückmeldung des ITSZ begünstigt. \\
+Inzwischen haben die Entwickler eine sehr gut Kompetenz entwickelt, den Umfang der einzelnen Aufgaben einzuschätzen. Somit konnten wir fast alle im Planning-Meeting besprochenen User-Storys erfolgreich abschließen. \\
+Leider mussten wir Aufgrund der fortgeschrittenen Zeit und der schlechten Kommunikation zum ITSZ, eine Authentifizierung mittels Shibboleth verwerfen.   
+
+\subsection{Abschließende Einschätzung des Software-Architekten}
+{\small Autor: Julius Jolig}
+
+Die noch immer ausstehende Antwort des ITSZ der HTWK verzögert die Arbeit am Projekt. Hier muss eine Lösung gefunden werden. Die Anzahl der Kommentare im Code ist soweit gut, allerdings müssen diese klarer formuliert werden. 
+
+\subsection{Abschließende Einschätzung des Team-Managers}
+{\small Autor: Alex Hofmann}
+
+Weiterhin trotz aller Umstände eine sehr fokussierte und lobenswerte Arbeit des Teams, gerade auch im Vergleich zu anderen Teams, wie man von deren Masterstudenten hört.
+

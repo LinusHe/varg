@@ -1,0 +1,262 @@
+\subsection{Ziel des Sprints}
+{\small Autor: David Koch}
+
+Vom 27.04. bis 07.05. arbeiteten wir an Sprint 6. Auf Grund von Corona fanden auch hier alle Treffen in Form von Online-Konferenzen statt. Die Zwischenstandsberichte bei den einzelnen Treffen wirkten zwar wenig erfolgversprechend, dennoch wurden fast alle Aufgaben bearbeitet und die Ergebnisse ins Projekt eingebunden.
+Die Meetings verliefen problemfrei, die Aufgaben wurden beim Planning gut verteilt und die Zwischenstandsmeetings halfen dabei, kleinere Probleme schnell zu lösen.
+
+\subsection{User-Stories des Sprint-Backlogs}
+{\small Autor: David Koch}
+
+\begin{itemize}
+  \item \textbf{ Optimierung des Graphen }
+        \\\textit{
+          Der Optimierungsalgorithmus soll überarbeitet werden. Erstens sollen die Start- und Endzustände automatisch ausgewählt werden. Zweitens soll eine neue Größe an den Kanten -- die Losgröße, die die Wichtung der Rüstkosten beeinflusst -- eingebunden werden. Drittens soll der Algorithmus nicht nur den besten, sondern auch den zweit-, dritt-, usw.- besten Pfad ausgeben. Das Interface soll an die neuen Ein- und Ausgabemöglichkeiten angepasst werden.}
+  \item \textbf{ Erstellen von Bearbeitungsschritten durch Klicken }
+        \\\textit{
+          Knoten und Kanten sollen durch wenige Klicks schnell erstellt werden können. Das Hinzufügen der Eigenschaften wird anschließend durchgeführt und die Validierungen werden dementsprechend von der Erstellung auf den Optimierungsalgorithmus verschoben.}
+  \item \textbf{ Sammelticket für Feedback vom Kunden }
+        \\\textit{
+          Die 'Knoten' sollen als 'Teile' bezeichnet werden und die 'Kanten' als 'Bearbeitungsschritte'. Der Name der Bearbeitungsschritte soll besser erkennbar sein.}
+  \item \textbf{ Design }
+        \\\textit{
+          Das Design soll auf die neuste Version angepasst werden.}
+  \item \textbf{ Login }
+        \\\textit{
+          Alle Buttons auf der Login-Seite, die zum Testen verwendet wurden, sollen entfernt werden. Die Credentials sollen gespeichert werden und der Graph soll bei einem Neuladen der Seite nicht verloren gehen. Außerdem wird die Anbindung an Shibboleth weiter bearbeitet.}
+  \item \textbf{ Backend Datenbank }
+        \\\textit{
+          Es soll eine Datenbank in Docker aufgesetzt werden, um erste Tests auf einer echten Datenbank durchführen und dafür eine Schnittstelle implementieren zu können. Sobald der angeforderte HTWK-Server bereitsteht, soll die Datenbank darauf aufgesetzt und parallel dazu eine Dokumentation geschrieben werden. Des Weiteren sollen Testdaten für die Datenbank erstellt werden.}
+
+\end{itemize}
+
+\subsection{Liste der durchgeführten Meetings}
+{\small Autor: David Koch}
+
+\begin{itemize}
+\item 27.04.2020: Planning
+\item 30.04.2020: Weekly
+\item 04.05.2020: Weekly
+\item 07.05.2020: Review, Retro
+\end{itemize}
+
+\subsection{Ergebnisse des Planning-Meetings}
+{\small Autor: David Koch}
+
+Anwesend: Alex, Julius J., Julius H., Linus, Jonas, Erik, Lennart, Nils, Tim, David, Matthias, Manuel\\
+\\
+Innerhalb dieses Meetings haben wir die Schwerpunkte des Sprints festgelegt, den Zeitaufwand der User-Stories abgeschätzt und die daraus entstehenden Aufgaben verteilt.\\
+
+
+\textbf{Design}\\
+Auf Grund der wandelnden Wünsche des Kunden wurde das Interface des Öfteren redesigned. Da sich das Projekt dem Ende nähert, soll in diesem Sprint die letzte Änderung am Interface vorgenommen werden.\\
+
+\textbf{Warten auf Antwort der HTWK}\\
+Die Datenbank auf einem HTWK-Server einzurichten sowie die Anbindung des Logins an Shibboleth sind abhängig von Antworten des ITSZ der HTWK und können daher eventuell noch nicht bearbeitet werden.\\
+
+\textbf{Weitere Sprintziele:}
+\begin{itemize}
+\item Bugtickets bearbeiten
+\item Losgröße als neue Kanteneigenschaft hinzufügen
+\item neu hinzugefügten Code testen
+\end{itemize}
+
+
+\subsection{Aufgewendete Arbeitszeit pro Person$+$Arbeitspaket}
+{\small Autor: David Koch}
+
+\begin{longtable}{|p{4cm}|p{2cm}|p{1.2cm}|p{1.2cm}|p{0.7cm}|p{3.8cm}|}
+  \hline
+  Arbeitspaket                                                          & Person                & Start    & Ende     & h     & Artefakt \\
+  \hline
+  Login                                                                 & Berger, Matthias      & 28.04.20 & 28.04.20 & 4     & Grundlagenrechte \\
+  \hline
+  Login                                                                 & Berger, Matthias      & 07.05.20 & 07.05.20 & 5     & Konzeption und Umsetzung von Ladebildschirm, Timeout \& Weiterbildung \\
+  \hline
+  Login                                                                 & Buchmann, Lennart     & 07.05.20 & 07.05.20 & 5     & Konzeption und Umsetzung von Ladebildschirm, Timeout \& Weiterbildung \\
+  \hline
+  Login                                                                 & Buchmann, Lennart     & 02.05.20 & 02.05.20 & 4     & Grundlagenrechte \\
+  \hline
+  Login                                                                 & Buchmann, Lennart     & 04.05.20 & 04.05.20 & 5     & Login Persistenz \\
+  \hline
+  Optimierung des Graphen                                               & Gwozdz, Jonas         & 30.04.20 & 30.04.20 & 1,5   & Design erstellen \\
+  \hline
+  Sammelticket für Feedback vom Kunden                                  & Gwozdz, Jonas         & 29.04.20 & 29.04.20 & 1,5   & Beschriftung ändern \\
+  \hline
+  BUG TRACKER                                                           & Gwozdz, Jonas         & 04.05.20 & 04.05.20 & 5     & Bug: Node-Overlapping ab 3 Knoten \\
+  \hline
+  Backend Datenbnk                                                      & Heldt, Erik           & 28.04.20 & 05.05.20 & 2,75  & Schreiben einer echten Datenbank auf Docker \\
+  \hline
+  Backend Datenbank                                                     & Heldt, Erik           & 06.05.20 & 06.05.20 & 0,5   & HTTP-Request (Client-Side) \\
+  \hline
+  Design                                                                & Heldt, Erik           & 06.05.20 & 06.05.20 & 3     & Ausführliche Tests für GraphInfo.vue \\
+  \hline
+  Optimierung des Graphen                                               & Henning, Tim          & 05.05.20 & 05.05.20 & 2     & Initialzustände automatisch auswählen \\
+  \hline
+  Optimierung des Graphen                                               & Henning, Tim          & 06.05.20 & 06.05.20 & 1     & Ausgabe der Gesamtkosten/-zeit auf dem User-Interface \\
+  \hline
+  Optimierung des Graphen                                               & Herterich, Linus      & 30.04.20 & 30.04.20 & 2     & Settings $\rightarrow$ Optimierung persistent speichern \\
+  \hline
+  Design                                                                & Herterich, Linus      & 30.04.20 & 06.05.20 & 5,5   & Redesign Optimierungsansicht \\
+  \hline
+  Design                                                                & Herterich, Linus      & 06.05.20 & 06.05.20 & 1     & Graph-Editor expandierbar \\
+  \hline
+  Design                                                                & Herterich, Linus      & 04.05.20 & 04.05.20 & 1     & Tests zum neuen Design \\
+  \hline
+  Design                                                                & Herterich, Linus      & 03.05.20 & 04.05.20 & 1,5   & Save Menu $\rightarrow$ Test fixen \\
+  \hline
+  Design                                                                & Herterich, Linus      & 04.05.20 & 04.05.20 & 1     & NewGraph Menu $\rightarrow$ Test fixen \\
+  \hline
+  Design                                                                & Herterich, Linus      & 04.05.20 & 04.05.20 & 1,5   & Überschreiben Dialog für Save-Menu \\
+  \hline
+  Design                                                                & Herterich, Linus      & 27.04.20 & 30.04.20 & 1,5   & Avatar-Menü $\rightarrow$ Ausloggen \& Einstellungen \\
+  \hline
+  Design                                                                & Herterich, Linus      & 27.04.20 & 27.04.20 & 2     & Merge auf Targetbranch \\
+  \hline
+  Design                                                                & Herterich, Linus      & 30.04.20 & 04.05.20 & 2,5   & Components aufräumen \\
+  \hline
+  Design                                                                & Herterich, Linus      & 27.04.20 & 27.04.20 & 0,5   & Login fixen \\
+  \hline
+  Design                                                                & Herterich, Linus      & 27.04.20 & 27.04.20 & 1     & Tests fixen \\
+  \hline
+  Design                                                                & Herterich, Linus      & 07.05.20 & 07.05.20 & 0,5   & Altes Design in 'removed code' \\
+  \hline
+  Backend Datenbank                                                     & Hohlfeld, Julius      & 05.05.20 & 06.05.20 & 7,5   & API-Parser \\
+  \hline
+  Backend Datenbank                                                     & Hohlfeld, Julius      & 03.05.20 & 07.05.20 & 4     & Node.js Programmierung (Server-Side) \\
+  \hline
+  Backend Datenbank                                                     & Hohlfeld, Julius      & 28.04.20 & 29.04.20 & 14,5  & Set-Up Docker MySQL \\
+  \hline
+  Backend Datenbank                                                     & Hohlfeld, Julius      & 03.05.20 & 03.05.20 & 3     & Umgehung des MySQL Authentifizierungsprotokoll \\
+  \hline
+  Backend Datenbank                                                     & Hohlfeld, Julius      & 03.05.20 & 05.05.20 & 5     & Anbindung von Docker zu JS \\
+  \hline
+  Login                                                                 & Karkoutli, Alaa Aldin & 07.05.20 & 07.05.20 & 5     & Konzeption und Umsetzung von Ladebildschirm, Timeout \& Weiterbildung \\
+  \hline
+  Login                                                                 & Karkoutli, Alaa Aldin & 04.05.20 & 04.05.20 & 4     & Grundlagenrechte \\
+  \hline
+  Optimierung des Graphen                                               & Koch, David           & 30.04.20 & 06.05.20 & 12    & Ausgabe der Gesamtkosten/-zeit auf dem User-Interface \\
+  \hline
+\end{longtable}
+
+\subsection{Konkrete Test-Überdeckung im Sprint}
+{\small Autor: David}
+
+Die Testabdeckung war deutlich besser als bei vorherigen Sprints. Auch wenn nicht zu allen bearbeiteten Aufgaben Tests angelegt wurden, lag dies lediglich an mangelnder Zeit, wenn sich eine User-Story als aufwendiger herausstellte als erwartet.
+
+\subsection{Ergebnisse des Reviews}
+{\small Autor: David Koch}
+
+Anwesend: Alaa Aldin, Lennart, David, Erik, Julius J., Julius H., Jonas, Linus, Manuel, Tim\\
+
+Im Rahmen des Reviews haben wir wie gewohnt die Ergebnisse des Sprints bewertet und Schwierigkeiten besprochen.\\
+
+\textbf{Problem: Warten auf das ITSZ der HTWK}\\
+Die derzeit wichtigsten ausstehenden Aufgaben betreffen vor allem die Themen Server und Datenbank. Da die Anwendung samt Datenbank und Shibboleth-Login am Ende auf einem Server der HTWK laufen soll, können wir dies ohne Antwort des ITSZ bisher nur eingeschränkt bearbeiten. \\
+
+\textbf{Design:}
+\begin{itemize}
+\item neues Design wurde eingebunden
+\item davon sind einige (wenige) Teile noch nicht funktional 
+\end{itemize}
+
+\textbf{Optimierung des Graphen:}
+\begin{itemize}
+\item Gesamtkosten und -zeit werden im neuen UI ausgegeben, alternative Pfade allerdings noch nicht
+\item automatische Auswahl von Start- und Endknoten wurde fertiggestellt, jedoch noch nicht mit implementiert
+\item Losgröße wurde noch nicht eingebaut
+\end{itemize}
+
+\textbf{Erstellung von Bearbeitungsschritten durch Klicken:}
+\begin{itemize}
+\item Validierung der Kanten von Erstellen auf Bearbeiten umgelegt
+\item vor der Optimierung wird überprüft, ob alle Eigenschaften gegeben sind
+\end{itemize}
+
+\textbf{Sammelticket für Feedback vom Kunden:}
+\begin{itemize}
+\item Tests für Toolbar, Zoom-Controls, Buttons und Eingabereihenfolgen geschrieben
+\end{itemize}
+
+\textbf{Julius H., Erik, Linus:}
+\begin{itemize}
+\item Knoten und Kanten heißen jetzt Teil und Bearbeitungsschritt
+\item Automatisches Verschieben bei überlappenden Knoten wurde überarbeitet
+\end{itemize}
+
+\textbf{Login:}
+\begin{itemize}
+\item Login-Persistenz ist eingebaut
+\item Ablaufender Zeitstempel ist eingebaut, wird aber bisher bei zu wenigen Aktionen refreshed
+\item zum Testen benötigte Buttons wurden entfernt
+\item Graph geht beim Neuladen der Seite nicht mehr verloren
+\item Login-Credentials können gespeichert werden
+\item erste Erfahrung sammeln im Umgang mit Shibboleth
+\item Anbindung an Shibboleth noch nicht möglich (fehlende Antwort des ITSZ)
+\end{itemize}
+
+\textbf{Backend Datenbank:}
+\begin{itemize}
+\item Docker Datenbank aufgesetzt und angebunden (noch nicht auf HTWK-Server)
+\item Grundlegende Struktur für API-Entwicklung implementiert
+\item Testdaten in Datenbank gespeichert, erste SQL-Befehle auf der Datenbank getestet
+\item Dokumentation vorhanden
+\end{itemize}
+
+\subsection{Ergebnisse der Retrospektive}
+{\small Autor: David Koch}
+
+Anwesend: Alaa Aldin, Lennart, David, Erik, Julius J., Julius H., Jonas, Linus, Manuel, Tim\\
+
+Nach den zwischenzeitlich schlechten Einschätzungen bezüglich des Erfolgs dieses Sprints gab es doch eine positive Überraschung, wie viele der User-Stories schon umgesetzt werden konnten. Die Retrospektive wird wie im letzten Sprint nach dem KALM-Prinzip durchgeführt.\\
+
+\textbf{Keep:}
+\begin{itemize}
+\item Produktivität/Motivation
+\item Zusammenarbeit 
+\item Zeiten buchen
+\item Übersicht im YouTrack
+\item Absprache beim Mergen
+\item kommentierter Code
+\end{itemize}
+
+\textbf{Add:}
+\begin{itemize}
+\item Fortschritte mitteilen
+\item Dark Mode
+\item Antworten des ITSZ
+\end{itemize}
+
+\textbf{Less:}
+\begin{itemize}
+\item keine Anmerkungen
+\end{itemize}
+
+\textbf{More:}
+\begin{itemize}
+\item Tests
+\item Fehlerhafte Tests fixen
+\item Bugfixing
+\item Branches löschen
+\end{itemize}
+
+
+\subsection{Abschließende Einschätzung des Product-Owners}
+{\small Autor: Manuel Eckert}
+
+Kurz vor Beginn des Sprints konnten wir nochmals Feedback von unserem Kunden erhalten. Daraufhin haben sich kurzfristig einige Änderungen für diesen Sprint ergeben, wie beispielsweise bei der Optimierung des erzeugten Graphen oder der Erstellung von einzelnen Knoten-/Kantenelementen.\\
+Weiterhin wurde ein moderneres und ansprechenderes UI-Design implementiert. \\
+Zum Ende des Sprints wurde ein zufriedenstellendes Ergebnis erreicht und fast alle Aufgaben wurden zu einer guten Zufriedenheit komplettiert. 
+Leider gibt es immer noch in einigen Modulen nicht genügend Tests um die geforderte Definition of Done zu erreichen. \\
+Das ITSZ war für uns immer noch nicht telefonisch oder via E-Mail zu erreichen.
+
+\subsection{Abschließende Einschätzung des Software-Architekten}
+{\small Autor: Julius Jolig}
+
+Die noch ausstehende Antwort des ITSZ der HTWK verzögert die Arbeit am Projekt. Mit diesem Sprint konnte eine höhere Testabdeckung erzielt werden. 
+
+\subsection{Abschließende Einschätzung des Team-Managers}
+{\small Autor: Alex Hofmann}
+
+Der Sprint schien nach Stand des letzten Scrum Meetings eher negativ auszufallen, jedoch wurden einige User-Stories durch großes Engagement des Teams dennoch in der verbleibenden Zeit finalisiert.
+
+

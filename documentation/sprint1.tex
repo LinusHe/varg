@@ -1,4 +1,3 @@
-
 \subsection{Ziel des Sprints}
 {\small Autor: Erik Heldt}
 
@@ -7,22 +6,22 @@ Der erste Sprint des VarG-Projekts lief vom 05.12.2019 bis zum 16.12.2019. Ziel 
 \subsection{User-Stories des Sprint-Backlogs}
 {\small Autor: Erik Heldt}
 
-\textbf{Grundstruktur}
+\textbf{Grundstruktur:}
 Die Anwendung sollte zu Beginn ein grundlegendes Fundament aufweisen, damit sich alle Teammitglieder vorstellen können, wie am Ende das Programm aussehen soll. Dazu gehörte zu Beginn das Design der Startseite mit dem VarGraph im Zentrum und der Einbindung von Cytoscape in die Programmstruktur.
 
-\textbf{Datenstruktur für Knoten}
+\textbf{Datenstruktur für Knoten:}
 Es sollte mit Hilfe von Cytoscape herausgefunden werden, wie man Knoten im Programmcode hinzufügen und speichern kann. Dafür sollte dann eine Datei im Programm angelegt werden.
 
-\textbf{Knoten zu bestehender Datenstruktur hinzufügen}
+\textbf{Knoten zu bestehender Datenstruktur hinzufügen:}
 Die Anwendung sollte eine einfache Funktionalität zum Erstellen neuer Knoten aka Produktionsschritte erhalten, um sich mit den Cytoscape-Funktionen näher vertraut zu machen. Hier war erstmal noch keine graphische Darstellung in der GUI notwendig, es reichte per Console logs zu testen.
 
-\textbf{Darstellung eines Graphen in Weboberfläche}
+\textbf{Darstellung eines Graphen in Weboberfläche:}
 In der Anwendung sollte zunächst ein statischer Graph mit Hilfe einer Cytoscape-Datenstruktur sichtbar dargestellt werden, damit man sehen konnte, wie so ein „CytoGraph“ überhaupt aussieht. User-Interaktion war hier noch nicht notwendig.
 
-\textbf{Kanten anlegen}
+\textbf{Kanten anlegen:}
 Zusätzlich zu Knoten sollten auch Kanten zwischen bestehenden Knoten hinzugefügt werden können. Diese Kanten sollten mit verschiedenen Attributen in der Cytoscape-Datenstruktur gespeichert werden.
 
-\textbf{Berechnung verschiedener Eigenschaften}
+\textbf{Berechnung verschiedener Eigenschaften:}
 Anhand der mit den Kanten gespeicherten Attribute sollte eine Funktionalität entwickelt werden, welche die Gesamtkosten (Auswahl von Geld oder Zeit) aller unterschiedlichen Pfade berechnen und anzeigen sollte. Dies war der erste Schritt in Richtung Optimierung, d.h. später sollte diese Funktionalität automatisch den günstigsten Pfad herausfinden und anzeigen.
 
 \subsection{Liste der durchgeführten Meetings}
@@ -44,7 +43,7 @@ Im Planning-Meeting erklärten die Projektmanager zu Beginn noch einmal kurz, wi
 \subsection{Aufgewendete Arbeitszeit pro Person$+$Arbeitspaket}
 {\small Autor: Erik Heldt}
 
-\begin{longtable}{|p{4cm}|l|l|l|l|l|}
+\begin{longtable}{|p{4cm}|l|l|l|l|p{5cm}|}
         \hline
 	Arbeitspaket & Person & Start & Ende & h & Artefakt\\
         \hline
@@ -99,16 +98,18 @@ Beim Thema der Daily Meetings ist man zu dem Schluss gekommen, dass diese wenn m
 Ein weiterer Themenpunkt war die Organisation im Git. Es wurde festgelegt, dass der Master-Branch während des Sprints unberührt bleiben sollte, da dieser immer lauffähig sein muss. Stattdessen sollte sich jeder seinen eigenen Branch erstellen und diesen nach Abschluss der eigenen Aufgaben auf den neuen Developer-Branch namens ''targetbranch'' mergen. Am Ende jedes Sprints würde dann der Developer-Branch mit dem Master-Branch gemerged werden.
 
 \subsection{Abschließende Einschätzung des Product-Owners}
-{\small Autor: xxx}
+{\small Autor: Manuel Eckert}
 
-XXX
+Der Erste Sprint wurde zur Erstellung einer geeigneten Datenstruktur genutzt. Das gesamte Team musste sich erst einmal in das Projekt einfinden. Zum Ende des Sprints hat sich herausgestellt, dass sich einige der Entwickler beim Planning-Poker überschätzten. Daher sind einige User-Stories verständlicherweise offen geblieben. \\
+Die abgehaltenen Daily Treffen gaben einen guten Überblick, an welchen Themen die einzelnen Teammitglieder arbeiteten . Wir hielten fest, dass Aufgaben klarer verteilt werden müssen, dass sich die einzelnen Teammitglied für die User-Stories verantwortlich fühlen.  
 
 \subsection{Abschließende Einschätzung des Software-Architekten}
-{\small Autor: xxx}
+{\small Autor: Julius Jolig}
 
-XXX
+Zwischen den einzelnen Bachelorstudenten herrschen teilweise große Unterschiede was die Vorerfahrung und auch die Programmierfähigkeiten betrifft. Das spiegelt sich auch bei der Einarbeitung in die Frameworks wider. Beim Zusammenführen aller branches am Ende des Sprints führte zu einigen Problemen. Das kann in Zunkunft noch besser laufen. 
 
 \subsection{Abschließende Einschätzung des Team-Managers}
-{\small Autor: xxx}
+{\small Autor: Alex Hofmann}
 
-XXX
+Ein verhaltener Start in das Softwareprojekt von sowohl Bachelors als auch uns Mastern.
+Natürlich muss sich dieses Team-Konstrukt erst einmal einspielen. Bleibt abzuwarten, wie sich die in der Retrospektive ergriffenen Maßnahmen auswirken.
