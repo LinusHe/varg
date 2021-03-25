@@ -16,7 +16,7 @@
         >
           <v-icon dark>mdi-plus</v-icon>Neuer Graph
         </v-btn>
-        <v-btn outlined tile color="#ececec" class="bo-r-0 blackbtn" id="database-btn" @click="datenbank()">
+        <v-btn outlined tile color="#ececec" class="bo-r-0 blackbtn" id="database-btn" @click="noDB()">
           <v-icon class="mr-1">mdi-database</v-icon>Datenbank
         </v-btn>
         <v-btn outlined tile color="#ececec" class="bo-r-0 blackbtn" @click="LoadJSon" id="ImportGraph">
@@ -91,6 +91,11 @@ export default {
   },
   name: "GraphHeader",
   methods: {
+    noDB() {
+      dialogComponent.dialogError(
+        "Diese Funktion exitiert in der Demo leider nicht."
+      );
+    },
     getGraph() {
       return this.$parent.$refs["vargraph"];
     },

@@ -4,8 +4,11 @@
       <v-list-item-title
         align="center"
         class="login-pre-headline mt-5 mb-3 darkmode-ign"
-      >Variantengraph-Editor</v-list-item-title>
-      <v-list-item-title align="center" class="login-headline mb-1 darkmode-ign">VarG</v-list-item-title>
+        >Variantengraph-Editor</v-list-item-title
+      >
+      <v-list-item-title align="center" class="login-headline mb-1 darkmode-ign"
+        >VarG</v-list-item-title
+      >
       <v-row class="button-container">
         <v-col sm="4">
           <v-card outlined align="center">
@@ -29,49 +32,62 @@
             >
               <v-icon>mdi-import</v-icon>
             </v-btn>
-            <input type="file" ref="file" accept=".json" style="display: none" />
+            <input
+              type="file"
+              ref="file"
+              accept=".json"
+              style="display: none"
+            />
           </v-card>
-          <a>Graphen importieren</a>
+          <a @click="openFromFile()">Graphen importieren</a>
         </v-col>
 
         <v-col sm="4">
           <v-card outlined align="center">
-            <router-link to="database" tag="button" id="database">
-              <v-btn depressed fab color="primary" class="mt-4 darkmode-ign">
-                <v-icon>mdi-database-export</v-icon>
-              </v-btn>
-            </router-link>
+            <v-btn
+              @click="noDB()"
+              depressed
+              fab
+              color="primary"
+              class="mt-4 darkmode-ign"
+            >
+              <v-icon>mdi-database-export</v-icon>
+            </v-btn>
           </v-card>
-          <a>Vorlage aus Datenbank öffnen</a>
+          <a @click="noDB()">Vorlage aus Datenbank öffnen</a>
         </v-col>
       </v-row>
 
-
-       <v-divider
-        class="mx-4 mt-10"
-        inset
-        horizontal
-      ></v-divider>
+      <v-divider class="mx-4 mt-10" inset horizontal></v-divider>
       <em align="center" class="login-bottom-links mt-5 mb-5" color="lightgrey">
         Mit freundlicher Unterstützung des
-        <a target="_blank" href="https://fsrim.htwk-leipzig.de/der-fachschaftsrat/">Fachschaftsrat Informatik & Medien</a>
+        <a
+          target="_blank"
+          href="https://fsrim.htwk-leipzig.de/der-fachschaftsrat/"
+          >Fachschaftsrat Informatik & Medien</a
+        >
       </em>
       <p align="center" class="login-bottom-links" color="lightgrey">
         <a
           class="not-underlined"
           href="https://sam.imn.htwk-leipzig.de/adminer.php"
           target="_blank"
-        >Backend</a> |
+          >Backend</a
+        >
+        |
         <a
           class="not-underlined"
           href="https://www.htwk-leipzig.de/hochschule/kontakt/impressum/"
           target="_blank"
-        >Impressum</a> |
+          >Impressum</a
+        >
+        |
         <a
           class="not-underlined"
           href="https://www.htwk-leipzig.de/de/hochschule/kontakt/datenschutzerklaerung/"
           target="_blank"
-        >Datenschutz</a>
+          >Datenschutz</a
+        >
       </p>
     </v-list-item-content>
   </v-list-item>
@@ -89,10 +105,10 @@ export default {
   name: "Menu",
   data() {
     return {
-      importBtnColor: "primary"
+      importBtnColor: "primary",
     };
   },
-  mounted: function() {
+  mounted: function () {
     if (this.$store.getters.getDownload === 1) {
       this.$store.commit("setDownload", 0);
       location.reload();
@@ -102,6 +118,11 @@ export default {
     ];
   },
   methods: {
+    noDB() {
+      dialogComponent.dialogError(
+        "Diese Funktion exitiert in der Demo leider nicht."
+      );
+    },
     openFromFile() {
       this.$refs.file.click();
 
@@ -116,7 +137,7 @@ export default {
       }
 
       this.$store.commit("saveGraph", cyStore.data.cy.json());
-    }
-  }
+    },
+  },
 };
 </script>

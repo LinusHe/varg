@@ -18,7 +18,7 @@
                 {{username}}
                 <br />
                 <b>Anzahl deiner Graphen in der Datenbank:</b>
-                {{graphcount}}
+                -
               </v-card-text>
             </v-col>
           </v-row>
@@ -81,7 +81,7 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="green darken-1" text @click="editUserName()">Account Umbenennen</v-btn>
+          <v-btn color="green darken-1" text @click="noDB()">Account Umbenennen</v-btn>
           <v-btn color="grey" text @click="usernameDialog = false">Abbrechen</v-btn>
         </v-card-actions>
       </v-card>
@@ -120,7 +120,7 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="green darken-1" text @click="editUserPW()">Passwort Ändern</v-btn>
+          <v-btn color="green darken-1" text @click="noDB()">Passwort Ändern</v-btn>
           <v-btn color="grey" text @click="passwordDialog = false">Abbrechen</v-btn>
         </v-card-actions>
       </v-card>
@@ -149,7 +149,7 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="error" text @click="deleteUserAccount()">Account Löschen</v-btn>
+          <v-btn color="error" text @click="noDB()">Account Löschen</v-btn>
           <v-btn color="grey" text @click="deleteDialog = false">Abbrechen</v-btn>
         </v-card-actions>
       </v-card>
@@ -187,6 +187,11 @@ export default {
     newusername: "",
   }),
   methods: {
+    noDB() {
+      dialogComponent.dialogError(
+        "Diese Funktion exitiert in der Demo leider nicht."
+      );
+    },
     getGraph() {
       return this.$parent.$parent.$parent.$parent.$parent.$parent.$parent
         .$parent.$parent.$refs["vargraph"];
@@ -196,7 +201,7 @@ export default {
     getAccountSettings() {
       this.usershort = this.$store.state.user.name.substring(0, 2).toUpperCase();
       this.username = this.$store.state.user.name;
-      this.getGraphCount();
+      // this.getGraphCount();
       this.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent.$parent
         .$refs.graphHeader.usershort = this.usershort;
     },

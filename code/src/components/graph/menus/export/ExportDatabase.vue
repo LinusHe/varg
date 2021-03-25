@@ -1,7 +1,7 @@
 <template>
   <v-card flat id="save-menu">
     <v-card-text>
-      <v-form ref="formDB" v-model="validDB" lazy-validation v-on:submit.prevent="uploadGraph()">
+      <v-form ref="formDB" v-model="validDB" lazy-validation v-on:submit.prevent="noDB()">
         <v-row class="ml-2 mt-4 mr-2">
           <p>
             Unter folgendem Namen kann der aktuelle Graph
@@ -27,7 +27,7 @@
               text
               :disabled="!validDB"
               id="save-menu-save"
-              @click="uploadGraph()"
+              @click="noDB()"
             >Speichern</v-btn>
           </v-col>
           <v-col sm="4">
@@ -86,6 +86,11 @@ export default {
   },
 
   methods: {
+    noDB() {
+      dialogComponent.dialogError(
+        "Diese Funktion exitiert in der Demo leider nicht."
+      );
+    },
     getGraph() {
       return this.$parent.$parent.$parent.$parent.$parent.$parent.$parent
         .$parent.$parent.$refs["vargraph"];
